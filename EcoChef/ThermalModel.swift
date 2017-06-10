@@ -8,15 +8,19 @@
 
 import Foundation
 
-class ThermalModel {
-    var a : Double = -7.8427
-    var b : Double = 0.002178
-    var c : Double = 459.1
-    var T0 : Double = 70
+class ThermalModel : CustomStringConvertible {
+    var a : Float = -7.8427
+    var b : Float = 2.178
+    var c : Float = 459.1
+    var T0 : Float = 70
+    
+    var description: String {
+        return "ThermalModel: \((a,b,c)), T0 = \(T0)"
+    }
     
     // time in minutes
     func timefor(temp:Int, fromtemp:Int? = nil) -> Int {
-        var timestart: Double
+        var timestart: Float
         if let tempstart = fromtemp {
             timestart = fractimefor(temp: tempstart)
         } else {
@@ -28,8 +32,8 @@ class ThermalModel {
     }
     
     // time in fractional minutes
-    func fractimefor(temp:Int) -> Double {
-        let timefrac = a * log(b * (c + T0 - Double(temp)))
+    func fractimefor(temp:Int) -> Float {
+        let timefrac = a * log(b/1000 * (c + T0 - Float(temp)))
         return ceil(timefrac)
     }
 }
