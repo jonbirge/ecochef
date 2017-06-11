@@ -8,14 +8,39 @@
 
 import Foundation
 
-class ThermalModel : CustomStringConvertible {
-    var a : Float = -7.8427
-    var b : Float = 2.178
-    var c : Float = 459.1
-    var T0 : Float = 70
+struct ThermalModelData : CustomStringConvertible {
+    var name : String = "None"
+    var a : Float = 0
+    var b : Float = 0
+    var c : Float = 0
     
     var description: String {
-        return "ThermalModel: \((a,b,c)), T0 = \(T0)"
+        return "ThermalModelData\((a, b, c))"
+    }
+    
+    init(name: String, a: Float, b: Float, c: Float) {
+        self.name = name
+        self.a = a
+        self.b = b
+        self.c = c
+    }
+}
+
+class ThermalModel : CustomStringConvertible {
+    var a : Float = -10.0669
+    var b : Float = 1.96757
+    var c : Float = 508.24
+    var T0 : Float = 72
+    
+    var description: String {
+        return "ThermalModel: \((a, b, c)), T0 = \(T0)"
+    }
+    
+    // load from struct
+    func readfrom(data:ThermalModelData) {
+        a = data.a
+        b = data.b
+        c = data.c
     }
     
     // time in minutes
