@@ -43,22 +43,21 @@ class ThermalModel : CustomStringConvertible {
         c = data.c
     }
     
-    // time in minutes
-    func timefor(temp:Int, fromtemp:Int? = nil) -> Int {
+    // time from hot
+    func timefor(temp:Int, fromtemp:Int? = nil) -> Float {
         var timestart: Float
         if let tempstart = fromtemp {
-            timestart = fractimefor(temp: tempstart)
+            timestart = coldtime(temp: tempstart)
         } else {
             timestart = 0
         }
-        let timefrac = fractimefor(temp:temp) - timestart
-        
-        return Int(ceil(timefrac))
+         
+        return coldtime(temp:temp) - timestart
     }
     
-    // time in fractional minutes
-    func fractimefor(temp:Int) -> Float {
+    // time from cold
+    func coldtime(temp:Int) -> Float {
         let timefrac = a * log(b/1000 * (c + T0 - Float(temp)))
-        return ceil(timefrac)
+        return timefrac
     }
 }

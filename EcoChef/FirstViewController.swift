@@ -28,10 +28,7 @@ class FirstViewController: UIViewController {
         currentTempLabel.text = String(currentTemp)
     }
     
-    func SetCurrentFinal(temp:Float) {
-        SetCurrent(temp: temp)
-        UpdateDesired()
-    }
+   
     
     func SetDesired(temp:Float) {
         var rawtemp = temp
@@ -42,12 +39,27 @@ class FirstViewController: UIViewController {
         desiredTemp = Int(25*ceil(rawtemp/25))
         desiredTempLabel.text = String(desiredTemp)
         
-        let pretime = model.timefor(temp: desiredTemp, fromtemp: currentTemp)
-        timeLabel.text = String(pretime)
+        let pretimefrac = model.timefor(temp: desiredTemp, fromtemp: currentTemp)
+        DisplayTime(minfrac: pretimefrac)
+    }
+    
+    func DisplayTime(minfrac:Float) {
+        let pretimemin = floor(minfrac)
+        let pretimesec = round(60*(minfrac - pretimemin))
+        minLabel.text = String(Int(pretimemin))
+        
+        var sectext : String
+        if pretimesec < 10 {
+            sectext = "0" + String(Int(pretimesec))
+        } else {
+            sectext = String(Int(pretimesec))
+        }
+        secLabel.text = sectext
     }
     
     func UpdateCurrent() {
         SetCurrent(temp: currentTempSlider.value)
+        UpdateDesired()
     }
     
     func UpdateDesired() {
@@ -55,13 +67,15 @@ class FirstViewController: UIViewController {
     }
     
     func Reset() {
-        currentTempSlider.value = 70.0
+        currentTempSlider.value = 72.0
         desiredTempSlider.value = 350.0
         UpdateCurrent()
         UpdateDesired()
     }
    
-    @IBOutlet weak var timeLabel: UILabel!
+    
+    @IBOutlet weak var minLabel: UILabel!
+    @IBOutlet weak var secLabel: UILabel!
     @IBOutlet weak var currentTempLabel: UILabel!
     @IBOutlet weak var desiredTempLabel: UILabel!
     @IBOutlet weak var currentTempSlider: UISlider!
@@ -69,10 +83,6 @@ class FirstViewController: UIViewController {
     
     @IBAction func CurrentTempChange(_ sender: UISlider) {
         UpdateCurrent()
-    }
-    
-    @IBAction func CurrentTempDone(_ sender: UISlider) {
-        SetCurrentFinal(temp: sender.value)
     }
     
     @IBAction func DesiredTempChange(_ sender: UISlider) {
