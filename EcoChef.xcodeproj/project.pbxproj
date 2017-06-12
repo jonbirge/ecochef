@@ -12,7 +12,6 @@
 		AB43B17B1EEB871E00B6A96B /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB43B17A1EEB871E00B6A96B /* SettingsViewController.swift */; };
 		AB43B17E1EEB871E00B6A96B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB43B17C1EEB871E00B6A96B /* Main.storyboard */; };
 		AB43B1801EEB871E00B6A96B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB43B17F1EEB871E00B6A96B /* Assets.xcassets */; };
-		AB43B1831EEB871E00B6A96B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB43B1811EEB871E00B6A96B /* LaunchScreen.storyboard */; };
 		AB43B18B1EEBAEA100B6A96B /* ThermalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB43B18A1EEBAEA100B6A96B /* ThermalModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -23,7 +22,6 @@
 		AB43B17A1EEB871E00B6A96B /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		AB43B17D1EEB871E00B6A96B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AB43B17F1EEB871E00B6A96B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		AB43B1821EEB871E00B6A96B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AB43B1841EEB871E00B6A96B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AB43B18A1EEBAEA100B6A96B /* ThermalModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThermalModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -63,7 +61,6 @@
 				AB43B17A1EEB871E00B6A96B /* SettingsViewController.swift */,
 				AB43B17C1EEB871E00B6A96B /* Main.storyboard */,
 				AB43B17F1EEB871E00B6A96B /* Assets.xcassets */,
-				AB43B1811EEB871E00B6A96B /* LaunchScreen.storyboard */,
 				AB43B1841EEB871E00B6A96B /* Info.plist */,
 				AB43B18A1EEBAEA100B6A96B /* ThermalModel.swift */,
 			);
@@ -130,7 +127,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB43B1831EEB871E00B6A96B /* LaunchScreen.storyboard in Resources */,
 				AB43B1801EEB871E00B6A96B /* Assets.xcassets in Resources */,
 				AB43B17E1EEB871E00B6A96B /* Main.storyboard in Resources */,
 			);
@@ -159,14 +155,6 @@
 				AB43B17D1EEB871E00B6A96B /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		AB43B1811EEB871E00B6A96B /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				AB43B1821EEB871E00B6A96B /* Base */,
-			);
-			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -277,6 +265,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = us.birge.EcoChef;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -291,6 +280,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = us.birge.EcoChef;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

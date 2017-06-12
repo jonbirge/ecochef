@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PreheatViewController: UIViewController {
+class PreheatViewController : UIViewController {
     var desiredTemp: Int = 0
     var currentTemp: Int = 0
     var model: ThermalModel!
@@ -23,9 +23,24 @@ class PreheatViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
 
+    func quantize(temp:Float) -> Int {
+        if temp < 100 {
+            return Int(2*round(temp/2))
+        } else {
+            return Int(25*round(temp/25))
+        }
+    }
+    
     func SetCurrent(temp:Float) {
-        currentTemp = Int(2*round(temp/2))
+        currentTemp = quantize(temp: temp)
         currentTempLabel.text = String(currentTemp)
+        
+        let maxtemp = currentTempSlider.maximumValue
+        let mintemp = currentTempSlider.minimumValue
+        let tempfrac = CGFloat((temp - mintemp)/(maxtemp - mintemp))
+        let tempcolor = UIColor(red: tempfrac, green: 0, blue: 1 - tempfrac, alpha: 1)
+        currentTempLabel.textColor = tempcolor
+        currentTempSlider.minimumTrackTintColor = tempcolor
     }
     
     func SetDesired(temp:Float) {
@@ -34,8 +49,15 @@ class PreheatViewController: UIViewController {
         if rawtemp < curtemp {
             rawtemp = curtemp
         }
-        desiredTemp = Int(25*ceil(rawtemp/25))
+        desiredTemp = quantize(temp: rawtemp)
         desiredTempLabel.text = String(desiredTemp)
+        
+        let maxtemp = desiredTempSlider.maximumValue
+        let mintemp = desiredTempSlider.minimumValue
+        let tempfrac = CGFloat((temp - mintemp)/(maxtemp - mintemp))
+        let tempcolor = UIColor(red: tempfrac, green: 0, blue: 1 - tempfrac, alpha: 1)
+        desiredTempLabel.textColor = tempcolor
+        desiredTempSlider.minimumTrackTintColor = tempcolor
         
         let pretimefrac = model.timefor(temp: desiredTemp, fromtemp: currentTemp)
         DisplayTime(minfrac: pretimefrac)
