@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		AB43B1771EEB871E00B6A96B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB43B1761EEB871E00B6A96B /* AppDelegate.swift */; };
-		AB43B1791EEB871E00B6A96B /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB43B1781EEB871E00B6A96B /* FirstViewController.swift */; };
-		AB43B17B1EEB871E00B6A96B /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB43B17A1EEB871E00B6A96B /* SecondViewController.swift */; };
+		AB43B1791EEB871E00B6A96B /* PreheatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB43B1781EEB871E00B6A96B /* PreheatViewController.swift */; };
+		AB43B17B1EEB871E00B6A96B /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB43B17A1EEB871E00B6A96B /* SettingsViewController.swift */; };
 		AB43B17E1EEB871E00B6A96B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB43B17C1EEB871E00B6A96B /* Main.storyboard */; };
 		AB43B1801EEB871E00B6A96B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB43B17F1EEB871E00B6A96B /* Assets.xcassets */; };
 		AB43B1831EEB871E00B6A96B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB43B1811EEB871E00B6A96B /* LaunchScreen.storyboard */; };
@@ -19,8 +19,8 @@
 /* Begin PBXFileReference section */
 		AB43B1731EEB871E00B6A96B /* EcoChef.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EcoChef.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB43B1761EEB871E00B6A96B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		AB43B1781EEB871E00B6A96B /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
-		AB43B17A1EEB871E00B6A96B /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
+		AB43B1781EEB871E00B6A96B /* PreheatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreheatViewController.swift; sourceTree = "<group>"; };
+		AB43B17A1EEB871E00B6A96B /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		AB43B17D1EEB871E00B6A96B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		AB43B17F1EEB871E00B6A96B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AB43B1821EEB871E00B6A96B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -59,8 +59,8 @@
 			isa = PBXGroup;
 			children = (
 				AB43B1761EEB871E00B6A96B /* AppDelegate.swift */,
-				AB43B1781EEB871E00B6A96B /* FirstViewController.swift */,
-				AB43B17A1EEB871E00B6A96B /* SecondViewController.swift */,
+				AB43B1781EEB871E00B6A96B /* PreheatViewController.swift */,
+				AB43B17A1EEB871E00B6A96B /* SettingsViewController.swift */,
 				AB43B17C1EEB871E00B6A96B /* Main.storyboard */,
 				AB43B17F1EEB871E00B6A96B /* Assets.xcassets */,
 				AB43B1811EEB871E00B6A96B /* LaunchScreen.storyboard */,
@@ -143,9 +143,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB43B17B1EEB871E00B6A96B /* SecondViewController.swift in Sources */,
+				AB43B17B1EEB871E00B6A96B /* SettingsViewController.swift in Sources */,
 				AB43B1771EEB871E00B6A96B /* AppDelegate.swift in Sources */,
-				AB43B1791EEB871E00B6A96B /* FirstViewController.swift in Sources */,
+				AB43B1791EEB871E00B6A96B /* PreheatViewController.swift in Sources */,
 				AB43B18B1EEBAEA100B6A96B /* ThermalModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -314,6 +314,7 @@
 				AB43B1891EEB871E00B6A96B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
