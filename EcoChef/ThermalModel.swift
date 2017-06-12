@@ -51,7 +51,6 @@ class ThermalModel : CustomStringConvertible {
         } else {
             timestart = 0
         }
-         
         return coldtime(temp:temp) - timestart
     }
     
