@@ -31,16 +31,19 @@ class PreheatViewController : UIViewController {
         }
     }
     
+    func colorfrom(frac:Float) -> UIColor {
+        let fracfloat:CGFloat = CGFloat(frac)
+        return UIColor(red: 0.5 + fracfloat/2, green: 0.5 - fracfloat/2, blue: 1 - fracfloat, alpha: 1)
+    }
+    
     func SetCurrent(temp:Float) {
         currentTemp = quantize(temp: temp)
         currentTempLabel.text = String(currentTemp)
         
         let maxtemp = currentTempSlider.maximumValue
         let mintemp = currentTempSlider.minimumValue
-        let tempfrac = CGFloat((temp - mintemp)/(maxtemp - mintemp))
-        let tempcolor = UIColor(red: tempfrac, green: 0, blue: 1 - tempfrac, alpha: 1)
-        currentTempLabel.textColor = tempcolor
-        currentTempSlider.minimumTrackTintColor = tempcolor
+        let tempfrac = (temp - mintemp)/(maxtemp - mintemp)
+        currentTempSlider.minimumTrackTintColor = colorfrom(frac:tempfrac)
     }
     
     func SetDesired(temp:Float) {
@@ -54,10 +57,8 @@ class PreheatViewController : UIViewController {
         
         let maxtemp = desiredTempSlider.maximumValue
         let mintemp = desiredTempSlider.minimumValue
-        let tempfrac = CGFloat((temp - mintemp)/(maxtemp - mintemp))
-        let tempcolor = UIColor(red: tempfrac, green: 0, blue: 1 - tempfrac, alpha: 1)
-        desiredTempLabel.textColor = tempcolor
-        desiredTempSlider.minimumTrackTintColor = tempcolor
+        let tempfrac = (temp - mintemp)/(maxtemp - mintemp)
+        desiredTempSlider.minimumTrackTintColor = colorfrom(frac:tempfrac)
         
         let pretimefrac = model.timefor(temp: desiredTemp, fromtemp: currentTemp)
         DisplayTime(minfrac: pretimefrac)
