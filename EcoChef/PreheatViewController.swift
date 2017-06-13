@@ -60,7 +60,7 @@ class PreheatViewController : UIViewController {
         let tempfrac = (temp - mintemp)/(maxtemp - mintemp)
         desiredTempSlider.minimumTrackTintColor = colorfrom(frac:tempfrac)
         
-        let pretimefrac = model.timefor(temp: desiredTemp, fromtemp: currentTemp)
+        let pretimefrac = model.time(totemp: desiredTemp, fromtemp: currentTemp)
         DisplayTime(minfrac: pretimefrac)
     }
     
