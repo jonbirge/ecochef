@@ -38,7 +38,11 @@ class PreheatViewController : UIViewController {
     
     func colorfrom(frac:Float) -> UIColor {
         let fracfloat:CGFloat = CGFloat(frac)
-        return UIColor(red: 0.5 - cos(3.1457*fracfloat)/2, green: 0, blue: 0.5 + cos(3.1457*fracfloat)/2, alpha: 1)
+        return UIColor(
+            red: 0.5 - cos(3.1457*fracfloat)/2,
+            green: 0,
+            blue: 0.5 + cos(3.1457*fracfloat)/2,
+            alpha: 1)
     }
     
     func SetCurrent(temp:Float) {
