@@ -9,54 +9,46 @@
 import Foundation
 
 struct ThermalModelData : CustomStringConvertible {
-    var name : String = "None"
+    var name : String = "Model"
     var a : Float = 0
     var b : Float = 0
-    var c : Float = 0
+    var T0fit : Float = 0
     
     var description: String {
-        return "ThermalModelData\((a, b, c))"
+        return "ThermalModelData\((a, b))"
     }
     
-    init(name: String, a: Float, b: Float, c: Float) {
+    init(name: String, a: Float, b: Float) {
         self.name = name
         self.a = a
         self.b = b
-        self.c = c
     }
 }
 
 class ThermalModel : CustomStringConvertible {
-    var a : Float = -10.0669
-    var b : Float = 1.96757
-    var c : Float = 508.24
+    var a : Float = 10.0669
+    var b : Float = 508.24
     var T0 : Float = 72
     
     var description: String {
-        return "ThermalModel: \((a, b, c)), T0 = \(T0)"
+        return "ThermalModel: \((a, b)), T0 = \(T0)"
     }
     
     // load from struct
-    func readfrom(data:ThermalModelData) {
+    func setfrom(data:ThermalModelData) {
         a = data.a
         b = data.b
-        c = data.c
     }
     
-    // time from hot
-    func time(totemp:Int, fromtemp:Int? = nil) -> Float {
-        var timestart: Float
-        if let tempstart = fromtemp {
-            timestart = coldtime(totemp: tempstart)
+    func time(totemp:Float) -> Float {
+        return time(totemp:totemp, fromtemp:T0)
+    }
+    
+    func time(totemp:Float, fromtemp:Float) -> Float {
+        if totemp > fromtemp {
+            return a * log((b + T0 - fromtemp)/(b + T0 - totemp))
         } else {
-            timestart = 0
+            return a * log((T0 - fromtemp)/(T0 - totemp))
         }
-        return coldtime(totemp: totemp) - timestart
-    }
-    
-    // time from cold
-    func coldtime(totemp:Int) -> Float {
-        let timefrac = a * log(b/1000 * (c + T0 - Float(totemp)))
-        return timefrac
     }
 }

@@ -9,13 +9,18 @@
 import UIKit
 
 class PreheatViewController : UIViewController {
-    var desiredTemp: Int = 0
-    var currentTemp: Int = 0
+    let smallstep: Float = 2
+    let largestep: Float = 25
+    let crossover: Float = 100
+    let tempdefault: Float = 350
+    var desiredTemp: Float = 0
+    var currentTemp: Float = 0
     var model: ThermalModel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         model = ThermalModel()
+        UpdateAmbient()
         Reset()
     }
 
@@ -23,11 +28,11 @@ class PreheatViewController : UIViewController {
         super.didReceiveMemoryWarning()
     }
 
-    func quantize(temp:Float) -> Int {
-        if temp < 100 {
-            return Int(2*round(temp/2))
+    func quantize(temp:Float) -> Float {
+        if temp < crossover {
+            return smallstep*round(temp/smallstep)
         } else {
-            return Int(25*round(temp/25))
+            return largestep*round(temp/largestep)
         }
     }
     
@@ -38,7 +43,7 @@ class PreheatViewController : UIViewController {
     
     func SetCurrent(temp:Float) {
         currentTemp = quantize(temp: temp)
-        currentTempLabel.text = String(currentTemp)
+        currentTempLabel.text = String(Int(currentTemp))
         
         let maxtemp = currentTempSlider.maximumValue
         let mintemp = currentTempSlider.minimumValue
@@ -47,13 +52,8 @@ class PreheatViewController : UIViewController {
     }
     
     func SetDesired(temp:Float) {
-        var rawtemp = temp
-        let curtemp = currentTempSlider.value
-        if rawtemp < curtemp {
-            rawtemp = curtemp
-        }
-        desiredTemp = quantize(temp: rawtemp)
-        desiredTempLabel.text = String(desiredTemp)
+        desiredTemp = quantize(temp: temp)
+        desiredTempLabel.text = String(Int(desiredTemp))
         
         let maxtemp = desiredTempSlider.maximumValue
         let mintemp = desiredTempSlider.minimumValue
@@ -87,13 +87,25 @@ class PreheatViewController : UIViewController {
         SetDesired(temp: desiredTempSlider.value)
     }
     
+    func UpdateAmbient() {
+        let T0 = quantize(temp: model.T0)
+        currentTempSlider.minimumValue = T0
+        desiredTempSlider.minimumValue = T0 + smallstep
+        if currentTempSlider.value < T0 {
+            currentTempSlider.value = T0
+        }
+        if desiredTempSlider.value < T0 {
+            desiredTempSlider.value = T0 + smallstep
+        }
+    }
+    
     func Reset() {
-        currentTempSlider.value = 72.0
-        desiredTempSlider.value = 350.0
+        currentTempSlider.value = currentTempSlider.minimumValue
+        desiredTempSlider.value = tempdefault
         UpdateCurrent()
         UpdateDesired()
     }
-   
+    
     @IBOutlet weak var minLabel: UILabel!
     @IBOutlet weak var secLabel: UILabel!
     @IBOutlet weak var currentTempLabel: UILabel!
