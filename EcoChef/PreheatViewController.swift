@@ -109,6 +109,10 @@ class PreheatViewController : UIViewController {
         UpdateDesired()
     }
     
+    @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
+        print("unwinding")
+    }
+    
     @IBOutlet weak var minLabel: UILabel!
     @IBOutlet weak var secLabel: UILabel!
     @IBOutlet weak var currentTempLabel: UILabel!
