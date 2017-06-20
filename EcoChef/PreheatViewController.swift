@@ -15,11 +15,10 @@ class PreheatViewController : UIViewController {
     let tempdefault: Float = 350
     var desiredTemp: Float = 0
     var currentTemp: Float = 0
-    var model: ThermalModel!
+    let model = ThermalModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        model = ThermalModel()
         UpdateAmbient()
         Reset()
     }

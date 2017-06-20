@@ -8,7 +8,13 @@
 
 import Foundation
 
-struct ThermalModelData : CustomStringConvertible {
+// Singleton data model
+class ThermalDataModel {
+    var T0 : Float = 72  // ambient
+    var ModelList : [ThermalModelParams] = []
+}
+
+struct ThermalModelParams : CustomStringConvertible {
     var name : String = "Model"
     var a : Float = 0
     var b : Float = 0
@@ -25,6 +31,7 @@ struct ThermalModelData : CustomStringConvertible {
     }
 }
 
+// Computational logic
 class ThermalModel : CustomStringConvertible {
     var a : Float = 10.0669
     var b : Float = 508.24
@@ -35,7 +42,7 @@ class ThermalModel : CustomStringConvertible {
     }
     
     // load from struct
-    func setfrom(data:ThermalModelData) {
+    func setfrom(data:ThermalModelParams) {
         a = data.a
         b = data.b
     }
