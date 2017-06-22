@@ -13,6 +13,7 @@ class SettingsViewController: UITableViewController {
 
     @IBOutlet weak var ambientField: UITextField!
     @IBOutlet weak var ambientStepper: UIStepper!
+    @IBOutlet weak var modelPicker: UIPickerView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,13 +21,27 @@ class SettingsViewController: UITableViewController {
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        updateViews()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    override func tableView(_ tableView: UITableView,
+                            didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 2 && indexPath.row == 1 {
+            showFAQ()
+        }
+    }
+    
+    func updateViews() {
+        let Tamb = ambientStepper.value
+        let ambientStr = String(Int(Tamb)) + "º F"
+        ambientField.text = ambientStr
+    }
+    
+    func showFAQ() {
+        if let faqURL = URL(string: "https://www.birge.us/public") {
+            let safariViewController = SFSafariViewController(url:faqURL)
+            present(safariViewController, animated: true, completion: nil)
+        }
     }
 
     @IBAction func clickedSave(_ sender: UIBarButtonItem) {
@@ -34,16 +49,7 @@ class SettingsViewController: UITableViewController {
     }
     
     @IBAction func clickAmbientStepper(_ sender: UIStepper) {
-        let Tamb = sender.value
-        let ambientStr = String(Int(Tamb)) + " degrees"
-        ambientField.text = ambientStr
-    }
-    
-    @IBAction func clickFAQ(_ sender: UIButton) {
-        if let faqURL = URL(string: "https://www.birge.us/public") {
-            let safariViewController = SFSafariViewController(url:faqURL)
-            present(safariViewController, animated: true, completion: nil)
-        }
+        updateViews()
     }
     
     /*
@@ -55,5 +61,5 @@ class SettingsViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
+    
 }
