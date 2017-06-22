@@ -27,7 +27,11 @@ class SettingsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView,
                             didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 2 && indexPath.row == 1 {
-            showFAQ()
+            if #available(iOS 9.0, *) {
+                showFAQ()
+            } else {
+                // Fallback on earlier versions
+            }
         }
     }
     
@@ -37,6 +41,7 @@ class SettingsViewController: UITableViewController {
         ambientField.text = ambientStr
     }
     
+    @available(iOS 9.0, *)
     func showFAQ() {
         if let faqURL = URL(string: "https://www.birge.us/public") {
             let safariViewController = SFSafariViewController(url:faqURL)
