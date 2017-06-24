@@ -59,7 +59,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nHw-Lj-crR">
-                                <rect key="frame" x="162" y="615" width="51" height="36"/>
+                                <rect key="frame" x="162" y="611" width="51" height="36"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                 <state key="normal" title="Reset"/>
                                 <connections>
@@ -115,10 +115,11 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jLP-zd-iGG">
-                                <rect key="frame" x="327" y="615" width="32" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button" image="settings-icon"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jLP-zd-iGG">
+                                <rect key="frame" x="311" y="603" width="48" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                <fontDescription key="fontDescription" name="Menlo-Bold" family="Menlo" pointSize="42"/>
+                                <state key="normal" title="❁"/>
                                 <connections>
                                     <segue destination="vre-sg-JdI" kind="show" identifier="ShowSettings" id="3SX-HB-Wfs"/>
                                 </connections>
@@ -135,7 +136,7 @@
                             <constraint firstItem="moH-Te-Xzb" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" constant="16" id="B0O-j9-Ni1"/>
                             <constraint firstItem="GDg-mc-Nd8" firstAttribute="centerX" secondItem="tsR-hK-woN" secondAttribute="centerX" id="B9a-xC-sTR"/>
                             <constraint firstAttribute="trailingMargin" secondItem="moH-Te-Xzb" secondAttribute="trailing" constant="16" id="FLg-vy-EhA"/>
-                            <constraint firstItem="4ug-Mw-9AY" firstAttribute="top" secondItem="nHw-Lj-crR" secondAttribute="bottom" constant="16" id="Fh7-wZ-Ykq"/>
+                            <constraint firstItem="4ug-Mw-9AY" firstAttribute="top" secondItem="nHw-Lj-crR" secondAttribute="bottom" constant="20" id="Fh7-wZ-Ykq"/>
                             <constraint firstItem="InP-Vp-TcT" firstAttribute="trailing" secondItem="moH-Te-Xzb" secondAttribute="trailing" id="FzQ-tX-z0h"/>
                             <constraint firstItem="4z5-mr-Y9b" firstAttribute="leading" secondItem="qfS-D6-HFC" secondAttribute="trailing" constant="19" id="JY0-u5-8SW"/>
                             <constraint firstItem="X3y-il-6FY" firstAttribute="baseline" secondItem="QVQ-IA-R7s" secondAttribute="baseline" id="Kdw-PU-OEI"/>
@@ -171,7 +172,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1930" y="-370"/>
+            <point key="canvasLocation" x="-1930.4000000000001" y="-370.16491754122939"/>
         </scene>
         <!--Settings-->
         <scene sceneID="vIN-4i-crW">
@@ -182,7 +183,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
-                            <tableViewSection headerTitle="Model" id="jxd-lI-kLV">
+                            <tableViewSection headerTitle="Thermal Model" id="jxd-lI-kLV">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="94" id="J8J-dE-bLf">
                                         <rect key="frame" x="0.0" y="55.5" width="375" height="94"/>
@@ -207,7 +208,7 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Ambient" id="JBB-pg-WtZ">
+                            <tableViewSection headerTitle="Ambient Temperature" id="JBB-pg-WtZ">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="Sh4-FG-9xl">
                                         <rect key="frame" x="0.0" y="205.5" width="375" height="44"/>
@@ -371,7 +372,4 @@
             <point key="canvasLocation" x="-2703" y="-370"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="settings-icon" width="187" height="187"/>
-    </resources>
 </document>
