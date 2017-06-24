@@ -13,6 +13,8 @@ class PreheatViewController : UIViewController {
     let largestep: Float = 25
     let crossover: Float = 100
     let tempdefault: Float = 350
+    let heatingColor: UIColor = UIColor(hue: 0.0, saturation: 0.95, brightness: 0.8, alpha: 1)
+    let coolingColor: UIColor = UIColor(hue: 0.6, saturation: 0.95, brightness: 1, alpha: 1)
     private var desiredTemp: Float = 250
     private var currentTemp: Float = 70
     private let model = ThermalModel()
@@ -75,7 +77,7 @@ class PreheatViewController : UIViewController {
         modelData.append(theparams)
     }
     
-    func quantize(temp:Float) -> Float {
+    private func quantize(temp:Float) -> Float {
         if temp < crossover {
             return smallstep*round(temp/smallstep)
         } else {
@@ -83,36 +85,31 @@ class PreheatViewController : UIViewController {
         }
     }
     
-    private func colorfrom(frac:Float) -> UIColor {
-        let fracfloat:CGFloat = CGFloat(frac)
-        
-        return UIColor(
-            red: 0.5 - cos(3.1457*fracfloat)/2,
-            green: 0,
-            blue: 0.5 + cos(3.1457*fracfloat)/2,
-            alpha: 1)
-    }
-    
     func SetCurrent(temp:Float) {
         currentTemp = quantize(temp: temp)
         currentTempLabel.text = String(Int(currentTemp))
-        
-        let maxtemp = currentTempSlider.maximumValue
-        let mintemp = currentTempSlider.minimumValue
-        let tempfrac = (temp - mintemp)/(maxtemp - mintemp)
-        currentTempSlider.minimumTrackTintColor = colorfrom(frac:tempfrac)
+        UpdateColor()
         UpdateTime()
     }
     
     func SetDesired(temp:Float) {
         desiredTemp = quantize(temp: temp)
         desiredTempLabel.text = String(Int(desiredTemp))
-        
-        let maxtemp = desiredTempSlider.maximumValue
-        let mintemp = desiredTempSlider.minimumValue
-        let tempfrac = (temp - mintemp)/(maxtemp - mintemp)
-        desiredTempSlider.minimumTrackTintColor = colorfrom(frac:tempfrac)
+        UpdateColor()
         UpdateTime()
+    }
+    
+    private func UpdateColor() {
+        var uiColor: UIColor
+        switch desiredTemp - currentTemp {
+        case let x where x > 0:
+            uiColor = heatingColor
+        case let x where x < 0:
+            uiColor = coolingColor
+        default:
+            uiColor = .darkGray
+        }
+        desiredTempSlider.minimumTrackTintColor = uiColor
     }
     
     func UpdateTime() {
