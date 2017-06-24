@@ -41,6 +41,9 @@ class PreheatViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         LoadModelData()
+        modelIndex = 1
+        Tamb = 72.0
+        UpdateAmbientLimits()
         Reset()
     }
 
@@ -149,9 +152,6 @@ class PreheatViewController : UIViewController {
     }
     
     func Reset() {
-        modelIndex = 1
-        Tamb = 72.0
-        UpdateAmbientLimits()
         currentTempSlider.value = currentTempSlider.minimumValue
         desiredTempSlider.value = tempdefault
         UpdateCurrent()
