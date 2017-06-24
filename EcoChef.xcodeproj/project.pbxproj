@@ -58,12 +58,12 @@
 		AB43B1751EEB871E00B6A96B /* EcoChef */ = {
 			isa = PBXGroup;
 			children = (
-				ABC7A8701EF8DC5D00F25317 /* SettingsViewController.swift */,
 				AB43B1761EEB871E00B6A96B /* AppDelegate.swift */,
 				AB43B18A1EEBAEA100B6A96B /* ThermalModel.swift */,
 				AB43B1781EEB871E00B6A96B /* PreheatViewController.swift */,
-				AB43B17C1EEB871E00B6A96B /* Main.storyboard */,
+				ABC7A8701EF8DC5D00F25317 /* SettingsViewController.swift */,
 				ABC7A8741EF8EE7900F25317 /* AboutViewController.swift */,
+				AB43B17C1EEB871E00B6A96B /* Main.storyboard */,
 				AB43B17F1EEB871E00B6A96B /* Assets.xcassets */,
 				AB43B1841EEB871E00B6A96B /* Info.plist */,
 			);

@@ -8,54 +8,47 @@
 
 import Foundation
 
-// Singleton data model
-class ThermalDataModel {
-    var T0 : Float = 72  // ambient
-    var ModelList : [ThermalModelParams] = []
-}
-
 struct ThermalModelParams : CustomStringConvertible {
-    var name : String = "Model"
-    var a : Float = 0
-    var b : Float = 0
-    var T0fit : Float = 0
+    let name : String
+    var a : Float
+    var b : Float
     
     var description: String {
-        return "ThermalModelData\((a, b))"
+        return name + "\(a, b)"
     }
     
-    init(name: String, a: Float, b: Float) {
+    init(name: String) {
         self.name = name
-        self.a = a
-        self.b = b
-    }
+        a = 10.0669
+        b = 508.24
+     }
 }
 
 // Computational logic
-class ThermalModel : CustomStringConvertible {
-    var a : Float = 10.0669
-    var b : Float = 508.24
-    var T0 : Float = 72
+class ThermalModel {
+    var a : Float = 10.0669  // time constant
+    var b : Float = 508.24  // integration coefficient
+    var Tamb : Float = 72.0  // T_ambient
     
     var description: String {
-        return "ThermalModel: \((a, b)), T0 = \(T0)"
+        return "ThermalModel: \((a, b)), Tambient = \(Tamb)"
     }
     
     // load from struct
-    func setfrom(data:ThermalModelParams) {
-        a = data.a
-        b = data.b
+    func setfrom(params:ThermalModelParams) {
+        a = params.a
+        b = params.b
     }
     
     func time(totemp:Float) -> Float {
-        return time(totemp:totemp, fromtemp:T0)
+        return time(totemp:totemp, fromtemp:Tamb)
     }
     
     func time(totemp:Float, fromtemp:Float) -> Float {
         if totemp > fromtemp {
-            return a * log((b + T0 - fromtemp)/(b + T0 - totemp))
+            return a * log((b + Tamb - fromtemp)/(b + Tamb - totemp))
         } else {
-            return a * log((T0 - fromtemp)/(T0 - totemp))
+            return a * log((Tamb - fromtemp)/(Tamb - totemp))
         }
     }
 }

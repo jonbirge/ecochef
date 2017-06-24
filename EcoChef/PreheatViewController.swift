@@ -13,13 +13,34 @@ class PreheatViewController : UIViewController {
     let largestep: Float = 25
     let crossover: Float = 100
     let tempdefault: Float = 350
-    var desiredTemp: Float = 0
-    var currentTemp: Float = 0
-    let model = ThermalModel()
+    private var desiredTemp: Float = 250
+    private var currentTemp: Float = 70
+    private let model = ThermalModel()
+    private var modelData: [ThermalModelParams] = []
+    private var modelIndex: Int = 0
+    
+    var Tamb : Float {
+        get {
+            return model.Tamb
+        }
+        set (newTamb) {
+            model.Tamb = quantize(temp: newTamb)
+        }
+    }
+    
+    var selectedModel: Int {
+        get {
+            return modelIndex
+        }
+        set (newIndex) {
+            modelIndex = newIndex
+            model.setfrom(params: modelData[modelIndex])
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        UpdateAmbient()
+        LoadModelData()
         Reset()
     }
 
@@ -27,6 +48,30 @@ class PreheatViewController : UIViewController {
         super.didReceiveMemoryWarning()
     }
 
+    private func LoadModelData() {
+        var theparams : ThermalModelParams
+        
+        theparams = ThermalModelParams(name: "Gas Oven")
+        theparams.a *= 1.1
+        modelData.append(theparams)
+        
+        theparams = ThermalModelParams(name: "Electric Oven")
+        theparams.a *= 1.2
+        modelData.append(theparams)
+        
+        theparams = ThermalModelParams(name: "Convection Oven")
+        theparams.a *= 0.9
+        modelData.append(theparams)
+        
+        theparams = ThermalModelParams(name: "Speed Oven")
+        theparams.a *= 0.8
+        modelData.append(theparams)
+        
+        theparams = ThermalModelParams(name: "Outdoor Grill")
+        theparams.a *= 1.0
+        modelData.append(theparams)
+    }
+    
     func quantize(temp:Float) -> Float {
         if temp < crossover {
             return smallstep*round(temp/smallstep)
@@ -35,8 +80,9 @@ class PreheatViewController : UIViewController {
         }
     }
     
-    func colorfrom(frac:Float) -> UIColor {
+    private func colorfrom(frac:Float) -> UIColor {
         let fracfloat:CGFloat = CGFloat(frac)
+        
         return UIColor(
             red: 0.5 - cos(3.1457*fracfloat)/2,
             green: 0,
@@ -52,6 +98,7 @@ class PreheatViewController : UIViewController {
         let mintemp = currentTempSlider.minimumValue
         let tempfrac = (temp - mintemp)/(maxtemp - mintemp)
         currentTempSlider.minimumTrackTintColor = colorfrom(frac:tempfrac)
+        UpdateTime()
     }
     
     func SetDesired(temp:Float) {
@@ -62,12 +109,14 @@ class PreheatViewController : UIViewController {
         let mintemp = desiredTempSlider.minimumValue
         let tempfrac = (temp - mintemp)/(maxtemp - mintemp)
         desiredTempSlider.minimumTrackTintColor = colorfrom(frac:tempfrac)
-        
-        let pretimefrac = model.time(totemp: desiredTemp, fromtemp: currentTemp)
-        DisplayTime(minfrac: pretimefrac)
+        UpdateTime()
     }
     
-    func DisplayTime(minfrac:Float) {
+    func UpdateTime() {
+        // Run model
+        let minfrac = model.time(totemp: desiredTemp, fromtemp: currentTemp)
+        
+        // Update display
         let pretimemin = floor(minfrac)
         let pretimesec = round(60*(minfrac - pretimemin))
         minLabel.text = String(Int(pretimemin))
@@ -83,34 +132,51 @@ class PreheatViewController : UIViewController {
     
     func UpdateCurrent() {
         SetCurrent(temp: currentTempSlider.value)
-        UpdateDesired()
     }
     
     func UpdateDesired() {
         SetDesired(temp: desiredTempSlider.value)
     }
     
-    func UpdateAmbient() {
-        let T0 = quantize(temp: model.T0)
-        currentTempSlider.minimumValue = T0
-        desiredTempSlider.minimumValue = T0 + smallstep
-        if currentTempSlider.value < T0 {
-            currentTempSlider.value = T0
-        }
-        if desiredTempSlider.value < T0 {
-            desiredTempSlider.value = T0 + smallstep
-        }
+    func UpdateAmbientLimits() {
+        currentTempSlider.minimumValue = Tamb
+        desiredTempSlider.minimumValue = Tamb + smallstep
+            UpdateCurrent()
+        if desiredTempSlider.value < (Tamb + smallstep) {
+            desiredTempSlider.value = Tamb + smallstep
+         }
+        UpdateDesired()
     }
     
     func Reset() {
+        modelIndex = 1
+        Tamb = 72.0
+        UpdateAmbientLimits()
         currentTempSlider.value = currentTempSlider.minimumValue
         desiredTempSlider.value = tempdefault
         UpdateCurrent()
         UpdateDesired()
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let settingsView = segue.destination as? SettingsViewController {
+            settingsView.initialTamb = Tamb
+            var modelNames: [String] = []
+            for themodel in modelData {
+                modelNames.append(themodel.name)
+            }
+            settingsView.modelNames = modelNames
+            settingsView.initialSelection = modelIndex
+        }
+    }
+    
     @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
-        print("unwinding")
+        guard let source = segue.source as? SettingsViewController else { return }
+        Tamb = source.Tamb
+        UpdateAmbientLimits()
+        modelIndex = source.selectedModel
+        model.setfrom(params: modelData[modelIndex])
+        UpdateTime()
     }
     
     @IBOutlet weak var minLabel: UILabel!
@@ -132,4 +198,3 @@ class PreheatViewController : UIViewController {
         Reset()
     }
 }
-

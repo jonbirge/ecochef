@@ -9,8 +9,12 @@
 import UIKit
 import SafariServices
 
-class SettingsViewController: UITableViewController {
-
+class SettingsViewController:
+UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+    var modelNames: [String] = []
+    var initialTamb: Float = 0.0
+    var initialSelection: Int = 2
+    
     @IBOutlet weak var ambientField: UITextField!
     @IBOutlet weak var ambientStepper: UIStepper!
     @IBOutlet weak var modelPicker: UIPickerView!
@@ -20,28 +24,49 @@ class SettingsViewController: UITableViewController {
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
-
+        modelPicker.selectRow(initialSelection, inComponent: 0, animated: true)
+        modelPicker.showsSelectionIndicator = true
+        ambientStepper.value = Double(initialTamb)
         updateViews()
     }
+    
+    // MARK: UIPickerView handling
+    
+    var selectedModel: Int {
+        return modelPicker.selectedRow(inComponent: 0)
+    }
+    
+    var Tamb: Float {
+        return Float(ambientStepper.value)
+    }
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView,
+                    numberOfRowsInComponent component: Int) -> Int {
+        return modelNames.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        return NSAttributedString(string: modelNames[row])
+    }
+    
+    // MARK: UITableView handling
     
     override func tableView(_ tableView: UITableView,
                             didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 2 && indexPath.row == 1 {
-            if #available(iOS 9.0, *) {
-                showFAQ()
-            } else {
-                // Fallback on earlier versions
-            }
+            showFAQ()
         }
     }
     
     func updateViews() {
-        let Tamb = ambientStepper.value
         let ambientStr = String(Int(Tamb)) + "º F"
         ambientField.text = ambientStr
     }
     
-    @available(iOS 9.0, *)
     func showFAQ() {
         if let faqURL = URL(string: "https://www.birge.us/public") {
             let safariViewController = SFSafariViewController(url:faqURL)
@@ -56,15 +81,5 @@ class SettingsViewController: UITableViewController {
     @IBAction func clickAmbientStepper(_ sender: UIStepper) {
         updateViews()
     }
-    
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
 }
