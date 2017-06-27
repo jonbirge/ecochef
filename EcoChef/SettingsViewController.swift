@@ -68,7 +68,7 @@ UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     }
     
     func showFAQ() {
-        if let faqURL = URL(string: "https://www.birge.us/public") {
+        if let faqURL = URL(string: "https://www.birge.us/ecochef-faq") {
             let safariViewController = SFSafariViewController(url:faqURL)
             present(safariViewController, animated: true, completion: nil)
         }
