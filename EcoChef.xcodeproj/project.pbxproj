@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AB0373891F020DD7005D1880 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB0373881F020DD7005D1880 /* LaunchScreen.storyboard */; };
 		AB43B1771EEB871E00B6A96B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB43B1761EEB871E00B6A96B /* AppDelegate.swift */; };
 		AB43B1791EEB871E00B6A96B /* PreheatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB43B1781EEB871E00B6A96B /* PreheatViewController.swift */; };
 		AB43B17E1EEB871E00B6A96B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB43B17C1EEB871E00B6A96B /* Main.storyboard */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AB0373881F020DD7005D1880 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AB43B1731EEB871E00B6A96B /* EcoChef.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EcoChef.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB43B1761EEB871E00B6A96B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AB43B1781EEB871E00B6A96B /* PreheatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreheatViewController.swift; sourceTree = "<group>"; };
@@ -64,6 +66,7 @@
 				ABC7A8701EF8DC5D00F25317 /* SettingsViewController.swift */,
 				ABC7A8741EF8EE7900F25317 /* AboutViewController.swift */,
 				AB43B17C1EEB871E00B6A96B /* Main.storyboard */,
+				AB0373881F020DD7005D1880 /* LaunchScreen.storyboard */,
 				AB43B17F1EEB871E00B6A96B /* Assets.xcassets */,
 				AB43B1841EEB871E00B6A96B /* Info.plist */,
 			);
@@ -129,6 +132,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB0373891F020DD7005D1880 /* LaunchScreen.storyboard in Resources */,
 				AB43B1801EEB871E00B6A96B /* Assets.xcassets in Resources */,
 				AB43B17E1EEB871E00B6A96B /* Main.storyboard in Resources */,
 			);
