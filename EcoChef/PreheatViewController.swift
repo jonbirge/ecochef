@@ -9,7 +9,7 @@
 import UIKit
 import UserNotifications
 
-class PreheatViewController : UIViewController {
+class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate {
     let smallstep: Float = 2
     let largestep: Float = 25
     let crossover: Float = 100
@@ -212,9 +212,9 @@ class PreheatViewController : UIViewController {
         
         // Notification
         let content = UNMutableNotificationContent()
-        content.title = NSString.localizedUserNotificationString(forKey: "Preheat timer", arguments: nil)
-        content.body = NSString.localizedUserNotificationString(forKey: modelData[selectedModel].name + " is preheated.",
-                                                                arguments: nil)
+        content.title = NSString.localizedUserNotificationString(forKey: "Timer done", arguments: nil)
+        let notifyText = modelData[selectedModel].name + " is preheated."
+        content.body = NSString.localizedUserNotificationString(forKey: notifyText, arguments: nil)
 
         let timeLeft = Double(modelTimer.minutesLeft())
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60.0*timeLeft, repeats: false)
@@ -226,6 +226,14 @@ class PreheatViewController : UIViewController {
                 print(theError.localizedDescription)
             }
         }
+        center.delegate = self
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        //completionHandler(UNNotificationPresentationOptions.alert.union(UNNotificationPresentationOptions.sound))
+        completionHandler(UNNotificationPresentationOptions.alert)
     }
     
     func CountUp() {
