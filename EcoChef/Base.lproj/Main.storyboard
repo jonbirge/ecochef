@@ -118,9 +118,9 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ANQ-uz-xo0">
-                                <rect key="frame" x="104.5" y="255" width="56" height="39"/>
+                                <rect key="frame" x="98" y="255" width="69" height="39"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
-                                <state key="normal" title="Reset"/>
+                                <state key="normal" title="Cancel"/>
                                 <connections>
                                     <action selector="TimerReset:" destination="9pv-A4-QxB" eventType="touchUpInside" id="jkP-Mu-Rj1"/>
                                 </connections>

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UserNotifications
 
 class PreheatViewController : UIViewController {
     let smallstep: Float = 2
@@ -22,7 +23,6 @@ class PreheatViewController : UIViewController {
     let model = ThermalModel()
     var modelData: [ThermalModelParams] = []
     let modelTimer = ThermalTimer()
-    var timer: Timer?
     
     var Tamb : Float {
         get {
@@ -164,7 +164,13 @@ class PreheatViewController : UIViewController {
         UpdateDesired()
     }
     
+    // MARK: timer functions
+    
+    var timer: Timer?
+    private var timerDisabledControls: [UIControl] = []
+    private var timerRunning: Bool = false
     private var oldCurrentTemp: Float = 0
+    
     private func ResetTimer() {
         currentTempSlider.value = Float(oldCurrentTemp)
         StopTimer()
@@ -181,6 +187,45 @@ class PreheatViewController : UIViewController {
         timerResetButton.isEnabled = false
         UpdateCurrent()
         UpdateTime()
+    }
+    
+    func StartTimer() {
+        // UI
+        timerRunning = true
+        oldCurrentTemp = currentTemp
+        timerDisabledControls =
+            [currentTempSlider, desiredTempSlider, tempResetButton]
+        for theControl in timerDisabledControls {
+            theControl.isEnabled = false
+        }
+        preheatLabel.textColor = .red
+        startButton.setTitle("Stop", for: UIControlState.normal)
+        timerResetButton.isEnabled = true
+        
+        // Timer
+        modelTimer.startTimer(fromTemp: currentTemp, toTemp: desiredTemp)
+        timer =
+            Timer.scheduledTimer(timeInterval: 0.2, target: self,
+                                 selector: #selector(PreheatViewController.CountUp),
+                                 userInfo: nil,
+                                 repeats: true)
+        
+        // Notification
+        let content = UNMutableNotificationContent()
+        content.title = NSString.localizedUserNotificationString(forKey: "Preheat timer", arguments: nil)
+        content.body = NSString.localizedUserNotificationString(forKey: modelData[selectedModel].name + " is preheated.",
+                                                                arguments: nil)
+
+        let timeLeft = Double(modelTimer.minutesLeft())
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60.0*timeLeft, repeats: false)
+        let request = UNNotificationRequest(identifier: "PreheatAlarm", content: content, trigger: trigger)
+        
+        let center = UNUserNotificationCenter.current()
+        center.add(request) { (error : Error?) in
+            if let theError = error {
+                print(theError.localizedDescription)
+            }
+        }
     }
     
     func CountUp() {
@@ -235,26 +280,9 @@ class PreheatViewController : UIViewController {
     @IBOutlet weak var tempResetButton: UIButton!
     @IBOutlet weak var preheatLabel: UILabel!
     
-    private var timerDisabledControls: [UIControl] = []
-    private var timerRunning: Bool = false
     @IBAction func StartButton(_ sender: UIButton) {
         if timerRunning == false {
-            timerRunning = true
-            oldCurrentTemp = currentTemp
-            timerDisabledControls =
-                [currentTempSlider, desiredTempSlider, tempResetButton]
-            for theControl in timerDisabledControls {
-                theControl.isEnabled = false
-            }
-            preheatLabel.textColor = .red
-            startButton.setTitle("Stop", for: UIControlState.normal)
-            timerResetButton.isEnabled = true
-            modelTimer.startTimer(fromTemp: currentTemp, toTemp: desiredTemp)
-            timer =
-                Timer.scheduledTimer(timeInterval: 0.2, target: self,
-                                     selector: #selector(PreheatViewController.CountUp),
-                                     userInfo: nil,
-                                     repeats: true)
+            StartTimer()
         } else {
             StopTimer()
         }
