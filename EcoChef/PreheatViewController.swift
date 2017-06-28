@@ -13,13 +13,16 @@ class PreheatViewController : UIViewController {
     let largestep: Float = 25
     let crossover: Float = 100
     let tempdefault: Float = 350
-    let heatingColor: UIColor = UIColor(hue: 0.0, saturation: 0.95, brightness: 0.8, alpha: 1)
-    let coolingColor: UIColor = UIColor(hue: 0.6, saturation: 0.95, brightness: 1, alpha: 1)
+    let heatingColor: UIColor =
+        UIColor(hue: 0.0, saturation: 0.95, brightness: 0.8, alpha: 1)
+    let coolingColor: UIColor =
+        UIColor(hue: 0.6, saturation: 0.95, brightness: 1, alpha: 1)
     private var desiredTemp: Float = 250
     private var currentTemp: Float = 70
-    private let model = ThermalModel()
-    private var modelData: [ThermalModelParams] = []
-    private var modelIndex: Int = 0
+    let model = ThermalModel()
+    var modelData: [ThermalModelParams] = []
+    let modelTimer = ThermalTimer()
+    var timer: Timer?
     
     var Tamb : Float {
         get {
@@ -30,6 +33,7 @@ class PreheatViewController : UIViewController {
         }
     }
     
+    private var modelIndex: Int = 0
     var selectedModel: Int {
         get {
             return modelIndex
@@ -43,6 +47,7 @@ class PreheatViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         LoadModelData()
+        modelTimer.thermalModel = model
         modelIndex = 1
         Tamb = 72.0
         UpdateAmbientLimits()
@@ -77,7 +82,7 @@ class PreheatViewController : UIViewController {
         modelData.append(theparams)
     }
     
-    private func quantize(temp:Float) -> Float {
+    func quantize(temp:Float) -> Float {
         if temp < crossover {
             return smallstep*round(temp/smallstep)
         } else {
@@ -99,7 +104,7 @@ class PreheatViewController : UIViewController {
         UpdateTime()
     }
     
-    private func UpdateColor() {
+    func UpdateColor() {
         var uiColor: UIColor
         switch desiredTemp - currentTemp {
         case let x where x > 0:
@@ -117,8 +122,12 @@ class PreheatViewController : UIViewController {
         let minfrac = model.time(totemp: desiredTemp, fromtemp: currentTemp)
         
         // Update display
-        let pretimemin = floor(minfrac)
-        let pretimesec = round(60*(minfrac - pretimemin))
+        ShowTime(minutes: minfrac)
+    }
+    
+    func ShowTime(minutes: Float) {
+        let pretimemin = floor(minutes)
+        let pretimesec = round(60*(minutes - pretimemin))
         minLabel.text = String(Int(pretimemin))
         
         var sectext : String
@@ -155,12 +164,48 @@ class PreheatViewController : UIViewController {
         UpdateDesired()
     }
     
+    private var oldCurrentTemp: Float = 0
+    private func ResetTimer() {
+        currentTempSlider.value = Float(oldCurrentTemp)
+        StopTimer()
+    }
+    
+    private func StopTimer() {
+        timer?.invalidate()
+        timerRunning = false
+        for theControl in timerDisabledControls {
+            theControl.isEnabled = true
+        }
+        preheatLabel.textColor = .gray
+        startButton.setTitle("Start", for: UIControlState.normal)
+        timerResetButton.isEnabled = false
+        UpdateCurrent()
+        UpdateTime()
+    }
+    
+    func CountUp() {
+        let minutesLeft = modelTimer.minutesLeft()
+        if minutesLeft > 0 {
+            ShowTime(minutes: minutesLeft)
+            let tempEst = modelTimer.tempEstimate()
+            currentTempLabel.text = String(Int(round(tempEst)))
+            currentTempSlider.value = tempEst
+        } else {
+            ResetTimer()
+            let Tset = desiredTempSlider.value
+            currentTempSlider.value = Tset
+            UpdateCurrent()
+        }
+    }
+    
+    // MARK: Navigation
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let settingsView = segue.destination as? SettingsViewController {
             settingsView.initialTamb = Tamb
             var modelNames: [String] = []
             for themodel in modelData {
-                modelNames.append(themodel.name)
+                modelNames.append("\(themodel)")
             }
             settingsView.modelNames = modelNames
             settingsView.initialSelection = modelIndex
@@ -176,12 +221,48 @@ class PreheatViewController : UIViewController {
         UpdateTime()
     }
     
+    // MARK: IBOutlets and IBActions
+    
     @IBOutlet weak var minLabel: UILabel!
     @IBOutlet weak var secLabel: UILabel!
     @IBOutlet weak var currentTempLabel: UILabel!
     @IBOutlet weak var desiredTempLabel: UILabel!
     @IBOutlet weak var currentTempSlider: UISlider!
     @IBOutlet weak var desiredTempSlider: UISlider!
+    @IBOutlet weak var startButton: UIButton!
+    @IBOutlet weak var timerResetButton: UIButton!
+    @IBOutlet weak var curTempLabel: UILabel!
+    @IBOutlet weak var tempResetButton: UIButton!
+    @IBOutlet weak var preheatLabel: UILabel!
+    
+    private var timerDisabledControls: [UIControl] = []
+    private var timerRunning: Bool = false
+    @IBAction func StartButton(_ sender: UIButton) {
+        if timerRunning == false {
+            timerRunning = true
+            oldCurrentTemp = currentTemp
+            timerDisabledControls =
+                [currentTempSlider, desiredTempSlider, tempResetButton]
+            for theControl in timerDisabledControls {
+                theControl.isEnabled = false
+            }
+            preheatLabel.textColor = .red
+            startButton.setTitle("Stop", for: UIControlState.normal)
+            timerResetButton.isEnabled = true
+            modelTimer.startTimer(fromTemp: currentTemp, toTemp: desiredTemp)
+            timer =
+                Timer.scheduledTimer(timeInterval: 0.2, target: self,
+                                     selector: #selector(PreheatViewController.CountUp),
+                                     userInfo: nil,
+                                     repeats: true)
+        } else {
+            StopTimer()
+        }
+    }
+    
+    @IBAction func TimerReset(_ sender: UIButton) {
+       ResetTimer()
+    }
     
     @IBAction func CurrentTempChange(_ sender: UISlider) {
         UpdateCurrent()

@@ -15,6 +15,7 @@
 		AB43B18B1EEBAEA100B6A96B /* ThermalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB43B18A1EEBAEA100B6A96B /* ThermalModel.swift */; };
 		ABC7A8711EF8DC5D00F25317 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC7A8701EF8DC5D00F25317 /* SettingsViewController.swift */; };
 		ABC7A8751EF8EE7900F25317 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC7A8741EF8EE7900F25317 /* AboutViewController.swift */; };
+		ABEB6F1D1F02A6E300ABD199 /* ThermalTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB6F1C1F02A6E300ABD199 /* ThermalTimer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		AB43B18A1EEBAEA100B6A96B /* ThermalModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThermalModel.swift; sourceTree = "<group>"; };
 		ABC7A8701EF8DC5D00F25317 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		ABC7A8741EF8EE7900F25317 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		ABEB6F1C1F02A6E300ABD199 /* ThermalTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThermalTimer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 			children = (
 				AB43B1761EEB871E00B6A96B /* AppDelegate.swift */,
 				AB43B18A1EEBAEA100B6A96B /* ThermalModel.swift */,
+				ABEB6F1C1F02A6E300ABD199 /* ThermalTimer.swift */,
 				AB43B1781EEB871E00B6A96B /* PreheatViewController.swift */,
 				ABC7A8701EF8DC5D00F25317 /* SettingsViewController.swift */,
 				ABC7A8741EF8EE7900F25317 /* AboutViewController.swift */,
@@ -106,6 +109,11 @@
 					AB43B1721EEB871E00B6A96B = {
 						CreatedOnToolsVersion = 8.3.2;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};
@@ -148,6 +156,7 @@
 				AB43B1771EEB871E00B6A96B /* AppDelegate.swift in Sources */,
 				AB43B1791EEB871E00B6A96B /* PreheatViewController.swift in Sources */,
 				AB43B18B1EEBAEA100B6A96B /* ThermalModel.swift in Sources */,
+				ABEB6F1D1F02A6E300ABD199 /* ThermalTimer.swift in Sources */,
 				ABC7A8751EF8EE7900F25317 /* AboutViewController.swift in Sources */,
 				ABC7A8711EF8DC5D00F25317 /* SettingsViewController.swift in Sources */,
 			);

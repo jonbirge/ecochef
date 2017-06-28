@@ -60,7 +60,7 @@
                                 <state key="normal" title="Reset"/>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="00" textAlignment="right" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="E5d-HF-4lR">
-                                <rect key="frame" x="87" y="143" width="91" height="86"/>
+                                <rect key="frame" x="87" y="173" width="91" height="86"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="91" id="5Hm-VF-PG9"/>
@@ -71,7 +71,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="00" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="n4v-vo-th5">
-                                <rect key="frame" x="197" y="143" width="91" height="86"/>
+                                <rect key="frame" x="197" y="173" width="91" height="86"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="86" id="NJh-uu-Uuc"/>
@@ -82,7 +82,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text=":" textAlignment="right" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="Wqs-If-nV8">
-                                <rect key="frame" x="178" y="143" width="19" height="86"/>
+                                <rect key="frame" x="178" y="173" width="19" height="86"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="19" id="4j0-OM-YMR"/>
@@ -93,7 +93,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="min" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="Fff-dn-fuv">
-                                <rect key="frame" x="299" y="180" width="48" height="40"/>
+                                <rect key="frame" x="299" y="210" width="48" height="40"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="dkS-8l-rsf"/>
@@ -127,7 +127,7 @@
                             <constraint firstItem="3xc-hK-TDy" firstAttribute="top" secondItem="rh1-2D-Q9e" secondAttribute="bottom" constant="20" id="DIX-EE-qTa"/>
                             <constraint firstItem="bYl-hJ-HwQ" firstAttribute="top" secondItem="VIT-V6-8gU" secondAttribute="bottom" constant="7" id="EXe-YP-KWK"/>
                             <constraint firstItem="3xc-hK-TDy" firstAttribute="top" secondItem="1nK-uL-WHc" secondAttribute="bottom" constant="128" id="GP0-OF-dpj"/>
-                            <constraint firstItem="Fff-dn-fuv" firstAttribute="top" secondItem="PgK-Sx-x0S" secondAttribute="bottom" constant="160" id="HwD-xp-Gmv"/>
+                            <constraint firstItem="Fff-dn-fuv" firstAttribute="top" secondItem="PgK-Sx-x0S" secondAttribute="bottom" constant="190" id="HwD-xp-Gmv"/>
                             <constraint firstItem="N9l-Wu-hRy" firstAttribute="top" secondItem="qdY-9U-you" secondAttribute="top" constant="1" id="IEU-bR-GbA"/>
                             <constraint firstItem="n4v-vo-th5" firstAttribute="bottom" secondItem="E5d-HF-4lR" secondAttribute="bottom" id="ME7-nv-MqE"/>
                             <constraint firstAttribute="trailingMargin" secondItem="bYl-hJ-HwQ" secondAttribute="trailing" constant="16" id="N32-Zm-Uds"/>
