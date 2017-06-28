@@ -177,8 +177,10 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     }
     
     private func StopTimer() {
-        timer?.invalidate()
         timerRunning = false
+        timer?.invalidate()
+        let center = UNUserNotificationCenter.current()
+        center.removeAllPendingNotificationRequests()
         for theControl in timerDisabledControls {
             theControl.isEnabled = true
         }
@@ -212,8 +214,8 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         
         // Notification
         let content = UNMutableNotificationContent()
-        content.title = NSString.localizedUserNotificationString(forKey: "Timer done", arguments: nil)
-        let notifyText = modelData[selectedModel].name + " is preheated."
+        content.title = NSString.localizedUserNotificationString(forKey: "Preheat done", arguments: nil)
+        let notifyText = "\(modelData[selectedModel]) should be \(Int(desiredTemp)) degrees."
         content.body = NSString.localizedUserNotificationString(forKey: notifyText, arguments: nil)
 
         let timeLeft = Double(modelTimer.minutesLeft())
