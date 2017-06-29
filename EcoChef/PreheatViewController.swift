@@ -18,7 +18,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         UIColor(hue: 0.0, saturation: 0.95, brightness: 0.8, alpha: 1)
     let coolingColor: UIColor =
         UIColor(hue: 0.6, saturation: 0.95, brightness: 1, alpha: 1)
-    private var desiredTemp: Float = 250
+    private var desiredTemp: Float = 350
     private var currentTemp: Float = 70
     let model = ThermalModel()
     var modelData: [ThermalModelParams] = []
@@ -29,7 +29,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
             return model.Tamb
         }
         set (newTamb) {
-            model.Tamb = quantize(temp: newTamb)
+            model.Tamb = Quantize(temp: newTamb)
         }
     }
     
@@ -82,7 +82,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         modelData.append(theparams)
     }
     
-    func quantize(temp:Float) -> Float {
+    func Quantize(temp:Float) -> Float {
         if temp < crossover {
             return smallstep*round(temp/smallstep)
         } else {
@@ -91,20 +91,19 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     }
     
     func SetCurrent(temp:Float) {
-        currentTemp = quantize(temp: temp)
+        currentTemp = Quantize(temp: temp)
         currentTempLabel.text = String(Int(currentTemp))
-        UpdateColor()
-        UpdateTime()
+        UpdateView()
     }
     
     func SetDesired(temp:Float) {
-        desiredTemp = quantize(temp: temp)
+        desiredTemp = Quantize(temp: temp)
         desiredTempLabel.text = String(Int(desiredTemp))
-        UpdateColor()
-        UpdateTime()
+        UpdateView()
     }
     
-    func UpdateColor() {
+    func UpdateView() {
+        // Colors
         var uiColor: UIColor
         switch desiredTemp - currentTemp {
         case let x where x > 0:
@@ -115,9 +114,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
             uiColor = .darkGray
         }
         desiredTempSlider.minimumTrackTintColor = uiColor
-    }
-    
-    func UpdateTime() {
+ 
         // Run model
         let minfrac = model.time(totemp: desiredTemp, fromtemp: currentTemp)
         
@@ -188,7 +185,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         startButton.setTitle("Start", for: UIControlState.normal)
         timerResetButton.isEnabled = false
         UpdateCurrent()
-        UpdateTime()
+        UpdateView()
     }
     
     func StartTimer() {
@@ -275,7 +272,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         UpdateAmbientLimits()
         modelIndex = source.selectedModel
         model.setfrom(params: modelData[modelIndex])
-        UpdateTime()
+        UpdateView()
     }
     
     // MARK: IBOutlets and IBActions

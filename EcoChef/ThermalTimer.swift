@@ -13,7 +13,7 @@ class ThermalTimer {
     var thermalModel: ThermalModel?
     var startTime: Date?
     private var timerMinutes: Float = 0
-    private var isHeating: Bool = true
+    var isHeating: Bool = true
     private var startTemp: Float = 0
     
     func startTimer(fromTemp: Float, toTemp: Float) {
