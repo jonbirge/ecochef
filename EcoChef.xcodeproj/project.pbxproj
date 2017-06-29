@@ -64,7 +64,6 @@
 		AB43B1751EEB871E00B6A96B /* EcoChef */ = {
 			isa = PBXGroup;
 			children = (
-				AB57E5DA1F0492F700D37EF8 /* birge-ring.aiff */,
 				AB43B1761EEB871E00B6A96B /* AppDelegate.swift */,
 				AB43B18A1EEBAEA100B6A96B /* ThermalModel.swift */,
 				ABEB6F1C1F02A6E300ABD199 /* ThermalTimer.swift */,
@@ -73,8 +72,9 @@
 				ABC7A8741EF8EE7900F25317 /* AboutViewController.swift */,
 				AB43B17C1EEB871E00B6A96B /* Main.storyboard */,
 				AB0373881F020DD7005D1880 /* LaunchScreen.storyboard */,
-				AB43B17F1EEB871E00B6A96B /* Assets.xcassets */,
 				AB43B1841EEB871E00B6A96B /* Info.plist */,
+				AB57E5DA1F0492F700D37EF8 /* birge-ring.aiff */,
+				AB43B17F1EEB871E00B6A96B /* Assets.xcassets */,
 			);
 			path = EcoChef;
 			sourceTree = "<group>";

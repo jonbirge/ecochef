@@ -181,26 +181,15 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         for theControl in timerDisabledControls {
             theControl.isEnabled = true
         }
-        preheatLabel.textColor = .gray
+        preheatLabel.isHidden = true
+        // preheatLabel.textColor = .gray
         startButton.setTitle("Start", for: UIControlState.normal)
         timerResetButton.isEnabled = false
         UpdateCurrent()
         UpdateView()
     }
     
-    func StartTimer() {
-        // UI
-        timerRunning = true
-        oldCurrentTemp = currentTemp
-        timerDisabledControls =
-            [currentTempSlider, desiredTempSlider, tempResetButton]
-        for theControl in timerDisabledControls {
-            theControl.isEnabled = false
-        }
-        preheatLabel.textColor = .red
-        startButton.setTitle("Stop", for: UIControlState.normal)
-        timerResetButton.isEnabled = true
-        
+    private func StartTimer() {
         // Timer
         modelTimer.startTimer(fromTemp: currentTemp, toTemp: desiredTemp)
         timer =
@@ -209,10 +198,35 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
                                  userInfo: nil,
                                  repeats: true)
         
+        // UI
+        timerRunning = true
+        oldCurrentTemp = currentTemp
+        timerDisabledControls =
+            [currentTempSlider, desiredTempSlider, tempResetButton]
+        for theControl in timerDisabledControls {
+            theControl.isEnabled = false
+        }
+        preheatLabel.isHidden = false
+        if modelTimer.isHeating {
+            preheatLabel.text = "Preheating time left"
+            preheatLabel.textColor = UIColor.red
+        } else {
+            preheatLabel.text = "Cooling time left"
+            preheatLabel.textColor = UIColor.purple
+        }
+        startButton.setTitle("Stop", for: UIControlState.normal)
+        timerResetButton.isEnabled = true
+        
         // Notification
         let content = UNMutableNotificationContent()
-        content.title = NSString.localizedUserNotificationString(forKey: "Preheat done", arguments: nil)
+        var notifyTitle: String
+        if modelTimer.isHeating {
+            notifyTitle = "Preheat done"
+        } else {
+            notifyTitle = "Cooling done"
+        }
         let notifyText = "\(modelData[selectedModel]) should be \(Int(desiredTemp)) degrees."
+        content.title = NSString.localizedUserNotificationString(forKey: notifyTitle, arguments: nil)
         content.body = NSString.localizedUserNotificationString(forKey: notifyText, arguments: nil)
         content.sound = UNNotificationSound(named: "birge-ring.aiff")
 
