@@ -217,6 +217,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         content.title = NSString.localizedUserNotificationString(forKey: "Preheat done", arguments: nil)
         let notifyText = "\(modelData[selectedModel]) should be \(Int(desiredTemp)) degrees."
         content.body = NSString.localizedUserNotificationString(forKey: notifyText, arguments: nil)
+        content.sound = UNNotificationSound(named: "birge-ring.aiff")
 
         let timeLeft = Double(modelTimer.minutesLeft())
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60.0*timeLeft, repeats: false)
@@ -234,8 +235,9 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        //completionHandler(UNNotificationPresentationOptions.alert.union(UNNotificationPresentationOptions.sound))
-        completionHandler(UNNotificationPresentationOptions.alert)
+        let alertOption = UNNotificationPresentationOptions.alert
+        let soundOption = UNNotificationPresentationOptions.sound
+        completionHandler(alertOption.union(soundOption))
     }
     
     func CountUp() {
