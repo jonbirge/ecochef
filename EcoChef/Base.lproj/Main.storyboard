@@ -117,30 +117,58 @@
                                     <segue destination="vre-sg-JdI" kind="show" identifier="ShowSettings" id="3SX-HB-Wfs"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ANQ-uz-xo0">
-                                <rect key="frame" x="90.5" y="255" width="84" height="39"/>
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ANQ-uz-xo0" customClass="TimerButton" customModule="EcoChef" customModuleProvider="target">
+                                <rect key="frame" x="45" y="255" width="84" height="36"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="84" id="qCA-a7-P7E"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                 <state key="normal" title="Cancel"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="9"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="normalBackgroundColor">
+                                        <color key="value" red="0.37862583630000002" green="0.58857592879999998" blue="0.98917354059999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="titleColorNormal">
+                                        <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="highlightBackgroundColor">
+                                        <color key="value" red="0.19006154459999999" green="0.34407279019999998" blue="0.78129583599999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="TimerReset:" destination="9pv-A4-QxB" eventType="touchUpInside" id="jkP-Mu-Rj1"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gCO-mA-Prx">
-                                <rect key="frame" x="210.5" y="255" width="64" height="39"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gCO-mA-Prx" customClass="TimerButton" customModule="EcoChef" customModuleProvider="target">
+                                <rect key="frame" x="253" y="255" width="70" height="36"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="64" id="nFs-1h-1h2"/>
+                                    <constraint firstAttribute="width" constant="70" id="nFs-1h-1h2"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                 <state key="normal" title="Start"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="highlightBackgroundColor">
+                                        <color key="value" red="0.19006154459999999" green="0.34407279019999998" blue="0.78129583599999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="titleColorNormal">
+                                        <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="9"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="normalBackgroundColor">
+                                        <color key="value" red="0.37862583630000002" green="0.58857592879999998" blue="0.98917354059999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="StartButton:" destination="9pv-A4-QxB" eventType="touchUpInside" id="q0A-nR-wLp"/>
                                 </connections>
                             </button>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time to preheat" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1cO-cu-AuE">
-                                <rect key="frame" x="126.5" y="134" width="121" height="21"/>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Preheating/Cooling" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1cO-cu-AuE">
+                                <rect key="frame" x="114" y="134" width="146.5" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -166,7 +194,7 @@
                             <constraint firstItem="GDg-mc-Nd8" firstAttribute="top" secondItem="moH-Te-Xzb" secondAttribute="bottom" constant="31" id="8XU-vQ-5vh"/>
                             <constraint firstItem="KQZ-1w-vlD" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" constant="128" id="Anf-Z4-8a0"/>
                             <constraint firstItem="moH-Te-Xzb" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" constant="16" id="B0O-j9-Ni1"/>
-                            <constraint firstItem="gCO-mA-Prx" firstAttribute="centerX" secondItem="X3y-il-6FY" secondAttribute="centerX" id="B1x-Qc-Tob"/>
+                            <constraint firstItem="gCO-mA-Prx" firstAttribute="centerX" secondItem="X3y-il-6FY" secondAttribute="trailing" id="B1x-Qc-Tob"/>
                             <constraint firstItem="GDg-mc-Nd8" firstAttribute="centerX" secondItem="tsR-hK-woN" secondAttribute="centerX" id="B9a-xC-sTR"/>
                             <constraint firstItem="nHw-Lj-crR" firstAttribute="centerX" secondItem="InP-Vp-TcT" secondAttribute="centerX" id="F8t-Re-zIv"/>
                             <constraint firstAttribute="trailingMargin" secondItem="moH-Te-Xzb" secondAttribute="trailing" constant="16" id="FLg-vy-EhA"/>
@@ -174,7 +202,7 @@
                             <constraint firstItem="X3y-il-6FY" firstAttribute="baseline" secondItem="QVQ-IA-R7s" secondAttribute="baseline" id="Kdw-PU-OEI"/>
                             <constraint firstItem="moH-Te-Xzb" firstAttribute="top" secondItem="qfS-D6-HFC" secondAttribute="bottom" constant="7" id="LjJ-JM-QSZ"/>
                             <constraint firstItem="KQZ-1w-vlD" firstAttribute="leading" secondItem="X3y-il-6FY" secondAttribute="trailing" constant="11" id="M8U-Sa-CES"/>
-                            <constraint firstItem="ANQ-uz-xo0" firstAttribute="centerX" secondItem="QVQ-IA-R7s" secondAttribute="centerX" id="NTs-yb-wRz"/>
+                            <constraint firstItem="ANQ-uz-xo0" firstAttribute="centerX" secondItem="QVQ-IA-R7s" secondAttribute="leading" id="NTs-yb-wRz"/>
                             <constraint firstItem="X3y-il-6FY" firstAttribute="bottom" secondItem="QVQ-IA-R7s" secondAttribute="bottom" id="Nvd-b3-sRA"/>
                             <constraint firstItem="moH-Te-Xzb" firstAttribute="leading" secondItem="InP-Vp-TcT" secondAttribute="leading" id="PKa-Cq-Fwn"/>
                             <constraint firstItem="Yxc-k7-e3x" firstAttribute="baseline" secondItem="GDg-mc-Nd8" secondAttribute="baseline" constant="0.5" id="PoY-Zw-D3x"/>

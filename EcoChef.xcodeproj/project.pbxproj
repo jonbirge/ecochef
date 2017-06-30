@@ -17,6 +17,10 @@
 		ABC7A8711EF8DC5D00F25317 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC7A8701EF8DC5D00F25317 /* SettingsViewController.swift */; };
 		ABC7A8751EF8EE7900F25317 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC7A8741EF8EE7900F25317 /* AboutViewController.swift */; };
 		ABEB6F1D1F02A6E300ABD199 /* ThermalTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB6F1C1F02A6E300ABD199 /* ThermalTimer.swift */; };
+		ABEBBBA01F05AC1C00527B4F /* TimerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEBBB9F1F05AC1C00527B4F /* TimerButton.swift */; };
+		ABEBBBA61F05B06400527B4F /* SimpleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEBBBA31F05B06400527B4F /* SimpleButton.swift */; };
+		ABEBBBA71F05B06400527B4F /* SimpleButtonControlState.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEBBBA41F05B06400527B4F /* SimpleButtonControlState.swift */; };
+		ABEBBBA81F05B06400527B4F /* SimpleButtonStateChangeValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEBBBA51F05B06400527B4F /* SimpleButtonStateChangeValue.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +36,10 @@
 		ABC7A8701EF8DC5D00F25317 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		ABC7A8741EF8EE7900F25317 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		ABEB6F1C1F02A6E300ABD199 /* ThermalTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThermalTimer.swift; sourceTree = "<group>"; };
+		ABEBBB9F1F05AC1C00527B4F /* TimerButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerButton.swift; sourceTree = "<group>"; };
+		ABEBBBA31F05B06400527B4F /* SimpleButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleButton.swift; sourceTree = "<group>"; };
+		ABEBBBA41F05B06400527B4F /* SimpleButtonControlState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleButtonControlState.swift; sourceTree = "<group>"; };
+		ABEBBBA51F05B06400527B4F /* SimpleButtonStateChangeValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleButtonStateChangeValue.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,13 +78,33 @@
 				AB43B1781EEB871E00B6A96B /* PreheatViewController.swift */,
 				ABC7A8701EF8DC5D00F25317 /* SettingsViewController.swift */,
 				ABC7A8741EF8EE7900F25317 /* AboutViewController.swift */,
+				ABEBBB9F1F05AC1C00527B4F /* TimerButton.swift */,
 				AB43B17C1EEB871E00B6A96B /* Main.storyboard */,
 				AB0373881F020DD7005D1880 /* LaunchScreen.storyboard */,
 				AB43B1841EEB871E00B6A96B /* Info.plist */,
-				AB57E5DA1F0492F700D37EF8 /* birge-ring.aiff */,
 				AB43B17F1EEB871E00B6A96B /* Assets.xcassets */,
+				ABEBBBAA1F05B5D400527B4F /* Media */,
+				ABEBBBA91F05B56E00527B4F /* SimpleButton */,
 			);
 			path = EcoChef;
+			sourceTree = "<group>";
+		};
+		ABEBBBA91F05B56E00527B4F /* SimpleButton */ = {
+			isa = PBXGroup;
+			children = (
+				ABEBBBA31F05B06400527B4F /* SimpleButton.swift */,
+				ABEBBBA41F05B06400527B4F /* SimpleButtonControlState.swift */,
+				ABEBBBA51F05B06400527B4F /* SimpleButtonStateChangeValue.swift */,
+			);
+			name = SimpleButton;
+			sourceTree = "<group>";
+		};
+		ABEBBBAA1F05B5D400527B4F /* Media */ = {
+			isa = PBXGroup;
+			children = (
+				AB57E5DA1F0492F700D37EF8 /* birge-ring.aiff */,
+			);
+			name = Media;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -159,6 +187,10 @@
 			files = (
 				AB43B1771EEB871E00B6A96B /* AppDelegate.swift in Sources */,
 				AB43B1791EEB871E00B6A96B /* PreheatViewController.swift in Sources */,
+				ABEBBBA01F05AC1C00527B4F /* TimerButton.swift in Sources */,
+				ABEBBBA71F05B06400527B4F /* SimpleButtonControlState.swift in Sources */,
+				ABEBBBA61F05B06400527B4F /* SimpleButton.swift in Sources */,
+				ABEBBBA81F05B06400527B4F /* SimpleButtonStateChangeValue.swift in Sources */,
 				AB43B18B1EEBAEA100B6A96B /* ThermalModel.swift in Sources */,
 				ABEB6F1D1F02A6E300ABD199 /* ThermalTimer.swift in Sources */,
 				ABC7A8751EF8EE7900F25317 /* AboutViewController.swift in Sources */,
@@ -280,6 +312,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = YB79GC96TU;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/EcoChef",
+				);
 				INFOPLIST_FILE = EcoChef/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -296,6 +332,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = YB79GC96TU;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/EcoChef",
+				);
 				INFOPLIST_FILE = EcoChef/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
