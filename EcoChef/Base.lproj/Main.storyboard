@@ -135,7 +135,7 @@
                                         <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="highlightBackgroundColor">
-                                        <color key="value" red="0.19006154459999999" green="0.34407279019999998" blue="0.78129583599999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="value" red="0.37862583630000002" green="0.58857592879999998" blue="0.98917354059999996" alpha="0.25171232876712329" colorSpace="custom" customColorSpace="displayP3"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
@@ -143,15 +143,15 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gCO-mA-Prx" customClass="TimerButton" customModule="EcoChef" customModuleProvider="target">
-                                <rect key="frame" x="253" y="255" width="70" height="36"/>
+                                <rect key="frame" x="246" y="255" width="84" height="36"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="70" id="nFs-1h-1h2"/>
+                                    <constraint firstAttribute="width" constant="84" id="nFs-1h-1h2"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                 <state key="normal" title="Start"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="highlightBackgroundColor">
-                                        <color key="value" red="0.19006154459999999" green="0.34407279019999998" blue="0.78129583599999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <color key="value" red="0.37862583630000002" green="0.58857592879999998" blue="0.98917354059999996" alpha="0.2579730308219178" colorSpace="custom" customColorSpace="displayP3"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="titleColorNormal">
                                         <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>

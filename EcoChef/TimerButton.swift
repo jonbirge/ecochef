@@ -27,7 +27,6 @@ class TimerButton: SimpleButton {
         }
         
         let lightgrey = UIColor(white: 0.9, alpha: 1)
-        // let darkgrey = UIColor(white: 0.2, alpha: 1)
         setBackgroundColor(lightgrey, for: .disabled, animated: true, animationDuration: 0.1)
         setTitleColor(UIColor.white, for: .disabled)
         

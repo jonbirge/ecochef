@@ -9,20 +9,51 @@
 import UIKit
 import UserNotifications
 
+class EcoChefState : NSObject, NSCoding {
+    var Tamb: Float
+    var selectedModel: Int
+    
+    struct PropertyKeys {
+        static let Tamb = "tamb"
+        static let selectedModel = "selectedmodel"
+    }
+    
+    override init() {
+        self.Tamb = 70
+        self.selectedModel = 0
+        super.init()
+    }
+    
+    init(Tamb: Float, selectedModel: Int) {
+        self.Tamb = Tamb
+        self.selectedModel = selectedModel
+    }
+    
+    required convenience init(coder aDecoder: NSCoder) {
+        let Tamb = aDecoder.decodeFloat(forKey: PropertyKeys.Tamb)
+        let selectedModel = aDecoder.decodeInteger(forKey: PropertyKeys.selectedModel)
+        self.init(Tamb: Tamb, selectedModel: selectedModel)
+    }
+    
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(Tamb, forKey: PropertyKeys.Tamb)
+        aCoder.encode(selectedModel, forKey: PropertyKeys.selectedModel)
+    }
+}
+
 class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate {
     let smallstep: Float = 2
     let largestep: Float = 25
     let crossover: Float = 100
     let tempdefault: Float = 350
-    let heatingColor: UIColor =
-        UIColor(hue: 0.0, saturation: 0.95, brightness: 0.8, alpha: 1)
-    let coolingColor: UIColor =
-        UIColor(hue: 0.6, saturation: 0.95, brightness: 1, alpha: 1)
+    let heatingColor: UIColor = UIColor.red
+    let coolingColor: UIColor = UIColor.purple
     private var desiredTemp: Float = 350
     private var currentTemp: Float = 70
     let model = ThermalModel()
-    var modelData: [ThermalModelParams] = []
     let modelTimer = ThermalTimer()
+    var modelData: [ThermalModelParams] = []
+    private var state: EcoChefState?
     
     var Tamb : Float {
         get {
@@ -30,27 +61,37 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         }
         set (newTamb) {
             model.Tamb = Quantize(temp: newTamb)
+            state?.Tamb = model.Tamb
         }
     }
     
-    private var modelIndex: Int = 0
     var selectedModel: Int {
         get {
-            return modelIndex
+            return state!.selectedModel
         }
         set (newIndex) {
-            modelIndex = newIndex
-            model.setfrom(params: modelData[modelIndex])
+            state?.selectedModel = newIndex
+            model.setfrom(params: modelData[state!.selectedModel])
         }
+    }
+    
+    var stateURL: URL {
+        let documentsURL = FileManager.default.urls(for: .documentDirectory,
+                                                    in: .userDomainMask).first!
+        return documentsURL.appendingPathComponent("state")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        LoadModelData()
         modelTimer.thermalModel = model
-        modelIndex = 1
-        Tamb = 72.0
-        UpdateAmbientLimits()
+        LoadModelData()
+        if let state = NSKeyedUnarchiver.unarchiveObject(withFile: stateURL.path) as? EcoChefState {
+            self.state = state
+        } else {
+            print("state file not loaded! setting state from defaults.")
+            self.state = EcoChefState()
+        }
+        UpdateAmbient()
         Reset()
     }
 
@@ -61,23 +102,23 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     private func LoadModelData() {
         var theparams : ThermalModelParams
         
-        theparams = ThermalModelParams(name: "Gas Oven")
+        theparams = ThermalModelParams(name: "Gas oven")
         theparams.a *= 1.1
         modelData.append(theparams)
         
-        theparams = ThermalModelParams(name: "Electric Oven")
+        theparams = ThermalModelParams(name: "Electric oven")
         theparams.a *= 1.2
         modelData.append(theparams)
         
-        theparams = ThermalModelParams(name: "Convection Oven")
+        theparams = ThermalModelParams(name: "Convection oven")
         theparams.a *= 0.9
         modelData.append(theparams)
         
-        theparams = ThermalModelParams(name: "Speed Oven")
+        theparams = ThermalModelParams(name: "Speed oven")
         theparams.a *= 0.8
         modelData.append(theparams)
         
-        theparams = ThermalModelParams(name: "Outdoor Grill")
+        theparams = ThermalModelParams(name: "Outdoor grill")
         theparams.a *= 1.0
         modelData.append(theparams)
     }
@@ -144,7 +185,8 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         SetDesired(temp: desiredTempSlider.value)
     }
     
-    func UpdateAmbientLimits() {
+    func UpdateAmbient() {
+        model.Tamb = state!.Tamb
         currentTempSlider.minimumValue = Tamb
         desiredTempSlider.minimumValue = Tamb + smallstep
             UpdateCurrent()
@@ -182,7 +224,6 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
             theControl.isEnabled = true
         }
         preheatLabel.isHidden = true
-        // preheatLabel.textColor = .gray
         startButton.setTitle("Start", for: UIControlState.normal)
         timerResetButton.isEnabled = false
         UpdateCurrent()
@@ -208,11 +249,11 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         }
         preheatLabel.isHidden = false
         if modelTimer.isHeating {
-            preheatLabel.text = "Preheating time left"
-            preheatLabel.textColor = UIColor.red
+            preheatLabel.text = "Preheating"
+            preheatLabel.textColor = heatingColor
         } else {
-            preheatLabel.text = "Cooling time left"
-            preheatLabel.textColor = UIColor.purple
+            preheatLabel.text = "Cooling"
+            preheatLabel.textColor = coolingColor
         }
         startButton.setTitle("Stop", for: UIControlState.normal)
         timerResetButton.isEnabled = true
@@ -276,17 +317,23 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
                 modelNames.append("\(themodel)")
             }
             settingsView.modelNames = modelNames
-            settingsView.initialSelection = modelIndex
+            settingsView.initialSelection = selectedModel
         }
     }
     
     @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
         guard let source = segue.source as? SettingsViewController else { return }
+        
+        // Pull data from SettingsViewController
         Tamb = source.Tamb
-        UpdateAmbientLimits()
-        modelIndex = source.selectedModel
-        model.setfrom(params: modelData[modelIndex])
+        UpdateAmbient()
+        selectedModel = source.selectedModel
         UpdateView()
+        
+        // Save to disk
+        if NSKeyedArchiver.archiveRootObject(state!, toFile: stateURL.path) == false {
+            print("saving to disk did not work! fuck!")
+        }
     }
     
     // MARK: IBOutlets and IBActions
