@@ -63,10 +63,6 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         Reset()
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-
     private func LoadModelData() {
         var theparams : ThermalModelParams
         
@@ -123,11 +119,9 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
             uiColor = .darkGray
         }
         desiredTempSlider.minimumTrackTintColor = uiColor
- 
+        
         // Run model
         let minfrac = model.time(totemp: desiredTemp, fromtemp: currentTemp)
-        
-        // Update display
         ShowTime(minutes: minfrac)
     }
     
@@ -171,19 +165,27 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         UpdateDesired()
     }
     
+    func CheckTimerEnable() {
+        if desiredTemp == currentTemp {
+            startButton.isEnabled = false
+        } else {
+            startButton.isEnabled = true
+        }
+    }
+    
     // MARK: timer functions
     
-    var timer: Timer?
+    private var timer: Timer?
     private var timerDisabledControls: [UIControl] = []
     private var timerRunning: Bool = false
-    private var oldCurrentTemp: Float = 0
+    private var timerCurrentTemp: Float = 0
     
-    private func ResetTimer() {
-        currentTempSlider.value = Float(oldCurrentTemp)
+    func ResetTimer() {
+        currentTempSlider.value = Float(timerCurrentTemp)
         StopTimer()
     }
     
-    private func StopTimer() {
+    func StopTimer() {
         timerRunning = false
         timer?.invalidate()
         let center = UNUserNotificationCenter.current()
@@ -194,22 +196,22 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         preheatLabel.isHidden = true
         startButton.setTitle("Start", for: UIControlState.normal)
         timerResetButton.isEnabled = false
-        UpdateCurrent()
         UpdateView()
+        CheckTimerEnable()
     }
     
-    private func StartTimer() {
+    func StartTimer() {
         // Timer
         modelTimer.startTimer(fromTemp: currentTemp, toTemp: desiredTemp)
         timer =
             Timer.scheduledTimer(timeInterval: 0.2, target: self,
-                                 selector: #selector(PreheatViewController.CountUp),
+                                 selector: #selector(PreheatViewController.TimerCount),
                                  userInfo: nil,
                                  repeats: true)
         
         // UI
         timerRunning = true
-        oldCurrentTemp = currentTemp
+        timerCurrentTemp = currentTemp
         timerDisabledControls =
             [currentTempSlider, desiredTempSlider, tempResetButton]
         for theControl in timerDisabledControls {
@@ -230,7 +232,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         let content = UNMutableNotificationContent()
         var notifyTitle: String
         if modelTimer.isHeating {
-            notifyTitle = "Preheat done"
+            notifyTitle = "Preheating done"
         } else {
             notifyTitle = "Cooling done"
         }
@@ -260,7 +262,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         completionHandler(alertOption.union(soundOption))
     }
     
-    func CountUp() {
+    func TimerCount() {
         let minutesLeft = modelTimer.minutesLeft()
         if minutesLeft > 0 {
             ShowTime(minutes: minutesLeft)
@@ -268,10 +270,10 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
             currentTempLabel.text = String(Int(round(tempEst)))
             currentTempSlider.value = tempEst
         } else {
-            ResetTimer()
             let Tset = desiredTempSlider.value
             currentTempSlider.value = Tset
             UpdateCurrent()
+            StopTimer()
         }
     }
     
@@ -299,9 +301,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         UpdateView()
         
         // Save to disk
-        if NSKeyedArchiver.archiveRootObject(state!, toFile: stateURL.path) == false {
-            print("saving to disk did not work! fuck!")
-        }
+        NSKeyedArchiver.archiveRootObject(state!, toFile: stateURL.path)
     }
     
     // MARK: IBOutlets and IBActions
@@ -337,7 +337,15 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     @IBAction func DesiredTempChange(_ sender: UISlider) {
         UpdateDesired()
     }
-
+    
+    @IBAction func DesiredTouchUpIn() {
+        CheckTimerEnable()
+    }
+    
+    @IBAction func CurrentTouchUpIn() {
+        CheckTimerEnable()
+    }
+    
     @IBAction func ResetButton(_ sender: UIButton) {
         Reset()
     }
