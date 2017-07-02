@@ -28,7 +28,7 @@ struct ThermalModelParams : CustomStringConvertible {
 class ThermalModel {
     var a: Float = 10.0  // RC time constant
     var b: Float = 500.0  // RH coefficient (s.s. temp above ambient)
-    var Tamb: Float = 72.0  // T_ambient
+    var Tamb: Float = 70.0  // T_ambient
     
     var description: String {
         return "ThermalModel: \((a, b)), Tambient = \(Tamb)"

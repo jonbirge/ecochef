@@ -28,7 +28,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
             return model.Tamb
         }
         set (newTamb) {
-            model.Tamb = Quantize(temp: newTamb)
+            model.Tamb = Quantize(newTamb)
             state?.Tamb = model.Tamb
         }
     }
@@ -87,7 +87,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         modelData.append(theparams)
     }
     
-    func Quantize(temp:Float) -> Float {
+    private func Quantize(_ temp:Float) -> Float {
         if temp < crossover {
             return smallstep*round(temp/smallstep)
         } else {
@@ -96,13 +96,13 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     }
     
     func SetCurrent(temp:Float) {
-        currentTemp = Quantize(temp: temp)
+        currentTemp = temp
         currentTempLabel.text = String(Int(currentTemp))
         UpdateView()
     }
     
     func SetDesired(temp:Float) {
-        desiredTemp = Quantize(temp: temp)
+        desiredTemp = temp
         desiredTempLabel.text = String(Int(desiredTemp))
         UpdateView()
     }
@@ -178,11 +178,28 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     private var timer: Timer?
     private var timerDisabledControls: [UIControl] = []
     private var timerRunning: Bool = false
-    private var timerCurrentTemp: Float = 0
+    private var initialCurrentTemp: Float = 0
     
+    func TimerCount() {
+        let minutesLeft = modelTimer.minutesLeft()
+        if minutesLeft > 0 {
+            ShowTime(minutes: minutesLeft)
+            let tempEst = modelTimer.tempEstimate()
+            currentTempLabel.text = String(Int(round(tempEst)))
+            currentTempSlider.value = tempEst
+            currentTemp = round(tempEst)
+        } else {
+            let Tset = desiredTempSlider.value
+            currentTempSlider.value = Tset
+            UpdateCurrent()
+            StopTimer()
+        }
+    }
+
     func ResetTimer() {
-        currentTempSlider.value = Float(timerCurrentTemp)
         StopTimer()
+        currentTempSlider.value = Float(initialCurrentTemp)
+        UpdateCurrent()
     }
     
     func StopTimer() {
@@ -211,7 +228,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         
         // UI
         timerRunning = true
-        timerCurrentTemp = currentTemp
+        initialCurrentTemp = currentTemp
         timerDisabledControls =
             [currentTempSlider, desiredTempSlider, tempResetButton]
         for theControl in timerDisabledControls {
@@ -260,21 +277,6 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         let alertOption = UNNotificationPresentationOptions.alert
         let soundOption = UNNotificationPresentationOptions.sound
         completionHandler(alertOption.union(soundOption))
-    }
-    
-    func TimerCount() {
-        let minutesLeft = modelTimer.minutesLeft()
-        if minutesLeft > 0 {
-            ShowTime(minutes: minutesLeft)
-            let tempEst = modelTimer.tempEstimate()
-            currentTempLabel.text = String(Int(round(tempEst)))
-            currentTempSlider.value = tempEst
-        } else {
-            let Tset = desiredTempSlider.value
-            currentTempSlider.value = Tset
-            UpdateCurrent()
-            StopTimer()
-        }
     }
     
     // MARK: Navigation
@@ -331,11 +333,11 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     }
     
     @IBAction func CurrentTempChange(_ sender: UISlider) {
-        UpdateCurrent()
+        SetCurrent(temp: Quantize(sender.value))
     }
     
     @IBAction func DesiredTempChange(_ sender: UISlider) {
-        UpdateDesired()
+        SetDesired(temp: Quantize(sender.value))
     }
     
     @IBAction func DesiredTouchUpIn() {
