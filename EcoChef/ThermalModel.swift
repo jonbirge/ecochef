@@ -18,10 +18,14 @@ struct ThermalModelParams {
     }
     
     init(name: String) {
-        self.name = name
-        a = 10.0
-        b = 500.0
+        self.init(name: name, a: 10, b: 500)
      }
+    
+    init(name: String, a: Float, b: Float) {
+        self.name = name
+        self.a = a
+        self.b = b
+    }
 }
 
 // Computational logic

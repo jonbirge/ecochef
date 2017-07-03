@@ -93,16 +93,17 @@ UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
         }
     }
     
-    /*
     @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
-        guard let source = segue.source as? ModelTableViewController else { return }
-        
-        // Pull data from ModelTableViewController
-        // Nothing to do!
+        // Update data
+        print("unwind handler in settingsview")
+        if let modelTableView = segue.source as? ModelTableViewController {
+            print("unwind from model table")
+            self.modelData = modelTableView.modelData
+            modelPicker.reloadAllComponents()
+        }
         
         // Save to disk
         // NSKeyedArchiver.archiveRootObject(state!, toFile: stateURL.path)
     }
-     */
     
 }

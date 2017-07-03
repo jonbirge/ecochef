@@ -144,7 +144,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     }
     
     func UpdateDesired() {
-        SetDesired(temp: desiredTempSlider.value)
+        SetDesired(temp: Quantize(desiredTempSlider.value))
     }
     
     func UpdateAmbient() {
@@ -295,6 +295,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         // Pull data from SettingsViewController
         Tamb = source.Tamb
         UpdateAmbient()
+        modelData = source.modelData
         selectedModel = source.selectedModel
         UpdateView()
         

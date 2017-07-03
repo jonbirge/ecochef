@@ -82,14 +82,40 @@ class ModelTableViewController: UITableViewController {
     }
     */
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        guard let editController = segue.destination as? ModelEditViewController
+            else { return }
+        
+        if let indexPath = tableView.indexPathForSelectedRow {
+            editController.modelparams = modelData[indexPath.row]
+        }
     }
-    */
+    
+    @IBAction func goBack(_ sender: UIBarButtonItem) {
+        performSegue(withIdentifier: "UnwindModelList", sender: self)
+    }
+    
+    @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
+        guard let source = segue.source as? ModelEditViewController,
+        let modelparams = source.modelparams
+            else { return }
+        print("in unwind from edit")
+        
+        if let indexPath = tableView.indexPathForSelectedRow {
+            print("in unwind from selection")
+            modelData.remove(at: indexPath.row)
+            modelData.insert(modelparams, at: indexPath.row)
+            tableView.deselectRow(at: indexPath, animated: true)
+        } else {
+            modelData.append(modelparams)
+        }
+        
+        tableView.reloadData()
+    }
     
 }

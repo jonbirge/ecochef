@@ -9,15 +9,11 @@
 import UIKit
 
 class ModelEditViewController: UITableViewController {
-
+    var modelparams: ThermalModelParams?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        updateView()
     }
 
     override func didReceiveMemoryWarning() {
@@ -26,6 +22,13 @@ class ModelEditViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
+    
+    func updateView() {
+        guard let modelparams = self.modelparams else { return }
+        nameField.text = modelparams.name
+        rcField.text = String(modelparams.a)
+        hrField.text = String(modelparams.b)
+    }
 
     /*
     // MARK: - Navigation
@@ -36,5 +39,19 @@ class ModelEditViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    @IBAction func clickedSave(_ sender: UIBarButtonItem) {
+        guard let name = nameField.text,
+        let rc = Float(rcField.text!),
+        let hr = Float(hrField.text!)
+            else { return }
+        
+        modelparams = ThermalModelParams(name: name, a: rc, b: hr)
+        
+        performSegue(withIdentifier: "UnwindToModelList", sender: self)
+    }
 
+    @IBOutlet weak var nameField: UITextField!
+    @IBOutlet weak var rcField: UITextField!
+    @IBOutlet weak var hrField: UITextField!
 }
