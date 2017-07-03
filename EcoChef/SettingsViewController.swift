@@ -95,9 +95,7 @@ UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
     @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
         // Update data
-        print("unwind handler in settingsview")
         if let modelTableView = segue.source as? ModelTableViewController {
-            print("unwind from model table")
             self.modelData = modelTableView.modelData
             modelPicker.reloadAllComponents()
         }

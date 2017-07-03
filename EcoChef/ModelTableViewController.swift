@@ -47,6 +47,15 @@ class ModelTableViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView,
+                            commit editingStyle: UITableViewCellEditingStyle,
+                            forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            modelData.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+    }
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -104,10 +113,8 @@ class ModelTableViewController: UITableViewController {
         guard let source = segue.source as? ModelEditViewController,
         let modelparams = source.modelparams
             else { return }
-        print("in unwind from edit")
         
         if let indexPath = tableView.indexPathForSelectedRow {
-            print("in unwind from selection")
             modelData.remove(at: indexPath.row)
             modelData.insert(modelparams, at: indexPath.row)
             tableView.deselectRow(at: indexPath, animated: true)
