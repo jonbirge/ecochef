@@ -284,11 +284,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let settingsView = segue.destination as? SettingsViewController {
             settingsView.initialTamb = Tamb
-            var modelNames: [String] = []
-            for themodel in modelData {
-                modelNames.append("\(themodel)")
-            }
-            settingsView.modelNames = modelNames
+            settingsView.modelData = self.modelData
             settingsView.initialSelection = selectedModel
         }
     }

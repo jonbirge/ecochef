@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ThermalModelParams : CustomStringConvertible {
+struct ThermalModelParams {
     let name: String
     var a: Float
     var b: Float
@@ -25,7 +25,7 @@ struct ThermalModelParams : CustomStringConvertible {
 }
 
 // Computational logic
-class ThermalModel {
+class ThermalModel : CustomStringConvertible {
     var a: Float = 10.0  // RC time constant
     var b: Float = 500.0  // RH coefficient (s.s. temp above ambient)
     var Tamb: Float = 70.0  // T_ambient

@@ -11,7 +11,7 @@ import SafariServices
 
 class SettingsViewController:
 UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
-    var modelNames: [String] = []
+    var modelData: [ThermalModelParams]!
     var initialTamb: Float = 0.0
     var initialSelection: Int = 2
     
@@ -30,7 +30,7 @@ UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
         updateViews()
     }
     
-    // MARK: UIPickerView handling
+    // Output handling
     
     var selectedModel: Int {
         return modelPicker.selectedRow(inComponent: 0)
@@ -39,6 +39,8 @@ UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     var Tamb: Float {
         return Float(ambientStepper.value)
     }
+
+    // MARK: UIPickerView handling
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -46,15 +48,16 @@ UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView,
                     numberOfRowsInComponent component: Int) -> Int {
-        return modelNames.count
+        return modelData.count
     }
     
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        return NSAttributedString(string: modelNames[row])
+        return NSAttributedString(string: modelData[row].name)
     }
     
     // MARK: UITableView handling
     
+    // Non-standard segues
     override func tableView(_ tableView: UITableView,
                             didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 2 && indexPath.row == 0 {
@@ -81,5 +84,25 @@ UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     @IBAction func clickAmbientStepper(_ sender: UIStepper) {
         updateViews()
     }
-
+    
+    // MARK: Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let modelTableView = segue.destination as? ModelTableViewController {
+            modelTableView.modelData = self.modelData
+        }
+    }
+    
+    /*
+    @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
+        guard let source = segue.source as? ModelTableViewController else { return }
+        
+        // Pull data from ModelTableViewController
+        // Nothing to do!
+        
+        // Save to disk
+        // NSKeyedArchiver.archiveRootObject(state!, toFile: stateURL.path)
+    }
+     */
+    
 }

@@ -22,6 +22,8 @@
 		ABEBBBA61F05B06400527B4F /* SimpleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEBBBA31F05B06400527B4F /* SimpleButton.swift */; };
 		ABEBBBA71F05B06400527B4F /* SimpleButtonControlState.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEBBBA41F05B06400527B4F /* SimpleButtonControlState.swift */; };
 		ABEBBBA81F05B06400527B4F /* SimpleButtonStateChangeValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEBBBA51F05B06400527B4F /* SimpleButtonStateChangeValue.swift */; };
+		ABEDA1BE1F09F75600FAE1E1 /* ModelTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEDA1BC1F09F75600FAE1E1 /* ModelTableViewController.swift */; };
+		ABEDA1C11F09FDAD00FAE1E1 /* ModelEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEDA1C01F09FDAD00FAE1E1 /* ModelEditViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +44,8 @@
 		ABEBBBA31F05B06400527B4F /* SimpleButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleButton.swift; sourceTree = "<group>"; };
 		ABEBBBA41F05B06400527B4F /* SimpleButtonControlState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleButtonControlState.swift; sourceTree = "<group>"; };
 		ABEBBBA51F05B06400527B4F /* SimpleButtonStateChangeValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleButtonStateChangeValue.swift; sourceTree = "<group>"; };
+		ABEDA1BC1F09F75600FAE1E1 /* ModelTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelTableViewController.swift; sourceTree = "<group>"; };
+		ABEDA1C01F09FDAD00FAE1E1 /* ModelEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelEditViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +87,8 @@
 				ABC7A8741EF8EE7900F25317 /* AboutViewController.swift */,
 				ABEBBB9F1F05AC1C00527B4F /* TimerButton.swift */,
 				AB43B17C1EEB871E00B6A96B /* Main.storyboard */,
+				ABEDA1C01F09FDAD00FAE1E1 /* ModelEditViewController.swift */,
+				ABEDA1BC1F09F75600FAE1E1 /* ModelTableViewController.swift */,
 				AB0373881F020DD7005D1880 /* LaunchScreen.storyboard */,
 				AB43B1841EEB871E00B6A96B /* Info.plist */,
 				AB43B17F1EEB871E00B6A96B /* Assets.xcassets */,
@@ -188,7 +194,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABEDA1C11F09FDAD00FAE1E1 /* ModelEditViewController.swift in Sources */,
 				AB43B1771EEB871E00B6A96B /* AppDelegate.swift in Sources */,
+				ABEDA1BE1F09F75600FAE1E1 /* ModelTableViewController.swift in Sources */,
 				ABA36DC31F07401100B3FCA4 /* EcoChefState.swift in Sources */,
 				AB43B1791EEB871E00B6A96B /* PreheatViewController.swift in Sources */,
 				ABEBBBA01F05AC1C00527B4F /* TimerButton.swift in Sources */,
