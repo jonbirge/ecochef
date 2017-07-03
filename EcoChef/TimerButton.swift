@@ -29,6 +29,7 @@ class TimerButton: SimpleButton {
             let highlightbrightness: CGFloat = 1 - (1 - brightness)/3
             let highlightColor = UIColor(hue: hue, saturation: sat, brightness: highlightbrightness, alpha: 1)
             setTitleColor(highlightColor, for: .highlighted)
+            setBorderColor(highlightColor, for: .highlighted)
         }
         
         setBorderWidth(1.0)
