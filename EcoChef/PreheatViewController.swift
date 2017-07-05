@@ -13,7 +13,6 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     let smallstep: Float = 2
     let largestep: Float = 25
     let crossover: Float = 100
-    let tempdefault: Float = 350
     let heatingColor: UIColor = UIColor.red
     let coolingColor: UIColor = UIColor.purple
     private var desiredTemp: Float = 350
@@ -56,9 +55,10 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         if let state = NSKeyedUnarchiver.unarchiveObject(withFile: stateURL.path) as? EcoChefState {
             self.state = state
         } else {
-            print("state file not loaded! setting state from defaults.")
             self.state = EcoChefState()
         }
+        SetDesired(temp: self.state!.desiredTemp)
+        desiredTempSlider.value = desiredTemp
         UpdateAmbient()
         Reset()
     }
@@ -160,7 +160,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     
     func Reset() {
         currentTempSlider.value = currentTempSlider.minimumValue
-        desiredTempSlider.value = tempdefault
+        desiredTempSlider.value = state!.desiredTemp
         UpdateCurrent()
         UpdateDesired()
     }
@@ -171,6 +171,11 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         } else {
             startButton.isEnabled = true
         }
+    }
+    
+    func WriteStateToDisk() {
+        state!.desiredTemp = desiredTemp
+        NSKeyedArchiver.archiveRootObject(state!, toFile: stateURL.path)
     }
     
     // MARK: timer functions
@@ -300,7 +305,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         UpdateView()
         
         // Save to disk
-        NSKeyedArchiver.archiveRootObject(state!, toFile: stateURL.path)
+        WriteStateToDisk()
     }
     
     // MARK: IBOutlets and IBActions
@@ -339,6 +344,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     
     @IBAction func DesiredTouchUpIn() {
         CheckTimerEnable()
+        WriteStateToDisk()
     }
     
     @IBAction func CurrentTouchUpIn() {
