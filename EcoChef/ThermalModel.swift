@@ -9,13 +9,9 @@
 import Foundation
 
 struct ThermalModelParams {
-    let name: String
+    var name: String
     var a: Float
     var b: Float
-    
-    var description: String {
-        return name
-    }
     
     init(name: String) {
         self.init(name: name, a: 10, b: 500)

@@ -66,25 +66,33 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     private func LoadModelData() {
         var theparams : ThermalModelParams
         
-        theparams = ThermalModelParams(name: "Gas oven")
-        theparams.a *= 1.1
-        modelData.append(theparams)
-        
-        theparams = ThermalModelParams(name: "Electric oven")
+        theparams = ThermalModelParams(name: "Electric (EnergyStar)")
         theparams.a *= 1.2
         modelData.append(theparams)
         
-        theparams = ThermalModelParams(name: "Convection oven")
+        theparams = ThermalModelParams(name: "Electric (Fast Preheat)")
+        theparams.a *= 1.2
+        theparams.b = 600
+        modelData.append(theparams)
+        
+        theparams = ThermalModelParams(name: "Electric (Old)")
+        theparams.a *= 1.5
+        modelData.append(theparams)
+        
+        theparams = ThermalModelParams(name: "Convection (Large)")
         theparams.a *= 0.9
         modelData.append(theparams)
         
-        theparams = ThermalModelParams(name: "Speed oven")
+        theparams = ThermalModelParams(name: "Convection (Small)")
         theparams.a *= 0.8
         modelData.append(theparams)
         
-        theparams = ThermalModelParams(name: "Outdoor grill")
-        theparams.a *= 1.0
+        theparams = ThermalModelParams(name: "Gas")
+        theparams.a *= 1.1
         modelData.append(theparams)
+        
+        theparams = ThermalModelParams(name: "Gas Grill")
+         modelData.append(theparams)
     }
     
     private func Quantize(_ temp:Float) -> Float {
@@ -185,6 +193,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     private var timerRunning: Bool = false
     private var initialCurrentTemp: Float = 0
     
+    // Timer delegate function
     func TimerCount() {
         let minutesLeft = modelTimer.minutesLeft()
         if minutesLeft > 0 {
@@ -194,7 +203,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
             currentTempSlider.value = tempEst
             currentTemp = round(tempEst)
         } else {
-            let Tset = desiredTempSlider.value
+            let Tset = desiredTemp
             currentTempSlider.value = Tset
             UpdateCurrent()
             StopTimer()
