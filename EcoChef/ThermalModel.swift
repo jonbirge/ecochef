@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import UIKit
 
 class ThermalModelData {
     var modelArray: [ThermalModelParams] = []
@@ -16,25 +15,8 @@ class ThermalModelData {
     var selectedModelData: ThermalModelParams {
         return modelArray[selectedIndex]
     }
-    
-    var modelURL: URL {
-        let modelURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        return modelURL.appendingPathComponent("models")
-    }
-    
-    func LoadModelData() {
-        if let models = NSKeyedUnarchiver.unarchiveObject(withFile: modelURL.path) as? [ThermalModelParams] {
-            self.modelArray = models
-        } else {
-            LoadDefaultModelData()
-        }
-    }
-    
-    func WriteToDisk() {
-        NSKeyedArchiver.archiveRootObject(modelArray, toFile: modelURL.path)
-    }
-    
-    private func LoadDefaultModelData() {
+        
+    func LoadDefaultModelData() {
         var theparams : ThermalModelParams
         
         theparams = ThermalModelParams(name: "Electric (EnergyStar)")
@@ -58,14 +40,13 @@ class ThermalModelData {
         theparams.a *= 0.8
         modelArray.append(theparams)
         
-        theparams = ThermalModelParams(name: "Gas")
+        theparams = ThermalModelParams(name: "Gas Oven")
         theparams.a *= 1.1
         modelArray.append(theparams)
         
         theparams = ThermalModelParams(name: "Gas Grill")
         modelArray.append(theparams)
     }
-    
 }
 
 class ThermalModelParams : NSObject, NSCoding {

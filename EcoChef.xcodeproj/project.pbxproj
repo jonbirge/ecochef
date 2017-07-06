@@ -13,6 +13,7 @@
 		AB43B17E1EEB871E00B6A96B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB43B17C1EEB871E00B6A96B /* Main.storyboard */; };
 		AB43B1801EEB871E00B6A96B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB43B17F1EEB871E00B6A96B /* Assets.xcassets */; };
 		AB43B18B1EEBAEA100B6A96B /* ThermalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB43B18A1EEBAEA100B6A96B /* ThermalModel.swift */; };
+		AB53D56E1F0DD85900ACA17A /* EcoChefThermalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB53D56D1F0DD85900ACA17A /* EcoChefThermalModel.swift */; };
 		AB57E5DB1F0492F700D37EF8 /* birge-ring.aiff in Resources */ = {isa = PBXBuildFile; fileRef = AB57E5DA1F0492F700D37EF8 /* birge-ring.aiff */; };
 		ABA36DC31F07401100B3FCA4 /* EcoChefState.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA36DC21F07401100B3FCA4 /* EcoChefState.swift */; };
 		ABC7A8711EF8DC5D00F25317 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC7A8701EF8DC5D00F25317 /* SettingsViewController.swift */; };
@@ -35,6 +36,7 @@
 		AB43B17F1EEB871E00B6A96B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AB43B1841EEB871E00B6A96B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AB43B18A1EEBAEA100B6A96B /* ThermalModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThermalModel.swift; sourceTree = "<group>"; };
+		AB53D56D1F0DD85900ACA17A /* EcoChefThermalModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EcoChefThermalModel.swift; sourceTree = "<group>"; };
 		AB57E5DA1F0492F700D37EF8 /* birge-ring.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "birge-ring.aiff"; sourceTree = "<group>"; };
 		ABA36DC21F07401100B3FCA4 /* EcoChefState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EcoChefState.swift; sourceTree = "<group>"; };
 		ABC7A8701EF8DC5D00F25317 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -81,9 +83,10 @@
 				AB43B1761EEB871E00B6A96B /* AppDelegate.swift */,
 				AB43B18A1EEBAEA100B6A96B /* ThermalModel.swift */,
 				ABEB6F1C1F02A6E300ABD199 /* ThermalTimer.swift */,
+				AB53D56D1F0DD85900ACA17A /* EcoChefThermalModel.swift */,
+				ABA36DC21F07401100B3FCA4 /* EcoChefState.swift */,
 				AB43B1781EEB871E00B6A96B /* PreheatViewController.swift */,
 				ABC7A8701EF8DC5D00F25317 /* SettingsViewController.swift */,
-				ABA36DC21F07401100B3FCA4 /* EcoChefState.swift */,
 				ABC7A8741EF8EE7900F25317 /* AboutViewController.swift */,
 				ABEBBB9F1F05AC1C00527B4F /* TimerButton.swift */,
 				AB43B17C1EEB871E00B6A96B /* Main.storyboard */,
@@ -201,6 +204,7 @@
 				AB43B1791EEB871E00B6A96B /* PreheatViewController.swift in Sources */,
 				ABEBBBA01F05AC1C00527B4F /* TimerButton.swift in Sources */,
 				ABEBBBA71F05B06400527B4F /* SimpleButtonControlState.swift in Sources */,
+				AB53D56E1F0DD85900ACA17A /* EcoChefThermalModel.swift in Sources */,
 				ABEBBBA61F05B06400527B4F /* SimpleButton.swift in Sources */,
 				ABEBBBA81F05B06400527B4F /* SimpleButtonStateChangeValue.swift in Sources */,
 				AB43B18B1EEBAEA100B6A96B /* ThermalModel.swift in Sources */,
