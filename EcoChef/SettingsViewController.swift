@@ -11,9 +11,8 @@ import SafariServices
 
 class SettingsViewController:
 UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
-    var modelData: [ThermalModelParams] = []
+    var modelData: ThermalModelData!
     var initialTamb: Float = 0.0
-    var initialSelection: Int = 2
     
     @IBOutlet weak var ambientField: UITextField!
     @IBOutlet weak var ambientStepper: UIStepper!
@@ -24,7 +23,7 @@ UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
-        modelPicker.selectRow(initialSelection, inComponent: 0, animated: true)
+        modelPicker.selectRow(modelData.selectedIndex, inComponent: 0, animated: true)
         modelPicker.showsSelectionIndicator = true
         ambientStepper.value = Double(initialTamb)
         updateViews()
@@ -48,11 +47,11 @@ UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView,
                     numberOfRowsInComponent component: Int) -> Int {
-        return modelData.count
+        return modelData.modelArray.count
     }
     
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        return NSAttributedString(string: modelData[row].name)
+        return NSAttributedString(string: modelData.modelArray[row].name)
     }
     
     // MARK: UITableView handling
@@ -78,6 +77,7 @@ UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     }
 
     @IBAction func clickedSave(_ sender: UIBarButtonItem) {
+        modelData.selectedIndex = selectedModel
         performSegue(withIdentifier: "UnwindSettings", sender: self)
     }
     
@@ -95,10 +95,9 @@ UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
     @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
         // Update data
-        if let modelTableView = segue.source as? ModelTableViewController {
-            self.modelData = modelTableView.modelData
+        if let _ = segue.source as? ModelTableViewController {
             modelPicker.reloadAllComponents()
-            // TODO: Save to disk
+            modelData.WriteToDisk()
         }
     }
     

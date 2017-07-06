@@ -7,11 +7,11 @@
 //
 
 import Foundation
-
 import UIKit
+
 class ThermalModelData {
     var modelArray: [ThermalModelParams] = []
-    var selectedIndex: Int = 0
+    var selectedIndex: Int = 1
     
     var selectedModelData: ThermalModelParams {
         return modelArray[selectedIndex]
@@ -65,7 +65,7 @@ class ThermalModelData {
         theparams = ThermalModelParams(name: "Gas Grill")
         modelArray.append(theparams)
     }
-
+    
 }
 
 class ThermalModelParams : NSObject, NSCoding {

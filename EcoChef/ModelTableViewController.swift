@@ -9,7 +9,7 @@
 import UIKit
 
 class ModelTableViewController: UITableViewController {
-    var modelData: [ThermalModelParams]!
+    var modelData: ThermalModelData!
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,13 +36,13 @@ class ModelTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return modelData.count
+        return modelData.modelArray.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ModelCell", for: indexPath)
 
-        cell.textLabel?.text = modelData[indexPath.row].name
+        cell.textLabel?.text = modelData.modelArray[indexPath.row].name
 
         return cell
     }
@@ -51,7 +51,7 @@ class ModelTableViewController: UITableViewController {
                             commit editingStyle: UITableViewCellEditingStyle,
                             forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            modelData.remove(at: indexPath.row)
+            modelData.modelArray.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }
@@ -101,7 +101,7 @@ class ModelTableViewController: UITableViewController {
             else { return }
         
         if let indexPath = tableView.indexPathForSelectedRow {
-            editController.modelparams = modelData[indexPath.row]
+            editController.modelparams = modelData.modelArray[indexPath.row]
         }
     }
     
@@ -115,11 +115,11 @@ class ModelTableViewController: UITableViewController {
             else { return }
         
         if let indexPath = tableView.indexPathForSelectedRow {
-            modelData.remove(at: indexPath.row)
-            modelData.insert(modelparams, at: indexPath.row)
+            modelData.modelArray.remove(at: indexPath.row)
+            modelData.modelArray.insert(modelparams, at: indexPath.row)
             tableView.deselectRow(at: indexPath, animated: true)
         } else {
-            modelData.append(modelparams)
+            modelData.modelArray.append(modelparams)
         }
         
         tableView.reloadData()

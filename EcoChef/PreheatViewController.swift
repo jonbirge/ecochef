@@ -19,7 +19,6 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     private var currentTemp: Float = 70
     let model = ThermalModel()
     let modelTimer = ThermalTimer()
-    //var modelData: [ThermalModelParams] = []
     var modelData = ThermalModelData()
     private var state: EcoChefState?
     
@@ -40,6 +39,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         super.viewDidLoad()
         modelTimer.thermalModel = model
         modelData.LoadModelData()
+        model.setfrom(params: modelData.selectedModelData)
         LoadState()
         UpdateFromState()
         UpdateAmbient()
@@ -150,8 +150,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         }
     }
     
-    // MARK: timer functions
-    
+    // MARK: Notification and timer functionality
     private var timer: Timer?
     private var timerDisabledControls: [UIControl] = []
     private var timerRunning: Bool = false
@@ -173,7 +172,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
             StopTimer()
         }
     }
-
+    
     func ResetTimer() {
         StopTimer()
         currentTempSlider.value = Float(initialCurrentTemp)
@@ -235,7 +234,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         content.title = NSString.localizedUserNotificationString(forKey: notifyTitle, arguments: nil)
         content.body = NSString.localizedUserNotificationString(forKey: notifyText, arguments: nil)
         content.sound = UNNotificationSound(named: "birge-ring.aiff")
-
+        
         let timeLeft = Double(modelTimer.minutesLeft())
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60.0*timeLeft, repeats: false)
         let request = UNNotificationRequest(identifier: "PreheatAlarm", content: content, trigger: trigger)
@@ -262,8 +261,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let settingsView = segue.destination as? SettingsViewController {
             settingsView.initialTamb = Tamb
-            settingsView.modelData = modelData.modelArray
-            settingsView.initialSelection = modelData.selectedIndex
+            settingsView.modelData = modelData
         }
     }
     
@@ -273,13 +271,12 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         // Pull data from SettingsViewController
         Tamb = source.Tamb
         UpdateAmbient()
-        modelData.modelArray = source.modelData
-        modelData.selectedIndex = source.selectedModel
         model.setfrom(params: modelData.selectedModelData)
         UpdateView()
         
         // Save to disk
         WriteStateToDisk()
+        modelData.WriteToDisk()
     }
     
     // MARK: IBOutlets and IBActions
@@ -329,4 +326,3 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         Reset()
     }
 }
-
