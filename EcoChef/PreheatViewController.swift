@@ -43,6 +43,29 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         UpdateFromState()
         UpdateAmbient()
         Reset()
+        
+        let notificationCenter = NotificationCenter.default
+        
+        notificationCenter.addObserver(self, selector: #selector(PreheatViewController.didEnterBackground), name: Notification.Name.UIApplicationDidEnterBackground, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(PreheatViewController.didBecomeActive), name: Notification.Name.UIApplicationWillEnterForeground, object: nil)
+    }
+    
+    func didEnterBackground() {
+        if timerRunning {
+            timer?.invalidate()
+            timer = nil
+        }
+    }
+    
+    func didBecomeActive() {
+        if timerRunning {
+            timer =
+                Timer.scheduledTimer(timeInterval: 0.2,
+                                     target: self,
+                                     selector: #selector(PreheatViewController.TimerCount),
+                                     userInfo: nil,
+                                     repeats: true)
+        }
     }
     
     private func LoadState() {
@@ -158,7 +181,12 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     private var initialCurrentTemp: Float = 0
     
     // Timer delegate function
+    var timerCount: Int = 0
     func TimerCount() {
+        timerCount += 1
+        if timerCount % 10 == 0 {
+            print("timer count: \(timerCount)")
+        }
         let minutesLeft = modelTimer.minutesLeft()
         if minutesLeft > 0 {
             ShowTime(minutes: minutesLeft)
@@ -199,7 +227,8 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         // Timer
         modelTimer.startTimer(fromTemp: currentTemp, toTemp: desiredTemp)
         timer =
-            Timer.scheduledTimer(timeInterval: 0.2, target: self,
+            Timer.scheduledTimer(timeInterval: 0.2,
+                                 target: self,
                                  selector: #selector(PreheatViewController.TimerCount),
                                  userInfo: nil,
                                  repeats: true)
