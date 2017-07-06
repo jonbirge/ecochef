@@ -43,6 +43,31 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         UpdateFromState()
         UpdateAmbient()
         Reset()
+        
+        let notificationCenter = NotificationCenter.default
+        
+        notificationCenter.addObserver(self, selector: #selector(PreheatViewController.didEnterBackground), name: Notification.Name.UIApplicationDidEnterBackground, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(PreheatViewController.didBecomeActive), name: Notification.Name.UIApplicationWillEnterForeground, object: nil)
+    }
+    
+    func didEnterBackground() {
+        print("PreheatView entered background")
+        if timerRunning {
+            timer?.invalidate()
+            timer = nil
+        }
+    }
+    
+    func didBecomeActive() {
+        print("PreheatView entering foreground")
+        if timerRunning {
+            timer =
+                Timer.scheduledTimer(timeInterval: 0.2,
+                                     target: self,
+                                     selector: #selector(PreheatViewController.TimerCount),
+                                     userInfo: nil,
+                                     repeats: true)
+        }
     }
     
     private func LoadState() {
@@ -161,7 +186,9 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     var timerCount: Int = 0
     func TimerCount() {
         timerCount += 1
-        timerLabel.text = String(timerCount)
+        if timerCount % 10 == 0 {
+            print("timer count: \(timerCount)")
+        }
         let minutesLeft = modelTimer.minutesLeft()
         if minutesLeft > 0 {
             ShowTime(minutes: minutesLeft)
@@ -202,7 +229,8 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         // Timer
         modelTimer.startTimer(fromTemp: currentTemp, toTemp: desiredTemp)
         timer =
-            Timer.scheduledTimer(timeInterval: 0.2, target: self,
+            Timer.scheduledTimer(timeInterval: 0.2,
+                                 target: self,
                                  selector: #selector(PreheatViewController.TimerCount),
                                  userInfo: nil,
                                  repeats: true)
@@ -297,7 +325,6 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     @IBOutlet weak var curTempLabel: UILabel!
     @IBOutlet weak var tempResetButton: UIButton!
     @IBOutlet weak var preheatLabel: UILabel!
-    @IBOutlet weak var timerLabel: UILabel!
     
     @IBAction func StartButton(_ sender: UIButton) {
         if timerRunning == false {
