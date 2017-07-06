@@ -39,7 +39,6 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         super.viewDidLoad()
         modelTimer.thermalModel = model
         modelData.LoadModelData()
-        model.setfrom(params: modelData.selectedModelData)
         LoadState()
         UpdateFromState()
         UpdateAmbient()
@@ -56,6 +55,8 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     
     private func UpdateFromState() {
         desiredTempSlider.value = state!.desiredTemp
+        modelData.selectedIndex = state!.selectedModel
+        model.setfrom(params: modelData.selectedModelData)
         UpdateDesired()
     }
     
@@ -272,6 +273,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         Tamb = source.Tamb
         UpdateAmbient()
         model.setfrom(params: modelData.selectedModelData)
+        state!.selectedModel = modelData.selectedIndex
         UpdateView()
         
         // Save to disk

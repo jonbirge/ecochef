@@ -168,7 +168,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nHw-Lj-crR">
                                 <rect key="frame" x="98" y="614" width="179" height="33"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                <state key="normal" title="Reset temperatures"/>
+                                <state key="normal" title="Set to ambient"/>
                                 <connections>
                                     <action selector="ResetButton:" destination="9pv-A4-QxB" eventType="touchUpInside" id="Xyf-GN-Ow5"/>
                                 </connections>
