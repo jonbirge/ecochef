@@ -158,7 +158,10 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     private var initialCurrentTemp: Float = 0
     
     // Timer delegate function
+    var timerCount: Int = 0
     func TimerCount() {
+        timerCount += 1
+        timerLabel.text = String(timerCount)
         let minutesLeft = modelTimer.minutesLeft()
         if minutesLeft > 0 {
             ShowTime(minutes: minutesLeft)
@@ -294,6 +297,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     @IBOutlet weak var curTempLabel: UILabel!
     @IBOutlet weak var tempResetButton: UIButton!
     @IBOutlet weak var preheatLabel: UILabel!
+    @IBOutlet weak var timerLabel: UILabel!
     
     @IBAction func StartButton(_ sender: UIButton) {
         if timerRunning == false {

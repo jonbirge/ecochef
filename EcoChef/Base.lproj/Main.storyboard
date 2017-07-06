@@ -173,6 +173,13 @@
                                     <action selector="ResetButton:" destination="9pv-A4-QxB" eventType="touchUpInside" id="Xyf-GN-Ow5"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Timer Count" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N4C-ne-ydK">
+                                <rect key="frame" x="32" y="620" width="72" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -228,6 +235,7 @@
                         <outlet property="secLabel" destination="X3y-il-6FY" id="4jO-R8-OG8"/>
                         <outlet property="startButton" destination="gCO-mA-Prx" id="vBl-Vr-ZK0"/>
                         <outlet property="tempResetButton" destination="nHw-Lj-crR" id="npU-LP-Ebi"/>
+                        <outlet property="timerLabel" destination="N4C-ne-ydK" id="klw-Hb-q2T"/>
                         <outlet property="timerResetButton" destination="ANQ-uz-xo0" id="FDq-96-Hhb"/>
                     </connections>
                 </viewController>
