@@ -13,80 +13,58 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     let smallstep: Float = 2
     let largestep: Float = 25
     let crossover: Float = 100
-    let tempdefault: Float = 350
     let heatingColor: UIColor = UIColor.red
     let coolingColor: UIColor = UIColor.purple
     private var desiredTemp: Float = 350
     private var currentTemp: Float = 70
     let model = ThermalModel()
     let modelTimer = ThermalTimer()
-    var modelData: [ThermalModelParams] = []
+    var modelData = ThermalModelData()
     private var state: EcoChefState?
     
     var Tamb : Float {
-        get {
-            return model.Tamb
-        }
+        get { return model.Tamb }
         set (newTamb) {
             model.Tamb = Quantize(newTamb)
             state?.Tamb = model.Tamb
         }
     }
     
-    var selectedModel: Int {
-        get {
-            return state!.selectedModel
-        }
-        set (newIndex) {
-            state?.selectedModel = newIndex
-            model.setfrom(params: modelData[state!.selectedModel])
-        }
-    }
-    
     var stateURL: URL {
-        let documentsURL = FileManager.default.urls(for: .documentDirectory,
-                                                    in: .userDomainMask).first!
-        return documentsURL.appendingPathComponent("state")
+        let docsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        return docsURL.appendingPathComponent("state")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         modelTimer.thermalModel = model
-        LoadModelData()
-        if let state = NSKeyedUnarchiver.unarchiveObject(withFile: stateURL.path) as? EcoChefState {
-            self.state = state
-        } else {
-            print("state file not loaded! setting state from defaults.")
-            self.state = EcoChefState()
-        }
+        modelData.LoadModelData()
+        LoadState()
+        UpdateFromState()
         UpdateAmbient()
         Reset()
     }
-
-    private func LoadModelData() {
-        var theparams : ThermalModelParams
-        
-        theparams = ThermalModelParams(name: "Gas oven")
-        theparams.a *= 1.1
-        modelData.append(theparams)
-        
-        theparams = ThermalModelParams(name: "Electric oven")
-        theparams.a *= 1.2
-        modelData.append(theparams)
-        
-        theparams = ThermalModelParams(name: "Convection oven")
-        theparams.a *= 0.9
-        modelData.append(theparams)
-        
-        theparams = ThermalModelParams(name: "Speed oven")
-        theparams.a *= 0.8
-        modelData.append(theparams)
-        
-        theparams = ThermalModelParams(name: "Outdoor grill")
-        theparams.a *= 1.0
-        modelData.append(theparams)
+    
+    private func LoadState() {
+        if let state = NSKeyedUnarchiver.unarchiveObject(withFile: stateURL.path) as? EcoChefState {
+            self.state = state
+        } else {
+            self.state = EcoChefState()
+        }
     }
     
+    private func UpdateFromState() {
+        desiredTempSlider.value = state!.desiredTemp
+        modelData.selectedIndex = state!.selectedModel
+        model.setfrom(params: modelData.selectedModelData)
+        UpdateDesired()
+    }
+    
+    func WriteStateToDisk() {
+        state!.desiredTemp = desiredTemp
+        NSKeyedArchiver.archiveRootObject(state!, toFile: stateURL.path)
+    }
+
     private func Quantize(_ temp:Float) -> Float {
         if temp < crossover {
             return smallstep*round(temp/smallstep)
@@ -144,7 +122,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     }
     
     func UpdateDesired() {
-        SetDesired(temp: desiredTempSlider.value)
+        SetDesired(temp: Quantize(desiredTempSlider.value))
     }
     
     func UpdateAmbient() {
@@ -160,7 +138,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     
     func Reset() {
         currentTempSlider.value = currentTempSlider.minimumValue
-        desiredTempSlider.value = tempdefault
+        desiredTempSlider.value = state!.desiredTemp
         UpdateCurrent()
         UpdateDesired()
     }
@@ -173,13 +151,13 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         }
     }
     
-    // MARK: timer functions
-    
+    // MARK: Notification and timer functionality
     private var timer: Timer?
     private var timerDisabledControls: [UIControl] = []
     private var timerRunning: Bool = false
     private var initialCurrentTemp: Float = 0
     
+    // Timer delegate function
     func TimerCount() {
         let minutesLeft = modelTimer.minutesLeft()
         if minutesLeft > 0 {
@@ -189,13 +167,13 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
             currentTempSlider.value = tempEst
             currentTemp = round(tempEst)
         } else {
-            let Tset = desiredTempSlider.value
+            let Tset = desiredTemp
             currentTempSlider.value = Tset
             UpdateCurrent()
             StopTimer()
         }
     }
-
+    
     func ResetTimer() {
         StopTimer()
         currentTempSlider.value = Float(initialCurrentTemp)
@@ -253,11 +231,11 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         } else {
             notifyTitle = "Cooling done"
         }
-        let notifyText = "\(modelData[selectedModel]) should be \(Int(desiredTemp)) degrees."
+        let notifyText = "\(modelData.selectedModelData.name) should be \(Int(desiredTemp)) degrees."
         content.title = NSString.localizedUserNotificationString(forKey: notifyTitle, arguments: nil)
         content.body = NSString.localizedUserNotificationString(forKey: notifyText, arguments: nil)
         content.sound = UNNotificationSound(named: "birge-ring.aiff")
-
+        
         let timeLeft = Double(modelTimer.minutesLeft())
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60.0*timeLeft, repeats: false)
         let request = UNNotificationRequest(identifier: "PreheatAlarm", content: content, trigger: trigger)
@@ -284,12 +262,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let settingsView = segue.destination as? SettingsViewController {
             settingsView.initialTamb = Tamb
-            var modelNames: [String] = []
-            for themodel in modelData {
-                modelNames.append("\(themodel)")
-            }
-            settingsView.modelNames = modelNames
-            settingsView.initialSelection = selectedModel
+            settingsView.modelData = modelData
         }
     }
     
@@ -299,11 +272,13 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         // Pull data from SettingsViewController
         Tamb = source.Tamb
         UpdateAmbient()
-        selectedModel = source.selectedModel
+        model.setfrom(params: modelData.selectedModelData)
+        state!.selectedModel = modelData.selectedIndex
         UpdateView()
         
         // Save to disk
-        NSKeyedArchiver.archiveRootObject(state!, toFile: stateURL.path)
+        WriteStateToDisk()
+        modelData.WriteToDisk()
     }
     
     // MARK: IBOutlets and IBActions
@@ -342,6 +317,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     
     @IBAction func DesiredTouchUpIn() {
         CheckTimerEnable()
+        WriteStateToDisk()
     }
     
     @IBAction func CurrentTouchUpIn() {

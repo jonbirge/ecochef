@@ -8,24 +8,84 @@
 
 import Foundation
 
-struct ThermalModelParams : CustomStringConvertible {
-    let name: String
+class ThermalModelData {
+    var modelArray: [ThermalModelParams] = []
+    var selectedIndex: Int = 1
+    
+    var selectedModelData: ThermalModelParams {
+        return modelArray[selectedIndex]
+    }
+        
+    func LoadDefaultModelData() {
+        var theparams : ThermalModelParams
+        
+        theparams = ThermalModelParams(name: "Electric (EnergyStar)")
+        theparams.a *= 1.2
+        modelArray.append(theparams)
+        
+        theparams = ThermalModelParams(name: "Electric (Fast Preheat)")
+        theparams.a *= 1.2
+        theparams.b = 700
+        modelArray.append(theparams)
+        
+        theparams = ThermalModelParams(name: "Electric (Old)")
+        theparams.a *= 1.5
+        modelArray.append(theparams)
+        
+        theparams = ThermalModelParams(name: "Convection (Large)")
+        theparams.a *= 0.9
+        modelArray.append(theparams)
+        
+        theparams = ThermalModelParams(name: "Convection (Small)")
+        theparams.a *= 0.8
+        modelArray.append(theparams)
+        
+        theparams = ThermalModelParams(name: "Gas Oven")
+        theparams.a *= 1.1
+        modelArray.append(theparams)
+        
+        theparams = ThermalModelParams(name: "Gas Grill")
+        modelArray.append(theparams)
+    }
+}
+
+class ThermalModelParams : NSObject, NSCoding {
+    var name: String
     var a: Float
     var b: Float
     
-    var description: String {
-        return name
+    struct PropertyKeys {
+        static let name = "name"
+        static let a = "a"
+        static let b = "b"
     }
     
-    init(name: String) {
+    convenience init(name: String) {
+        self.init(name: name, a: 10, b: 500)
+    }
+    
+    init(name: String, a: Float, b: Float) {
         self.name = name
-        a = 10.0
-        b = 500.0
-     }
+        self.a = a
+        self.b = b
+    }
+    
+    required convenience init(coder aDecoder: NSCoder) {
+        let name = aDecoder.decodeObject(forKey: PropertyKeys.name) as? String
+        let a = aDecoder.decodeFloat(forKey: PropertyKeys.a)
+        let b = aDecoder.decodeFloat(forKey: PropertyKeys.b)
+        self.init(name: name!, a: a, b: b)
+    }
+    
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(name, forKey: PropertyKeys.name)
+        aCoder.encode(a, forKey: PropertyKeys.a)
+        aCoder.encode(b, forKey: PropertyKeys.b)
+    }
 }
 
 // Computational logic
-class ThermalModel {
+class ThermalModel : CustomStringConvertible {
     var a: Float = 10.0  // RC time constant
     var b: Float = 500.0  // RH coefficient (s.s. temp above ambient)
     var Tamb: Float = 70.0  // T_ambient
