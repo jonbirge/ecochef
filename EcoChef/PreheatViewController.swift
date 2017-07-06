@@ -51,7 +51,6 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     }
     
     func didEnterBackground() {
-        print("PreheatView entered background")
         if timerRunning {
             timer?.invalidate()
             timer = nil
@@ -59,7 +58,6 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     }
     
     func didBecomeActive() {
-        print("PreheatView entering foreground")
         if timerRunning {
             timer =
                 Timer.scheduledTimer(timeInterval: 0.2,
