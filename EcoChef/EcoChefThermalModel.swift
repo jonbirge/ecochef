@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+// Extend for reading and writing from iOS
 extension ThermalModelData {
     var modelURL: URL {
         let modelURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!

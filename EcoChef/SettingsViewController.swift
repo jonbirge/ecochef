@@ -29,7 +29,7 @@ UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
         updateViews()
     }
     
-    // Output handling
+    // MARK: Output handling
     
     var selectedModel: Int {
         return modelPicker.selectedRow(inComponent: 0)

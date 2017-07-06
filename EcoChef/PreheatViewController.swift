@@ -35,6 +35,8 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         return docsURL.appendingPathComponent("state")
     }
     
+    // MARK: - Startup
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         modelTimer.thermalModel = model
@@ -68,6 +70,8 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         }
     }
     
+    // MARK: - State
+    
     private func LoadState() {
         if let state = NSKeyedUnarchiver.unarchiveObject(withFile: stateURL.path) as? EcoChefState {
             self.state = state
@@ -87,6 +91,8 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         state!.desiredTemp = desiredTemp
         NSKeyedArchiver.archiveRootObject(state!, toFile: stateURL.path)
     }
+    
+    // MARK: - UI & model
 
     private func Quantize(_ temp:Float) -> Float {
         if temp < crossover {
@@ -174,19 +180,15 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         }
     }
     
-    // MARK: Notification and timer functionality
+    // MARK: - Notification and timer functionality
+    
     private var timer: Timer?
     private var timerDisabledControls: [UIControl] = []
     private var timerRunning: Bool = false
     private var initialCurrentTemp: Float = 0
     
     // Timer delegate function
-    var timerCount: Int = 0
     func TimerCount() {
-        timerCount += 1
-        if timerCount % 10 == 0 {
-            print("timer count: \(timerCount)")
-        }
         let minutesLeft = modelTimer.minutesLeft()
         if minutesLeft > 0 {
             ShowTime(minutes: minutesLeft)
@@ -286,7 +288,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         completionHandler(alertOption.union(soundOption))
     }
     
-    // MARK: Navigation
+    // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let settingsView = segue.destination as? SettingsViewController {
