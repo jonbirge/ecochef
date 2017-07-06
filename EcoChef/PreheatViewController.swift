@@ -19,82 +19,51 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     private var currentTemp: Float = 70
     let model = ThermalModel()
     let modelTimer = ThermalTimer()
-    var modelData: [ThermalModelParams] = []
+    //var modelData: [ThermalModelParams] = []
+    var modelData = ThermalModelData()
     private var state: EcoChefState?
     
     var Tamb : Float {
-        get {
-            return model.Tamb
-        }
+        get { return model.Tamb }
         set (newTamb) {
             model.Tamb = Quantize(newTamb)
             state?.Tamb = model.Tamb
         }
     }
     
-    var selectedModel: Int {
-        get {
-            return state!.selectedModel
-        }
-        set (newIndex) {
-            state?.selectedModel = newIndex
-            model.setfrom(params: modelData[state!.selectedModel])
-        }
-    }
-    
     var stateURL: URL {
-        let documentsURL = FileManager.default.urls(for: .documentDirectory,
-                                                    in: .userDomainMask).first!
-        return documentsURL.appendingPathComponent("state")
+        let docsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        return docsURL.appendingPathComponent("state")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         modelTimer.thermalModel = model
-        LoadModelData()
+        modelData.LoadModelData()
+        LoadState()
+        UpdateFromState()
+        UpdateAmbient()
+        Reset()
+    }
+    
+    private func LoadState() {
         if let state = NSKeyedUnarchiver.unarchiveObject(withFile: stateURL.path) as? EcoChefState {
             self.state = state
         } else {
             self.state = EcoChefState()
         }
-        SetDesired(temp: self.state!.desiredTemp)
-        desiredTempSlider.value = desiredTemp
-        UpdateAmbient()
-        Reset()
-    }
-
-    private func LoadModelData() {
-        var theparams : ThermalModelParams
-        
-        theparams = ThermalModelParams(name: "Electric (EnergyStar)")
-        theparams.a *= 1.2
-        modelData.append(theparams)
-        
-        theparams = ThermalModelParams(name: "Electric (Fast Preheat)")
-        theparams.a *= 1.2
-        theparams.b = 600
-        modelData.append(theparams)
-        
-        theparams = ThermalModelParams(name: "Electric (Old)")
-        theparams.a *= 1.5
-        modelData.append(theparams)
-        
-        theparams = ThermalModelParams(name: "Convection (Large)")
-        theparams.a *= 0.9
-        modelData.append(theparams)
-        
-        theparams = ThermalModelParams(name: "Convection (Small)")
-        theparams.a *= 0.8
-        modelData.append(theparams)
-        
-        theparams = ThermalModelParams(name: "Gas")
-        theparams.a *= 1.1
-        modelData.append(theparams)
-        
-        theparams = ThermalModelParams(name: "Gas Grill")
-         modelData.append(theparams)
     }
     
+    private func UpdateFromState() {
+        desiredTempSlider.value = state!.desiredTemp
+        UpdateDesired()
+    }
+    
+    func WriteStateToDisk() {
+        state!.desiredTemp = desiredTemp
+        NSKeyedArchiver.archiveRootObject(state!, toFile: stateURL.path)
+    }
+
     private func Quantize(_ temp:Float) -> Float {
         if temp < crossover {
             return smallstep*round(temp/smallstep)
@@ -181,11 +150,6 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         }
     }
     
-    func WriteStateToDisk() {
-        state!.desiredTemp = desiredTemp
-        NSKeyedArchiver.archiveRootObject(state!, toFile: stateURL.path)
-    }
-    
     // MARK: timer functions
     
     private var timer: Timer?
@@ -267,7 +231,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         } else {
             notifyTitle = "Cooling done"
         }
-        let notifyText = "\(modelData[selectedModel]) should be \(Int(desiredTemp)) degrees."
+        let notifyText = "\(modelData.selectedModelData.name) should be \(Int(desiredTemp)) degrees."
         content.title = NSString.localizedUserNotificationString(forKey: notifyTitle, arguments: nil)
         content.body = NSString.localizedUserNotificationString(forKey: notifyText, arguments: nil)
         content.sound = UNNotificationSound(named: "birge-ring.aiff")
@@ -298,8 +262,8 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let settingsView = segue.destination as? SettingsViewController {
             settingsView.initialTamb = Tamb
-            settingsView.modelData = self.modelData
-            settingsView.initialSelection = selectedModel
+            settingsView.modelData = modelData.modelArray
+            settingsView.initialSelection = modelData.selectedIndex
         }
     }
     
@@ -309,8 +273,9 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         // Pull data from SettingsViewController
         Tamb = source.Tamb
         UpdateAmbient()
-        modelData = source.modelData
-        selectedModel = source.selectedModel
+        modelData.modelArray = source.modelData
+        modelData.selectedIndex = source.selectedModel
+        model.setfrom(params: modelData.selectedModelData)
         UpdateView()
         
         // Save to disk
@@ -364,3 +329,4 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         Reset()
     }
 }
+

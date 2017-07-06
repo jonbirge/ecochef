@@ -11,7 +11,7 @@ import SafariServices
 
 class SettingsViewController:
 UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
-    var modelData: [ThermalModelParams]!
+    var modelData: [ThermalModelParams] = []
     var initialTamb: Float = 0.0
     var initialSelection: Int = 2
     
@@ -98,10 +98,8 @@ UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
         if let modelTableView = segue.source as? ModelTableViewController {
             self.modelData = modelTableView.modelData
             modelPicker.reloadAllComponents()
+            // TODO: Save to disk
         }
-        
-        // Save to disk
-        // NSKeyedArchiver.archiveRootObject(modelData!, toFile: modelURL.path)
     }
     
 }
