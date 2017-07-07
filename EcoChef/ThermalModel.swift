@@ -28,16 +28,8 @@ class ThermalModelData {
         theparams.b = 700
         modelArray.append(theparams)
         
-        theparams = ThermalModelParams(name: "Electric (Old)")
-        theparams.a *= 1.5
-        modelArray.append(theparams)
-        
-        theparams = ThermalModelParams(name: "Convection (Large)")
+        theparams = ThermalModelParams(name: "Convection")
         theparams.a *= 0.9
-        modelArray.append(theparams)
-        
-        theparams = ThermalModelParams(name: "Convection (Small)")
-        theparams.a *= 0.8
         modelArray.append(theparams)
         
         theparams = ThermalModelParams(name: "Gas Oven")
@@ -53,34 +45,58 @@ class ThermalModelParams : NSObject, NSCoding {
     var name: String
     var a: Float
     var b: Float
+    var note: String
+    var mod: Date
     
-    struct PropertyKeys {
+    struct Keys {
         static let name = "name"
         static let a = "a"
         static let b = "b"
+        static let note = "note"
+        static let mod = "mod"
     }
     
     convenience init(name: String) {
-        self.init(name: name, a: 10, b: 500)
+        self.init(name: name, a: 10, b: 500, note: "Default")
     }
     
-    init(name: String, a: Float, b: Float) {
+    convenience init(name: String, a: Float, b: Float, note: String) {
+        self.init(name: name, a: a, b: b, note: note, mod: Date())
+    }
+    
+    init(name: String, a: Float, b: Float, note: String, mod: Date) {
         self.name = name
         self.a = a
         self.b = b
+        self.note = note
+        self.mod = mod
     }
     
     required convenience init(coder aDecoder: NSCoder) {
-        let name = aDecoder.decodeObject(forKey: PropertyKeys.name) as? String
-        let a = aDecoder.decodeFloat(forKey: PropertyKeys.a)
-        let b = aDecoder.decodeFloat(forKey: PropertyKeys.b)
-        self.init(name: name!, a: a, b: b)
+        let name = aDecoder.decodeObject(forKey: Keys.name) as! String
+        let a = aDecoder.decodeFloat(forKey: Keys.a)
+        let b = aDecoder.decodeFloat(forKey: Keys.b)
+        var note: String
+        if let noteread = aDecoder.decodeObject(forKey: Keys.note) as? String {
+            note = noteread
+        } else {
+            note = ""
+        }
+        var mod: Date
+        if let modread = aDecoder.decodeObject(forKey: Keys.mod) as? Date {
+            mod = modread
+        } else {
+            mod = Date()
+        }
+        self.init(name: name, a: a, b: b, note: note, mod: mod)
     }
     
     func encode(with aCoder: NSCoder) {
-        aCoder.encode(name, forKey: PropertyKeys.name)
-        aCoder.encode(a, forKey: PropertyKeys.a)
-        aCoder.encode(b, forKey: PropertyKeys.b)
+        aCoder.encode(name, forKey: Keys.name)
+        aCoder.encode(a, forKey: Keys.a)
+        aCoder.encode(b, forKey: Keys.b)
+        aCoder.encode(note, forKey: Keys.note)
+        aCoder.encode(mod, forKey: Keys.mod)
     }
 }
 
