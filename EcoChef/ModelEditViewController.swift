@@ -16,18 +16,18 @@ class ModelEditViewController: UITableViewController {
         updateView()
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
     // MARK: - Table view data source
     
     func updateView() {
-        guard let modelparams = self.modelparams else { return }
-        nameField.text = modelparams.name
-        rcField.text = String(modelparams.a)
-        hrField.text = String(modelparams.b)
+        if let modelparams = self.modelparams {
+            nameField.text = modelparams.name
+            rcField.text = String(modelparams.a)
+            hrField.text = String(modelparams.b)
+            noteField.text = modelparams.note
+            modLabel.text = modelparams.mod.description
+        } else {
+            self.modelparams = ThermalModelParams(name: "New Model")  // default
+        }
     }
 
     /*
@@ -46,7 +46,12 @@ class ModelEditViewController: UITableViewController {
         let hr = Float(hrField.text!)
             else { return }
         
-        modelparams = ThermalModelParams(name: name, a: rc, b: hr)
+        let note = noteField.text!
+        let mod = Date()
+        modelparams = ThermalModelParams(name: name,
+                                         a: rc, b: hr,
+                                         note: note,
+                                         mod: mod)
         
         performSegue(withIdentifier: "UnwindToModelList", sender: self)
     }
@@ -54,4 +59,6 @@ class ModelEditViewController: UITableViewController {
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var rcField: UITextField!
     @IBOutlet weak var hrField: UITextField!
+    @IBOutlet weak var noteField: UITextField!
+    @IBOutlet weak var modLabel: UILabel!
 }
