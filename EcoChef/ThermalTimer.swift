@@ -17,14 +17,16 @@ class ThermalTimer {
     private var startTemp: Float = 0
     
     func startTimer(fromTemp: Float, toTemp: Float) {
-        startTime = Date()
-        timerMinutes = thermalModel!.time(totemp: toTemp, fromtemp: fromTemp)
-        if toTemp > fromTemp {
-            isHeating = true
-        } else {
-            isHeating = false
+        if let timerMinutes = thermalModel!.time(totemp: toTemp, fromtemp: fromTemp) {
+            startTime = Date()
+            self.timerMinutes = timerMinutes
+            if toTemp > fromTemp {
+                isHeating = true
+            } else {
+                isHeating = false
+            }
+            startTemp = fromTemp
         }
-        startTemp = fromTemp
     }
     
     func minutesLeft() -> Float {

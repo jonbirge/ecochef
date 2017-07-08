@@ -18,6 +18,8 @@
 		ABA36DC31F07401100B3FCA4 /* EcoChefState.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA36DC21F07401100B3FCA4 /* EcoChefState.swift */; };
 		ABC7A8711EF8DC5D00F25317 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC7A8701EF8DC5D00F25317 /* SettingsViewController.swift */; };
 		ABC7A8751EF8EE7900F25317 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC7A8741EF8EE7900F25317 /* AboutViewController.swift */; };
+		ABD4127F1F1134C900429887 /* EcoChefTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD4127E1F1134C900429887 /* EcoChefTests.swift */; };
+		ABD412861F11375400429887 /* ThermalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB43B18A1EEBAEA100B6A96B /* ThermalModel.swift */; };
 		ABEB6F1D1F02A6E300ABD199 /* ThermalTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB6F1C1F02A6E300ABD199 /* ThermalTimer.swift */; };
 		ABEBBBA01F05AC1C00527B4F /* TimerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEBBB9F1F05AC1C00527B4F /* TimerButton.swift */; };
 		ABEBBBA61F05B06400527B4F /* SimpleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEBBBA31F05B06400527B4F /* SimpleButton.swift */; };
@@ -26,6 +28,16 @@
 		ABEDA1BE1F09F75600FAE1E1 /* ModelTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEDA1BC1F09F75600FAE1E1 /* ModelTableViewController.swift */; };
 		ABEDA1C11F09FDAD00FAE1E1 /* ModelEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEDA1C01F09FDAD00FAE1E1 /* ModelEditViewController.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		ABD412811F1134C900429887 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB43B16B1EEB871E00B6A96B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AB43B1721EEB871E00B6A96B;
+			remoteInfo = EcoChef;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		AB0373881F020DD7005D1880 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -41,6 +53,9 @@
 		ABA36DC21F07401100B3FCA4 /* EcoChefState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EcoChefState.swift; sourceTree = "<group>"; };
 		ABC7A8701EF8DC5D00F25317 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		ABC7A8741EF8EE7900F25317 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		ABD4127C1F1134C900429887 /* EcoChefTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EcoChefTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		ABD4127E1F1134C900429887 /* EcoChefTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcoChefTests.swift; sourceTree = "<group>"; };
+		ABD412801F1134C900429887 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ABEB6F1C1F02A6E300ABD199 /* ThermalTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThermalTimer.swift; sourceTree = "<group>"; };
 		ABEBBB9F1F05AC1C00527B4F /* TimerButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerButton.swift; sourceTree = "<group>"; };
 		ABEBBBA31F05B06400527B4F /* SimpleButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleButton.swift; sourceTree = "<group>"; };
@@ -58,6 +73,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		ABD412791F1134C900429887 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -65,6 +87,7 @@
 			isa = PBXGroup;
 			children = (
 				AB43B1751EEB871E00B6A96B /* EcoChef */,
+				ABD4127D1F1134C900429887 /* EcoChefTests */,
 				AB43B1741EEB871E00B6A96B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -73,6 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				AB43B1731EEB871E00B6A96B /* EcoChef.app */,
+				ABD4127C1F1134C900429887 /* EcoChefTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -99,6 +123,15 @@
 				ABEBBBA91F05B56E00527B4F /* SimpleButton */,
 			);
 			path = EcoChef;
+			sourceTree = "<group>";
+		};
+		ABD4127D1F1134C900429887 /* EcoChefTests */ = {
+			isa = PBXGroup;
+			children = (
+				ABD4127E1F1134C900429887 /* EcoChefTests.swift */,
+				ABD412801F1134C900429887 /* Info.plist */,
+			);
+			path = EcoChefTests;
 			sourceTree = "<group>";
 		};
 		ABEBBBA91F05B56E00527B4F /* SimpleButton */ = {
@@ -139,6 +172,24 @@
 			productReference = AB43B1731EEB871E00B6A96B /* EcoChef.app */;
 			productType = "com.apple.product-type.application";
 		};
+		ABD4127B1F1134C900429887 /* EcoChefTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ABD412831F1134C900429887 /* Build configuration list for PBXNativeTarget "EcoChefTests" */;
+			buildPhases = (
+				ABD412781F1134C900429887 /* Sources */,
+				ABD412791F1134C900429887 /* Frameworks */,
+				ABD4127A1F1134C900429887 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				ABD412821F1134C900429887 /* PBXTargetDependency */,
+			);
+			name = EcoChefTests;
+			productName = EcoChefTests;
+			productReference = ABD4127C1F1134C900429887 /* EcoChefTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -158,6 +209,11 @@
 							};
 						};
 					};
+					ABD4127B1F1134C900429887 = {
+						CreatedOnToolsVersion = 8.3.3;
+						ProvisioningStyle = Automatic;
+						TestTargetID = AB43B1721EEB871E00B6A96B;
+					};
 				};
 			};
 			buildConfigurationList = AB43B16E1EEB871E00B6A96B /* Build configuration list for PBXProject "EcoChef" */;
@@ -174,6 +230,7 @@
 			projectRoot = "";
 			targets = (
 				AB43B1721EEB871E00B6A96B /* EcoChef */,
+				ABD4127B1F1134C900429887 /* EcoChefTests */,
 			);
 		};
 /* End PBXProject section */
@@ -187,6 +244,13 @@
 				AB57E5DB1F0492F700D37EF8 /* birge-ring.aiff in Resources */,
 				AB43B1801EEB871E00B6A96B /* Assets.xcassets in Resources */,
 				AB43B17E1EEB871E00B6A96B /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABD4127A1F1134C900429887 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,7 +278,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		ABD412781F1134C900429887 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ABD4127F1F1134C900429887 /* EcoChefTests.swift in Sources */,
+				ABD412861F11375400429887 /* ThermalModel.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		ABD412821F1134C900429887 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AB43B1721EEB871E00B6A96B /* EcoChef */;
+			targetProxy = ABD412811F1134C900429887 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		AB43B17C1EEB871E00B6A96B /* Main.storyboard */ = {
@@ -363,6 +444,34 @@
 			};
 			name = Release;
 		};
+		ABD412841F1134C900429887 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = YB79GC96TU;
+				INFOPLIST_FILE = EcoChefTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = us.birge.EcoChefTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EcoChef.app/EcoChef";
+			};
+			name = Debug;
+		};
+		ABD412851F1134C900429887 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = YB79GC96TU;
+				INFOPLIST_FILE = EcoChefTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = us.birge.EcoChefTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EcoChef.app/EcoChef";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -383,6 +492,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		ABD412831F1134C900429887 /* Build configuration list for PBXNativeTarget "EcoChefTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ABD412841F1134C900429887 /* Debug */,
+				ABD412851F1134C900429887 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};

@@ -34,7 +34,7 @@ class AboutViewController: UIViewController {
         UIView.transition(with: eggTextView, duration: 5,
                           options: .transitionCrossDissolve,
                           animations:
-            { self.eggTextView.textColor = .purple },
+            { self.eggTextView.textColor = .red },
                           completion: nil)
     }
 }

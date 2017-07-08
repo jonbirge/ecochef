@@ -110,6 +110,10 @@ class ThermalModel : CustomStringConvertible {
         return "ThermalModel: \((a, b)), Tambient = \(Tamb)"
     }
     
+    var Tmax: Float {
+        return b + Tamb
+    }
+    
     // load from struct
     func setfrom(params:ThermalModelParams) {
         a = params.a
@@ -117,11 +121,11 @@ class ThermalModel : CustomStringConvertible {
     }
     
     // time in fractional minutes
-    func time(totemp:Float) -> Float {
+    func time(totemp:Float) -> Float? {
         return time(totemp:totemp, fromtemp:Tamb)
     }
     
-    func time(totemp Tset:Float, fromtemp Tstart:Float) -> Float {
+    func time(totemp Tset:Float, fromtemp Tstart:Float) -> Float? {
         if Tset > Tstart {
             return a * log((b + Tamb - Tstart)/(b + Tamb - Tset))
         } else {

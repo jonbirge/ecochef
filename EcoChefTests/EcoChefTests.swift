@@ -1,0 +1,71 @@
+//
+//  EcoChefTests.swift
+//  EcoChefTests
+//
+//  Created by Jonathan Birge on 7/8/17.
+//  Copyright © 2017 Birge Clocks. All rights reserved.
+//
+
+import XCTest
+
+class EcoChefTests: XCTestCase {
+    var testModel: ThermalModel = ThermalModel()
+    var maxTemp: Float = 0
+    
+    override func setUp() {
+        super.setUp()
+        // Put setup code here. This method is called before the invocation of each test method in the class.
+        testModel.a = 10
+        testModel.b = 500
+        testModel.Tamb = 70
+        maxTemp = testModel.b + testModel.Tamb
+    }
+    
+    override func tearDown() {
+        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        super.tearDown()
+    }
+    
+    func testZeroTime() {
+        // This is an example of a functional test case.
+        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        let testTime = testModel.time(totemp: 100, fromtemp: 100)
+        XCTAssertEqual(testTime, 0.0)
+    }
+    
+    func testGeneralTime() {
+        let testTime = testModel.time(totemp: 450, fromtemp: 70)
+        XCTAssertEqual(testTime, 10*log(25/6))
+    }
+    
+    func testTimeFromAmbient() {
+        let testTime = testModel.time(totemp: 450)
+        XCTAssertEqual(testTime, 10*log(25/6))
+    }
+    
+    func testMaxTemp() {
+        XCTAssertEqual(testModel.Tmax, maxTemp)
+    }
+    
+    func testUndefinedHeating() {
+        XCTAssertNil(testModel.time(totemp: maxTemp + 10))
+    }
+    
+    func testUndefinedCooling() {
+        let testCool = testModel.time(totemp: testModel.Tamb - 10)
+        XCTAssertNil(testCool)
+    }
+    
+    func testPerformanceExample() {
+        // This is an example of a performance test case.
+        var temp: Float = 0
+        self.measure {
+            for Tstart in 50...Int(floor(self.maxTemp)) {
+                for Tfinal in 50...Int(floor(self.maxTemp)) {
+                    temp += self.testModel.time(totemp: Float(Tfinal), fromtemp: Float(Tstart))!
+                }
+            }
+        }
+    }
+    
+}

@@ -128,8 +128,11 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         desiredTempSlider.minimumTrackTintColor = uiColor
         
         // Run model
-        let minfrac = model.time(totemp: desiredTemp, fromtemp: currentTemp)
-        ShowTime(minutes: minfrac)
+        if let minfrac = model.time(totemp: desiredTemp, fromtemp: currentTemp) {
+            ShowTime(minutes: minfrac)
+        } else {
+            ShowTime(minutes: 99)  // infinity...
+        }
     }
     
     func ShowTime(minutes: Float) {
