@@ -33,14 +33,29 @@ class EcoChefTests: XCTestCase {
         XCTAssertEqual(testTime, 0.0)
     }
     
-    func testGeneralTime() {
+    func testGeneralHeatTime() {
         let testTime = testModel.time(totemp: 450, fromtemp: 70)
         XCTAssertEqual(testTime, 10*log(25/6))
     }
     
-    func testTimeFromAmbient() {
+    func testHeatTimeFromAmbient() {
         let testTime = testModel.time(totemp: 450)
         XCTAssertEqual(testTime, 10*log(25/6))
+    }
+    
+    func testGeneralCoolTime() {
+        let testTime = testModel.time(totemp: 100, fromtemp: 175)
+        XCTAssertEqual(testTime, 10*log(7/2))
+    }
+    
+    func testHeatTemp() {
+        let testTemp = testModel.tempAfterHeating(time: 10, fromtemp: 100)
+        XCTAssertEqual(testTemp, 570 - 470/exp(1))
+    }
+    
+    func testCoolTemp() {
+        let testTemp = testModel.tempAfterCooling(time: 10, fromtemp: 175)
+        XCTAssertEqual(testTemp, 70 + 105/exp(1))
     }
     
     func testMaxTemp() {

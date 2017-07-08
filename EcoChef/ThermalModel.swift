@@ -107,7 +107,7 @@ class ThermalModel : CustomStringConvertible {
     var Tamb: Float = 70.0  // T_ambient
     
     var description: String {
-        return "ThermalModel: \((a, b)), Tambient = \(Tamb)"
+        return "ThermalModel: \((a, b)), Tamb = \(Tamb)"
     }
     
     var Tmax: Float {
