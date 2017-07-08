@@ -60,9 +60,12 @@ class EcoChefTests: XCTestCase {
         // This is an example of a performance test case.
         var temp: Float = 0
         self.measure {
-            for Tstart in 50...Int(floor(self.maxTemp)) {
-                for Tfinal in 50...Int(floor(self.maxTemp)) {
-                    temp += self.testModel.time(totemp: Float(Tfinal), fromtemp: Float(Tstart))!
+            for _ in 1...32 {
+                for Tstart in 80...Int(floor(self.maxTemp)-1) {
+                    for Tfinal in 80...Int(floor(self.maxTemp)-1) {
+                        temp += self.testModel.time(totemp: Float(Tfinal), fromtemp: Float(Tstart))!
+                        temp -= self.testModel.time(totemp: Float(Tstart), fromtemp: Float(Tfinal))!
+                    }
                 }
             }
         }
