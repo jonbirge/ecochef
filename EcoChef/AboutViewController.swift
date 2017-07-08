@@ -11,15 +11,15 @@ import UIKit
 class AboutViewController: UIViewController {
 
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var eggTextView: UITextView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        titleLabel.textColor = .black
+        titleLabel.textColor = .blue
+        eggTextView.textColor = .white
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -30,9 +30,11 @@ class AboutViewController: UIViewController {
                           completion: nil)
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @IBAction func swipeUp(_ sender: UISwipeGestureRecognizer) {
+        UIView.transition(with: eggTextView, duration: 5,
+                          options: .transitionCrossDissolve,
+                          animations:
+            { self.eggTextView.textColor = .purple },
+                          completion: nil)
     }
-
 }

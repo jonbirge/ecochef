@@ -33,6 +33,14 @@
                                     <action selector="CurrentTouchUpIn" destination="9pv-A4-QxB" eventType="touchUpInside" id="189-Dg-a5x"/>
                                 </connections>
                             </slider>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="350" minValue="50" maxValue="500" translatesAutoresizingMaskIntoConstraints="NO" id="InP-Vp-TcT">
+                                <rect key="frame" x="30" y="509" width="315" height="31"/>
+                                <color key="minimumTrackTintColor" red="0.85622223984771573" green="0.22233978877993463" blue="0.13874736178681857" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <connections>
+                                    <action selector="DesiredTempChange:" destination="9pv-A4-QxB" eventType="valueChanged" id="Ykb-Np-7q9"/>
+                                    <action selector="DesiredTouchUpIn" destination="9pv-A4-QxB" eventType="touchUpInside" id="aLk-cX-sRm"/>
+                                </connections>
+                            </slider>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="70" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4z5-mr-Y9b" userLabel="CurrTemp">
                                 <rect key="frame" x="155.5" y="384" width="64" height="24"/>
                                 <constraints>
@@ -42,14 +50,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="350" minValue="50" maxValue="500" translatesAutoresizingMaskIntoConstraints="NO" id="InP-Vp-TcT">
-                                <rect key="frame" x="30" y="509" width="315" height="31"/>
-                                <color key="minimumTrackTintColor" red="0.85622223984771573" green="0.22233978877993463" blue="0.13874736178681857" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <connections>
-                                    <action selector="DesiredTempChange:" destination="9pv-A4-QxB" eventType="valueChanged" id="Ykb-Np-7q9"/>
-                                    <action selector="DesiredTouchUpIn" destination="9pv-A4-QxB" eventType="touchUpInside" id="aLk-cX-sRm"/>
-                                </connections>
-                            </slider>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Desired Temp" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yxc-k7-e3x">
                                 <rect key="frame" x="32" y="477" width="100.5" height="23"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
@@ -165,10 +165,10 @@
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nHw-Lj-crR">
-                                <rect key="frame" x="98" y="614" width="179" height="33"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nHw-Lj-crR">
+                                <rect key="frame" x="223" y="380" width="120" height="33"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                <state key="normal" title="Set to ambient"/>
+                                <state key="normal" title="Ambient"/>
                                 <connections>
                                     <action selector="ResetButton:" destination="9pv-A4-QxB" eventType="touchUpInside" id="Xyf-GN-Ow5"/>
                                 </connections>
@@ -187,7 +187,7 @@
                             <constraint firstItem="moH-Te-Xzb" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" constant="16" id="B0O-j9-Ni1"/>
                             <constraint firstItem="gCO-mA-Prx" firstAttribute="centerX" secondItem="X3y-il-6FY" secondAttribute="centerX" constant="22" id="B1x-Qc-Tob"/>
                             <constraint firstItem="GDg-mc-Nd8" firstAttribute="centerX" secondItem="tsR-hK-woN" secondAttribute="centerX" id="B9a-xC-sTR"/>
-                            <constraint firstItem="nHw-Lj-crR" firstAttribute="centerX" secondItem="InP-Vp-TcT" secondAttribute="centerX" id="F8t-Re-zIv"/>
+                            <constraint firstItem="nHw-Lj-crR" firstAttribute="centerX" secondItem="InP-Vp-TcT" secondAttribute="centerX" constant="95.5" id="F8t-Re-zIv"/>
                             <constraint firstAttribute="trailingMargin" secondItem="moH-Te-Xzb" secondAttribute="trailing" constant="16" id="FLg-vy-EhA"/>
                             <constraint firstItem="InP-Vp-TcT" firstAttribute="trailing" secondItem="moH-Te-Xzb" secondAttribute="trailing" id="FzQ-tX-z0h"/>
                             <constraint firstItem="X3y-il-6FY" firstAttribute="baseline" secondItem="QVQ-IA-R7s" secondAttribute="baseline" id="Kdw-PU-OEI"/>
@@ -206,12 +206,12 @@
                             <constraint firstItem="X3y-il-6FY" firstAttribute="leading" secondItem="pAx-TJ-5bS" secondAttribute="trailing" id="cxw-Kd-aKP"/>
                             <constraint firstItem="4ug-Mw-9AY" firstAttribute="top" secondItem="InP-Vp-TcT" secondAttribute="bottom" priority="250" constant="128" id="dEc-QD-k9C"/>
                             <constraint firstItem="1cO-cu-AuE" firstAttribute="centerX" secondItem="tsR-hK-woN" secondAttribute="centerX" id="ebr-AC-Wms"/>
-                            <constraint firstAttribute="bottom" secondItem="nHw-Lj-crR" secondAttribute="bottom" constant="20" symbolic="YES" id="fxp-vg-UeO"/>
+                            <constraint firstAttribute="bottom" secondItem="nHw-Lj-crR" secondAttribute="bottom" constant="254" id="fxp-vg-UeO"/>
                             <constraint firstItem="pAx-TJ-5bS" firstAttribute="baseline" secondItem="QVQ-IA-R7s" secondAttribute="baseline" id="hc4-oO-32q"/>
                             <constraint firstItem="pAx-TJ-5bS" firstAttribute="centerX" secondItem="tsR-hK-woN" secondAttribute="centerX" id="l7q-k1-W3R"/>
                             <constraint firstItem="pAx-TJ-5bS" firstAttribute="top" secondItem="1cO-cu-AuE" secondAttribute="bottom" id="pk4-gS-Nk4"/>
-                            <constraint firstItem="jLP-zd-iGG" firstAttribute="centerY" secondItem="nHw-Lj-crR" secondAttribute="centerY" constant="-2" id="pov-RN-YHI"/>
-                            <constraint firstItem="nHw-Lj-crR" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" constant="82" id="rmK-fU-hpG"/>
+                            <constraint firstItem="jLP-zd-iGG" firstAttribute="centerY" secondItem="nHw-Lj-crR" secondAttribute="centerY" constant="232" id="pov-RN-YHI"/>
+                            <constraint firstItem="nHw-Lj-crR" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" constant="207" id="rmK-fU-hpG"/>
                             <constraint firstItem="KQZ-1w-vlD" firstAttribute="firstBaseline" secondItem="X3y-il-6FY" secondAttribute="baseline" id="sqQ-UY-euR"/>
                             <constraint firstItem="qfS-D6-HFC" firstAttribute="top" secondItem="4z5-mr-Y9b" secondAttribute="top" id="xjK-qN-dme"/>
                             <constraint firstItem="4z5-mr-Y9b" firstAttribute="leading" secondItem="GDg-mc-Nd8" secondAttribute="leading" id="zJj-cA-xh7"/>
@@ -638,7 +638,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="2015 Andreas Tinoco Lobo." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UIk-FW-kHF">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="©2015 Andreas Tinoco Lobo" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UIk-FW-kHF">
                                 <rect key="frame" x="23" y="371" width="327" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <accessibility key="accessibilityConfiguration">
@@ -652,18 +652,37 @@
                                 <rect key="frame" x="47" y="313" width="280" height="1"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
                             </view>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" scrollEnabled="NO" text="Thanks to Alexander Birge for being such an understanding and loving son!" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="dEl-m8-ic1">
+                                <rect key="frame" x="16" y="507.5" width="343" height="115.5"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
+                                <fontDescription key="fontDescription" name="Verdana-Bold" family="Verdana" pointSize="16"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="0vc-s8-3Dc" appends="YES" id="JeZ-YY-kqA"/>
+                                </connections>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                     </view>
                     <navigationItem key="navigationItem" title="Credits" id="aQY-x9-j9i"/>
                     <connections>
+                        <outlet property="eggTextView" destination="dEl-m8-ic1" id="0gq-6e-vhg"/>
                         <outlet property="titleLabel" destination="7e4-7D-by5" id="WyA-zl-fgN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UR9-qM-YlW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="left" id="0vc-s8-3Dc">
+                    <connections>
+                        <action selector="swipeUp:" destination="IjI-Cv-998" id="gDd-5a-8oa"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-370.39999999999998" y="60.719640179910051"/>
+            <point key="canvasLocation" x="-371.25" y="60"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="p31-ys-d4b">
