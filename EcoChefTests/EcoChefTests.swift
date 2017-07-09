@@ -9,15 +9,15 @@
 import XCTest
 
 class EcoChefTests: XCTestCase {
-    var testModel: ThermalModel = ThermalModel()
+    var testModel = ThermalModel()
+    var testCase = ThermalModelParams(name: "Test", a: 10, b: 500, note: "Test")
     var maxTemp: Float = 0
     
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        testModel.a = 10
-        testModel.b = 500
         testModel.Tamb = 70
+        testModel.setfrom(params: testCase)
         maxTemp = testModel.b + testModel.Tamb
     }
     
