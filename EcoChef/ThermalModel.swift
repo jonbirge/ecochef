@@ -126,10 +126,18 @@ class ThermalModel : CustomStringConvertible {
     }
     
     func time(totemp Tset:Float, fromtemp Tstart:Float) -> Float? {
-        if Tset > Tstart {
-            return a * log((b + Tamb - Tstart)/(b + Tamb - Tset))
-        } else {
-            return a * log((Tamb - Tstart)/(Tamb - Tset))
+        if Tset > Tstart {  // heating
+            if Tset >= Tmax {
+                return nil
+            } else {
+                return a * log((b + Tamb - Tstart)/(b + Tamb - Tset))
+            }
+        } else {  // cooling
+            if Tset < Tamb  {
+                return nil
+            } else {
+                return a * log((Tamb - Tstart)/(Tamb - Tset))
+            }
         }
     }
     
