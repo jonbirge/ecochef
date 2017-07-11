@@ -21,8 +21,6 @@ UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
         modelPicker.selectRow(modelData.selectedIndex, inComponent: 0, animated: true)
         modelPicker.showsSelectionIndicator = true
         ambientStepper.value = Double(initialTamb)
@@ -59,9 +57,17 @@ UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     // Non-standard segues
     override func tableView(_ tableView: UITableView,
                             didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 2 && indexPath.row == 0 {
-            showFAQ()
+        if indexPath.section == 2 {
+            switch indexPath.row {
+            case 0:
+                showFAQ()
+            case 1:
+                showSite()
+            default:
+                return
+            }
         }
+        print("ID: \(tableView.cellForRow(at: indexPath)?.reuseIdentifier ?? "NA")")
     }
     
     func updateViews() {
@@ -71,6 +77,13 @@ UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
     func showFAQ() {
         if let faqURL = URL(string: "https://www.birge.us/ecochef-faq") {
+            let safariViewController = SFSafariViewController(url:faqURL)
+            present(safariViewController, animated: true, completion: nil)
+        }
+    }
+    
+    func showSite() {
+        if let faqURL = URL(string: "https://www.birge.us/ecochef") {
             let safariViewController = SFSafariViewController(url:faqURL)
             present(safariViewController, animated: true, completion: nil)
         }
