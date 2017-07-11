@@ -43,7 +43,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         modelData.LoadModelData()
         LoadState()
         UpdateFromState()
-        UpdateAmbient()
+        UpdateLimits()
         Reset()
         
         let notificationCenter = NotificationCenter.default
@@ -84,7 +84,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         desiredTempSlider.value = state!.desiredTemp
         modelData.selectedIndex = state!.selectedModel
         model.setfrom(params: modelData.selectedModelData)
-        UpdateDesired()
+        UpdateView()
     }
     
     func WriteStateToDisk() {
@@ -96,25 +96,21 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
 
     private func Quantize(_ temp:Float) -> Float {
         if temp < crossover {
-            return smallstep*round(temp/smallstep)
+            return smallstep*floor(temp/smallstep)
         } else {
-            return largestep*round(temp/largestep)
+            return largestep*floor(temp/largestep)
         }
     }
     
-    func SetCurrent(temp:Float) {
-        currentTemp = temp
-        currentTempLabel.text = String(Int(currentTemp))
-        UpdateView()
-    }
-    
-    func SetDesired(temp:Float) {
-        desiredTemp = temp
-        desiredTempLabel.text = String(Int(desiredTemp))
-        UpdateView()
-    }
-    
     func UpdateView() {
+        // Pull from sliders
+        currentTemp = currentTempSlider.value
+        desiredTemp = Quantize(desiredTempSlider.value)
+        
+        // Labels
+        currentTempLabel.text = String(Int(currentTemp))
+        desiredTempLabel.text = String(Int(desiredTemp))
+        
         // Colors
         var uiColor: UIColor
         switch desiredTemp - currentTemp {
@@ -128,51 +124,48 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         desiredTempSlider.minimumTrackTintColor = uiColor
         
         // Run model
-        if let minfrac = model.time(totemp: desiredTemp, fromtemp: currentTemp) {
-            ShowTime(minutes: minfrac)
+        let minfrac = model.time(totemp: desiredTemp, fromtemp: currentTemp)
+        ShowTime(minutes: minfrac!)  // faster?
+    }
+    
+    func ShowTime(minutes: Float?) {
+        if let min = minutes {
+            let pretimemin = floor(min)
+            let pretimesec = round(60*(min - pretimemin))
+            minLabel.text = String(Int(pretimemin))
+            var sectext : String
+            if pretimesec < 10 {
+                sectext = "0" + String(Int(pretimesec))
+            } else {
+                sectext = String(Int(pretimesec))
+            }
+            secLabel.text = sectext
         } else {
-            ShowTime(minutes: 99)  // infinity...
+            secLabel.text = "--"
+            minLabel.text = "--"
         }
     }
     
-    func ShowTime(minutes: Float) {
-        let pretimemin = floor(minutes)
-        let pretimesec = round(60*(minutes - pretimemin))
-        minLabel.text = String(Int(pretimemin))
-        
-        var sectext : String
-        if pretimesec < 10 {
-            sectext = "0" + String(Int(pretimesec))
-        } else {
-            sectext = String(Int(pretimesec))
-        }
-        secLabel.text = sectext
-    }
-    
-    func UpdateCurrent() {
-        SetCurrent(temp: currentTempSlider.value)
-    }
-    
-    func UpdateDesired() {
-        SetDesired(temp: Quantize(desiredTempSlider.value))
-    }
-    
-    func UpdateAmbient() {
+    func UpdateLimits() {
         model.Tamb = state!.Tamb
+        let maxTemp = Quantize(model.Tmax)
+        if maxTemp > 500 {
+            desiredTempSlider.maximumValue = 500
+        } else {
+            desiredTempSlider.maximumValue = Quantize(model.Tmax)
+        }
         currentTempSlider.minimumValue = Tamb
         desiredTempSlider.minimumValue = Tamb + smallstep
-            UpdateCurrent()
         if desiredTempSlider.value < (Tamb + smallstep) {
             desiredTempSlider.value = Tamb + smallstep
-         }
-        UpdateDesired()
+        }
+        UpdateView()
     }
     
     func Reset() {
         currentTempSlider.value = currentTempSlider.minimumValue
         desiredTempSlider.value = state!.desiredTemp
-        UpdateCurrent()
-        UpdateDesired()
+        UpdateView()
     }
     
     func CheckTimerEnable() {
@@ -202,7 +195,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         } else {
             let Tset = desiredTemp
             currentTempSlider.value = Tset
-            UpdateCurrent()
+            UpdateView()
             StopTimer()
         }
     }
@@ -210,7 +203,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     func ResetTimer() {
         StopTimer()
         currentTempSlider.value = Float(initialCurrentTemp)
-        UpdateCurrent()
+        UpdateView()
     }
     
     func StopTimer() {
@@ -304,10 +297,10 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         guard let source = segue.source as? SettingsViewController else { return }
         
         // Pull data from SettingsViewController
-        Tamb = source.Tamb
-        UpdateAmbient()
         model.setfrom(params: modelData.selectedModelData)
         state!.selectedModel = modelData.selectedIndex
+        Tamb = source.Tamb
+        UpdateLimits()
         UpdateView()
         
         // Save to disk
@@ -342,11 +335,11 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     }
     
     @IBAction func CurrentTempChange(_ sender: UISlider) {
-        SetCurrent(temp: Quantize(sender.value))
+        UpdateView()
     }
     
     @IBAction func DesiredTempChange(_ sender: UISlider) {
-        SetDesired(temp: Quantize(sender.value))
+        UpdateView()
     }
     
     @IBAction func DesiredTouchUpIn() {
