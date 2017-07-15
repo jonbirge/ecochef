@@ -62,21 +62,22 @@ class ModelTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
+        let fromrow = fromIndexPath.row
+        let torow = to.row
+        let movedModel = modelData.modelArray[fromrow]
+        modelData.modelArray.remove(at: fromrow)
+        modelData.modelArray.insert(movedModel, at: torow)
     }
-    */
 
-    /*
     // Override to support conditional rearranging of the table view.
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the item to be re-orderable.
         return true
     }
-    */
-
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -88,6 +89,14 @@ class ModelTableViewController: UITableViewController {
         
         if let indexPath = tableView.indexPathForSelectedRow {
             editController.modelparams = modelData.modelArray[indexPath.row]
+        }
+    }
+    
+    @IBAction func doEdit(_ sender: Any) {
+        if self.isEditing {
+            self.setEditing(false, animated: true)
+        } else {
+            self.setEditing(true, animated: true)
         }
     }
     
