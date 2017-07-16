@@ -32,7 +32,7 @@ class ModelEditViewController: UITableViewController {
 
     /*
     // MARK: - Navigation
-
+     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
@@ -41,17 +41,19 @@ class ModelEditViewController: UITableViewController {
     */
     
     @IBAction func clickedSave(_ sender: UIBarButtonItem) {
-        guard let name = nameField.text,
-        let rc = Float(rcField.text!),
-        let hr = Float(hrField.text!)
-            else { return }
+        // TODO: we'll have to return the model by reference now...
         
-        let note = noteField.text!
-        let mod = Date()
-        modelparams = ThermalModelParams(name: name,
-                                         a: rc, b: hr,
-                                         note: note,
-                                         mod: mod)
+        //        guard let name = nameField.text,
+        //        let rc = Float(rcField.text!),
+        //        let hr = Float(hrField.text!)
+        //            else { return }
+        //
+        //        let note = noteField.text!
+        //        let mod = Date()
+        //        modelparams = ThermalModelParams(name: name,
+        //                                         a: rc, b: hr,
+        //                                         note: note,
+        //                                         mod: mod)
         
         performSegue(withIdentifier: "UnwindToModelList", sender: self)
     }

@@ -48,12 +48,49 @@ class ThermalModelData {
     }
 }
 
+class HeatingDataPoint : NSObject, NSCoding {
+    var Tamb : Float
+    var Tstart : Float
+    var Tfinal : Float
+    var time : Float  // minutes
+    
+    struct Keys {
+        static let tamb = "tamb"
+        static let tstart = "tstart"
+        static let tfinal = "tfinal"
+        static let time = "time"
+    }
+    
+    init(Tamb: Float, Tstart: Float, Tfinal: Float, time: Float) {
+        self.Tamb = Tamb
+        self.Tstart = Tstart
+        self.Tfinal = Tfinal
+        self.time = time
+    }
+    
+    required convenience init(coder aDecoder: NSCoder) {
+        let Tamb = aDecoder.decodeFloat(forKey: Keys.tamb)
+        let Tstart = aDecoder.decodeFloat(forKey: Keys.tstart)
+        let Tfinal = aDecoder.decodeFloat(forKey: Keys.tfinal)
+        let time = aDecoder.decodeFloat(forKey: Keys.time)
+        self.init(Tamb: Tamb, Tstart: Tstart, Tfinal: Tfinal, time: time)
+    }
+    
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(Tamb, forKey: Keys.tamb)
+        aCoder.encode(Tfinal, forKey: Keys.tfinal)
+        aCoder.encode(Tstart, forKey: Keys.tstart)
+        aCoder.encode(time, forKey: Keys.time)
+    }
+}
+
 class ThermalModelParams : NSObject, NSCoding {
     var name: String
     var a: Float
     var b: Float
     var note: String
     var mod: Date
+    var measurements: [HeatingDataPoint]?
     
     struct Keys {
         static let name = "name"
@@ -61,6 +98,7 @@ class ThermalModelParams : NSObject, NSCoding {
         static let b = "b"
         static let note = "note"
         static let mod = "mod"
+        static let meas = "meas"
     }
     
     convenience init(name: String) {
@@ -68,15 +106,16 @@ class ThermalModelParams : NSObject, NSCoding {
     }
     
     convenience init(name: String, a: Float, b: Float, note: String) {
-        self.init(name: name, a: a, b: b, note: note, mod: Date())
+        self.init(name: name, a: a, b: b, note: note, mod: Date(), meas: nil)
     }
     
-    init(name: String, a: Float, b: Float, note: String, mod: Date) {
+    init(name: String, a: Float, b: Float, note: String, mod: Date, meas: [HeatingDataPoint]?) {
         self.name = name
         self.a = a
         self.b = b
         self.note = note
         self.mod = mod
+        self.measurements = meas
     }
     
     required convenience init(coder aDecoder: NSCoder) {
@@ -95,7 +134,14 @@ class ThermalModelParams : NSObject, NSCoding {
         } else {
             mod = Date()
         }
-        self.init(name: name, a: a, b: b, note: note, mod: mod)
+//        var measurements: [HeatingDataPoint]?
+//        if let measread = aDecoder.decodeObject(forKey: Keys.meas) as? [HeatingDataPoint] {
+//            measurements = measread
+//        } else {
+//            measurements = nil
+//        }
+        let measurements = aDecoder.decodeObject(forKey: Keys.meas) as? [HeatingDataPoint]
+        self.init(name: name, a: a, b: b, note: note, mod: mod, meas: measurements)
     }
     
     func encode(with aCoder: NSCoder) {
@@ -109,8 +155,8 @@ class ThermalModelParams : NSObject, NSCoding {
 
 // Computational logic
 class ThermalModel : CustomStringConvertible {
-    var a: Float = 10.0  // RC time constant
-    var b: Float = 500.0  // RH coefficient (s.s. temp above ambient)
+    var a: Float = 12.0  // RC time constant
+    var b: Float = 600.0  // RH coefficient (s.s. temp above ambient)
     var Tamb: Float = 70.0  // T_ambient
     
     var description: String {

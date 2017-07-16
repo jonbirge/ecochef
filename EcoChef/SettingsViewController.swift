@@ -54,7 +54,6 @@ UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
     // MARK: UITableView handling
     
-    // Non-standard segues
     override func tableView(_ tableView: UITableView,
                             didSelectRowAt indexPath: IndexPath) {
         if indexPath.section == 2 {
