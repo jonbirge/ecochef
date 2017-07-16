@@ -67,7 +67,6 @@ UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
                 return
             }
         }
-        print("ID: \(tableView.cellForRow(at: indexPath)?.reuseIdentifier ?? "NA")")
     }
     
     func updateViews() {

@@ -18,7 +18,7 @@ class AboutViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        titleLabel.textColor = .blue
+        titleLabel.textColor = .black
         eggTextView.textColor = .white
     }
     
