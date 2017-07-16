@@ -582,10 +582,34 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection headerTitle="Measured data" id="ke6-7G-S7M">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="RdS-YE-Vsu" style="IBUITableViewCellStyleDefault" id="wsA-AL-ssM">
+                                        <rect key="frame" x="0.0" y="500.5" width="375" height="38"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" tableViewCell="wsA-AL-ssM" id="ukf-rr-bkx">
+                                            <rect key="frame" x="0.0" y="0.0" width="342" height="37.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Data points" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="RdS-YE-Vsu">
+                                                    <rect key="frame" x="15" y="0.0" width="325" height="37.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="dYc-GE-e27" kind="show" identifier="MeasList" id="xAq-Ht-Q9n"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                             <tableViewSection headerTitle="Last Modified Date" id="QiJ-nw-OZ4">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="tl0-Yw-MKv">
-                                        <rect key="frame" x="0.0" y="500.5" width="375" height="38"/>
+                                        <rect key="frame" x="0.0" y="594.5" width="375" height="38"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" tableViewCell="tl0-Yw-MKv" id="2ZS-Jy-eYr">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="37.5"/>
@@ -603,30 +627,6 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Measured data" id="ke6-7G-S7M">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="RdS-YE-Vsu" style="IBUITableViewCellStyleDefault" id="wsA-AL-ssM">
-                                        <rect key="frame" x="0.0" y="594.5" width="375" height="38"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" tableViewCell="wsA-AL-ssM" id="ukf-rr-bkx">
-                                            <rect key="frame" x="0.0" y="0.0" width="342" height="37.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Data points" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="RdS-YE-Vsu">
-                                                    <rect key="frame" x="15" y="0.0" width="325" height="37.5"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="dYc-GE-e27" kind="show" id="xAq-Ht-Q9n"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="e2Y-VJ-Gdt" id="3Jm-pG-VRt"/>
@@ -641,6 +641,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="dataCell" destination="wsA-AL-ssM" id="K1k-5H-Jmk"/>
+                        <outlet property="dataLabel" destination="RdS-YE-Vsu" id="rb9-jm-eMb"/>
                         <outlet property="hrField" destination="A3E-LD-RKK" id="bcN-CD-UHw"/>
                         <outlet property="modLabel" destination="99N-1Z-UST" id="VYI-oF-clT"/>
                         <outlet property="nameField" destination="4gl-Fz-pBX" id="E1Q-Xk-gEz"/>

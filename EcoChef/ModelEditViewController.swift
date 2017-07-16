@@ -25,20 +25,30 @@ class ModelEditViewController: UITableViewController {
             hrField.text = String(modelparams.b)
             noteField.text = modelparams.note
             modLabel.text = modelparams.mod.description
-        } else {
+            if let measdata = modelparams.measurements {
+                dataLabel.text = "\(measdata.count) data points"
+            } else {
+                dataCell.isUserInteractionEnabled = false
+                dataCell.accessoryType = .none
+                dataLabel.text = "No data"
+                dataLabel.textColor = .lightGray
+            }
+        } else {  // right now we should never use this...
             self.modelparams = ThermalModelParams(name: "New Model")  // default
+            print("ModelEditViewController: creating new model")
         }
     }
 
-    /*
     // MARK: - Navigation
      
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if segue.identifier == "MeasList" {
+            print("Heading to MeasListController")
+        }
     }
-    */
     
     @IBAction func clickedSave(_ sender: UIBarButtonItem) {
         // TODO: we'll have to return the model by reference now...
@@ -58,6 +68,8 @@ class ModelEditViewController: UITableViewController {
         performSegue(withIdentifier: "UnwindToModelList", sender: self)
     }
 
+    @IBOutlet weak var dataCell: UITableViewCell!
+    @IBOutlet weak var dataLabel: UILabel!
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var rcField: UITextField!
     @IBOutlet weak var hrField: UITextField!
