@@ -52,7 +52,7 @@ class ModelEditViewController: UITableViewController {
     }
     
     @IBAction func clickedSave(_ sender: UIBarButtonItem) {
-        // TODO: we'll have to return the model by reference now...
+        // TODO: Update the model by reference now...
         
         //        guard let name = nameField.text,
         //        let rc = Float(rcField.text!),
