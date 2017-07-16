@@ -88,21 +88,22 @@ class HeatingDataSet : NSObject, NSCoding {
         aCoder.encode(measlist, forKey: Keys.measlist)
     }
     
+    // TODO: Fix sorting!
+    // Add new heating data to maintain sorted order
     func addDataPoint(_ datapoint: HeatingDataPoint) {
         if measlist.count == 0 {
             measlist.append(datapoint)
         } else {
-            var kinsert = 0
-            for k in 1...measlist.count {
-                if datapoint.time > measlist[k-1].time {
-                    kinsert = k + 1
+            var inserted = false  // assume end
+            for k in 0...(measlist.count - 1) {
+                if datapoint.time < measlist[k].time {
+                    measlist.insert(datapoint, at: k)
+                    inserted = true
                     break
                 }
             }
-            if kinsert >= measlist.count {
+            if !inserted {
                 measlist.append(datapoint)
-            } else {
-                measlist.insert(datapoint, at: kinsert)
             }
         }
     }
