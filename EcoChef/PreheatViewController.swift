@@ -104,7 +104,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     
     func UpdateView() {
         // Pull from sliders
-        currentTemp = currentTempSlider.value
+        currentTemp = round(currentTempSlider.value)
         desiredTemp = Quantize(desiredTempSlider.value)
         
         // Labels
@@ -160,12 +160,14 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
             desiredTempSlider.value = Tamb + smallstep
         }
         UpdateView()
+        CheckTimerEnable()
     }
     
     func Reset() {
         currentTempSlider.value = currentTempSlider.minimumValue
         desiredTempSlider.value = state!.desiredTemp
         UpdateView()
+        CheckTimerEnable()
     }
     
     func CheckTimerEnable() {
@@ -308,7 +310,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         modelData.WriteToDisk()
     }
     
-    // MARK: IBOutlets and IBActions
+    // MARK: - IBOutlets and IBActions
     
     @IBOutlet weak var minLabel: UILabel!
     @IBOutlet weak var secLabel: UILabel!
