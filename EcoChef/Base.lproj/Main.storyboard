@@ -456,8 +456,7 @@
                         <rightBarButtonItems>
                             <barButtonItem systemItem="add" id="UZo-6f-nCx">
                                 <connections>
-                                    <action selector="clickedSave:" destination="vre-sg-JdI" id="qxu-V9-Jxm"/>
-                                    <segue destination="e2Y-VJ-Gdt" kind="show" identifier="AddModel" id="j1K-n2-9aD"/>
+                                    <action selector="doAdd:" destination="zjn-9A-oq7" id="bbR-oB-BDF"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem systemItem="edit" id="EbP-P1-dvb">
@@ -734,7 +733,4 @@
             <point key="canvasLocation" x="-2703" y="-370"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="owp-zZ-K4z"/>
-    </inferredMetricsTieBreakers>
 </document>

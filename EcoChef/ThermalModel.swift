@@ -16,7 +16,7 @@ class ThermalModelData {
         return modelArray[selectedIndex]
     }
     
-    func LoadModelList() {
+    func LoadDefaultModelData() {
         modelArray = ThermalModelData.DefaultModelList()
     }
     
@@ -41,18 +41,9 @@ class ThermalModelData {
         theparams.a *= 0.8
         defModelArray.append(theparams)
         
-        theparams = ThermalModelParams(name: "Gas Oven")
-        theparams.a *= 1.2
-        defModelArray.append(theparams)
-        
         theparams = ThermalModelParams(name: "Gas Grill")
         theparams.a = 16
         theparams.b = 700
-        defModelArray.append(theparams)
-        
-        theparams = ThermalModelParams(name: "Toaster")
-        theparams.a = 9
-        theparams.b = 400
         defModelArray.append(theparams)
         
         return defModelArray
