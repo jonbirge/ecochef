@@ -15,29 +15,47 @@ class ThermalModelData {
     var selectedModelData: ThermalModelParams {
         return modelArray[selectedIndex]
     }
-        
-    func LoadDefaultModelData() {
+    
+    func LoadModelList() {
+        modelArray = ThermalModelData.DefaultModelList()
+    }
+    
+    static func DefaultModelList() -> [ThermalModelParams] {
         var theparams : ThermalModelParams
+        var defModelArray : [ThermalModelParams] = []
         
         theparams = ThermalModelParams(name: "Electric (EnergyStar)")
-        theparams.a *= 1.2
-        modelArray.append(theparams)
+        theparams.a *= 1.5
+        defModelArray.append(theparams)
         
         theparams = ThermalModelParams(name: "Electric (Fast Preheat)")
-        theparams.a *= 1.2
+        theparams.a *= 1.25
         theparams.b = 700
-        modelArray.append(theparams)
+        defModelArray.append(theparams)
         
-        theparams = ThermalModelParams(name: "Convection")
+        theparams = ThermalModelParams(name: "Convection (Large)")
         theparams.a *= 0.9
-        modelArray.append(theparams)
+        defModelArray.append(theparams)
+        
+        theparams = ThermalModelParams(name: "Convection (Small)")
+        theparams.a *= 0.8
+        defModelArray.append(theparams)
         
         theparams = ThermalModelParams(name: "Gas Oven")
-        theparams.a *= 1.1
-        modelArray.append(theparams)
+        theparams.a *= 1.2
+        defModelArray.append(theparams)
         
         theparams = ThermalModelParams(name: "Gas Grill")
-        modelArray.append(theparams)
+        theparams.a = 16
+        theparams.b = 700
+        defModelArray.append(theparams)
+        
+        theparams = ThermalModelParams(name: "Toaster")
+        theparams.a = 9
+        theparams.b = 400
+        defModelArray.append(theparams)
+        
+        return defModelArray
     }
 }
 
