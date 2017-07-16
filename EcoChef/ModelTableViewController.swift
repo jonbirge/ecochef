@@ -82,19 +82,22 @@ class ModelTableViewController: UITableViewController {
     @IBAction func doAdd(_ sender: UIBarButtonItem) {
         let defaultModelList = ThermalModelData.DefaultModelList()
         
-        let alertController = UIAlertController(title: "Choose model type", message: nil, preferredStyle: .actionSheet)
+        let alertController = UIAlertController(title: "Choose model type",
+                                                message: nil, preferredStyle: .actionSheet)
         
-        let cancelAction = UIAlertAction(title: "Cancel",
-                                         style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alertController.addAction(cancelAction)
         
         for theModel in defaultModelList {
-        let theAction = UIAlertAction(title: theModel.name,
-            style: .default, handler: { action in
+            let theAction = UIAlertAction(title: theModel.name, style: .default) {
+                action in
                 self.modelData.modelArray.append(theModel)
-                self.tableView.reloadData() })
-            alertController.addAction(theAction)
-        }
+                self.tableView.reloadData()
+                let lastIndex = self.modelData.modelArray.count - 1
+                let thePath = IndexPath(row: lastIndex, section: 0)
+                self.tableView.selectRow(at: thePath, animated: true, scrollPosition: .none)
+                self.performSegue(withIdentifier: "EditModel", sender: self) }
+            alertController.addAction(theAction) }
         
         alertController.popoverPresentationController?.sourceView = self.view
             

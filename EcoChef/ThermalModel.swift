@@ -41,9 +41,7 @@ class ThermalModelData {
         theparams.a *= 0.8
         defModelArray.append(theparams)
         
-        theparams = ThermalModelParams(name: "Gas Grill")
-        theparams.a = 16
-        theparams.b = 700
+        theparams = ThermalModelParams(name: "Gas Grill", a: 16.3, b: 644, note: "MHP")
         defModelArray.append(theparams)
         
         return defModelArray
