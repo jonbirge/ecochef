@@ -659,17 +659,17 @@
         <!--Measurement List-->
         <scene sceneID="cZh-xJ-PQf">
             <objects>
-                <tableViewController title="Measurement List" id="dYc-GE-e27" sceneMemberID="viewController">
+                <tableViewController title="Measurement List" id="dYc-GE-e27" customClass="MeasTableViewController" customModule="EcoChef" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="aFd-PO-ifX">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MeasCell" textLabel="wtu-ja-1mk" detailTextLabel="Ubw-yL-dqq" style="IBUITableViewCellStyleValue1" id="gdV-hc-TQE">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="MeasCell" textLabel="wtu-ja-1mk" detailTextLabel="Ubw-yL-dqq" style="IBUITableViewCellStyleValue1" id="gdV-hc-TQE">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gdV-hc-TQE" id="E2z-4R-qbK">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wtu-ja-1mk">
@@ -680,7 +680,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ubw-yL-dqq">
-                                            <rect key="frame" x="316" y="12" width="44" height="20.5"/>
+                                            <rect key="frame" x="296" y="12" width="44" height="20.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -689,7 +689,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="pF0-3d-934" kind="show" id="vBd-zj-ku5"/>
+                                    <segue destination="pF0-3d-934" kind="show" identifier="EditData" id="vBd-zj-ku5"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -698,10 +698,10 @@
                             <outlet property="delegate" destination="dYc-GE-e27" id="uwT-t7-Zuh"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Measurement List" id="OMn-qg-N6O">
+                    <navigationItem key="navigationItem" title="Measurements" id="OMn-qg-N6O">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="7O2-gD-isg">
                             <connections>
-                                <segue destination="pF0-3d-934" kind="show" id="YY9-mo-gVY"/>
+                                <segue destination="pF0-3d-934" kind="show" identifier="NewData" id="SN2-Ya-5CE"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -809,7 +809,7 @@
                             <outlet property="delegate" destination="pF0-3d-934" id="56C-Ll-BDm"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Edit Measurement" id="AkP-V2-M46">
+                    <navigationItem key="navigationItem" title="Edit Data" id="AkP-V2-M46">
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="mtS-Pk-7Mk"/>
                     </navigationItem>
                 </tableViewController>
@@ -921,6 +921,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="YY9-mo-gVY"/>
+        <segue reference="SN2-Ya-5CE"/>
     </inferredMetricsTieBreakers>
 </document>

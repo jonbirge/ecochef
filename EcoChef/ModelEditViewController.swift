@@ -46,7 +46,8 @@ class ModelEditViewController: UITableViewController {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if segue.identifier == "MeasList" {
-            print("Heading to MeasListController")
+            let measView = segue.destination as! MeasTableViewController
+            measView.measData = modelparams?.measurements
         }
     }
     
