@@ -42,27 +42,6 @@ class ModelTableViewController: UITableViewController {
         }
     }
     
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
         let fromrow = fromIndexPath.row
@@ -92,7 +71,7 @@ class ModelTableViewController: UITableViewController {
         }
     }
     
-    @IBAction func doEdit(_ sender: Any) {
+    @IBAction func doEdit(_ sender: UIBarButtonItem) {
         if self.isEditing {
             self.setEditing(false, animated: true)
         } else {
@@ -100,6 +79,31 @@ class ModelTableViewController: UITableViewController {
         }
     }
     
+    @IBAction func doAdd(_ sender: UIBarButtonItem) {
+        let defaultModelList = ThermalModelData.DefaultModelList()
+        
+        let alertController = UIAlertController(title: "Choose model type",
+                                                message: nil, preferredStyle: .actionSheet)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertController.addAction(cancelAction)
+        
+        for theModel in defaultModelList {
+            let theAction = UIAlertAction(title: theModel.name, style: .default) {
+                action in
+                self.modelData.modelArray.append(theModel)
+                self.tableView.reloadData()
+                let lastIndex = self.modelData.modelArray.count - 1
+                let thePath = IndexPath(row: lastIndex, section: 0)
+                self.tableView.selectRow(at: thePath, animated: true, scrollPosition: .none)
+                self.performSegue(withIdentifier: "EditModel", sender: self) }
+            alertController.addAction(theAction) }
+        
+        alertController.popoverPresentationController?.sourceView = self.view
+            
+        present(alertController, animated: true, completion: nil)
+    }
+
     @IBAction func goBack(_ sender: UIBarButtonItem) {
         performSegue(withIdentifier: "UnwindModelList", sender: self)
     }
