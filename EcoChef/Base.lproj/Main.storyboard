@@ -810,16 +810,22 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Edit Data" id="AkP-V2-M46">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="mtS-Pk-7Mk"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="mtS-Pk-7Mk">
+                            <connections>
+                                <action selector="doSave:" destination="pF0-3d-934" id="o5Q-2E-f23"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="ambField" destination="aDX-zV-5IU" id="5rJ-3E-GlW"/>
                         <outlet property="finalField" destination="sxd-jV-nvP" id="X4Y-1W-DWR"/>
                         <outlet property="startField" destination="UUu-Rd-C0s" id="ID2-3A-BVu"/>
                         <outlet property="timeField" destination="FzF-SX-EN6" id="AqY-Z9-Q3a"/>
+                        <segue destination="Ktu-i3-Njb" kind="unwind" identifier="UnwindToMeasList" unwindAction="prepareForUnwindWithSegue:" id="ZGA-2X-7Ja"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zcT-mv-O2A" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="Ktu-i3-Njb" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1936.8" y="-663.41829085457277"/>
         </scene>
@@ -927,6 +933,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="SN2-Ya-5CE"/>
+        <segue reference="vBd-zj-ku5"/>
     </inferredMetricsTieBreakers>
 </document>

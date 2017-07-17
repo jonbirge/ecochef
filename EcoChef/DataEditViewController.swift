@@ -23,17 +23,11 @@ class DataEditViewController: UITableViewController {
         ambField.text = String(dataPoint.Tamb)
     }
     
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    // MARK: - Outlets and Actions
+    
+    @IBAction func doSave(_ sender: UIBarButtonItem) {
+        performSegue(withIdentifier: "UnwindToMeasList", sender: self)
     }
-
-    // TODO: Prepare for unwind
-
-    // MARK: - Outlets
     
     @IBOutlet weak var timeField: UITextField!
     @IBOutlet weak var startField: UITextField!

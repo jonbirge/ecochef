@@ -122,10 +122,10 @@ class HeatingDataSet : NSObject, NSCoding {
 }
 
 class HeatingDataPoint : NSObject, NSCoding {
-    var Tamb : Float
-    var Tstart : Float
-    var Tfinal : Float
-    var time : Float  // minutes
+    var Tamb : Float = 72
+    var Tstart : Float = 72
+    var Tfinal : Float = 350
+    var time : Float = 10  // minutes
     
     struct Keys {
         static let tamb = "tamb"
@@ -139,6 +139,17 @@ class HeatingDataPoint : NSObject, NSCoding {
         self.Tstart = Tstart
         self.Tfinal = Tfinal
         self.time = time
+    }
+    
+    override init() {
+        super.init()
+    }
+    
+    convenience init(copiedfrom source: HeatingDataPoint) {
+        self.init(time: source.time,
+                  Tstart: source.Tstart,
+                  Tfinal: source.Tfinal,
+                  Tamb: source.Tamb)
     }
     
     convenience init(time: Float, Tstart: Float, Tfinal: Float) {

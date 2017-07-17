@@ -13,29 +13,36 @@ class ModelEditViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if modelparams == nil {
+            self.modelparams = ThermalModelParams(name: "New Model")
+            print("ModelEditViewController: creating new model")
+        }
         updateView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        updateData()
     }
 
     // MARK: - Table view data source
     
     func updateView() {
-        if let modelparams = self.modelparams {
-            nameField.text = modelparams.name
-            rcField.text = String(modelparams.a)
-            hrField.text = String(modelparams.b)
-            noteField.text = modelparams.note
-            modLabel.text = modelparams.mod.description
-            if let measdata = modelparams.measurements {
-                dataLabel.text = "\(measdata.count) data points"
-            } else {
-                dataCell.isUserInteractionEnabled = false
-                dataCell.accessoryType = .none
-                dataLabel.text = "No data"
-                dataLabel.textColor = .lightGray
-            }
-        } else {  // right now we should never use this...
-            self.modelparams = ThermalModelParams(name: "New Model")  // default
-            print("ModelEditViewController: creating new model")
+        nameField.text = modelparams!.name
+        rcField.text = String(modelparams!.a)
+        hrField.text = String(modelparams!.b)
+        noteField.text = modelparams!.note
+        modLabel.text = modelparams!.mod.description
+    }
+    
+    // TODO: Stop disabling measured data cell
+    func updateData() {
+        if let measdata = modelparams!.measurements {
+            dataLabel.text = "\(measdata.count) data points"
+        } else {
+            dataCell.isUserInteractionEnabled = false
+            dataCell.accessoryType = .none
+            dataLabel.text = "No data"
+            dataLabel.textColor = .lightGray
         }
     }
 

@@ -49,9 +49,23 @@ class MeasTableViewController: UITableViewController {
         guard let theview = segue.destination as? DataEditViewController else
         { return }
         
-        if let path = tableView.indexPathForSelectedRow {
+        if let path = tableView.indexPathForSelectedRow {  // old one
+            print("editing old data point")
             theview.dataPoint = measData[path.row]
+        } else {  // new one
+            print("creating new data point")
+            if measData.count > 0 {
+                theview.dataPoint =
+                    HeatingDataPoint(copiedfrom: measData[measData.count-1])
+            } else {
+                theview.dataPoint = HeatingDataPoint()
+            }
+            measData.addDataPoint(theview.dataPoint)
         }
+    }
+    
+    @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
+        tableView.reloadData()
     }
 
 }
