@@ -32,10 +32,10 @@ class MeasTableViewController: UITableViewController {
         let thedata = measData[indexPath.row]
         cell.textLabel?.text = "\(thedata.time) min"
         if thedata.Tstart == thedata.Tamb {
-            cell.detailTextLabel?.text = "\(thedata.Tstart)º to \(thedata.Tfinal)º"
+            cell.detailTextLabel?.text = "\(thedata.Tstart)º ➔ \(thedata.Tfinal)º"
         } else {
             cell.detailTextLabel?.text =
-            "\(thedata.Tstart)º to \(thedata.Tfinal)º at \(thedata.Tamb)º"
+            "\(thedata.Tstart)º ➔ \(thedata.Tfinal)º at \(thedata.Tamb)º"
         }
         
         return cell
@@ -50,10 +50,8 @@ class MeasTableViewController: UITableViewController {
         { return }
         
         if let path = tableView.indexPathForSelectedRow {  // old one
-            print("editing old data point")
             theview.dataPoint = measData[path.row]
         } else {  // new one
-            print("creating new data point")
             if measData.count > 0 {
                 theview.dataPoint =
                     HeatingDataPoint(copiedfrom: measData[measData.count-1])

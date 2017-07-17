@@ -13,7 +13,6 @@ class ThermalModelData {
     var selectedIndex: Int = 1
     
     var selectedModelData: ThermalModelParams {
-        // TODO: should we use try?
         if selectedIndex < modelArray.count {
             return modelArray[selectedIndex]
         } else {
@@ -88,7 +87,6 @@ class HeatingDataSet : NSObject, NSCoding {
         aCoder.encode(measlist, forKey: Keys.measlist)
     }
     
-    // TODO: Fix sorting!
     // Add new heating data to maintain sorted order
     func addDataPoint(_ datapoint: HeatingDataPoint) {
         if measlist.count == 0 {
@@ -106,6 +104,12 @@ class HeatingDataSet : NSObject, NSCoding {
                 measlist.append(datapoint)
             }
         }
+    }
+    
+    func sort() {
+        measlist = measlist.sorted(by: { (pointA, pointB) -> Bool in
+            return pointA.time > pointB.time
+        })
     }
     
     subscript(index: Int) -> HeatingDataPoint {

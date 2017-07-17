@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DataEditViewController: UITableViewController {
+class DataEditViewController : UITableViewController {
     var dataPoint: HeatingDataPoint!
 
     override func viewDidLoad() {
@@ -26,6 +26,15 @@ class DataEditViewController: UITableViewController {
     // MARK: - Outlets and Actions
     
     @IBAction func doSave(_ sender: UIBarButtonItem) {
+        guard let time = Float(timeField.text!),
+            let Tstart = Float(startField.text!),
+            let Tfinal = Float(finalField.text!),
+            let Tamb = Float(ambField.text!) else
+        { return }
+        dataPoint.time = time
+        dataPoint.Tstart = Tstart
+        dataPoint.Tfinal = Tfinal
+        dataPoint.Tamb = Tamb
         performSegue(withIdentifier: "UnwindToMeasList", sender: self)
     }
     

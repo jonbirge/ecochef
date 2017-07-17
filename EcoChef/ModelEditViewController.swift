@@ -21,6 +21,7 @@ class ModelEditViewController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         updateData()
     }
 
@@ -50,8 +51,6 @@ class ModelEditViewController: UITableViewController {
      
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
         if segue.identifier == "MeasList" {
             let measView = segue.destination as! MeasTableViewController
             measView.measData = modelparams?.measurements
@@ -59,19 +58,19 @@ class ModelEditViewController: UITableViewController {
     }
     
     @IBAction func clickedSave(_ sender: UIBarButtonItem) {
-        // TODO: Update the model by reference now...
+        guard let name = nameField.text,
+            let rc = Float(rcField.text!),
+            let hr = Float(hrField.text!),
+            let note = noteField.text
+            else { return }
         
-        //        guard let name = nameField.text,
-        //        let rc = Float(rcField.text!),
-        //        let hr = Float(hrField.text!)
-        //            else { return }
-        //
-        //        let note = noteField.text!
-        //        let mod = Date()
-        //        modelparams = ThermalModelParams(name: name,
-        //                                         a: rc, b: hr,
-        //                                         note: note,
-        //                                         mod: mod)
+        if let modelparams = self.modelparams {
+            modelparams.name = name
+            modelparams.a = rc
+            modelparams.b = hr
+            modelparams.note = note
+            modelparams.mod = Date()
+        }
         
         performSegue(withIdentifier: "UnwindToModelList", sender: self)
     }
