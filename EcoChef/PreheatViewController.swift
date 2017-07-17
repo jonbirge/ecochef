@@ -96,9 +96,9 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
 
     private func Quantize(_ temp:Float) -> Float {
         if temp < crossover {
-            return smallstep*floor(temp/smallstep)
+            return smallstep*round(temp/smallstep)
         } else {
-            return largestep*floor(temp/largestep)
+            return largestep*round(temp/largestep)
         }
     }
     
@@ -345,11 +345,13 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     }
     
     @IBAction func DesiredTouchUpIn() {
+        desiredTempSlider.value = desiredTemp
         CheckTimerEnable()
         WriteStateToDisk()
     }
     
     @IBAction func CurrentTouchUpIn() {
+        currentTempSlider.value = currentTemp
         CheckTimerEnable()
     }
     

@@ -228,12 +228,7 @@ class ThermalModelParams : NSObject, NSCoding {
         } else {
             mod = Date()
         }
-//        var measurements: [HeatingDataPoint]?
-//        if let measread = aDecoder.decodeObject(forKey: Keys.meas) as? [HeatingDataPoint] {
-//            measurements = measread
-//        } else {
-//            measurements = nil
-//        }
+
         let measurements = aDecoder.decodeObject(forKey: Keys.meas) as? HeatingDataSet
         self.init(name: name, a: a, b: b, note: note, mod: mod, meas: measurements)
     }
