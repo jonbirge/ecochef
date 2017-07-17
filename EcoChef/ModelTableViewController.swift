@@ -109,6 +109,8 @@ class ModelTableViewController: UITableViewController {
     }
     
     @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
+        // TODO: Update for new pass by reference symantics when editing
+        
         guard let source = segue.source as? ModelEditViewController,
         let modelparams = source.modelparams
             else { return }

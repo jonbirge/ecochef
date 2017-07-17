@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AB007F1D1F1BE67E00AD9552 /* MeasTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB007F1C1F1BE67E00AD9552 /* MeasTableViewController.swift */; };
+		AB007F1F1F1C109000AD9552 /* DataEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB007F1E1F1C109000AD9552 /* DataEditViewController.swift */; };
 		AB0373891F020DD7005D1880 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB0373881F020DD7005D1880 /* LaunchScreen.storyboard */; };
 		AB43B1771EEB871E00B6A96B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB43B1761EEB871E00B6A96B /* AppDelegate.swift */; };
 		AB43B1791EEB871E00B6A96B /* PreheatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB43B1781EEB871E00B6A96B /* PreheatViewController.swift */; };
@@ -40,6 +42,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AB007F1C1F1BE67E00AD9552 /* MeasTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeasTableViewController.swift; sourceTree = "<group>"; };
+		AB007F1E1F1C109000AD9552 /* DataEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataEditViewController.swift; sourceTree = "<group>"; };
 		AB0373881F020DD7005D1880 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AB43B1731EEB871E00B6A96B /* EcoChef.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EcoChef.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB43B1761EEB871E00B6A96B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -113,6 +117,8 @@
 				ABC7A8701EF8DC5D00F25317 /* SettingsViewController.swift */,
 				ABEDA1BC1F09F75600FAE1E1 /* ModelTableViewController.swift */,
 				ABEDA1C01F09FDAD00FAE1E1 /* ModelEditViewController.swift */,
+				AB007F1C1F1BE67E00AD9552 /* MeasTableViewController.swift */,
+				AB007F1E1F1C109000AD9552 /* DataEditViewController.swift */,
 				ABC7A8741EF8EE7900F25317 /* AboutViewController.swift */,
 				ABEBBB9F1F05AC1C00527B4F /* TimerButton.swift */,
 				AB43B17C1EEB871E00B6A96B /* Main.storyboard */,
@@ -263,9 +269,11 @@
 			files = (
 				ABEDA1C11F09FDAD00FAE1E1 /* ModelEditViewController.swift in Sources */,
 				AB43B1771EEB871E00B6A96B /* AppDelegate.swift in Sources */,
+				AB007F1D1F1BE67E00AD9552 /* MeasTableViewController.swift in Sources */,
 				ABEDA1BE1F09F75600FAE1E1 /* ModelTableViewController.swift in Sources */,
 				ABA36DC31F07401100B3FCA4 /* EcoChefState.swift in Sources */,
 				AB43B1791EEB871E00B6A96B /* PreheatViewController.swift in Sources */,
+				AB007F1F1F1C109000AD9552 /* DataEditViewController.swift in Sources */,
 				ABEBBBA01F05AC1C00527B4F /* TimerButton.swift in Sources */,
 				ABEBBBA71F05B06400527B4F /* SimpleButtonControlState.swift in Sources */,
 				AB53D56E1F0DD85900ACA17A /* EcoChefThermalModel.swift in Sources */,

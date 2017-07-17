@@ -13,49 +13,70 @@ class ModelEditViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if modelparams == nil {
+            self.modelparams = ThermalModelParams(name: "New Model")
+            print("ModelEditViewController: creating new model")
+        }
         updateView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateData()
     }
 
     // MARK: - Table view data source
     
     func updateView() {
-        if let modelparams = self.modelparams {
-            nameField.text = modelparams.name
-            rcField.text = String(modelparams.a)
-            hrField.text = String(modelparams.b)
-            noteField.text = modelparams.note
-            modLabel.text = modelparams.mod.description
+        nameField.text = modelparams!.name
+        rcField.text = String(modelparams!.a)
+        hrField.text = String(modelparams!.b)
+        noteField.text = modelparams!.note
+        modLabel.text = modelparams!.mod.description
+    }
+    
+    // TODO: Stop disabling measured data cell
+    func updateData() {
+        if let measdata = modelparams!.measurements {
+            dataLabel.text = "\(measdata.count) data points"
         } else {
-            self.modelparams = ThermalModelParams(name: "New Model")  // default
+            dataCell.isUserInteractionEnabled = false
+            dataCell.accessoryType = .none
+            dataLabel.text = "No data"
+            dataLabel.textColor = .lightGray
         }
     }
 
-    /*
     // MARK: - Navigation
-
+     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "MeasList" {
+            let measView = segue.destination as! MeasTableViewController
+            measView.measData = modelparams?.measurements
+        }
     }
-    */
     
     @IBAction func clickedSave(_ sender: UIBarButtonItem) {
         guard let name = nameField.text,
-        let rc = Float(rcField.text!),
-        let hr = Float(hrField.text!)
+            let rc = Float(rcField.text!),
+            let hr = Float(hrField.text!),
+            let note = noteField.text
             else { return }
         
-        let note = noteField.text!
-        let mod = Date()
-        modelparams = ThermalModelParams(name: name,
-                                         a: rc, b: hr,
-                                         note: note,
-                                         mod: mod)
+        if let modelparams = self.modelparams {
+            modelparams.name = name
+            modelparams.a = rc
+            modelparams.b = hr
+            modelparams.note = note
+            modelparams.mod = Date()
+        }
         
         performSegue(withIdentifier: "UnwindToModelList", sender: self)
     }
 
+    @IBOutlet weak var dataCell: UITableViewCell!
+    @IBOutlet weak var dataLabel: UILabel!
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var rcField: UITextField!
     @IBOutlet weak var hrField: UITextField!

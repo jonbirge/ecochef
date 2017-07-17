@@ -13,10 +13,15 @@ class ThermalModelData {
     var selectedIndex: Int = 1
     
     var selectedModelData: ThermalModelParams {
-        return modelArray[selectedIndex]
+        if selectedIndex < modelArray.count {
+            return modelArray[selectedIndex]
+        } else {
+            return modelArray.first!
+        }
     }
     
     func LoadDefaultModelData() {
+        print("Loading default model data...")
         modelArray = ThermalModelData.DefaultModelList()
     }
     
@@ -42,11 +47,136 @@ class ThermalModelData {
         defModelArray.append(theparams)
         
         theparams = ThermalModelParams(name: "Gas Grill", a: 16.3, b: 644, note: "MHP")
+        let measdata = HeatingDataSet()
+        measdata.addDataPoint(HeatingDataPoint(time: 2.5, Tstart: 64, Tfinal: 155))
+        measdata.addDataPoint(HeatingDataPoint(time: 4, Tstart: 64, Tfinal: 200))
+        measdata.addDataPoint(HeatingDataPoint(time: 7.5, Tstart: 64, Tfinal: 300))
+        measdata.addDataPoint(HeatingDataPoint(time: 5.5, Tstart: 64, Tfinal: 250))
+        measdata.addDataPoint(HeatingDataPoint(time: 10, Tstart: 64, Tfinal: 365))
+        measdata.addDataPoint(HeatingDataPoint(time: 12.25, Tstart: 64, Tfinal: 400))
+        theparams.measurements = measdata
         defModelArray.append(theparams)
         
         return defModelArray
     }
 }
+
+// MARK: -
+
+class HeatingDataSet : NSObject, NSCoding {
+    private var measlist: [HeatingDataPoint] = []
+    
+    struct Keys {
+        static let measlist = "measlist"
+    }
+    
+    override init() {
+        super.init()
+    }
+    
+    private init(measlist: [HeatingDataPoint]) {
+        self.measlist = measlist
+    }
+    
+    required convenience init(coder aDecoder: NSCoder) {
+        let measlistread = aDecoder.decodeObject(forKey: Keys.measlist) as! [HeatingDataPoint]
+        self.init(measlist: measlistread)
+    }
+    
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(measlist, forKey: Keys.measlist)
+    }
+    
+    // Add new heating data to maintain sorted order
+    func addDataPoint(_ datapoint: HeatingDataPoint) {
+        if measlist.count == 0 {
+            measlist.append(datapoint)
+        } else {
+            var inserted = false  // assume end
+            for k in 0...(measlist.count - 1) {
+                if datapoint.time < measlist[k].time {
+                    measlist.insert(datapoint, at: k)
+                    inserted = true
+                    break
+                }
+            }
+            if !inserted {
+                measlist.append(datapoint)
+            }
+        }
+    }
+    
+    func sort() {
+        measlist = measlist.sorted(by: { (pointA, pointB) -> Bool in
+            return pointA.time > pointB.time
+        })
+    }
+    
+    subscript(index: Int) -> HeatingDataPoint {
+        return measlist[index]
+    }
+    
+    var count: Int {
+        return measlist.count
+    }
+    
+    var measurementList: [HeatingDataPoint] {
+        return measlist
+    }
+}
+
+class HeatingDataPoint : NSObject, NSCoding {
+    var Tamb : Float = 72
+    var Tstart : Float = 72
+    var Tfinal : Float = 350
+    var time : Float = 10  // minutes
+    
+    struct Keys {
+        static let tamb = "tamb"
+        static let tstart = "tstart"
+        static let tfinal = "tfinal"
+        static let time = "time"
+    }
+    
+    init(time: Float, Tstart: Float, Tfinal: Float, Tamb: Float) {
+        self.Tamb = Tamb
+        self.Tstart = Tstart
+        self.Tfinal = Tfinal
+        self.time = time
+    }
+    
+    override init() {
+        super.init()
+    }
+    
+    convenience init(copiedfrom source: HeatingDataPoint) {
+        self.init(time: source.time,
+                  Tstart: source.Tstart,
+                  Tfinal: source.Tfinal,
+                  Tamb: source.Tamb)
+    }
+    
+    convenience init(time: Float, Tstart: Float, Tfinal: Float) {
+        self.init(time: time, Tstart: Tstart, Tfinal: Tfinal, Tamb: Tstart)
+    }
+    
+    required convenience init(coder aDecoder: NSCoder) {
+        let Tamb = aDecoder.decodeFloat(forKey: Keys.tamb)
+        let Tstart = aDecoder.decodeFloat(forKey: Keys.tstart)
+        let Tfinal = aDecoder.decodeFloat(forKey: Keys.tfinal)
+        let time = aDecoder.decodeFloat(forKey: Keys.time)
+        self.init(time: time, Tstart: Tstart, Tfinal: Tfinal, Tamb: Tamb)
+    }
+    
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(Tamb, forKey: Keys.tamb)
+        aCoder.encode(Tfinal, forKey: Keys.tfinal)
+        aCoder.encode(Tstart, forKey: Keys.tstart)
+        aCoder.encode(time, forKey: Keys.time)
+    }
+}
+
+// MARK: -
 
 class ThermalModelParams : NSObject, NSCoding {
     var name: String
@@ -54,6 +184,7 @@ class ThermalModelParams : NSObject, NSCoding {
     var b: Float
     var note: String
     var mod: Date
+    var measurements: HeatingDataSet?
     
     struct Keys {
         static let name = "name"
@@ -61,6 +192,7 @@ class ThermalModelParams : NSObject, NSCoding {
         static let b = "b"
         static let note = "note"
         static let mod = "mod"
+        static let meas = "meas"
     }
     
     convenience init(name: String) {
@@ -68,15 +200,16 @@ class ThermalModelParams : NSObject, NSCoding {
     }
     
     convenience init(name: String, a: Float, b: Float, note: String) {
-        self.init(name: name, a: a, b: b, note: note, mod: Date())
+        self.init(name: name, a: a, b: b, note: note, mod: Date(), meas: nil)
     }
     
-    init(name: String, a: Float, b: Float, note: String, mod: Date) {
+    init(name: String, a: Float, b: Float, note: String, mod: Date, meas: HeatingDataSet?) {
         self.name = name
         self.a = a
         self.b = b
         self.note = note
         self.mod = mod
+        self.measurements = meas
     }
     
     required convenience init(coder aDecoder: NSCoder) {
@@ -95,7 +228,14 @@ class ThermalModelParams : NSObject, NSCoding {
         } else {
             mod = Date()
         }
-        self.init(name: name, a: a, b: b, note: note, mod: mod)
+//        var measurements: [HeatingDataPoint]?
+//        if let measread = aDecoder.decodeObject(forKey: Keys.meas) as? [HeatingDataPoint] {
+//            measurements = measread
+//        } else {
+//            measurements = nil
+//        }
+        let measurements = aDecoder.decodeObject(forKey: Keys.meas) as? HeatingDataSet
+        self.init(name: name, a: a, b: b, note: note, mod: mod, meas: measurements)
     }
     
     func encode(with aCoder: NSCoder) {
@@ -104,13 +244,15 @@ class ThermalModelParams : NSObject, NSCoding {
         aCoder.encode(b, forKey: Keys.b)
         aCoder.encode(note, forKey: Keys.note)
         aCoder.encode(mod, forKey: Keys.mod)
+        aCoder.encode(measurements, forKey: Keys.meas)
     }
 }
 
-// Computational logic
+// MARK: - Computational logic
+
 class ThermalModel : CustomStringConvertible {
-    var a: Float = 10.0  // RC time constant
-    var b: Float = 500.0  // RH coefficient (s.s. temp above ambient)
+    var a: Float = 12.0  // RC time constant
+    var b: Float = 600.0  // RH coefficient (s.s. temp above ambient)
     var Tamb: Float = 70.0  // T_ambient
     
     var description: String {
