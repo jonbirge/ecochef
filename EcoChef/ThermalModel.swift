@@ -125,6 +125,21 @@ class HeatingDataSet : NSObject, NSCoding {
     }
 }
 
+// Compute sum of squared error for ThermalModel
+extension ThermalModel {
+    func modelError(for data: HeatingDataSet) -> Float {
+        var err: Float = 0
+        for dataPoint in data.measurementList {
+            let Tfinal = tempAfterHeating(time: dataPoint.time,
+                                          fromtemp: dataPoint.Tstart,
+                                          withamb: dataPoint.Tamb)
+            err += pow(Tfinal - dataPoint.Tfinal, 2)
+        }
+        
+        return err
+    }
+}
+
 class HeatingDataPoint : NSObject, NSCoding {
     var Tamb : Float = 72
     var Tstart : Float = 72
@@ -286,6 +301,12 @@ class ThermalModel : CustomStringConvertible {
     }
     
     func tempAfterHeating(time t:Float, fromtemp Tstart:Float) -> Float {
+        let Tinf = b + Tamb
+        return Tinf - exp(-t/a)*(Tinf - Tstart)
+    }
+    
+    func tempAfterHeating
+        (time t:Float, fromtemp Tstart:Float, withamb Tamb:Float) -> Float {
         let Tinf = b + Tamb
         return Tinf - exp(-t/a)*(Tinf - Tstart)
     }

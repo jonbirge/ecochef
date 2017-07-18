@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		AB007F1D1F1BE67E00AD9552 /* MeasTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB007F1C1F1BE67E00AD9552 /* MeasTableViewController.swift */; };
 		AB007F1F1F1C109000AD9552 /* DataEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB007F1E1F1C109000AD9552 /* DataEditViewController.swift */; };
+		AB007F211F1C7B8000AD9552 /* Optimization.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB007F201F1C7B8000AD9552 /* Optimization.swift */; };
+		AB007F221F1C7B8000AD9552 /* Optimization.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB007F201F1C7B8000AD9552 /* Optimization.swift */; };
 		AB0373891F020DD7005D1880 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB0373881F020DD7005D1880 /* LaunchScreen.storyboard */; };
 		AB43B1771EEB871E00B6A96B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB43B1761EEB871E00B6A96B /* AppDelegate.swift */; };
 		AB43B1791EEB871E00B6A96B /* PreheatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB43B1781EEB871E00B6A96B /* PreheatViewController.swift */; };
@@ -44,6 +46,7 @@
 /* Begin PBXFileReference section */
 		AB007F1C1F1BE67E00AD9552 /* MeasTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeasTableViewController.swift; sourceTree = "<group>"; };
 		AB007F1E1F1C109000AD9552 /* DataEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataEditViewController.swift; sourceTree = "<group>"; };
+		AB007F201F1C7B8000AD9552 /* Optimization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Optimization.swift; sourceTree = "<group>"; };
 		AB0373881F020DD7005D1880 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AB43B1731EEB871E00B6A96B /* EcoChef.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EcoChef.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB43B1761EEB871E00B6A96B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -109,6 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				AB43B1761EEB871E00B6A96B /* AppDelegate.swift */,
+				AB007F201F1C7B8000AD9552 /* Optimization.swift */,
 				AB43B18A1EEBAEA100B6A96B /* ThermalModel.swift */,
 				ABEB6F1C1F02A6E300ABD199 /* ThermalTimer.swift */,
 				AB53D56D1F0DD85900ACA17A /* EcoChefThermalModel.swift */,
@@ -280,6 +284,7 @@
 				ABEBBBA61F05B06400527B4F /* SimpleButton.swift in Sources */,
 				ABEBBBA81F05B06400527B4F /* SimpleButtonStateChangeValue.swift in Sources */,
 				AB43B18B1EEBAEA100B6A96B /* ThermalModel.swift in Sources */,
+				AB007F211F1C7B8000AD9552 /* Optimization.swift in Sources */,
 				ABEB6F1D1F02A6E300ABD199 /* ThermalTimer.swift in Sources */,
 				ABC7A8751EF8EE7900F25317 /* AboutViewController.swift in Sources */,
 				ABC7A8711EF8DC5D00F25317 /* SettingsViewController.swift in Sources */,
@@ -290,6 +295,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB007F221F1C7B8000AD9552 /* Optimization.swift in Sources */,
 				ABD4127F1F1134C900429887 /* EcoChefTests.swift in Sources */,
 				ABD412861F11375400429887 /* ThermalModel.swift in Sources */,
 			);
