@@ -22,7 +22,7 @@
 
 import Accelerate
 
-public enum MatrixAxies {
+public enum MatrixAxes {
     case row
     case column
 }
@@ -41,6 +41,7 @@ public struct Matrix<T> where T: FloatingPoint, T: ExpressibleByFloatLiteral {
         self.grid = [Element](repeating: repeatedValue, count: rows * columns)
     }
 
+    // Create matrix from Swift array
     public init(_ contents: [[Element]]) {
         let m: Int = contents.count
         let n: Int = contents[0].count
@@ -52,6 +53,18 @@ public struct Matrix<T> where T: FloatingPoint, T: ExpressibleByFloatLiteral {
             grid.replaceSubrange(i*n..<i*n+Swift.min(m, row.count), with: row)
         }
     }
+    
+    // Create column vector from Swift array
+    public init(_ contents: [Element]) {
+        let m: Int = contents.count
+        let n: Int = 1
+        let repeatedValue: Element = 0.0
+        
+        self.init(rows: m, columns: n, repeatedValue: repeatedValue)
+        
+        grid = contents
+    }
+
 
     public subscript(row: Int, column: Int) -> Element {
         get {
@@ -170,6 +183,14 @@ public func neg(_ x: Matrix<Double>) -> Matrix<Double> {
     return results
 }
 
+public func neg(_ x: Matrix<Float>) -> Matrix<Float> {
+    var results = x
+    for k in 0...(results.grid.count - 1) {
+        results.grid[k] *= -1
+    }
+    return results
+}
+
 public func add(_ x: Matrix<Float>, y: Matrix<Float>) -> Matrix<Float> {
     precondition(x.rows == y.rows && x.columns == y.columns, "Matrix dimensions not compatible with addition")
 
@@ -270,7 +291,7 @@ public func exp(_ x: Matrix<Float>) -> Matrix<Float> {
     return result
 }
 
-public func sum(_ x: Matrix<Double>, axies: MatrixAxies = .column) -> Matrix<Double> {
+public func sum(_ x: Matrix<Double>, axies: MatrixAxes = .column) -> Matrix<Double> {
     
     switch axies {
     case .column:
@@ -352,6 +373,10 @@ public func + (lhs: Matrix<Double>, rhs: Matrix<Double>) -> Matrix<Double> {
 }
 
 public func - (lhs: Matrix<Double>, rhs: Matrix<Double>) -> Matrix<Double> {
+    return add(lhs, y: neg(rhs))
+}
+
+public func - (lhs: Matrix<Float>, rhs: Matrix<Float>) -> Matrix<Float> {
     return add(lhs, y: neg(rhs))
 }
 

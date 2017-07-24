@@ -47,7 +47,6 @@ class GenExponentialTest: Fittable {
 }
 
 class ExponentialTest: GenExponentialTest {
-    
     init() {
         let x0: [Double] = [0, 1, 2, 3, 4]
         let y0: [Double] = [1.047, 0.2864, 0.288, 0.07777, 0.121, -0.0001342]
@@ -57,7 +56,6 @@ class ExponentialTest: GenExponentialTest {
         self.x = x0
         self.y = y0
     }
-    
 }
 
 class OptimizationTests: XCTestCase {

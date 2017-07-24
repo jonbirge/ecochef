@@ -32,7 +32,7 @@ class Fitter {
     // Matrix with columns (vectors) representing points and rows (vector of vectors) representing parameters.
     func jacobian(at params:[Double]) -> [[Double]] {
         var J: [[Double]] = []
-        for kp in 0...params.count - 1 {
+        for kp in 0..<params.count {
             let dp = params[kp] * fdrel
             var params1 = params
             params1[kp] = params1[kp] + dp
@@ -54,14 +54,14 @@ class Fitter {
     
     func residuals(at beta:Matrix<Double>) -> Matrix<Double> {
         let betarray = beta.grid
-        let residarray: [[Double]] = [residuals(at: betarray)]
-        return transpose(Matrix<Double>(residarray))  // TODO: fix syntax
+        let residarray: [Double] = residuals(at: betarray)
+        return Matrix<Double>(residarray)
     }
 }
 
 class GaussNewtonFitter : Fitter {
     override func fit() -> [Double] {
-        var beta = transpose(Matrix<Double>([initialparams]))  // TODO: fix syntax
+        var beta = Matrix<Double>(initialparams)
         var fitting = true
         var iterations = 0
         while fitting {
