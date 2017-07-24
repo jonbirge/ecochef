@@ -7,7 +7,6 @@
 //
 
 import Foundation
-//import Surge
 
 protocol Fittable {
     var fitnparams: Int { get }
@@ -18,10 +17,12 @@ protocol Fittable {
 
 class Fitter {
     var system: Fittable
+    var initialparams: [Double]
     private let fdrel: Double = 0.0001
     
     init(with sys: Fittable) {
         self.system = sys
+        initialparams = system.fitinitparams
     }
     
     func fit() -> [Double] {
@@ -29,8 +30,6 @@ class Fitter {
     }
     
     // Matrix with columns (vectors) representing points and rows (vector of vectors) representing parameters.
-    // This is actually the transpose of the Jacobian for r(beta) in the standard definition of Newton-Gauss.
-    // Why are we doing it like this? It's convenient both to create and to use.
     func jacobian(at params:[Double]) -> [[Double]] {
         var J: [[Double]] = []
         
@@ -63,7 +62,7 @@ class Fitter {
 
 class GaussNewtonFitter : Fitter {
     override func fit() -> [Double] {
-        var beta = transpose(Matrix<Double>([system.fitinitparams]))  // TODO: fix syntax
+        var beta = transpose(Matrix<Double>([initialparams]))  // TODO: fix syntax
         var fitting = true
         var iterations = 0
         while fitting {

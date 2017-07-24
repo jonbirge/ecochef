@@ -97,12 +97,17 @@ class OptimizationTests: XCTestCase {
     }
     
     func testGaussNewtonPerformance() {
+        let m = 200
         let fitter = GaussNewtonFitter(with: gentest)
         self.measure {
             var p: [Double]
-            p = fitter.fit()
-            XCTAssertEqualWithAccuracy(p[0], 1.0, accuracy: 0.01)
-            XCTAssertEqualWithAccuracy(p[1], 1.0, accuracy: 0.01)
+            for k in 1...m {
+                let tc0 = Double(k)/Double(m) + 0.5
+                fitter.initialparams = [0.5, tc0]
+                p = fitter.fit()
+                XCTAssertEqualWithAccuracy(p[0], 1.0, accuracy: 0.01)
+                XCTAssertEqualWithAccuracy(p[1], 1.0, accuracy: 0.01)
+            }
         }
     }
     
