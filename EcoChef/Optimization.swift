@@ -7,66 +7,75 @@
 //
 
 import Foundation
-
-protocol Optimizable {
-    var optdim: Int { get }
-    func optmerit(for x:[Double]) -> Double
-}
+//import Surge
 
 protocol Fittable {
-    var fitdim: Int { get }
-    func fiterrvector(for x:[Double]) -> [Double]
-}
-
-class Optimizer {
-    var system: Optimizable
-    
-    init(with sys: Optimizable) {
-        self.system = sys
-    }
-    
-    func fdgrad() -> [Double] {
-        return []
-    }
-    
-    // func for line search?
-    
-    func optimize() {
-        // abstract
-    }
-    
-    // utility
-    func merit(for x:[Double]) -> Double {
-        return system.optmerit(for: x)
-    }
+    var fitnparams: Int { get }
+    var fitnpoints: Int { get }
+    var fitinitparams: [Double] { get }
+    func fitresiduals(for params:[Double]) -> [Double]
 }
 
 class Fitter {
     var system: Fittable
+    private let fdrel: Double = 0.0001
     
     init(with sys: Fittable) {
         self.system = sys
     }
     
-    func fit() {
-        //abstract
+    func fit() -> [Double] {
+        return [0.0]
     }
     
-    func fd(for ksys:Int, kx:Int) -> Double {
-        return 0
+    // Matrix with columns (vectors) representing points and rows (vector of vectors) representing parameters.
+    // This is actually the transpose of the Jacobian for r(beta) in the standard definition of Newton-Gauss.
+    // Why are we doing it like this? It's convenient both to create and to use.
+    func jacobian(at params:[Double]) -> [[Double]] {
+        var J: [[Double]] = []
+        
+        for kp in 0...params.count - 1 {
+            let dp = params[kp] * fdrel
+            var params1 = params
+            params1[kp] = params1[kp] + dp
+            let x0 = residuals(at: params)
+            let x1 = residuals(at: params1)
+            J.append((x1 - x0)/dp)
+        }
+        return J
     }
     
-    func jacobian() -> [[Double]] {
-        return [[]]
+    func jacobian(at params:Matrix<Double>) -> Matrix<Double> {
+        let Jdata = jacobian(at: params[column:0])
+        return Matrix<Double>(Jdata)
     }
     
-    func errvector(for x:[Double]) -> [Double] {
-        return system.fiterrvector(for: x)
+    func residuals(at params:[Double]) -> [Double] {
+        return system.fitresiduals(for: params)
+    }
+    
+    func residuals(at beta:Matrix<Double>) -> Matrix<Double> {
+        let betarray = beta.grid
+        let residarray: [[Double]] = [residuals(at: betarray)]
+        return transpose(Matrix<Double>(residarray))  // TODO: fix syntax
     }
 }
 
 class GaussNewtonFitter : Fitter {
-    override func fit() {
-        
+    override func fit() -> [Double] {
+        var beta = transpose(Matrix<Double>([system.fitinitparams]))  // TODO: fix syntax
+        var fitting = true
+        var iterations = 0
+        while fitting {
+            let Jt = jacobian(at: beta)  // transpose
+            let Jpi = inv(Jt * transpose(Jt)) * Jt  // pseudo-inverse
+            let r = residuals(at: beta)
+            beta = beta - Jpi * r
+            iterations += 1
+            if iterations > 32 {
+                fitting = false
+            }
+        }
+        return beta[column:0]
     }
 }

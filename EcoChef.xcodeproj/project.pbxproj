@@ -19,11 +19,30 @@
 		AB43B18B1EEBAEA100B6A96B /* ThermalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB43B18A1EEBAEA100B6A96B /* ThermalModel.swift */; };
 		AB53D56E1F0DD85900ACA17A /* EcoChefThermalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB53D56D1F0DD85900ACA17A /* EcoChefThermalModel.swift */; };
 		AB57E5DB1F0492F700D37EF8 /* birge-ring.aiff in Resources */ = {isa = PBXBuildFile; fileRef = AB57E5DA1F0492F700D37EF8 /* birge-ring.aiff */; };
+		AB9506111F2580E1004A2EA9 /* Arithmetic.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB05AF1F1DB90200C7B635 /* Arithmetic.swift */; };
+		AB9506121F2580E1004A2EA9 /* Auxiliary.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB05B01F1DB90200C7B635 /* Auxiliary.swift */; };
+		AB9506131F2580E1004A2EA9 /* Convolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB05B11F1DB90200C7B635 /* Convolution.swift */; };
+		AB9506141F2580E1004A2EA9 /* Exponential.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB05B21F1DB90200C7B635 /* Exponential.swift */; };
+		AB9506151F2580E1004A2EA9 /* FFT.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB05B31F1DB90200C7B635 /* FFT.swift */; };
+		AB9506161F2580E1004A2EA9 /* Hyperbolic.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB05B41F1DB90200C7B635 /* Hyperbolic.swift */; };
+		AB9506171F2580E1004A2EA9 /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB05B51F1DB90200C7B635 /* Matrix.swift */; };
+		AB9506181F2580E1004A2EA9 /* Power.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB05B61F1DB90200C7B635 /* Power.swift */; };
+		AB9506191F2580E1004A2EA9 /* Trigonometric.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB05B81F1DB90200C7B635 /* Trigonometric.swift */; };
 		ABA36DC31F07401100B3FCA4 /* EcoChefState.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA36DC21F07401100B3FCA4 /* EcoChefState.swift */; };
 		ABC7A8711EF8DC5D00F25317 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC7A8701EF8DC5D00F25317 /* SettingsViewController.swift */; };
 		ABC7A8751EF8EE7900F25317 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC7A8741EF8EE7900F25317 /* AboutViewController.swift */; };
 		ABD4127F1F1134C900429887 /* EcoChefTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD4127E1F1134C900429887 /* EcoChefTests.swift */; };
 		ABD412861F11375400429887 /* ThermalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB43B18A1EEBAEA100B6A96B /* ThermalModel.swift */; };
+		ABEB05B91F1DB90200C7B635 /* Arithmetic.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB05AF1F1DB90200C7B635 /* Arithmetic.swift */; };
+		ABEB05BA1F1DB90200C7B635 /* Auxiliary.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB05B01F1DB90200C7B635 /* Auxiliary.swift */; };
+		ABEB05BB1F1DB90200C7B635 /* Convolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB05B11F1DB90200C7B635 /* Convolution.swift */; };
+		ABEB05BC1F1DB90200C7B635 /* Exponential.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB05B21F1DB90200C7B635 /* Exponential.swift */; };
+		ABEB05BD1F1DB90200C7B635 /* FFT.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB05B31F1DB90200C7B635 /* FFT.swift */; };
+		ABEB05BE1F1DB90200C7B635 /* Hyperbolic.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB05B41F1DB90200C7B635 /* Hyperbolic.swift */; };
+		ABEB05BF1F1DB90200C7B635 /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB05B51F1DB90200C7B635 /* Matrix.swift */; };
+		ABEB05C01F1DB90200C7B635 /* Power.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB05B61F1DB90200C7B635 /* Power.swift */; };
+		ABEB05C11F1DB90200C7B635 /* Trigonometric.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB05B81F1DB90200C7B635 /* Trigonometric.swift */; };
+		ABEB05C31F1EEDF000C7B635 /* OptimizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB05C21F1EEDF000C7B635 /* OptimizationTests.swift */; };
 		ABEB6F1D1F02A6E300ABD199 /* ThermalTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB6F1C1F02A6E300ABD199 /* ThermalTimer.swift */; };
 		ABEBBBA01F05AC1C00527B4F /* TimerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEBBB9F1F05AC1C00527B4F /* TimerButton.swift */; };
 		ABEBBBA61F05B06400527B4F /* SimpleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEBBBA31F05B06400527B4F /* SimpleButton.swift */; };
@@ -63,6 +82,17 @@
 		ABD4127C1F1134C900429887 /* EcoChefTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EcoChefTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABD4127E1F1134C900429887 /* EcoChefTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcoChefTests.swift; sourceTree = "<group>"; };
 		ABD412801F1134C900429887 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ABEB05AF1F1DB90200C7B635 /* Arithmetic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Arithmetic.swift; sourceTree = "<group>"; };
+		ABEB05B01F1DB90200C7B635 /* Auxiliary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Auxiliary.swift; sourceTree = "<group>"; };
+		ABEB05B11F1DB90200C7B635 /* Convolution.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Convolution.swift; sourceTree = "<group>"; };
+		ABEB05B21F1DB90200C7B635 /* Exponential.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Exponential.swift; sourceTree = "<group>"; };
+		ABEB05B31F1DB90200C7B635 /* FFT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FFT.swift; sourceTree = "<group>"; };
+		ABEB05B41F1DB90200C7B635 /* Hyperbolic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hyperbolic.swift; sourceTree = "<group>"; };
+		ABEB05B51F1DB90200C7B635 /* Matrix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Matrix.swift; sourceTree = "<group>"; };
+		ABEB05B61F1DB90200C7B635 /* Power.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Power.swift; sourceTree = "<group>"; };
+		ABEB05B71F1DB90200C7B635 /* Surge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Surge.h; sourceTree = "<group>"; };
+		ABEB05B81F1DB90200C7B635 /* Trigonometric.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trigonometric.swift; sourceTree = "<group>"; };
+		ABEB05C21F1EEDF000C7B635 /* OptimizationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptimizationTests.swift; sourceTree = "<group>"; };
 		ABEB6F1C1F02A6E300ABD199 /* ThermalTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThermalTimer.swift; sourceTree = "<group>"; };
 		ABEBBB9F1F05AC1C00527B4F /* TimerButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerButton.swift; sourceTree = "<group>"; };
 		ABEBBBA31F05B06400527B4F /* SimpleButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleButton.swift; sourceTree = "<group>"; };
@@ -93,6 +123,7 @@
 		AB43B16A1EEB871E00B6A96B = {
 			isa = PBXGroup;
 			children = (
+				ABEB05AE1F1DB90200C7B635 /* Surge */,
 				AB43B1751EEB871E00B6A96B /* EcoChef */,
 				ABD4127D1F1134C900429887 /* EcoChefTests */,
 				AB43B1741EEB871E00B6A96B /* Products */,
@@ -139,9 +170,28 @@
 			isa = PBXGroup;
 			children = (
 				ABD4127E1F1134C900429887 /* EcoChefTests.swift */,
+				ABEB05C21F1EEDF000C7B635 /* OptimizationTests.swift */,
 				ABD412801F1134C900429887 /* Info.plist */,
 			);
 			path = EcoChefTests;
+			sourceTree = "<group>";
+		};
+		ABEB05AE1F1DB90200C7B635 /* Surge */ = {
+			isa = PBXGroup;
+			children = (
+				ABEB05B71F1DB90200C7B635 /* Surge.h */,
+				ABEB05AF1F1DB90200C7B635 /* Arithmetic.swift */,
+				ABEB05B01F1DB90200C7B635 /* Auxiliary.swift */,
+				ABEB05B11F1DB90200C7B635 /* Convolution.swift */,
+				ABEB05B21F1DB90200C7B635 /* Exponential.swift */,
+				ABEB05B31F1DB90200C7B635 /* FFT.swift */,
+				ABEB05B41F1DB90200C7B635 /* Hyperbolic.swift */,
+				ABEB05B51F1DB90200C7B635 /* Matrix.swift */,
+				ABEB05B61F1DB90200C7B635 /* Power.swift */,
+				ABEB05B81F1DB90200C7B635 /* Trigonometric.swift */,
+			);
+			name = Surge;
+			path = Source;
 			sourceTree = "<group>";
 		};
 		ABEBBBA91F05B56E00527B4F /* SimpleButton */ = {
@@ -272,20 +322,29 @@
 			buildActionMask = 2147483647;
 			files = (
 				ABEDA1C11F09FDAD00FAE1E1 /* ModelEditViewController.swift in Sources */,
+				ABEB05BC1F1DB90200C7B635 /* Exponential.swift in Sources */,
 				AB43B1771EEB871E00B6A96B /* AppDelegate.swift in Sources */,
 				AB007F1D1F1BE67E00AD9552 /* MeasTableViewController.swift in Sources */,
 				ABEDA1BE1F09F75600FAE1E1 /* ModelTableViewController.swift in Sources */,
 				ABA36DC31F07401100B3FCA4 /* EcoChefState.swift in Sources */,
+				ABEB05BE1F1DB90200C7B635 /* Hyperbolic.swift in Sources */,
+				ABEB05BA1F1DB90200C7B635 /* Auxiliary.swift in Sources */,
 				AB43B1791EEB871E00B6A96B /* PreheatViewController.swift in Sources */,
 				AB007F1F1F1C109000AD9552 /* DataEditViewController.swift in Sources */,
 				ABEBBBA01F05AC1C00527B4F /* TimerButton.swift in Sources */,
 				ABEBBBA71F05B06400527B4F /* SimpleButtonControlState.swift in Sources */,
+				ABEB05B91F1DB90200C7B635 /* Arithmetic.swift in Sources */,
+				ABEB05BD1F1DB90200C7B635 /* FFT.swift in Sources */,
+				ABEB05C11F1DB90200C7B635 /* Trigonometric.swift in Sources */,
 				AB53D56E1F0DD85900ACA17A /* EcoChefThermalModel.swift in Sources */,
 				ABEBBBA61F05B06400527B4F /* SimpleButton.swift in Sources */,
 				ABEBBBA81F05B06400527B4F /* SimpleButtonStateChangeValue.swift in Sources */,
 				AB43B18B1EEBAEA100B6A96B /* ThermalModel.swift in Sources */,
 				AB007F211F1C7B8000AD9552 /* Optimization.swift in Sources */,
+				ABEB05BB1F1DB90200C7B635 /* Convolution.swift in Sources */,
+				ABEB05BF1F1DB90200C7B635 /* Matrix.swift in Sources */,
 				ABEB6F1D1F02A6E300ABD199 /* ThermalTimer.swift in Sources */,
+				ABEB05C01F1DB90200C7B635 /* Power.swift in Sources */,
 				ABC7A8751EF8EE7900F25317 /* AboutViewController.swift in Sources */,
 				ABC7A8711EF8DC5D00F25317 /* SettingsViewController.swift in Sources */,
 			);
@@ -295,9 +354,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB9506111F2580E1004A2EA9 /* Arithmetic.swift in Sources */,
+				AB9506191F2580E1004A2EA9 /* Trigonometric.swift in Sources */,
+				ABEB05C31F1EEDF000C7B635 /* OptimizationTests.swift in Sources */,
+				AB9506121F2580E1004A2EA9 /* Auxiliary.swift in Sources */,
+				AB9506141F2580E1004A2EA9 /* Exponential.swift in Sources */,
 				AB007F221F1C7B8000AD9552 /* Optimization.swift in Sources */,
+				AB9506171F2580E1004A2EA9 /* Matrix.swift in Sources */,
+				AB9506131F2580E1004A2EA9 /* Convolution.swift in Sources */,
+				AB9506181F2580E1004A2EA9 /* Power.swift in Sources */,
 				ABD4127F1F1134C900429887 /* EcoChefTests.swift in Sources */,
 				ABD412861F11375400429887 /* ThermalModel.swift in Sources */,
+				AB9506161F2580E1004A2EA9 /* Hyperbolic.swift in Sources */,
+				AB9506151F2580E1004A2EA9 /* FFT.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
