@@ -32,7 +32,6 @@ class Fitter {
     // Matrix with columns (vectors) representing points and rows (vector of vectors) representing parameters.
     func jacobian(at params:[Double]) -> [[Double]] {
         var J: [[Double]] = []
-        
         for kp in 0...params.count - 1 {
             let dp = params[kp] * fdrel
             var params1 = params

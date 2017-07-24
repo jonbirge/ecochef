@@ -46,33 +46,18 @@ class GenExponentialTest: Fittable {
     }
 }
 
-class ExponentialTest: Fittable {
-    var x: [Double] = [0, 1, 2, 3, 4]
-    var y: [Double] = [1.047, 0.2864, 0.288, 0.07777, 0.121, -0.0001342]
+class ExponentialTest: GenExponentialTest {
     
-    var fitnparams: Int {
-        return 2
+    init() {
+        let x0: [Double] = [0, 1, 2, 3, 4]
+        let y0: [Double] = [1.047, 0.2864, 0.288, 0.07777, 0.121, -0.0001342]
+
+        super.init(n: x0.count)
+
+        self.x = x0
+        self.y = y0
     }
     
-    var fitnpoints: Int {
-        return x.count
-    }
-    
-    var fitinitparams: [Double] {
-        return [1.0, 1.0]
-    }
-    
-    func evalfun(at x: Double, with params: [Double]) -> Double {
-        return params[0] * exp(-params[1] * x)
-    }
-    
-    func fitresiduals(for params: [Double]) -> [Double] {
-        var res: [Double] = []
-        for k in 0...(x.count - 1) {
-            res.append(evalfun(at:x[k], with: params) - y[k])
-        }
-        return res
-    }
 }
 
 class OptimizationTests: XCTestCase {
