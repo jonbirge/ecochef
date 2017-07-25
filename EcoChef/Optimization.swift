@@ -12,7 +12,12 @@ protocol Fittable {
     var fitnparams: Int { get }
     var fitnpoints: Int { get }
     var fitinitparams: [Double] { get }
-    func fitresiduals(for params:[Double]) -> [Double]
+    func fitresiduals(for params:[Double]) throws -> [Double]
+}
+
+enum OptimizationError: Error {
+    case undefinedResidual
+    case didNotConverge
 }
 
 class Fitter {
@@ -24,36 +29,36 @@ class Fitter {
         self.system = sys
     }
     
-    func fit() -> [Double] {
+    func fit() throws -> [Double] {
         return [0.0]
     }
     
     // Matrix with columns (vectors) representing points and rows (vector of vectors) representing parameters.
-    func jacobian(at params:[Double]) -> [[Double]] {
+    func jacobian(at params:[Double]) throws -> [[Double]] {
         var J: [[Double]] = []
         for kp in 0..<params.count {
             let dp = params[kp] * fdrel
             var params1 = params
             params1[kp] = params1[kp] + dp
-            let x0 = residuals(at: params)
-            let x1 = residuals(at: params1)
+            let x0 = try residuals(at: params)
+            let x1 = try residuals(at: params1)
             J.append((x1 - x0)/dp)
         }
         return J
     }
     
-    func jacobian(at params:Matrix<Double>) -> Matrix<Double> {
-        let Jdata = jacobian(at: params[column:0])
+    func jacobian(at params:Matrix<Double>) throws -> Matrix<Double> {
+        let Jdata = try jacobian(at: params[column:0])
         return Matrix<Double>(Jdata)
     }
     
-    func residuals(at params:[Double]) -> [Double] {
-        return system.fitresiduals(for: params)
+    func residuals(at params:[Double]) throws -> [Double] {
+        return try system.fitresiduals(for: params)
     }
     
-    func residuals(at beta:Matrix<Double>) -> Matrix<Double> {
+    func residuals(at beta:Matrix<Double>) throws -> Matrix<Double> {
         let betarray = beta.grid
-        let residarray: [Double] = residuals(at: betarray)
+        let residarray: [Double] = try residuals(at: betarray)
         return Matrix<Double>(residarray)
     }
     
@@ -63,7 +68,7 @@ class Fitter {
 }
 
 class GaussNewtonFitter : Fitter {
-    override func fit() -> [Double] {
+    override func fit() throws -> [Double] {
         var beta: Matrix<Double>
         if let initialparams = initialparams {
             beta = Matrix<Double>(initialparams)
@@ -73,9 +78,9 @@ class GaussNewtonFitter : Fitter {
         var fitting = true
         var iterations = 0
         while fitting {
-            let Jt = jacobian(at: beta)  // transpose
+            let Jt = try jacobian(at: beta)  // transpose
             let Jpi = inv(Jt * transpose(Jt)) * Jt  // pseudo-inverse
-            let r = residuals(at: beta)
+            let r = try residuals(at: beta)
             beta = beta - Jpi * r
             iterations += 1
             if iterations > 32 {

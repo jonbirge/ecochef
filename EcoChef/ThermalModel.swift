@@ -285,14 +285,16 @@ class ThermalModelFitter : Fittable {
         }
     }
     
-    func fitresiduals(for params: [Double]) -> [Double] {
+    func fitresiduals(for params: [Double]) throws -> [Double] {
         fitmodel.a = Float(params[IndexKeys.a])
         fitmodel.b = Float(params[IndexKeys.b])
         var res: [Double] = []
         for meas in modelparams.measurements!.measurementList {
             fitmodel.Tamb = meas.Tamb
             let tmeas = meas.time
-            let tcomp = fitmodel.time(totemp: meas.Tfinal, fromtemp: meas.Tstart)!
+            guard let tcomp =
+                fitmodel.time(totemp: meas.Tfinal, fromtemp: meas.Tstart)
+                else { throw OptimizationError.undefinedResidual }
             res.append(Double(tmeas - tcomp))
         }
         return res
@@ -314,9 +316,13 @@ class ThermalModelFitter : Fittable {
     
     func fitfromdata() {
         if fittable {
-            var p: [Double] = fitter.fit()
-            modelparams.a = Float(p[IndexKeys.a])
-            modelparams.b = Float(p[IndexKeys.b])
+            do {
+                var p: [Double] = try fitter.fit()
+                modelparams.a = Float(p[IndexKeys.a])
+                modelparams.b = Float(p[IndexKeys.b])
+            } catch  {
+                print("ThermalModelFitter: fitting failed")
+            }
         }
     }
 }

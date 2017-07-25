@@ -74,9 +74,13 @@ class OptimizationTests: XCTestCase {
     
     func testGaussNewtonFit() {
         let fitter = GaussNewtonFitter(with: funtest)
-        var p: [Double] = fitter.fit()
-        XCTAssertEqualWithAccuracy(p[0], 1.01869, accuracy: 0.01)
-        XCTAssertEqualWithAccuracy(p[1], 0.90268, accuracy: 0.01)
+        do {
+            var p: [Double] = try fitter.fit()
+            XCTAssertEqualWithAccuracy(p[0], 1.01869, accuracy: 0.01)
+            XCTAssertEqualWithAccuracy(p[1], 0.90268, accuracy: 0.01)
+        } catch {
+            XCTFail("GaussNewton threw")
+        }
     }
     
     func testGaussNewtonPerformance() {
@@ -84,12 +88,16 @@ class OptimizationTests: XCTestCase {
         let fitter = GaussNewtonFitter(with: gentest)
         self.measure {
             var p: [Double]
-            for k in 1...m {
-                let tc0 = Double(k)/Double(m) + 0.5
-                fitter.setInitial(params: [0.5, tc0])
-                p = fitter.fit()
-                XCTAssertEqualWithAccuracy(p[0], 1.0, accuracy: 0.01)
-                XCTAssertEqualWithAccuracy(p[1], 1.0, accuracy: 0.01)
+            do {
+                for k in 1...m {
+                    let tc0 = Double(k)/Double(m) + 0.5
+                    fitter.setInitial(params: [0.5, tc0])
+                    p = try fitter.fit()
+                    XCTAssertEqualWithAccuracy(p[0], 1.0, accuracy: 0.01)
+                    XCTAssertEqualWithAccuracy(p[1], 1.0, accuracy: 0.01)
+                }
+            } catch {
+                XCTFail("GaussNewton threw")
             }
         }
     }
