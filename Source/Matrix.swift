@@ -65,7 +65,6 @@ public struct Matrix<T> where T: FloatingPoint, T: ExpressibleByFloatLiteral {
         grid = contents
     }
 
-
     public subscript(row: Int, column: Int) -> Element {
         get {
             assert(indexIsValidForRow(row, column: column))

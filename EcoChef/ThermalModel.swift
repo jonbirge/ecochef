@@ -27,24 +27,24 @@ class ThermalModelData {
     
     static func DefaultModelList() -> [ThermalModelParams] {
         var theparams : ThermalModelParams
-        var defModelArray : [ThermalModelParams] = []
+        var defaultModels : [ThermalModelParams] = []
         
         theparams = ThermalModelParams(name: "Electric (EnergyStar)")
         theparams.a *= 1.5
-        defModelArray.append(theparams)
+        defaultModels.append(theparams)
         
         theparams = ThermalModelParams(name: "Electric (Fast Preheat)")
         theparams.a *= 1.25
         theparams.b = 700
-        defModelArray.append(theparams)
+        defaultModels.append(theparams)
         
         theparams = ThermalModelParams(name: "Convection (Large)")
         theparams.a *= 0.9
-        defModelArray.append(theparams)
+        defaultModels.append(theparams)
         
         theparams = ThermalModelParams(name: "Convection (Small)")
         theparams.a *= 0.8
-        defModelArray.append(theparams)
+        defaultModels.append(theparams)
         
         theparams = ThermalModelParams(name: "Gas Grill", a: 16.3, b: 644, note: "MHP")
         let measdata = HeatingDataSet()
@@ -55,9 +55,9 @@ class ThermalModelData {
         measdata.addDataPoint(HeatingDataPoint(time: 10, Tstart: 64, Tfinal: 365))
         measdata.addDataPoint(HeatingDataPoint(time: 12.25, Tstart: 64, Tfinal: 400))
         theparams.measurements = measdata
-        defModelArray.append(theparams)
+        defaultModels.append(theparams)
         
-        return defModelArray
+        return defaultModels
     }
 }
 
@@ -125,21 +125,6 @@ class HeatingDataSet : NSObject, NSCoding {
     }
 }
 
-// Compute sum of squared error for ThermalModel
-extension ThermalModel {
-    func modelError(for data: HeatingDataSet) -> Float {
-        var err: Float = 0
-        for dataPoint in data.measurementList {
-            let Tfinal = tempAfterHeating(time: dataPoint.time,
-                                          fromtemp: dataPoint.Tstart,
-                                          withamb: dataPoint.Tamb)
-            err += pow(Tfinal - dataPoint.Tfinal, 2)
-        }
-        
-        return err
-    }
-}
-
 class HeatingDataPoint : NSObject, NSCoding {
     var Tamb : Float = 72
     var Tstart : Float = 72
@@ -191,7 +176,7 @@ class HeatingDataPoint : NSObject, NSCoding {
     }
 }
 
-// MARK: -
+// MARK: - Data model
 
 class ThermalModelParams : NSObject, NSCoding {
     var name: String
@@ -248,6 +233,10 @@ class ThermalModelParams : NSObject, NSCoding {
         self.init(name: name, a: a, b: b, note: note, mod: mod, meas: measurements)
     }
     
+    override var description: String {
+        return "ThermalModelParams(a: \(a), b: \(b))"
+    }
+    
     func encode(with aCoder: NSCoder) {
         aCoder.encode(name, forKey: Keys.name)
         aCoder.encode(a, forKey: Keys.a)
@@ -258,7 +247,81 @@ class ThermalModelParams : NSObject, NSCoding {
     }
 }
 
-// MARK: - Computational logic
+// MARK: - Model fitting
+
+class ThermalModelFitter : Fittable {
+    var fitmodel: ThermalModel
+    var modelparams: ThermalModelParams
+    private var fitter: GaussNewtonFitter!
+    
+    struct IndexKeys {
+        static let a = 0
+        static let b = 1
+    }
+    
+    var fitnparams: Int {
+        return 2
+    }
+    
+    var fitnpoints: Int {
+        if let n = modelparams.measurements?.count {
+            return n
+        } else {
+            return 0
+        }
+    }
+    
+    var fitinitparams: [Double] {
+        let p: [Double] =
+            [Double(modelparams.a), Double(modelparams.b)]
+        return p
+    }
+    
+    var fittable: Bool {
+        if fitnpoints > 3 {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func fitresiduals(for params: [Double]) -> [Double] {
+        fitmodel.a = Float(params[IndexKeys.a])
+        fitmodel.b = Float(params[IndexKeys.b])
+        var res: [Double] = []
+        for meas in modelparams.measurements!.measurementList {
+            fitmodel.Tamb = meas.Tamb
+            let tmeas = meas.time
+            let tcomp = fitmodel.time(totemp: meas.Tfinal, fromtemp: meas.Tstart)!
+            res.append(Double(tmeas - tcomp))
+        }
+        return res
+    }
+    
+    convenience init(params: ThermalModelParams) {
+        self.init(model: ThermalModel(), params: params)
+    }
+    
+    init(model: ThermalModel, params: ThermalModelParams) {
+        fitmodel = model
+        modelparams = params
+        setup()
+    }
+    
+    func setup() {
+        fitter = GaussNewtonFitter(with: self)
+    }
+    
+    func fitfromdata() {
+        if fittable {
+            var p: [Double] = fitter.fit()
+            modelparams.a = Float(p[IndexKeys.a])
+            modelparams.b = Float(p[IndexKeys.b])
+        }
+    }
+}
+
+// MARK: - Computational model
 
 class ThermalModel : CustomStringConvertible {
     var a: Float = 12.0  // RC time constant

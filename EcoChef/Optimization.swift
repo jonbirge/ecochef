@@ -17,12 +17,11 @@ protocol Fittable {
 
 class Fitter {
     var system: Fittable
-    var initialparams: [Double]
+    var initialparams: [Double]? = nil
     private let fdrel: Double = 0.0001
     
     init(with sys: Fittable) {
         self.system = sys
-        initialparams = system.fitinitparams
     }
     
     func fit() -> [Double] {
@@ -57,11 +56,20 @@ class Fitter {
         let residarray: [Double] = residuals(at: betarray)
         return Matrix<Double>(residarray)
     }
+    
+    func setInitial(params: [Double]) {
+        initialparams = params
+    }
 }
 
 class GaussNewtonFitter : Fitter {
     override func fit() -> [Double] {
-        var beta = Matrix<Double>(initialparams)
+        var beta: Matrix<Double>
+        if let initialparams = initialparams {
+            beta = Matrix<Double>(initialparams)
+        } else {
+            beta = Matrix<Double>(system.fitinitparams)
+        }
         var fitting = true
         var iterations = 0
         while fitting {
