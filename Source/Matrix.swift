@@ -27,6 +27,11 @@ public enum MatrixAxes {
     case column
 }
 
+public enum SurgeError: Error {
+    case matrixBadDimensions
+    case matrixSingular
+}
+
 public struct Matrix<T> where T: FloatingPoint, T: ExpressibleByFloatLiteral {
     public typealias Element = T
 
@@ -254,14 +259,14 @@ public func elmul(_ x: Matrix<Float>, y: Matrix<Float>) -> Matrix<Float> {
     return result
 }
 
-public func div(_ x: Matrix<Double>, y: Matrix<Double>) -> Matrix<Double> {
-    let yInv = inv(y)
+public func div(_ x: Matrix<Double>, y: Matrix<Double>) throws -> Matrix<Double> {
+    let yInv = try inv(y)
     precondition(x.columns == yInv.rows, "Matrix dimensions not compatible")
     return mul(x, y: yInv)
 }
 
-public func div(_ x: Matrix<Float>, y: Matrix<Float>) -> Matrix<Float> {
-    let yInv = inv(y)
+public func div(_ x: Matrix<Float>, y: Matrix<Float>) throws -> Matrix<Float> {
+    let yInv = try inv(y)
     precondition(x.columns == yInv.rows, "Matrix dimensions not compatible")
     return mul(x, y: yInv)
 }
@@ -309,8 +314,8 @@ public func sum(_ x: Matrix<Double>, axies: MatrixAxes = .column) -> Matrix<Doub
     }
 }
 
-public func inv(_ x : Matrix<Float>) -> Matrix<Float> {
-    precondition(x.rows == x.columns, "Matrix must be square")
+public func inv(_ x : Matrix<Float>) throws -> Matrix<Float> {
+    guard x.rows == x.columns else { throw SurgeError.matrixBadDimensions }
 
     var results = x
 
@@ -323,14 +328,15 @@ public func inv(_ x : Matrix<Float>) -> Matrix<Float> {
     sgetrf_(&nc, &nc, &(results.grid), &nc, &ipiv, &error)
     sgetri_(&nc, &(results.grid), &nc, &ipiv, &work, &lwork, &error)
 
-    assert(error == 0, "Matrix not invertible")
+    if error != 0 {
+        throw SurgeError.matrixSingular
+    }
 
     return results
 }
 
-public func inv(_ x : Matrix<Double>) -> Matrix<Double> {
-    precondition(x.rows == x.columns, "Matrix must be square")
-    
+public func inv(_ x : Matrix<Double>) throws -> Matrix<Double> {
+    guard x.rows == x.columns else { throw SurgeError.matrixBadDimensions }
 
     var results = x
 
@@ -343,7 +349,9 @@ public func inv(_ x : Matrix<Double>) -> Matrix<Double> {
     dgetrf_(&nc, &nc, &(results.grid), &nc, &ipiv, &error)
     dgetri_(&nc, &(results.grid), &nc, &ipiv, &work, &lwork, &error)
 
-    assert(error == 0, "Matrix not invertible")
+    if error != 0 {
+        throw SurgeError.matrixSingular
+    }
 
     return results
 }
@@ -396,12 +404,12 @@ public func * (lhs: Matrix<Double>, rhs: Matrix<Double>) -> Matrix<Double> {
     return mul(lhs, y: rhs)
 }
 
-public func / (lhs: Matrix<Double>, rhs: Matrix<Double>) -> Matrix<Double> {
-    return div(lhs, y: rhs)
+public func / (lhs: Matrix<Double>, rhs: Matrix<Double>) throws -> Matrix<Double> {
+    return try div(lhs, y: rhs)
 }
 
-public func / (lhs: Matrix<Float>, rhs: Matrix<Float>) -> Matrix<Float> {
-    return div(lhs, y: rhs)
+public func / (lhs: Matrix<Float>, rhs: Matrix<Float>) throws -> Matrix<Float> {
+    return try div(lhs, y: rhs)
 }
 
 public func / (lhs: Matrix<Double>, rhs: Double) -> Matrix<Double> {

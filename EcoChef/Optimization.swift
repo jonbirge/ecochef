@@ -86,7 +86,7 @@ class GaussNewtonFitter : Fitter {
                 print("\(iterations):\n\(beta)\n\(z)")
             }
             let Jt = try jacobian(at: beta)  // transpose
-            let Jpi = inv(Jt * transpose(Jt)) * Jt  // pseudo-inverse
+            let Jpi = try inv(Jt * transpose(Jt)) * Jt  // pseudo-inverse
             beta = beta - Jpi * r
             iterations += 1
             if iterations > 16 {

@@ -17,6 +17,7 @@
 		AB43B17E1EEB871E00B6A96B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB43B17C1EEB871E00B6A96B /* Main.storyboard */; };
 		AB43B1801EEB871E00B6A96B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB43B17F1EEB871E00B6A96B /* Assets.xcassets */; };
 		AB43B18B1EEBAEA100B6A96B /* ThermalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB43B18A1EEBAEA100B6A96B /* ThermalModel.swift */; };
+		AB47A6CD1F27A4F400044D74 /* MatrixTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB47A6CC1F27A4F400044D74 /* MatrixTests.swift */; };
 		AB53D56E1F0DD85900ACA17A /* EcoChefThermalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB53D56D1F0DD85900ACA17A /* EcoChefThermalModel.swift */; };
 		AB57E5DB1F0492F700D37EF8 /* birge-ring.aiff in Resources */ = {isa = PBXBuildFile; fileRef = AB57E5DA1F0492F700D37EF8 /* birge-ring.aiff */; };
 		AB9506111F2580E1004A2EA9 /* Arithmetic.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB05AF1F1DB90200C7B635 /* Arithmetic.swift */; };
@@ -74,6 +75,7 @@
 		AB43B17F1EEB871E00B6A96B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AB43B1841EEB871E00B6A96B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AB43B18A1EEBAEA100B6A96B /* ThermalModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThermalModel.swift; sourceTree = "<group>"; };
+		AB47A6CC1F27A4F400044D74 /* MatrixTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatrixTests.swift; sourceTree = "<group>"; };
 		AB53D56D1F0DD85900ACA17A /* EcoChefThermalModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EcoChefThermalModel.swift; sourceTree = "<group>"; };
 		AB57E5DA1F0492F700D37EF8 /* birge-ring.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "birge-ring.aiff"; sourceTree = "<group>"; };
 		ABA36DC21F07401100B3FCA4 /* EcoChefState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EcoChefState.swift; sourceTree = "<group>"; };
@@ -125,7 +127,7 @@
 			children = (
 				ABEB05AE1F1DB90200C7B635 /* Surge */,
 				AB43B1751EEB871E00B6A96B /* EcoChef */,
-				ABD4127D1F1134C900429887 /* EcoChefTests */,
+				ABD4127D1F1134C900429887 /* Tests */,
 				AB43B1741EEB871E00B6A96B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -166,13 +168,15 @@
 			path = EcoChef;
 			sourceTree = "<group>";
 		};
-		ABD4127D1F1134C900429887 /* EcoChefTests */ = {
+		ABD4127D1F1134C900429887 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
 				ABD4127E1F1134C900429887 /* EcoChefTests.swift */,
 				ABEB05C21F1EEDF000C7B635 /* OptimizationTests.swift */,
+				AB47A6CC1F27A4F400044D74 /* MatrixTests.swift */,
 				ABD412801F1134C900429887 /* Info.plist */,
 			);
+			name = Tests;
 			path = EcoChefTests;
 			sourceTree = "<group>";
 		};
@@ -362,6 +366,7 @@
 				AB007F221F1C7B8000AD9552 /* Optimization.swift in Sources */,
 				AB9506171F2580E1004A2EA9 /* Matrix.swift in Sources */,
 				AB9506131F2580E1004A2EA9 /* Convolution.swift in Sources */,
+				AB47A6CD1F27A4F400044D74 /* MatrixTests.swift in Sources */,
 				AB9506181F2580E1004A2EA9 /* Power.swift in Sources */,
 				ABD4127F1F1134C900429887 /* EcoChefTests.swift in Sources */,
 				ABD412861F11375400429887 /* ThermalModel.swift in Sources */,
