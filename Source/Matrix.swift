@@ -330,6 +330,7 @@ public func inv(_ x : Matrix<Float>) -> Matrix<Float> {
 
 public func inv(_ x : Matrix<Double>) -> Matrix<Double> {
     precondition(x.rows == x.columns, "Matrix must be square")
+    
 
     var results = x
 

@@ -250,6 +250,7 @@ class ThermalModelParams : NSObject, NSCoding {
 // MARK: - Model fitting
 
 class ThermalModelFitter : Fittable {
+    var verbose: Bool = false
     var fitmodel: ThermalModel
     var modelparams: ThermalModelParams
     private var fitter: GaussNewtonFitter!
@@ -278,7 +279,7 @@ class ThermalModelFitter : Fittable {
     }
     
     var fittable: Bool {
-        if fitnpoints > 3 {
+        if fitnpoints > 2 {
             return true
         } else {
             return false
@@ -291,11 +292,11 @@ class ThermalModelFitter : Fittable {
         var res: [Double] = []
         for meas in modelparams.measurements!.measurementList {
             fitmodel.Tamb = meas.Tamb
-            let tmeas = meas.time
-            guard let tcomp =
-                fitmodel.time(totemp: meas.Tfinal, fromtemp: meas.Tstart)
-                else { throw OptimizationError.undefinedResidual }
-            res.append(Double(tmeas - tcomp))
+            let Tmeas = meas.Tfinal
+            let Tcomp = fitmodel.tempAfterHeating(time: meas.time,
+                                                  fromtemp: meas.Tstart,
+                                                  withamb: meas.Tamb)
+            res.append(Double(Tcomp - Tmeas))
         }
         return res
     }
@@ -317,11 +318,12 @@ class ThermalModelFitter : Fittable {
     func fitfromdata() {
         if fittable {
             do {
+                fitter.verbose = verbose
                 var p: [Double] = try fitter.fit()
                 modelparams.a = Float(p[IndexKeys.a])
                 modelparams.b = Float(p[IndexKeys.b])
-            } catch  {
-                print("ThermalModelFitter: fitting failed")
+            } catch let err {
+                print("ThermalModelFitter: failed with \(err)")
             }
         }
     }

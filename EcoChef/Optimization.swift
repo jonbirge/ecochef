@@ -17,10 +17,12 @@ protocol Fittable {
 
 enum OptimizationError: Error {
     case undefinedResidual
+    case singularJacobian
     case didNotConverge
 }
 
 class Fitter {
+    var verbose: Bool = false
     var system: Fittable
     var initialparams: [Double]? = nil
     private let fdrel: Double = 0.0001
@@ -78,12 +80,16 @@ class GaussNewtonFitter : Fitter {
         var fitting = true
         var iterations = 0
         while fitting {
+            let r = try residuals(at: beta)
+            if verbose {
+                let z = transpose(r) * r
+                print("\(iterations):\n\(beta)\n\(z)")
+            }
             let Jt = try jacobian(at: beta)  // transpose
             let Jpi = inv(Jt * transpose(Jt)) * Jt  // pseudo-inverse
-            let r = try residuals(at: beta)
             beta = beta - Jpi * r
             iterations += 1
-            if iterations > 32 {
+            if iterations > 16 {
                 fitting = false
             }
         }

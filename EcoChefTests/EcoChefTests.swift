@@ -102,29 +102,6 @@ class ThermalModelTests: XCTestCase {
     }
     
     func testModelFitAccuracy() {
-        let testparams = ThermalModelParams(name: "Test", a: 16, b: 630, note: "")
-        let measdata = HeatingDataSet()
-        measdata.addDataPoint(HeatingDataPoint(time: 2.5, Tstart: 64, Tfinal: 155))
-        measdata.addDataPoint(HeatingDataPoint(time: 4, Tstart: 64, Tfinal: 200))
-        measdata.addDataPoint(HeatingDataPoint(time: 7.5, Tstart: 64, Tfinal: 300))
-        measdata.addDataPoint(HeatingDataPoint(time: 5.5, Tstart: 64, Tfinal: 250))
-        measdata.addDataPoint(HeatingDataPoint(time: 10, Tstart: 64, Tfinal: 365))
-        measdata.addDataPoint(HeatingDataPoint(time: 12.25, Tstart: 64, Tfinal: 400))
-        testparams.measurements = measdata
-        
-        let fitter = ThermalModelFitter(params: testparams)
-        
-        fitter.fitfromdata()
- 
-        let a = testparams.a
-        let b = testparams.b
-        
-        XCTAssertEqualWithAccuracy(a, 15.8, accuracy: 0.1)
-        XCTAssertEqualWithAccuracy(b, 630, accuracy: 1)
-    }
-    
-    func testModelFitConvergence() {
-        let m = 64
         let testparams = ThermalModelParams(name: "Test", a: 10, b: 500, note: "")
         let measdata = HeatingDataSet()
         measdata.addDataPoint(HeatingDataPoint(time: 2.5, Tstart: 64, Tfinal: 155))
@@ -137,19 +114,44 @@ class ThermalModelTests: XCTestCase {
         
         let fitter = ThermalModelFitter(params: testparams)
         
-        for k in 1...m {
-            let f = Double(k)/Double(m)
-            testparams.a = Float(f*10.0 + 10.0)
-            testparams.b = Float(f*500 + 250.0)
-            print("k = \(k): \(testparams)")
-            
-            fitter.fitfromdata()
-            
-            let a = testparams.a
-            let b = testparams.b
-            
-            XCTAssertEqualWithAccuracy(a, 16, accuracy: 0.5)
-            XCTAssertEqualWithAccuracy(b, 630, accuracy: 5)
+        fitter.verbose = false
+        fitter.fitfromdata()
+ 
+        let a = testparams.a
+        let b = testparams.b
+        
+        XCTAssertEqualWithAccuracy(a, 16, accuracy: 0.5)
+        XCTAssertEqualWithAccuracy(b, 645, accuracy: 5)
+    }
+    
+    func testModelFitConvergence() {
+        let m = 128
+        let testparams = ThermalModelParams(name: "Test", a: 10, b: 500, note: "")
+        let measdata = HeatingDataSet()
+        measdata.addDataPoint(HeatingDataPoint(time: 2.5, Tstart: 64, Tfinal: 155))
+        measdata.addDataPoint(HeatingDataPoint(time: 4, Tstart: 64, Tfinal: 200))
+        measdata.addDataPoint(HeatingDataPoint(time: 7.5, Tstart: 64, Tfinal: 300))
+        measdata.addDataPoint(HeatingDataPoint(time: 5.5, Tstart: 64, Tfinal: 250))
+        measdata.addDataPoint(HeatingDataPoint(time: 10, Tstart: 64, Tfinal: 365))
+        measdata.addDataPoint(HeatingDataPoint(time: 12.25, Tstart: 64, Tfinal: 400))
+        testparams.measurements = measdata
+        
+        let fitter = ThermalModelFitter(params: testparams)
+        
+        self.measure {
+            for k in 1...m {
+                let f = Double(k)/Double(m)
+                testparams.a = Float(f*20.0 + 5.0)
+                testparams.b = Float(f*800.0 + 200.0)
+                
+                fitter.fitfromdata()
+                
+                let a = testparams.a
+                let b = testparams.b
+                
+                XCTAssertEqualWithAccuracy(a, 16, accuracy: 1)
+                XCTAssertEqualWithAccuracy(b, 645, accuracy: 5)
+            }
         }
     }
 
