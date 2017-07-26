@@ -67,7 +67,7 @@ class ModelTableViewController: UITableViewController {
             else { return }
         
         if let indexPath = tableView.indexPathForSelectedRow {
-            editController.modelparams = modelData.modelArray[indexPath.row]
+            editController.modelParams = modelData.modelArray[indexPath.row]
         }
     }
     
@@ -112,15 +112,15 @@ class ModelTableViewController: UITableViewController {
         // TODO: Update for new pass by reference symantics when editing
         
         guard let source = segue.source as? ModelEditViewController,
-        let modelparams = source.modelparams
+        let modelParams = source.modelParams
             else { return }
         
         if let indexPath = tableView.indexPathForSelectedRow {
             modelData.modelArray.remove(at: indexPath.row)
-            modelData.modelArray.insert(modelparams, at: indexPath.row)
+            modelData.modelArray.insert(modelParams, at: indexPath.row)
             tableView.deselectRow(at: indexPath, animated: true)
         } else {
-            modelData.modelArray.append(modelparams)
+            modelData.modelArray.append(modelParams)
         }
         
         tableView.reloadData()
