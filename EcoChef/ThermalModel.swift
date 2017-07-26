@@ -64,7 +64,7 @@ class ThermalModelData {
 // MARK: -
 
 class HeatingDataSet : NSObject, NSCoding {
-    private var measlist: [HeatingDataPoint] = []
+    var measlist: [HeatingDataPoint] = []
     
     struct Keys {
         static let measlist = "measlist"
@@ -118,10 +118,6 @@ class HeatingDataSet : NSObject, NSCoding {
     
     var count: Int {
         return measlist.count
-    }
-    
-    var measurementList: [HeatingDataPoint] {
-        return measlist
     }
 }
 
@@ -290,7 +286,7 @@ class ThermalModelFitter : Fittable {
         fitmodel.a = Float(params[IndexKeys.a])
         fitmodel.b = Float(params[IndexKeys.b])
         var res: [Double] = []
-        for meas in modelparams.measurements!.measurementList {
+        for meas in modelparams.measurements!.measlist {
             fitmodel.Tamb = meas.Tamb
             let Tmeas = meas.Tfinal
             let Tcomp = fitmodel.tempAfterHeating(time: meas.time,
@@ -320,8 +316,8 @@ class ThermalModelFitter : Fittable {
             do {
                 fitter.verbose = verbose
                 var p: [Double] = try fitter.fit()
-                modelparams.a = Float(p[IndexKeys.a])
-                modelparams.b = Float(p[IndexKeys.b])
+                modelparams.a = Float(round(10*p[IndexKeys.a])/10)
+                modelparams.b = Float(round(p[IndexKeys.b]))
             } catch let err {
                 print("ThermalModelFitter: failed with \(err)")
             }

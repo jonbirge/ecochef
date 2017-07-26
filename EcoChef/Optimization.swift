@@ -89,7 +89,7 @@ class GaussNewtonFitter : Fitter {
             let Jpi = try inv(Jt * transpose(Jt)) * Jt  // pseudo-inverse
             beta = beta - Jpi * r
             iterations += 1
-            if iterations > 16 {
+            if iterations > 32 {
                 fitting = false
             }
         }
