@@ -249,7 +249,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
             preheatLabel.text = "Cooling"
             preheatLabel.textColor = coolingColor
         }
-        startButton.setTitle("Stop", for: UIControlState.normal)
+        startButton.setTitle("Done", for: UIControlState.normal)
         timerResetButton.isEnabled = true
         
         // Notification
@@ -276,6 +276,21 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
             }
         }
         center.delegate = self
+    }
+    
+    // Simple data collection for slow models
+    func RecordTime() {
+        let elapsed = modelTimer.minutesElapsed()
+        let measurement = HeatingDataPoint(time: elapsed,
+                                           Tstart: modelTimer.initialTemp,
+                                           Tfinal: desiredTemp,
+                                           Tamb: Tamb)
+        let theModelParams = modelData.selectedModelData
+        if theModelParams.measurements == nil {
+            theModelParams.measurements = HeatingDataSet()
+        }
+        theModelParams.measurements!.addDataPoint(measurement)
+        modelData.WriteToDisk()
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter,
@@ -329,6 +344,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
             StartTimer()
         } else {
             StopTimer()
+            RecordTime()
         }
     }
     

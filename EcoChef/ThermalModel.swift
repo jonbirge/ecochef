@@ -12,7 +12,7 @@ class ThermalModelData {
     var modelArray: [ThermalModelParams] = []
     var selectedIndex: Int = 1
     
-    var selectedModelData: ThermalModelParams {
+    var selectedModelData: ThermalModelParams {  // TODO: Refactor name
         if selectedIndex < modelArray.count {
             return modelArray[selectedIndex]
         } else {
@@ -30,23 +30,24 @@ class ThermalModelData {
         var defaultModels : [ThermalModelParams] = []
         
         theparams = ThermalModelParams(name: "Electric (EnergyStar)")
-        theparams.a *= 1.5
+        theparams.a *= 2
         defaultModels.append(theparams)
         
         theparams = ThermalModelParams(name: "Electric (Fast Preheat)")
-        theparams.a *= 1.25
+        theparams.a *= 1.5
         theparams.b = 700
         defaultModels.append(theparams)
         
-        theparams = ThermalModelParams(name: "Convection (Large)")
-        theparams.a *= 0.9
+        theparams = ThermalModelParams(name: "Convection")
+        theparams.a *= 1.1
         defaultModels.append(theparams)
         
-        theparams = ThermalModelParams(name: "Convection (Small)")
-        theparams.a *= 0.8
+        theparams = ThermalModelParams(name: "Speed Oven")
+        theparams.a *= 1.0
+        theparams.b = 500
         defaultModels.append(theparams)
         
-        theparams = ThermalModelParams(name: "Gas Grill", a: 16.3, b: 644, note: "MHP")
+        theparams = ThermalModelParams(name: "Gas Grill", a: 16.0, b: 640, note: "MHP")
         let measdata = HeatingDataSet()
         measdata.addDataPoint(HeatingDataPoint(time: 2.5, Tstart: 64, Tfinal: 155))
         measdata.addDataPoint(HeatingDataPoint(time: 4, Tstart: 64, Tfinal: 200))
