@@ -8,9 +8,9 @@
 
 import XCTest
 
-class EcoChefTests: XCTestCase {
+class ThermalModelTests: XCTestCase {
     var testModel = ThermalModel()
-    var testCase = ThermalModelParams(name: "Test", a: 10, b: 500, note: "Test")
+    var testCase = ThermalModelParams(name: "Test", a: 10, b: 500, note: "")
     var maxTemp: Float = 0
     
     override func setUp() {
@@ -71,19 +71,88 @@ class EcoChefTests: XCTestCase {
         XCTAssertNil(testCool)
     }
     
-//    func testPerformanceExample() {
-//        // This is an example of a performance test case.
-//        var temp: Float = 0
-//        self.measure {
-//            for _ in 1...32 {
-//                for Tstart in 80...Int(floor(self.maxTemp)-1) {
-//                    for Tfinal in 80...Int(floor(self.maxTemp)-1) {
-//                        temp += self.testModel.time(totemp: Float(Tfinal), fromtemp: Float(Tstart))!
-//                        temp -= self.testModel.time(totemp: Float(Tstart), fromtemp: Float(Tfinal))!
-//                    }
-//                }
-//            }
-//        }
-//    }
+    func testModelFitUpdate() {
+        let testparams = ThermalModelParams(name: "Test", a: 16, b: 640, note: "-")
+        let measdata = HeatingDataSet()
+        measdata.addDataPoint(HeatingDataPoint(time: 2.5, Tstart: 64, Tfinal: 155))
+        measdata.addDataPoint(HeatingDataPoint(time: 4, Tstart: 64, Tfinal: 200))
+        measdata.addDataPoint(HeatingDataPoint(time: 7.5, Tstart: 64, Tfinal: 300))
+        measdata.addDataPoint(HeatingDataPoint(time: 5.5, Tstart: 64, Tfinal: 250))
+        measdata.addDataPoint(HeatingDataPoint(time: 10, Tstart: 64, Tfinal: 365))
+        measdata.addDataPoint(HeatingDataPoint(time: 12.25, Tstart: 64, Tfinal: 400))
+        testparams.measurements = measdata
+        
+        let a0 = testparams.a
+        let b0 = testparams.b
+        
+        let fitter = ThermalModelFitter(params: testparams)
+        
+        fitter.fitfromdata()
+        let a1 = testparams.a
+        let b1 = testparams.b
+        
+        fitter.fitfromdata()
+        let a2 = testparams.a
+        let b2 = testparams.b
+        
+        XCTAssertNotEqual(a0, a1)
+        XCTAssertEqualWithAccuracy(a1, a2, accuracy: 0.1)
+        XCTAssertNotEqual(b0, b1)
+        XCTAssertEqualWithAccuracy(b1, b2, accuracy: 1)
+    }
     
+    func testModelFitAccuracy() {
+        let testparams = ThermalModelParams(name: "Test", a: 10, b: 500, note: "")
+        let measdata = HeatingDataSet()
+        measdata.addDataPoint(HeatingDataPoint(time: 2.5, Tstart: 64, Tfinal: 155))
+        measdata.addDataPoint(HeatingDataPoint(time: 4, Tstart: 64, Tfinal: 200))
+        measdata.addDataPoint(HeatingDataPoint(time: 7.5, Tstart: 64, Tfinal: 300))
+        measdata.addDataPoint(HeatingDataPoint(time: 5.5, Tstart: 64, Tfinal: 250))
+        measdata.addDataPoint(HeatingDataPoint(time: 10, Tstart: 64, Tfinal: 365))
+        measdata.addDataPoint(HeatingDataPoint(time: 12.25, Tstart: 64, Tfinal: 400))
+        testparams.measurements = measdata
+        
+        let fitter = ThermalModelFitter(params: testparams)
+        
+        fitter.verbose = false
+        fitter.fitfromdata()
+ 
+        let a = testparams.a
+        let b = testparams.b
+        
+        XCTAssertEqualWithAccuracy(a, 16, accuracy: 0.5)
+        XCTAssertEqualWithAccuracy(b, 645, accuracy: 5)
+    }
+    
+    func testModelFitConvergence() {
+        let m = 128
+        let testparams = ThermalModelParams(name: "Test", a: 10, b: 500, note: "")
+        let measdata = HeatingDataSet()
+        measdata.addDataPoint(HeatingDataPoint(time: 2.5, Tstart: 64, Tfinal: 155))
+        measdata.addDataPoint(HeatingDataPoint(time: 4, Tstart: 64, Tfinal: 200))
+        measdata.addDataPoint(HeatingDataPoint(time: 7.5, Tstart: 64, Tfinal: 300))
+        measdata.addDataPoint(HeatingDataPoint(time: 5.5, Tstart: 64, Tfinal: 250))
+        measdata.addDataPoint(HeatingDataPoint(time: 10, Tstart: 64, Tfinal: 365))
+        measdata.addDataPoint(HeatingDataPoint(time: 12.25, Tstart: 64, Tfinal: 400))
+        testparams.measurements = measdata
+        
+        let fitter = ThermalModelFitter(params: testparams)
+        
+        self.measure {
+            for k in 1...m {
+                let f = Double(k)/Double(m)
+                testparams.a = Float(f*20.0 + 5.0)
+                testparams.b = Float(f*800.0 + 200.0)
+                
+                fitter.fitfromdata()
+                
+                let a = testparams.a
+                let b = testparams.b
+                
+                XCTAssertEqualWithAccuracy(a, 16, accuracy: 1)
+                XCTAssertEqualWithAccuracy(b, 645, accuracy: 5)
+            }
+        }
+    }
+
 }

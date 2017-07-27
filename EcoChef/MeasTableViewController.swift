@@ -9,10 +9,12 @@
 import UIKit
 
 class MeasTableViewController: UITableViewController {
-    var measData: HeatingDataSet!
+    private var measData: HeatingDataSet!  // convenience
+    var modelParams: ThermalModelParams!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        measData = modelParams.measurements
     }
 
     // MARK: - Table view data source
@@ -41,6 +43,16 @@ class MeasTableViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView,
+                            commit editingStyle: UITableViewCellEditingStyle,
+                            forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            measData.measlist.remove(at: indexPath.row)
+            modelParams.fitfromdata()
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+    }
+    
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -64,6 +76,7 @@ class MeasTableViewController: UITableViewController {
     
     @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
         tableView.reloadData()
+        modelParams.fitfromdata()
     }
 
 }

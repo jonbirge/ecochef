@@ -9,43 +9,47 @@
 import UIKit
 
 class ModelEditViewController: UITableViewController {
-    var modelparams: ThermalModelParams?
+    var modelParams: ThermalModelParams?
+    var modelFitter: ThermalModelFitter!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if modelparams == nil {
-            self.modelparams = ThermalModelParams(name: "New Model")
+        if modelParams == nil {
+            modelParams = ThermalModelParams(name: "New Model")
             print("ModelEditViewController: creating new model")
         }
-        updateView()
+        modelFitter = ThermalModelFitter(params: modelParams!)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        updateData()
+        updateView()
     }
 
     // MARK: - Table view data source
     
     func updateView() {
-        nameField.text = modelparams!.name
-        rcField.text = String(modelparams!.a)
-        hrField.text = String(modelparams!.b)
-        noteField.text = modelparams!.note
-        modLabel.text = modelparams!.mod.description
+        nameField.text = modelParams!.name
+        rcField.text = String(modelParams!.a)
+        hrField.text = String(modelParams!.b)
+        noteField.text = modelParams!.note
+        modLabel.text = modelParams!.mod.description
+        updateData()
     }
     
-    // TODO: Stop disabling measured data cell
     func updateData() {
-        if let measdata = modelparams!.measurements {
-            dataLabel.text = "\(measdata.count) data points"
+        if let measData = modelParams!.measurements {
+            if measData.count == 0 {
+                dataLabel.text = "No data points"
+            } else {
+                dataLabel.text = "\(measData.count) data points"
+            }
         } else {
-            dataCell.isUserInteractionEnabled = false
             dataCell.accessoryType = .none
             dataLabel.text = "No data"
             dataLabel.textColor = .lightGray
         }
-    }
+     }
 
     // MARK: - Navigation
      
@@ -53,7 +57,10 @@ class ModelEditViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "MeasList" {
             let measView = segue.destination as! MeasTableViewController
-            measView.measData = modelparams?.measurements
+            if modelParams!.measurements == nil {
+                modelParams!.measurements = HeatingDataSet()
+            }
+            measView.modelParams = modelParams
         }
     }
     
@@ -64,7 +71,7 @@ class ModelEditViewController: UITableViewController {
             let note = noteField.text
             else { return }
         
-        if let modelparams = self.modelparams {
+        if let modelparams = self.modelParams {
             modelparams.name = name
             modelparams.a = rc
             modelparams.b = hr

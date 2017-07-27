@@ -27,24 +27,24 @@ class ThermalModelData {
     
     static func DefaultModelList() -> [ThermalModelParams] {
         var theparams : ThermalModelParams
-        var defModelArray : [ThermalModelParams] = []
+        var defaultModels : [ThermalModelParams] = []
         
         theparams = ThermalModelParams(name: "Electric (EnergyStar)")
         theparams.a *= 1.5
-        defModelArray.append(theparams)
+        defaultModels.append(theparams)
         
         theparams = ThermalModelParams(name: "Electric (Fast Preheat)")
         theparams.a *= 1.25
         theparams.b = 700
-        defModelArray.append(theparams)
+        defaultModels.append(theparams)
         
         theparams = ThermalModelParams(name: "Convection (Large)")
         theparams.a *= 0.9
-        defModelArray.append(theparams)
+        defaultModels.append(theparams)
         
         theparams = ThermalModelParams(name: "Convection (Small)")
         theparams.a *= 0.8
-        defModelArray.append(theparams)
+        defaultModels.append(theparams)
         
         theparams = ThermalModelParams(name: "Gas Grill", a: 16.3, b: 644, note: "MHP")
         let measdata = HeatingDataSet()
@@ -55,16 +55,16 @@ class ThermalModelData {
         measdata.addDataPoint(HeatingDataPoint(time: 10, Tstart: 64, Tfinal: 365))
         measdata.addDataPoint(HeatingDataPoint(time: 12.25, Tstart: 64, Tfinal: 400))
         theparams.measurements = measdata
-        defModelArray.append(theparams)
+        defaultModels.append(theparams)
         
-        return defModelArray
+        return defaultModels
     }
 }
 
 // MARK: -
 
 class HeatingDataSet : NSObject, NSCoding {
-    private var measlist: [HeatingDataPoint] = []
+    var measlist: [HeatingDataPoint] = []
     
     struct Keys {
         static let measlist = "measlist"
@@ -119,10 +119,6 @@ class HeatingDataSet : NSObject, NSCoding {
     var count: Int {
         return measlist.count
     }
-    
-    var measurementList: [HeatingDataPoint] {
-        return measlist
-    }
 }
 
 class HeatingDataPoint : NSObject, NSCoding {
@@ -176,7 +172,7 @@ class HeatingDataPoint : NSObject, NSCoding {
     }
 }
 
-// MARK: -
+// MARK: - Data model
 
 class ThermalModelParams : NSObject, NSCoding {
     var name: String
@@ -185,6 +181,7 @@ class ThermalModelParams : NSObject, NSCoding {
     var note: String
     var mod: Date
     var measurements: HeatingDataSet?
+    var fitter: ThermalModelFitter?
     
     struct Keys {
         static let name = "name"
@@ -212,6 +209,17 @@ class ThermalModelParams : NSObject, NSCoding {
         self.measurements = meas
     }
     
+    func initFitter() {
+        fitter = ThermalModelFitter(params: self)
+    }
+    
+    func fitfromdata() {
+        if fitter == nil {
+            initFitter()
+        }
+        fitter!.fitfromdata()
+    }
+    
     required convenience init(coder aDecoder: NSCoder) {
         let name = aDecoder.decodeObject(forKey: Keys.name) as! String
         let a = aDecoder.decodeFloat(forKey: Keys.a)
@@ -228,14 +236,13 @@ class ThermalModelParams : NSObject, NSCoding {
         } else {
             mod = Date()
         }
-//        var measurements: [HeatingDataPoint]?
-//        if let measread = aDecoder.decodeObject(forKey: Keys.meas) as? [HeatingDataPoint] {
-//            measurements = measread
-//        } else {
-//            measurements = nil
-//        }
+
         let measurements = aDecoder.decodeObject(forKey: Keys.meas) as? HeatingDataSet
         self.init(name: name, a: a, b: b, note: note, mod: mod, meas: measurements)
+    }
+    
+    override var description: String {
+        return "ThermalModelParams(a: \(a), b: \(b))"
     }
     
     func encode(with aCoder: NSCoder) {
@@ -248,7 +255,89 @@ class ThermalModelParams : NSObject, NSCoding {
     }
 }
 
-// MARK: - Computational logic
+// MARK: - Model fitting
+
+class ThermalModelFitter : Fittable {
+    var verbose: Bool = false
+    var fitmodel: ThermalModel
+    var modelparams: ThermalModelParams
+    private var fitter: GaussNewtonFitter!
+    
+    struct IndexKeys {
+        static let a = 0
+        static let b = 1
+    }
+    
+    var fitnparams: Int {
+        return 2
+    }
+    
+    var fitnpoints: Int {
+        if let n = modelparams.measurements?.count {
+            return n
+        } else {
+            return 0
+        }
+    }
+    
+    var fitinitparams: [Double] {
+        let p: [Double] =
+            [Double(modelparams.a), Double(modelparams.b)]
+        return p
+    }
+    
+    var fittable: Bool {
+        if fitnpoints > 2 {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func fitresiduals(for params: [Double]) throws -> [Double] {
+        fitmodel.a = Float(params[IndexKeys.a])
+        fitmodel.b = Float(params[IndexKeys.b])
+        var res: [Double] = []
+        for meas in modelparams.measurements!.measlist {
+            fitmodel.Tamb = meas.Tamb
+            let Tmeas = meas.Tfinal
+            let Tcomp = fitmodel.tempAfterHeating(time: meas.time,
+                                                  fromtemp: meas.Tstart,
+                                                  withamb: meas.Tamb)
+            res.append(Double(Tcomp - Tmeas))
+        }
+        return res
+    }
+    
+    convenience init(params: ThermalModelParams) {
+        self.init(model: ThermalModel(), params: params)
+    }
+    
+    init(model: ThermalModel, params: ThermalModelParams) {
+        fitmodel = model
+        modelparams = params
+        setup()
+    }
+    
+    func setup() {
+        fitter = GaussNewtonFitter(with: self)
+    }
+    
+    func fitfromdata() {
+        if fittable {
+            do {
+                fitter.verbose = verbose
+                var p: [Double] = try fitter.fit()
+                modelparams.a = Float(round(10*p[IndexKeys.a])/10)
+                modelparams.b = Float(round(p[IndexKeys.b]))
+            } catch let err {
+                print("ThermalModelFitter: failed with \(err)")
+            }
+        }
+    }
+}
+
+// MARK: - Computational model
 
 class ThermalModel : CustomStringConvertible {
     var a: Float = 12.0  // RC time constant
@@ -291,6 +380,12 @@ class ThermalModel : CustomStringConvertible {
     }
     
     func tempAfterHeating(time t:Float, fromtemp Tstart:Float) -> Float {
+        let Tinf = b + Tamb
+        return Tinf - exp(-t/a)*(Tinf - Tstart)
+    }
+    
+    func tempAfterHeating
+        (time t:Float, fromtemp Tstart:Float, withamb Tamb:Float) -> Float {
         let Tinf = b + Tamb
         return Tinf - exp(-t/a)*(Tinf - Tstart)
     }
