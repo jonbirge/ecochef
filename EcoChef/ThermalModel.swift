@@ -181,6 +181,7 @@ class ThermalModelParams : NSObject, NSCoding {
     var note: String
     var mod: Date
     var measurements: HeatingDataSet?
+    var fitter: ThermalModelFitter?
     
     struct Keys {
         static let name = "name"
@@ -206,6 +207,17 @@ class ThermalModelParams : NSObject, NSCoding {
         self.note = note
         self.mod = mod
         self.measurements = meas
+    }
+    
+    func initFitter() {
+        fitter = ThermalModelFitter(params: self)
+    }
+    
+    func fitfromdata() {
+        if fitter == nil {
+            initFitter()
+        }
+        fitter!.fitfromdata()
     }
     
     required convenience init(coder aDecoder: NSCoder) {

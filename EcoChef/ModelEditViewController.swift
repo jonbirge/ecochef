@@ -23,7 +23,7 @@ class ModelEditViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        updateData()
+        updateView()
     }
 
     // MARK: - Table view data source
@@ -34,6 +34,7 @@ class ModelEditViewController: UITableViewController {
         hrField.text = String(modelParams!.b)
         noteField.text = modelParams!.note
         modLabel.text = modelParams!.mod.description
+        updateData()
     }
     
     func updateData() {
@@ -48,9 +49,7 @@ class ModelEditViewController: UITableViewController {
             dataLabel.text = "No data"
             dataLabel.textColor = .lightGray
         }
-        modelFitter.fitfromdata()
-        updateView()
-    }
+     }
 
     // MARK: - Navigation
      
@@ -61,7 +60,7 @@ class ModelEditViewController: UITableViewController {
             if modelParams!.measurements == nil {
                 modelParams!.measurements = HeatingDataSet()
             }
-            measView.measData = modelParams!.measurements
+            measView.modelParams = modelParams
         }
     }
     
