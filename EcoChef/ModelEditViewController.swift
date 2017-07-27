@@ -40,14 +40,16 @@ class ModelEditViewController: UITableViewController {
     func updateData() {
         if let measData = modelParams!.measurements {
             if measData.count == 0 {
-                dataLabel.text = "No data points"
+                dataLabel.text = "No data"
             } else {
-                dataLabel.text = "\(measData.count) data points"
+                if measData.count > 1 {
+                    dataLabel.text = "\(measData.count) data points"
+                } else {
+                    dataLabel.text = "1 data point"
+                }
             }
         } else {
-            dataCell.accessoryType = .none
             dataLabel.text = "No data"
-            dataLabel.textColor = .lightGray
         }
      }
 
