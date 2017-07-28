@@ -209,13 +209,18 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     }
     
     func StopTimer() {
+        // Timer stuff
         timerRunning = false
         timer?.invalidate()
+        
+        // Notification stuff
         let center = UNUserNotificationCenter.current()
         center.removeAllPendingNotificationRequests()
         for theControl in timerDisabledControls {
             theControl.isEnabled = true
         }
+        
+        // View stuff
         preheatLabel.isHidden = true
         startButton.setTitle("Start", for: UIControlState.normal)
         timerResetButton.isEnabled = false
@@ -344,7 +349,20 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
             StartTimer()
         } else {
             StopTimer()
-            RecordTime()
+            
+            let modelParams = modelData.selectedModelData
+            let alert = UIAlertController(title: "Calibration",
+                                          message: "Did \(modelParams.name) reach the desired temperature early?", preferredStyle: .alert)
+            let noAction = UIAlertAction(title: "No", style: .cancel)
+            let yesAction = UIAlertAction(title: "Yes", style: .destructive) { action in
+                self.RecordTime()
+                self.currentTempSlider.value = self.desiredTempSlider.value
+                self.UpdateView()
+            }
+            alert.addAction(noAction)
+            alert.addAction(yesAction)
+            
+            present(alert, animated: true)
         }
     }
     

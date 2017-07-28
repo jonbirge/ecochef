@@ -101,7 +101,7 @@ class ModelTableViewController: UITableViewController {
         
         alertController.popoverPresentationController?.sourceView = self.view
             
-        present(alertController, animated: true, completion: nil)
+        present(alertController, animated: true)
     }
 
     @IBAction func goBack(_ sender: UIBarButtonItem) {
