@@ -12,7 +12,7 @@ class ThermalModelData {
     var modelArray: [ThermalModelParams] = []
     var selectedIndex: Int = 1
     
-    var selectedModelData: ThermalModelParams {  // TODO: Refactor name
+    var selectedModelData: ThermalModelParams {
         if selectedIndex < modelArray.count {
             return modelArray[selectedIndex]
         } else {
@@ -33,7 +33,7 @@ class ThermalModelData {
         theparams.a *= 2
         defaultModels.append(theparams)
         
-        theparams = ThermalModelParams(name: "Electric (Fast Preheat)")
+        theparams = ThermalModelParams(name: "Electric (Fast)")
         theparams.a *= 1.5
         theparams.b = 700
         defaultModels.append(theparams)
