@@ -50,6 +50,19 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         
         notificationCenter.addObserver(self, selector: #selector(PreheatViewController.didEnterBackground), name: Notification.Name.UIApplicationDidEnterBackground, object: nil)
         notificationCenter.addObserver(self, selector: #selector(PreheatViewController.didBecomeActive), name: Notification.Name.UIApplicationWillEnterForeground, object: nil)
+
+        let usernotificationCenter = UNUserNotificationCenter.current()
+        usernotificationCenter.delegate = self
+        
+        let earlyAction = UNNotificationAction(identifier: "TIMER_EARLY", title: "Not preheated",
+                                                options: .destructive)
+        let rightAction = UNNotificationAction(identifier: "TIMER_GOOD", title: "Pretty close",
+                                              options: UNNotificationActionOptions(rawValue: 0))
+        let timerFeedbackCategory = UNNotificationCategory(identifier: "TIMER_FEEDBACK", actions: [earlyAction, rightAction],
+                                                   intentIdentifiers: [], options: UNNotificationCategoryOptions(rawValue: 0))
+        let timerDoneCategory = UNNotificationCategory(identifier: "TIMER_DONE", actions: [],
+                                                   intentIdentifiers: [], options: UNNotificationCategoryOptions(rawValue: 0))
+        usernotificationCenter.setNotificationCategories([timerFeedbackCategory, timerDoneCategory])
     }
     
     func didEnterBackground() {
@@ -228,6 +241,15 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         CheckTimerEnable()
     }
     
+    // Delegate for notification action
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        print("Got a notification action response: \(response.actionIdentifier)")
+        if response.actionIdentifier == "TIMER_EARLY" {
+            RecordTime(offset: 5.0)
+        }
+        completionHandler()
+    }
+    
     func StartTimer() {
         // Timer
         modelTimer.startTimer(fromTemp: currentTemp, toTemp: desiredTemp)
@@ -265,14 +287,15 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         } else {
             notifyTitle = "Cooling done"
         }
-        let notifyText = "\(modelData.selectedModelData.name) should be \(Int(desiredTemp)) degrees."
+        let notifyText = "\(modelData.selectedModelData.name) should be \(Int(desiredTemp)) degrees. Swipe down to provide model learning feedback."
         content.title = NSString.localizedUserNotificationString(forKey: notifyTitle, arguments: nil)
         content.body = NSString.localizedUserNotificationString(forKey: notifyText, arguments: nil)
         content.sound = UNNotificationSound(named: "birge-ring.aiff")
+        content.categoryIdentifier = "TIMER_FEEDBACK"
         
         let timeLeft = Double(modelTimer.minutesLeft())
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60.0*timeLeft, repeats: false)
-        let request = UNNotificationRequest(identifier: "PreheatAlarm", content: content, trigger: trigger)
+        let request = UNNotificationRequest(identifier: "PREHEAT_ALARM", content: content, trigger: trigger)
         
         let center = UNUserNotificationCenter.current()
         center.add(request) { (error : Error?) in
@@ -284,18 +307,22 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     }
     
     // Simple data collection for slow models
-    func RecordTime() {
+    func RecordTime(offset: Float = 0) {
+        let isHeating = modelTimer.isHeating
         let elapsed = modelTimer.minutesElapsed()
-        let measurement = HeatingDataPoint(time: elapsed,
-                                           Tstart: modelTimer.initialTemp,
-                                           Tfinal: desiredTemp,
-                                           Tamb: Tamb)
-        let theModelParams = modelData.selectedModelData
-        if theModelParams.measurements == nil {
-            theModelParams.measurements = HeatingDataSet()
+        let thetime = elapsed - offset
+        if thetime > 0 && isHeating {
+            let measurement = HeatingDataPoint(time: thetime,
+                                               Tstart: modelTimer.initialTemp,
+                                               Tfinal: desiredTemp,
+                                               Tamb: Tamb)
+            let theModelParams = modelData.selectedModelData
+            if theModelParams.measurements == nil {
+                theModelParams.measurements = HeatingDataSet()
+            }
+            theModelParams.measurements!.addDataPoint(measurement)
+            modelData.WriteToDisk()
         }
-        theModelParams.measurements!.addDataPoint(measurement)
-        modelData.WriteToDisk()
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter,
@@ -351,16 +378,22 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
             StopTimer()
             
             let modelParams = modelData.selectedModelData
-            let alert = UIAlertController(title: "Calibration",
-                                          message: "Did \(modelParams.name) reach the desired temperature early?", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Model learning",
+                                          message: "Did \(modelParams.name) reach the desired temperature already?", preferredStyle: .alert)
             let noAction = UIAlertAction(title: "No", style: .cancel)
-            let yesAction = UIAlertAction(title: "Yes", style: .destructive) { action in
+            let yesAction = UIAlertAction(title: "Just now", style: .destructive) { action in
                 self.RecordTime()
+                self.currentTempSlider.value = self.desiredTempSlider.value
+                self.UpdateView()
+            }
+            let missedAction = UIAlertAction(title: "Earlier", style: .destructive) { action in
+                self.RecordTime(offset: -2.5)
                 self.currentTempSlider.value = self.desiredTempSlider.value
                 self.UpdateView()
             }
             alert.addAction(noAction)
             alert.addAction(yesAction)
+            alert.addAction(missedAction)
             
             present(alert, animated: true)
         }
