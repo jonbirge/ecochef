@@ -448,11 +448,6 @@
                     </tableView>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Model List" id="oqz-gR-ZtM">
-                        <barButtonItem key="leftBarButtonItem" systemItem="done" id="NAd-Fk-OaN">
-                            <connections>
-                                <action selector="goBack:" destination="zjn-9A-oq7" id="h3W-CS-HsU"/>
-                            </connections>
-                        </barButtonItem>
                         <rightBarButtonItems>
                             <barButtonItem systemItem="add" id="UZo-6f-nCx">
                                 <connections>
