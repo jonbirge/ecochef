@@ -19,11 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         center.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
             // Enable or disable features based on authorization.
         }
-        let timerCategory = UNNotificationCategory(identifier: "TIMER_EXPIRED",
-                                                   actions: [],
-                                                   intentIdentifiers: [],
-                                                   options: UNNotificationCategoryOptions(rawValue: 0))
-        center.setNotificationCategories([timerCategory])
+        
         return true
     }
 

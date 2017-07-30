@@ -19,6 +19,11 @@ class ModelEditViewController: UITableViewController {
             print("ModelEditViewController: creating new model")
         }
         modelFitter = ThermalModelFitter(params: modelParams!)
+        nameField.text = modelParams!.name
+        noteField.text = modelParams!.note
+        rcField.text = String(modelParams!.a)
+        hrField.text = String(modelParams!.b)
+        fitSwitch.isOn = modelParams!.calibrated
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -29,39 +34,37 @@ class ModelEditViewController: UITableViewController {
     // MARK: - Table view data source
     
     func updateView() {
-        nameField.text = modelParams!.name
-        rcField.text = String(modelParams!.a)
-        hrField.text = String(modelParams!.b)
-        noteField.text = modelParams!.note
-        modLabel.text = modelParams!.mod.description
-        updateData()
-    }
-    
-    func updateData() {
-        if let measData = modelParams!.measurements {
-            if measData.count == 0 {
-                dataLabel.text = "No data"
-            } else {
-                if measData.count > 1 {
-                    dataLabel.text = "\(measData.count) data points"
-                } else {
-                    dataLabel.text = "1 data point"
-                }
-            }
+        if fitSwitch.isOn {
+            rcField.text = String(modelParams!.a)
+            hrField.text = String(modelParams!.b)
+            rcField.isEnabled = false
+            hrField.isEnabled = false
+            rcField.textColor = .lightGray
+            hrField.textColor = .lightGray
         } else {
-            dataLabel.text = "No data"
+            rcField.isEnabled = true
+            hrField.isEnabled = true
+            rcField.textColor = .black
+            hrField.textColor = .black
         }
-     }
+        let measData = modelParams!.measurements
+        if measData.count == 0 {
+            dataLabel.text = "No data"
+        } else {
+            if measData.count > 1 {
+                dataLabel.text = "\(measData.count) data points"
+            } else {
+                dataLabel.text = "1 data point"
+            }
+        }
+        dataLabel.isEnabled = fitSwitch.isOn
+    }
 
     // MARK: - Navigation
-     
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "MeasList" {
-            let measView = segue.destination as! MeasTableViewController
-            if modelParams!.measurements == nil {
-                modelParams!.measurements = HeatingDataSet()
-            }
+        if let measView = segue.destination as? MeasTableViewController {
             measView.modelParams = modelParams
         }
     }
@@ -70,8 +73,13 @@ class ModelEditViewController: UITableViewController {
         guard let name = nameField.text,
             let rc = Float(rcField.text!),
             let hr = Float(hrField.text!),
-            let note = noteField.text
-            else { return }
+            let note = noteField.text else
+        {
+            // TODO: Actually handle this
+            performSegue(withIdentifier: "UnwindToModelList", sender: self)
+            print("ModelEditController: can't save poorly formed data.")
+            return
+        }
         
         if let modelparams = self.modelParams {
             modelparams.name = name
@@ -79,16 +87,20 @@ class ModelEditViewController: UITableViewController {
             modelparams.b = hr
             modelparams.note = note
             modelparams.mod = Date()
+            modelparams.calibrated = fitSwitch.isOn
         }
         
         performSegue(withIdentifier: "UnwindToModelList", sender: self)
     }
+    
+    @IBAction func clickFitSwitch() {
+        updateView()
+    }
 
-    @IBOutlet weak var dataCell: UITableViewCell!
+    @IBOutlet weak var fitSwitch: UISwitch!
     @IBOutlet weak var dataLabel: UILabel!
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var rcField: UITextField!
     @IBOutlet weak var hrField: UITextField!
     @IBOutlet weak var noteField: UITextField!
-    @IBOutlet weak var modLabel: UILabel!
 }
