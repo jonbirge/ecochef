@@ -115,6 +115,8 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         }
     }
     
+    // Update view while time is not engaged
+    // TODO: Integrate timer view updates
     func UpdateView() {
         // Pull from sliders
         currentTemp = round(currentTempSlider.value)
@@ -123,6 +125,8 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         // Labels
         currentTempLabel.text = String(Int(currentTemp))
         desiredTempLabel.text = String(Int(desiredTemp))
+        preheatLabel.textColor = .darkGray
+        preheatLabel.text = modelData.selectedModelData.name
         
         // Colors
         var uiColor: UIColor
@@ -233,7 +237,6 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         }
         
         // View stuff
-        preheatLabel.isHidden = true
         startButton.setTitle("Start", for: UIControlState.normal)
         timerResetButton.isEnabled = false
         UpdateView()
@@ -266,12 +269,12 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         for theControl in timerDisabledControls {
             theControl.isEnabled = false
         }
-        preheatLabel.isHidden = false
+        let modelname = modelData.selectedModelData.name
         if modelTimer.isHeating {
-            preheatLabel.text = "Preheating"
+            preheatLabel.text = "Preheating \(modelname)"
             preheatLabel.textColor = heatingColor
         } else {
-            preheatLabel.text = "Cooling"
+            preheatLabel.text = "Cooling \(modelname)"
             preheatLabel.textColor = coolingColor
         }
         startButton.setTitle("Done", for: UIControlState.normal)
