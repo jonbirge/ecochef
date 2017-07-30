@@ -311,15 +311,10 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         let elapsed = modelTimer.minutesElapsed()
         let thetime = elapsed * offset
         if thetime > 0 && isHeating {
-            let measurement = HeatingDataPoint(time: thetime,
-                                               Tstart: modelTimer.initialTemp,
-                                               Tfinal: desiredTemp,
-                                               Tamb: Tamb)
-            let theModelParams = modelData.selectedModelData
-            if theModelParams.measurements == nil {
-                theModelParams.measurements = HeatingDataSet()
-            }
-            theModelParams.measurements!.addDataPoint(measurement)
+            modelData.selectedModelData.addDataPoint(time: thetime,
+                                                     Tstart: modelTimer.initialTemp,
+                                                     Tfinal: desiredTemp,
+                                                     Tamb: Tamb)
             modelData.WriteToDisk()
         }
     }

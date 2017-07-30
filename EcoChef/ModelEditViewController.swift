@@ -38,30 +38,24 @@ class ModelEditViewController: UITableViewController {
     }
     
     func updateData() {
-        if let measData = modelParams!.measurements {
-            if measData.count == 0 {
-                dataLabel.text = "No data"
-            } else {
-                if measData.count > 1 {
-                    dataLabel.text = "\(measData.count) data points"
-                } else {
-                    dataLabel.text = "1 data point"
-                }
-            }
-        } else {
+        let measData = modelParams!.measurements
+        if measData.count == 0 {
             dataLabel.text = "No data"
+        } else {
+            if measData.count > 1 {
+                dataLabel.text = "\(measData.count) data points"
+            } else {
+                dataLabel.text = "1 data point"
+            }
         }
-     }
+    }
 
     // MARK: - Navigation
-     
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "MeasList" {
             let measView = segue.destination as! MeasTableViewController
-            if modelParams!.measurements == nil {
-                modelParams!.measurements = HeatingDataSet()
-            }
             measView.modelParams = modelParams
         }
     }

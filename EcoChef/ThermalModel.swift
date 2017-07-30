@@ -126,7 +126,8 @@ class HeatingDataPoint : NSObject, NSCoding {
     var Tamb : Float = 72
     var Tstart : Float = 72
     var Tfinal : Float = 350
-    var time : Float = 10  // minutes
+    var time : Float = 10  // minutes (est. or actual)
+    // TODO: denote estimated or not, and direction
     
     struct Keys {
         static let tamb = "tamb"
@@ -181,8 +182,9 @@ class ThermalModelParams : NSObject, NSCoding {
     var b: Float
     var note: String
     var mod: Date
-    var measurements: HeatingDataSet?
+    var measurements: HeatingDataSet
     var fitter: ThermalModelFitter?
+    var calibrated: Bool = false
     
     struct Keys {
         static let name = "name"
@@ -198,16 +200,34 @@ class ThermalModelParams : NSObject, NSCoding {
     }
     
     convenience init(name: String, a: Float, b: Float, note: String) {
-        self.init(name: name, a: a, b: b, note: note, mod: Date(), meas: nil)
+        let newmeas = HeatingDataSet()
+        self.init(name: name, a: a, b: b, note: note, mod: Date(), meas: newmeas)
     }
     
-    init(name: String, a: Float, b: Float, note: String, mod: Date, meas: HeatingDataSet?) {
+    convenience init(name: String, a: Float, b: Float, note: String, mod: Date) {
+        let newmeas = HeatingDataSet()
+        self.init(name: name, a: a, b: b, note: note, mod: mod, meas: newmeas)
+    }
+    
+    init(name: String, a: Float, b: Float, note: String, mod: Date, meas: HeatingDataSet) {
         self.name = name
         self.a = a
         self.b = b
         self.note = note
         self.mod = mod
         self.measurements = meas
+    }
+    
+    func addDataPoint(_ data: HeatingDataPoint) {
+        measurements.addDataPoint(data)
+    }
+    
+    func addDataPoint(time: Float, Tstart: Float, Tfinal: Float, Tamb: Float) {
+        let measurement = HeatingDataPoint(time: time,
+                                           Tstart: Tstart,
+                                           Tfinal: Tfinal,
+                                           Tamb: Tamb)
+        measurements.addDataPoint(measurement)
     }
     
     func initFitter() {
@@ -238,8 +258,11 @@ class ThermalModelParams : NSObject, NSCoding {
             mod = Date()
         }
 
-        let measurements = aDecoder.decodeObject(forKey: Keys.meas) as? HeatingDataSet
-        self.init(name: name, a: a, b: b, note: note, mod: mod, meas: measurements)
+        if let measlist = aDecoder.decodeObject(forKey: Keys.meas) as? HeatingDataSet {
+            self.init(name: name, a: a, b: b, note: note, mod: mod, meas: measlist)
+        } else {
+            self.init(name: name, a: a, b: b, note: note, mod: mod)
+        }
     }
     
     override var description: String {
@@ -274,11 +297,7 @@ class ThermalModelFitter : Fittable {
     }
     
     var fitnpoints: Int {
-        if let n = modelparams.measurements?.count {
-            return n
-        } else {
-            return 0
-        }
+        return modelparams.measurements.count
     }
     
     var fitinitparams: [Double] {
@@ -299,7 +318,7 @@ class ThermalModelFitter : Fittable {
         fitmodel.a = Float(params[IndexKeys.a])
         fitmodel.b = Float(params[IndexKeys.b])
         var res: [Double] = []
-        for meas in modelparams.measurements!.measlist {
+        for meas in modelparams.measurements.measlist {
             fitmodel.Tamb = meas.Tamb
             let Tmeas = meas.Tfinal
             let Tcomp = fitmodel.tempAfterHeating(time: meas.time,
