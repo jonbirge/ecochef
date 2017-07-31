@@ -27,6 +27,13 @@ UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
         updateViews()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        modelPicker.reloadAllComponents()
+        modelData.WriteToDisk()
+    }
+    
     // MARK: Output handling
     
     var selectedModel: Int {
@@ -56,7 +63,7 @@ UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
     override func tableView(_ tableView: UITableView,
                             didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 2 {
+        if indexPath.section == 3 {
             switch indexPath.row {
             case 0:
                 showFAQ()
@@ -104,12 +111,13 @@ UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
         }
     }
     
-    @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
-        // Update data
-        if let _ = segue.source as? ModelTableViewController {
-            modelPicker.reloadAllComponents()
-            modelData.WriteToDisk()
-        }
-    }
+//    @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
+//        // Update data
+//        print("Settings segue unwind")
+//        if let _ = segue.source as? ModelTableViewController {
+//            modelPicker.reloadAllComponents()
+//            modelData.WriteToDisk()
+//        }
+//    }
     
 }

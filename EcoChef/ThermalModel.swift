@@ -128,10 +128,8 @@ class ThermalModelParams : NSObject, NSCoding {
         fitter = ThermalModelFitter(params: self)
     }
     
+    // TODO: Rename
     func fitfromdata() {
-        if !calibrated {
-            print("warning: fitting model marked as not calibrated")
-        }
         if fitter == nil {
             initFitter()
         }
