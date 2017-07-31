@@ -10,15 +10,14 @@ import UIKit
 
 class ModelEditViewController: UITableViewController {
     var modelParams: ThermalModelParams?
-    var modelFitter: ThermalModelFitter!
+    //var modelFitter: ThermalModelFitter!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         if modelParams == nil {
             modelParams = ThermalModelParams(name: "New Model")
-            print("ModelEditViewController: creating new model")
         }
-        modelFitter = ThermalModelFitter(params: modelParams!)
+        //modelFitter = ThermalModelFitter(params: modelParams!)
         nameField.text = modelParams!.name
         noteField.text = modelParams!.note
         rcField.text = String(modelParams!.a)
@@ -75,7 +74,7 @@ class ModelEditViewController: UITableViewController {
             let hr = Float(hrField.text!),
             let note = noteField.text else
         {
-            // TODO: Actually handle this
+            // TODO: Actually handle this!
             performSegue(withIdentifier: "UnwindToModelList", sender: self)
             print("ModelEditController: can't save poorly formed data.")
             return
@@ -94,9 +93,13 @@ class ModelEditViewController: UITableViewController {
     }
     
     @IBAction func clickFitSwitch() {
+        if fitSwitch.isOn {
+            modelParams!.fitfromdata()
+        }
         updateView()
     }
 
+    @IBOutlet weak var dataCell: UITableViewCell!
     @IBOutlet weak var fitSwitch: UISwitch!
     @IBOutlet weak var dataLabel: UILabel!
     @IBOutlet weak var nameField: UITextField!
