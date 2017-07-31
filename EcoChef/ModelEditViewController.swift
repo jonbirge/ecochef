@@ -57,6 +57,7 @@ class ModelEditViewController: UITableViewController {
             }
         }
         dataLabel.isEnabled = fitSwitch.isOn
+        dataCell.isUserInteractionEnabled = fitSwitch.isOn
     }
 
     // MARK: - Navigation
