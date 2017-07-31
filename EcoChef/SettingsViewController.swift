@@ -27,6 +27,13 @@ UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
         updateViews()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        modelPicker.reloadAllComponents()
+        modelData.WriteToDisk()
+    }
+    
     // MARK: Output handling
     
     var selectedModel: Int {
@@ -104,12 +111,13 @@ UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
         }
     }
     
-    @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
-        // Update data
-        if let _ = segue.source as? ModelTableViewController {
-            modelPicker.reloadAllComponents()
-            modelData.WriteToDisk()
-        }
-    }
+//    @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
+//        // Update data
+//        print("Settings segue unwind")
+//        if let _ = segue.source as? ModelTableViewController {
+//            modelPicker.reloadAllComponents()
+//            modelData.WriteToDisk()
+//        }
+//    }
     
 }
