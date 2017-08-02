@@ -13,11 +13,14 @@ class ThermalTimer {
     var thermalModel: ThermalModel?
     var startTime: Date?
     var stopTime: Date?
+    var snoozeTime: Float = 0
     var isHeating: Bool = true
     var initialTemp: Float = 0
+    var snoozing: Bool = false
     private var timerMinutes: Float = 0
     private var startTemp: Float = 0
     private var localIsRunning: Bool = false
+    private var started: Bool = false
     
     var isRunning: Bool {
         return localIsRunning
@@ -27,24 +30,39 @@ class ThermalTimer {
         return !localIsRunning
     }
     
+    var isNotDone: Bool {
+        return minutesLeft() > 0
+    }
+    
     func stopTimer() {
         localIsRunning = false
         stopTime = Date()
     }
     
     func startTimer(fromTemp: Float, toTemp: Float) {
-        localIsRunning = true
-        initialTemp = fromTemp
-        if let timerMinutes = thermalModel!.time(totemp: toTemp, fromtemp: fromTemp) {
-            startTime = Date()
-            self.timerMinutes = timerMinutes
-            if toTemp > fromTemp {
-                isHeating = true
-            } else {
-                isHeating = false
+        if !started {
+            started = true
+            localIsRunning = true
+            initialTemp = fromTemp
+            if let timerMinutes = thermalModel!.time(totemp: toTemp, fromtemp: fromTemp) {
+                startTime = Date()
+                self.timerMinutes = timerMinutes
+                if toTemp > fromTemp {
+                    isHeating = true
+                } else {
+                    isHeating = false
+                }
+                startTemp = fromTemp
             }
-            startTemp = fromTemp
+        } else {
+            print("already used timer!")
         }
+    }
+    
+    func snoozeTimer(for minutes: Float) {
+        localIsRunning = true
+        snoozing = true
+        timerMinutes = timerMinutes + minutes
     }
     
     func minutesLeft() -> Float {
@@ -55,7 +73,7 @@ class ThermalTimer {
         let minElapsed = minutesElapsed()
         if isHeating {
             return thermalModel!.tempAfterHeating(time: minElapsed,
-                                                   fromtemp: startTemp)
+                                                  fromtemp: startTemp)
         } else {
             return thermalModel!.tempAfterCooling(time: minutesElapsed(),
                                                   fromtemp: startTemp)
