@@ -40,7 +40,8 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        timerDisabledControls = [currentTempSlider, desiredTempSlider, tempResetButton]
+        timerDisabledControls =
+            [currentTempSlider, desiredTempSlider, tempResetButton, settingsButton]
         modelTimer.thermalModel = model
         modelData.LoadModelData()
         LoadState()
@@ -420,6 +421,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     @IBOutlet weak var curTempLabel: UILabel!
     @IBOutlet weak var tempResetButton: UIButton!
     @IBOutlet weak var preheatLabel: UILabel!
+    @IBOutlet weak var settingsButton: UIButton!
     
     @IBAction func StartButton(_ sender: UIButton) {
         if modelTimer.isNotRunning {
