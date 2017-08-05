@@ -77,8 +77,8 @@ class ThermalModelParams : NSObject, NSCoding {
     var note: String
     var mod: Date
     var measurements: HeatingDataSet
-    var fitter: ThermalModelFitter?
     var calibrated: Bool = false
+    var fitter: ThermalModelFitter?
     
     struct Keys {
         static let name = "name"
@@ -87,6 +87,7 @@ class ThermalModelParams : NSObject, NSCoding {
         static let note = "note"
         static let mod = "mod"
         static let meas = "meas"
+        static let cal = "cal"
     }
     
     convenience init(name: String) {
@@ -103,13 +104,14 @@ class ThermalModelParams : NSObject, NSCoding {
         self.init(name: name, a: a, b: b, note: note, mod: mod, meas: newmeas)
     }
     
-    init(name: String, a: Float, b: Float, note: String, mod: Date, meas: HeatingDataSet) {
+    init(name: String, a: Float, b: Float, note: String, mod: Date, meas: HeatingDataSet, cal: Bool = true) {
         self.name = name
         self.a = a
         self.b = b
         self.note = note
         self.mod = mod
         self.measurements = meas
+        self.calibrated = cal
     }
     
     func addDataPoint(_ data: HeatingDataPoint) {
@@ -152,12 +154,9 @@ class ThermalModelParams : NSObject, NSCoding {
         } else {
             mod = Date()
         }
-
-        if let measlist = aDecoder.decodeObject(forKey: Keys.meas) as? HeatingDataSet {
-            self.init(name: name, a: a, b: b, note: note, mod: mod, meas: measlist)
-        } else {
-            self.init(name: name, a: a, b: b, note: note, mod: mod)
-        }
+        let meas = aDecoder.decodeObject(forKey: Keys.meas) as! HeatingDataSet
+        let cal = aDecoder.decodeBool(forKey: Keys.cal)
+        self.init(name: name, a: a, b: b, note: note, mod: mod, meas: meas, cal: cal)
     }
     
     override var description: String {
@@ -171,6 +170,7 @@ class ThermalModelParams : NSObject, NSCoding {
         aCoder.encode(note, forKey: Keys.note)
         aCoder.encode(mod, forKey: Keys.mod)
         aCoder.encode(measurements, forKey: Keys.meas)
+        aCoder.encode(calibrated, forKey: Keys.cal)
     }
 }
 

@@ -226,6 +226,7 @@
                         <outlet property="minLabel" destination="QVQ-IA-R7s" id="IiD-JR-DuY"/>
                         <outlet property="preheatLabel" destination="1cO-cu-AuE" id="6lg-LB-wJr"/>
                         <outlet property="secLabel" destination="X3y-il-6FY" id="4jO-R8-OG8"/>
+                        <outlet property="settingsButton" destination="jLP-zd-iGG" id="wqG-Pf-6Ns"/>
                         <outlet property="startButton" destination="gCO-mA-Prx" id="vBl-Vr-ZK0"/>
                         <outlet property="tempResetButton" destination="nHw-Lj-crR" id="npU-LP-Ebi"/>
                         <outlet property="timerResetButton" destination="ANQ-uz-xo0" id="FDq-96-Hhb"/>
@@ -885,7 +886,7 @@
                                     <outletCollection property="gestureRecognizers" destination="0vc-s8-3Dc" appends="YES" id="JeZ-YY-kqA"/>
                                 </connections>
                             </textView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Version 0.4.1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QXx-YA-bsb">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Version 0.5" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QXx-YA-bsb">
                                 <rect key="frame" x="47" y="244" width="283" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
