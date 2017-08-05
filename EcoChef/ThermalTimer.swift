@@ -20,7 +20,6 @@ class ThermalTimer {
     private var timerMinutes: Float = 0
     private var startTemp: Float = 0
     private var localIsRunning: Bool = false
-    private var started: Bool = false
     
     var isRunning: Bool {
         return localIsRunning
@@ -40,22 +39,17 @@ class ThermalTimer {
     }
     
     func startTimer(fromTemp: Float, toTemp: Float) {
-        if !started {
-            started = true
-            localIsRunning = true
-            initialTemp = fromTemp
-            if let timerMinutes = thermalModel!.time(totemp: toTemp, fromtemp: fromTemp) {
-                startTime = Date()
-                self.timerMinutes = timerMinutes
-                if toTemp > fromTemp {
-                    isHeating = true
-                } else {
-                    isHeating = false
-                }
-                startTemp = fromTemp
+        localIsRunning = true
+        initialTemp = fromTemp
+        if let timerMinutes = thermalModel!.time(totemp: toTemp, fromtemp: fromTemp) {
+            startTime = Date()
+            self.timerMinutes = timerMinutes
+            if toTemp > fromTemp {
+                isHeating = true
+            } else {
+                isHeating = false
             }
-        } else {
-            print("already used timer!")
+            startTemp = fromTemp
         }
     }
     
