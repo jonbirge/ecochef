@@ -361,8 +361,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         AddNotification()
     }
     
-    // Simple data collection for slow models
-    // TODO: Move into ThermalModel and use judgement as to how to handle offsets
+    // Data collection for models
     func LearnTime(offset: Float = 1) {
         let isHeating = modelTimer.isHeating
         let elapsed = modelTimer.minutesElapsed()
@@ -435,19 +434,22 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
             let alert = UIAlertController(title: "Model learning",
                                           message: "Did \(modelParams.name) reach the desired temperature?", preferredStyle: .alert)
             let noAction = UIAlertAction(title: "Dismiss", style: .cancel)
-            let yesAction = UIAlertAction(title: "Now", style: .destructive) { action in
+            let yesAction = UIAlertAction(title: "Yes", style: .destructive) { action in
                 self.LearnTime()
-                self.currentTempSlider.value = self.desiredTempSlider.value
-                self.UpdateView()
-            }
-            let missedAction = UIAlertAction(title: "Earlier", style: .destructive) { action in
-                self.LearnTime(offset: 0.9)
                 self.currentTempSlider.value = self.desiredTempSlider.value
                 self.UpdateView()
             }
             alert.addAction(noAction)
             alert.addAction(yesAction)
-            alert.addAction(missedAction)
+            
+            if !modelTimer.snoozing {
+                let missedAction = UIAlertAction(title: "Earlier", style: .destructive) { action in
+                    self.LearnTime(offset: 0.9)
+                    self.currentTempSlider.value = self.desiredTempSlider.value
+                    self.UpdateView()
+                }
+                alert.addAction(missedAction)
+            }
             
             present(alert, animated: true)
         }
