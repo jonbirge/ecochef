@@ -226,6 +226,7 @@
                         <outlet property="minLabel" destination="QVQ-IA-R7s" id="IiD-JR-DuY"/>
                         <outlet property="preheatLabel" destination="1cO-cu-AuE" id="6lg-LB-wJr"/>
                         <outlet property="secLabel" destination="X3y-il-6FY" id="4jO-R8-OG8"/>
+                        <outlet property="settingsButton" destination="jLP-zd-iGG" id="wqG-Pf-6Ns"/>
                         <outlet property="startButton" destination="gCO-mA-Prx" id="vBl-Vr-ZK0"/>
                         <outlet property="tempResetButton" destination="nHw-Lj-crR" id="npU-LP-Ebi"/>
                         <outlet property="timerResetButton" destination="ANQ-uz-xo0" id="FDq-96-Hhb"/>
