@@ -67,7 +67,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
                                    intentIdentifiers: [],
                                    options: UNNotificationCategoryOptions(rawValue: 0))
         let timerDoneCategory =
-            UNNotificationCategory(identifier: "TIMER_DONE",
+            UNNotificationCategory(identifier: "TIMER_SIMPLE",
                                    actions: [],
                                    intentIdentifiers: [],
                                    options: UNNotificationCategoryOptions(rawValue: 0))
@@ -252,6 +252,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     }
     
     private func AddNotification() {
+        let modelParams = modelData.selectedModelData
         let content = UNMutableNotificationContent()
         var notifyTitle: String
         if modelTimer.isHeating {
@@ -259,11 +260,18 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         } else {
             notifyTitle = "Cooling done"
         }
-        let notifyText = "\(modelData.selectedModelData.name) should be \(Int(desiredTemp))º. Pull down to provide model learning data."
+
+        if modelParams.calibrated {
+            content.categoryIdentifier = "TIMER_FEEDBACK"
+            let notifyText = "\(modelData.selectedModelData.name) should be \(Int(desiredTemp))º. Pull down to provide model learning data."
+            content.body = NSString.localizedUserNotificationString(forKey: notifyText, arguments: nil)
+        } else {
+            content.categoryIdentifier = "TIMER_SIMPLE"
+            let notifyText = "\(modelData.selectedModelData.name) should be \(Int(desiredTemp))º"
+            content.body = NSString.localizedUserNotificationString(forKey: notifyText, arguments: nil)
+        }
         content.title = NSString.localizedUserNotificationString(forKey: notifyTitle, arguments: nil)
-        content.body = NSString.localizedUserNotificationString(forKey: notifyText, arguments: nil)
         content.sound = UNNotificationSound(named: "birge-ring.aiff")
-        content.categoryIdentifier = "TIMER_FEEDBACK"
         
         let timeLeft = Double(modelTimer.minutesLeft())
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60.0*timeLeft, repeats: false)
@@ -431,27 +439,29 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
             
             // UI learning interface
             let modelParams = modelData.selectedModelData
-            let alert = UIAlertController(title: "Model learning",
-                                          message: "Did \(modelParams.name) reach the desired temperature?", preferredStyle: .alert)
-            let noAction = UIAlertAction(title: "Dismiss", style: .cancel)
-            let yesAction = UIAlertAction(title: "Yes", style: .destructive) { action in
-                self.LearnTime()
-                self.currentTempSlider.value = self.desiredTempSlider.value
-                self.UpdateView()
-            }
-            alert.addAction(noAction)
-            alert.addAction(yesAction)
-            
-            if !modelTimer.snoozing {
-                let missedAction = UIAlertAction(title: "Earlier", style: .destructive) { action in
-                    self.LearnTime(offset: 0.9)
+            if modelParams.calibrated {
+                let alert = UIAlertController(title: "Model learning",
+                                              message: "Did \(modelParams.name) reach the desired temperature?", preferredStyle: .alert)
+                
+                let noAction = UIAlertAction(title: "Dismiss", style: .cancel)
+                let yesAction = UIAlertAction(title: "Yes", style: .destructive) { action in
+                    self.LearnTime()
                     self.currentTempSlider.value = self.desiredTempSlider.value
                     self.UpdateView()
                 }
-                alert.addAction(missedAction)
+                alert.addAction(noAction)
+                alert.addAction(yesAction)
+                
+                if !modelTimer.snoozing {
+                    let missedAction = UIAlertAction(title: "Earlier", style: .destructive) { action in
+                        self.LearnTime(offset: 0.9)
+                        self.currentTempSlider.value = self.desiredTempSlider.value
+                        self.UpdateView()
+                    }
+                    alert.addAction(missedAction)
+                }
+                present(alert, animated: true)
             }
-            
-            present(alert, animated: true)
         }
     }
     
