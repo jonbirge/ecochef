@@ -10,14 +10,12 @@ import UIKit
 
 class ModelEditViewController: UITableViewController {
     var modelParams: ThermalModelParams?
-    //var modelFitter: ThermalModelFitter!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         if modelParams == nil {
             modelParams = ThermalModelParams(name: "New Model")
         }
-        //modelFitter = ThermalModelFitter(params: modelParams!)
         nameField.text = modelParams!.name
         noteField.text = modelParams!.note
         rcField.text = String(modelParams!.a)
@@ -56,8 +54,11 @@ class ModelEditViewController: UITableViewController {
                 dataLabel.text = "1 data point"
             }
         }
-        dataLabel.isEnabled = fitSwitch.isOn
-        dataCell.isUserInteractionEnabled = fitSwitch.isOn
+        let isLearning = fitSwitch.isOn
+        dataLabel.isEnabled = isLearning
+        dataCell.isUserInteractionEnabled = isLearning
+        calibrateLabel.isEnabled = isLearning
+        calibrateCell.isUserInteractionEnabled = isLearning
     }
 
     // MARK: - Navigation
@@ -100,8 +101,10 @@ class ModelEditViewController: UITableViewController {
         updateView()
     }
 
+    @IBOutlet weak var calibrateCell: UITableViewCell!
     @IBOutlet weak var dataCell: UITableViewCell!
     @IBOutlet weak var fitSwitch: UISwitch!
+    @IBOutlet weak var calibrateLabel: UILabel!
     @IBOutlet weak var dataLabel: UILabel!
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var rcField: UITextField!
