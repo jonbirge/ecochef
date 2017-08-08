@@ -31,32 +31,34 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         }
     }
     
-    var stateURL: URL {
-        let docsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        return docsURL.appendingPathComponent("state")
-    }
-    
     // MARK: - Startup
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Get state from application object
+        let app = UIApplication.shared.delegate as! AppDelegate
+        state = app.state
+        print("state Tamb: \(String(describing: state?.Tamb))")
+        print("state des: \(String(describing: state?.desiredTemp))")
+        
         timerDisabledControls =
             [currentTempSlider, desiredTempSlider, tempResetButton, settingsButton]
         modelTimer.thermalModel = model
         modelData.LoadModelData()
-        LoadState()
         UpdateFromState()
         UpdateLimits()
         Reset()
         
+        // Notification setup
         let notificationCenter = NotificationCenter.default
         
         notificationCenter.addObserver(self, selector: #selector(PreheatViewController.didEnterBackground), name: Notification.Name.UIApplicationDidEnterBackground, object: nil)
         notificationCenter.addObserver(self, selector: #selector(PreheatViewController.didBecomeActive), name: Notification.Name.UIApplicationWillEnterForeground, object: nil)
 
+        // UI notification setup
         let usernotificationCenter = UNUserNotificationCenter.current()
         usernotificationCenter.delegate = self
-        
         let earlyAction = UNNotificationAction(identifier: "TIMER_SNOOZE", title: "Continue timer",
                                                 options: .destructive)
         let rightAction = UNNotificationAction(identifier: "TIMER_GOOD", title: "Preheated",
@@ -94,14 +96,6 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     
     // MARK: - State
     
-    private func LoadState() {
-        if let state = NSKeyedUnarchiver.unarchiveObject(withFile: stateURL.path) as? EcoChefState {
-            self.state = state
-        } else {
-            self.state = EcoChefState()
-        }
-    }
-    
     private func UpdateFromState() {
         desiredTempSlider.value = state!.desiredTemp
         modelData.selectedIndex = state!.selectedModel
@@ -111,7 +105,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     
     func WriteStateToDisk() {
         state!.desiredTemp = desiredTemp
-        NSKeyedArchiver.archiveRootObject(state!, toFile: stateURL.path)
+        state!.writeStateToDisk()
     }
     
     // MARK: - UI & model

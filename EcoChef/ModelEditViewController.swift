@@ -67,8 +67,12 @@ class ModelEditViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let measView = segue.destination as? MeasTableViewController {
             measView.modelParams = modelParams
+        } else if let calView = segue.destination as? CalibrationViewController {
+            calView.modelParams = modelParams
         }
     }
+
+    // MARK: - IB
     
     @IBAction func clickedSave(_ sender: UIBarButtonItem) {
         guard let name = nameField.text,

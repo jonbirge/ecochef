@@ -111,13 +111,4 @@ UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
         }
     }
     
-//    @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
-//        // Update data
-//        print("Settings segue unwind")
-//        if let _ = segue.source as? ModelTableViewController {
-//            modelPicker.reloadAllComponents()
-//            modelData.WriteToDisk()
-//        }
-//    }
-    
 }

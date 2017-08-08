@@ -21,6 +21,11 @@ class EcoChefState : NSObject, NSCoding {
         static let desiredTemp = "desiredtemp"
     }
     
+    static var stateURL: URL {
+        let docsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        return docsURL.appendingPathComponent("state")
+    }
+    
     override init() {
         self.selectedModel = 0
         self.Tamb = TambDefault
@@ -51,5 +56,9 @@ class EcoChefState : NSObject, NSCoding {
         aCoder.encode(Tamb, forKey: PropertyKeys.Tamb)
         aCoder.encode(selectedModel, forKey: PropertyKeys.selectedModel)
         aCoder.encode(desiredTemp, forKey: PropertyKeys.desiredTemp)
+    }
+    
+    func writeStateToDisk() {
+        NSKeyedArchiver.archiveRootObject(self, toFile: EcoChefState.stateURL.path)
     }
 }

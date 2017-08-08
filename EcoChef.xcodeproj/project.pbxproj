@@ -20,6 +20,8 @@
 		AB43B18B1EEBAEA100B6A96B /* ThermalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB43B18A1EEBAEA100B6A96B /* ThermalModel.swift */; };
 		AB47A6CD1F27A4F400044D74 /* MatrixTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB47A6CC1F27A4F400044D74 /* MatrixTests.swift */; };
 		AB53D56E1F0DD85900ACA17A /* EcoChefThermalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB53D56D1F0DD85900ACA17A /* EcoChefThermalModel.swift */; };
+		AB57418C1F397224007AA3E0 /* CalibrationTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB57418B1F397224007AA3E0 /* CalibrationTimer.swift */; };
+		AB57418D1F397224007AA3E0 /* CalibrationTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB57418B1F397224007AA3E0 /* CalibrationTimer.swift */; };
 		AB57E5DB1F0492F700D37EF8 /* birge-ring.aiff in Resources */ = {isa = PBXBuildFile; fileRef = AB57E5DA1F0492F700D37EF8 /* birge-ring.aiff */; };
 		AB9506111F2580E1004A2EA9 /* Arithmetic.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB05AF1F1DB90200C7B635 /* Arithmetic.swift */; };
 		AB9506121F2580E1004A2EA9 /* Auxiliary.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB05B01F1DB90200C7B635 /* Auxiliary.swift */; };
@@ -79,6 +81,7 @@
 		AB43B18A1EEBAEA100B6A96B /* ThermalModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThermalModel.swift; sourceTree = "<group>"; };
 		AB47A6CC1F27A4F400044D74 /* MatrixTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatrixTests.swift; sourceTree = "<group>"; };
 		AB53D56D1F0DD85900ACA17A /* EcoChefThermalModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EcoChefThermalModel.swift; sourceTree = "<group>"; };
+		AB57418B1F397224007AA3E0 /* CalibrationTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalibrationTimer.swift; sourceTree = "<group>"; };
 		AB57E5DA1F0492F700D37EF8 /* birge-ring.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "birge-ring.aiff"; sourceTree = "<group>"; };
 		ABA36DC21F07401100B3FCA4 /* EcoChefState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EcoChefState.swift; sourceTree = "<group>"; };
 		ABC7A8701EF8DC5D00F25317 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -150,6 +153,7 @@
 				AB007F201F1C7B8000AD9552 /* Optimization.swift */,
 				AB43B18A1EEBAEA100B6A96B /* ThermalModel.swift */,
 				ABEB6F1C1F02A6E300ABD199 /* ThermalTimer.swift */,
+				AB57418B1F397224007AA3E0 /* CalibrationTimer.swift */,
 				AB53D56D1F0DD85900ACA17A /* EcoChefThermalModel.swift */,
 				ABA36DC21F07401100B3FCA4 /* EcoChefState.swift */,
 				AB43B1781EEB871E00B6A96B /* PreheatViewController.swift */,
@@ -354,6 +358,7 @@
 				ABEB6F1D1F02A6E300ABD199 /* ThermalTimer.swift in Sources */,
 				ABEB05C01F1DB90200C7B635 /* Power.swift in Sources */,
 				ABC7A8751EF8EE7900F25317 /* AboutViewController.swift in Sources */,
+				AB57418C1F397224007AA3E0 /* CalibrationTimer.swift in Sources */,
 				ABC7A8711EF8DC5D00F25317 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -365,6 +370,7 @@
 				AB9506111F2580E1004A2EA9 /* Arithmetic.swift in Sources */,
 				AB9506191F2580E1004A2EA9 /* Trigonometric.swift in Sources */,
 				ABEB05C31F1EEDF000C7B635 /* OptimizationTests.swift in Sources */,
+				AB57418D1F397224007AA3E0 /* CalibrationTimer.swift in Sources */,
 				AB9506121F2580E1004A2EA9 /* Auxiliary.swift in Sources */,
 				AB9506141F2580E1004A2EA9 /* Exponential.swift in Sources */,
 				AB007F221F1C7B8000AD9552 /* Optimization.swift in Sources */,
