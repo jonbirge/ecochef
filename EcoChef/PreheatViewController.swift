@@ -91,6 +91,9 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
                                      selector: #selector(PreheatViewController.TimerCount),
                                      userInfo: nil,
                                      repeats: true)
+        } else {
+            StopTimer()
+            UpdateView()
         }
     }
     

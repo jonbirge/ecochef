@@ -944,140 +944,114 @@
         <!--Calibrate-->
         <scene sceneID="kF4-iF-yTA">
             <objects>
-                <viewController title="Calibrate" id="l70-eN-l8r" customClass="CalibrationViewController" customModule="EcoChef" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Calibrate" automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="overFullScreen" hidesBottomBarWhenPushed="YES" id="l70-eN-l8r" customClass="CalibrationViewController" customModule="EcoChef" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Olf-yt-bpw"/>
                         <viewControllerLayoutGuide type="bottom" id="35v-VE-3H6"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="5BB-z2-Ivb">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="64" width="375" height="559"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="70" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EZu-f1-QZp" userLabel="CurrTemp">
-                                <rect key="frame" x="156" y="387" width="64" height="24"/>
+                                <rect key="frame" x="156" y="320" width="64" height="24"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="64" id="qiA-ws-dcQ"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="00" textAlignment="right" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="GPv-8a-XKv">
-                                <rect key="frame" x="87" y="124" width="89" height="91"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <rect key="frame" x="87" y="60" width="89" height="91"/>
                                 <fontDescription key="fontDescription" type="system" weight="thin" pointSize="76"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text=":" textAlignment="right" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="giX-nA-qQG">
-                                <rect key="frame" x="178" y="124" width="19" height="91"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <rect key="frame" x="178" y="60" width="19" height="91"/>
                                 <fontDescription key="fontDescription" type="system" weight="thin" pointSize="76"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="00" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="Qkk-Iu-dE2">
-                                <rect key="frame" x="195" y="124" width="89" height="91"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <rect key="frame" x="197" y="60" width="89" height="91"/>
                                 <fontDescription key="fontDescription" type="system" weight="thin" pointSize="76"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Temp" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4ls-dY-Fiv">
-                                <rect key="frame" x="32" y="387" width="100" height="24"/>
+                                <rect key="frame" x="32" y="320" width="100" height="24"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jWL-C5-aRL" customClass="TimerButton" customModule="EcoChef" customModuleProvider="target">
-                                <rect key="frame" x="70" y="223" width="84" height="36"/>
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jWL-C5-aRL" customClass="SimpleButton" customModule="EcoChef" customModuleProvider="target">
+                                <rect key="frame" x="70" y="159" width="84" height="39"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="84" id="6VZ-ED-NAQ"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                 <state key="normal" title="Reset"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="9"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="titleColorNormal">
-                                        <color key="value" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="cancelTimerClicked" destination="l70-eN-l8r" eventType="touchUpInside" id="p8Y-UJ-ecN"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Calibration" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dW2-kT-WQX">
-                                <rect key="frame" x="88" y="103" width="198" height="21"/>
+                                <rect key="frame" x="88" y="39" width="198" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OvZ-T6-Kag">
-                                <rect key="frame" x="279" y="383" width="64" height="33"/>
+                                <rect key="frame" x="279" y="316" width="64" height="33"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                <state key="normal" title="Ambient"/>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OhM-Ha-8Vy" customClass="TimerButton" customModule="EcoChef" customModuleProvider="target">
-                                <rect key="frame" x="136" y="474" width="102" height="36"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="102" id="IwR-td-lQw"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
-                                <state key="normal" title="Mark">
-                                    <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Ambient">
+                                    <color key="titleColor" red="0.0078070115500000004" green="0.72024770400000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="titleColorNormal">
-                                        <color key="value" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="9"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="markClicked" destination="l70-eN-l8r" eventType="touchUpInside" id="F7s-Pr-bld"/>
-                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dCm-Vx-1Nt" customClass="TimerButton" customModule="EcoChef" customModuleProvider="target">
-                                <rect key="frame" x="216" y="223" width="84" height="36"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dCm-Vx-1Nt" customClass="SimpleButton" customModule="EcoChef" customModuleProvider="target">
+                                <rect key="frame" x="216" y="158.5" width="84" height="39"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="84" id="diC-zj-H4W"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                 <state key="normal" title="Start">
-                                    <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleColor" red="0.0078070115500000004" green="0.72024770400000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="titleColorNormal">
-                                        <color key="value" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="9"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="startTimerClicked" destination="l70-eN-l8r" eventType="touchUpInside" id="iul-8T-1Ko"/>
                                 </connections>
                             </button>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="100" minValue="50" maxValue="500" translatesAutoresizingMaskIntoConstraints="NO" id="Acb-Rv-rvH">
-                                <rect key="frame" x="30" y="419" width="315" height="31"/>
-                                <color key="minimumTrackTintColor" red="0.38632217639999999" green="0.38632217639999999" blue="0.38632217639999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <color key="maximumTrackTintColor" red="0.75495717009999996" green="0.75495717009999996" blue="0.75495717009999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <rect key="frame" x="30" y="352" width="315" height="31"/>
+                                <color key="minimumTrackTintColor" red="0.0078070115500000004" green="0.72024770400000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <connections>
                                     <action selector="currentTempChanged:" destination="l70-eN-l8r" eventType="valueChanged" id="bY5-YJ-4o4"/>
                                     <action selector="currentTempDoneChanging:" destination="l70-eN-l8r" eventType="touchUpInside" id="E9V-z1-nYP"/>
                                 </connections>
                             </slider>
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OhM-Ha-8Vy" customClass="SimpleButton" customModule="EcoChef" customModuleProvider="target">
+                                <rect key="frame" x="136" y="407" width="102" height="39"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="102" id="IwR-td-lQw"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                <state key="normal" title="Mark">
+                                    <color key="titleColor" red="0.0078070115500000004" green="0.72024770400000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                </state>
+                                <connections>
+                                    <action selector="markClicked" destination="l70-eN-l8r" eventType="touchUpInside" id="F7s-Pr-bld"/>
+                                </connections>
+                            </button>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Acb-Rv-rvH" firstAttribute="top" secondItem="EZu-f1-QZp" secondAttribute="bottom" constant="8" symbolic="YES" id="3Ra-UM-YYo"/>
                             <constraint firstItem="EZu-f1-QZp" firstAttribute="leading" secondItem="4ls-dY-Fiv" secondAttribute="trailing" constant="24" id="4Dt-sm-TW2"/>
                             <constraint firstItem="4ls-dY-Fiv" firstAttribute="top" secondItem="EZu-f1-QZp" secondAttribute="top" id="5QR-Zn-i1x"/>
                             <constraint firstItem="35v-VE-3H6" firstAttribute="top" secondItem="OhM-Ha-8Vy" secondAttribute="bottom" constant="113" id="7KF-Om-uoA"/>
-                            <constraint firstItem="Qkk-Iu-dE2" firstAttribute="leading" secondItem="GPv-8a-XKv" secondAttribute="trailing" constant="19" id="7kW-PQ-Mjk"/>
+                            <constraint firstItem="Qkk-Iu-dE2" firstAttribute="leading" secondItem="GPv-8a-XKv" secondAttribute="trailing" constant="21" id="7kW-PQ-Mjk"/>
                             <constraint firstItem="dW2-kT-WQX" firstAttribute="top" secondItem="Olf-yt-bpw" secondAttribute="bottom" constant="39" id="7nh-Mv-ErC"/>
                             <constraint firstItem="OvZ-T6-Kag" firstAttribute="trailing" secondItem="Acb-Rv-rvH" secondAttribute="trailing" id="Dim-Wi-TNi"/>
                             <constraint firstItem="EZu-f1-QZp" firstAttribute="centerY" secondItem="OvZ-T6-Kag" secondAttribute="centerY" id="IBU-1e-k14"/>
@@ -1100,6 +1074,7 @@
                             <constraint firstItem="jWL-C5-aRL" firstAttribute="leading" secondItem="5BB-z2-Ivb" secondAttribute="leadingMargin" constant="54" id="yML-g5-U8q"/>
                         </constraints>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" title="Calibration Timer" id="lLQ-7B-pum"/>
                     <connections>
                         <outlet property="currentTempLabel" destination="EZu-f1-QZp" id="pbo-9X-YFt"/>
@@ -1114,7 +1089,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SlZ-bh-era" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="389.60000000000002" y="59.820089955022496"/>
+            <point key="canvasLocation" x="390" y="60"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
