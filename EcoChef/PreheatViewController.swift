@@ -258,7 +258,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
             notifyTitle = "Cooling done"
         }
 
-        if modelParams.calibrated {
+        if modelParams.calibrated && modelTimer.isHeating {
             content.categoryIdentifier = "TIMER_FEEDBACK"
             let notifyText = "\(modelData.selectedModelData.name) should be \(Int(desiredTemp))º. Pull down to provide model learning data."
             content.body = NSString.localizedUserNotificationString(forKey: notifyText, arguments: nil)
@@ -309,7 +309,6 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     }
     
     func StopTimer() {
-        // Timer stuff
         modelTimer.stopTimer()
         timer?.invalidate()
         EnableTimerControls()
@@ -430,13 +429,13 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     @IBAction func StartButton(_ sender: UIButton) {
         if modelTimer.isNotRunning {
             StartTimer()
-        } else {
+        } else {  // done
             CancelNotification()
             StopTimer()
             
             // UI learning interface
             let modelParams = modelData.selectedModelData
-            if modelParams.calibrated {
+            if modelParams.calibrated && modelTimer.isHeating {
                 let alert = UIAlertController(title: "Model learning",
                                               message: "Did \(modelParams.name) reach the desired temperature?", preferredStyle: .alert)
                 
@@ -457,6 +456,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
                     }
                     alert.addAction(missedAction)
                 }
+                
                 present(alert, animated: true)
             }
         }
