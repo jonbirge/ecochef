@@ -22,6 +22,8 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     private var currentTemp: Float = 70
     private var state: EcoChefState?
     private var timerDisabledControls: [UIControl]!
+    private var timer: Timer?
+    private var initialCurrentTemp: Float = 0
     
     var Tamb : Float {
         get { return model.Tamb }
@@ -203,9 +205,6 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     
     // MARK: - Notification and timer functionality
     
-    private var timer: Timer?
-    private var initialCurrentTemp: Float = 0
-    
     // Delegate for notification action
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse,
@@ -238,14 +237,6 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
             UpdateView()
             StopTimer()
         }
-    }
-    
-    func ResetTimer() {
-        CancelNotification()
-        StopTimer()
-        EnableTimerControls()
-        currentTempSlider.value = Float(initialCurrentTemp)
-        UpdateView()
     }
     
     private func AddNotification() {
@@ -308,6 +299,13 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         timerResetButton.isEnabled = true
     }
     
+    func ResetTimer() {
+        CancelNotification()
+        StopTimer()
+        currentTempSlider.value = Float(initialCurrentTemp)
+        UpdateView()
+    }
+
     func StopTimer() {
         modelTimer.stopTimer()
         timer?.invalidate()

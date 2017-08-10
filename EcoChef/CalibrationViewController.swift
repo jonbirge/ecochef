@@ -15,9 +15,10 @@ class CalibrationViewController: UIViewController {
     private let largestep: Float = 10
     private let crossover: Float = 100
     private var currentTemp: Float = 70
-    private var timerEnabledControls: [UIControl]!
     private var calTimer: CalibrationTimer!
-    
+    private var timer: Timer?
+    private var initialCurrentTemp: Float = 0
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -26,7 +27,6 @@ class CalibrationViewController: UIViewController {
         
         calTimer = CalibrationTimer(params: modelParams, tamb: state.Tamb)
         
-        timerEnabledControls = [markButton, timerResetButton]
         UpdateLimits()
         Reset()
     }
@@ -66,8 +66,8 @@ class CalibrationViewController: UIViewController {
             }
             secLabel.text = sectext
         } else {
-            secLabel.text = "--"
-            minLabel.text = "--"
+            secLabel.text = "00"
+            minLabel.text = "00"
         }
     }
     
@@ -83,9 +83,6 @@ class CalibrationViewController: UIViewController {
     
     // MARK: - Notification and timer functionality
     
-    private var timer: Timer?
-    private var initialCurrentTemp: Float = 0
-    
     // Timer delegate function
     func TimerCount() {
         let mins = calTimer.minutesElapsed()
@@ -93,31 +90,23 @@ class CalibrationViewController: UIViewController {
     }
     
     private func EnableTimerControls() {
-        for theControl in timerEnabledControls {
-            theControl.isEnabled = false
-        }
         startButton.setTitle("Start", for: UIControlState.normal)
-        timerResetButton.isEnabled = false
+        markButton.isEnabled = false
         UpdateView()
     }
     
     private func DisableTimerControls () {
-        for theControl in timerEnabledControls {
-            theControl.isEnabled = true
-        }
-        startButton.setTitle("Stop", for: UIControlState.normal)
+        startButton.setTitle("Reset", for: UIControlState.normal)
         startButton.isEnabled = true
-        timerResetButton.isEnabled = true
+        markButton.isEnabled = true
     }
     
     func ResetTimer() {
         StopTimer()
-        EnableTimerControls()
         Reset()
     }
     
     func StopTimer() {
-        // Timer stuff
         calTimer.stopTimer()
         timer?.invalidate()
         EnableTimerControls()
@@ -140,11 +129,6 @@ class CalibrationViewController: UIViewController {
         DisableTimerControls()
     }
     
-    // Data collection for models
-    func MarkTime() {
-        calTimer.mark(temp: currentTemp)
-    }
-    
     // MARK: - IB
     
     @IBAction func currentTempChanged(_ sender: UISlider) {
@@ -160,21 +144,16 @@ class CalibrationViewController: UIViewController {
         if calTimer.isNotRunning {
             StartTimer()
         } else {
-            StopTimer()
+            ResetTimer()
         }
     }
     
-    @IBAction func cancelTimerClicked() {
-        ResetTimer()
-    }
-    
     @IBAction func markClicked() {
-        MarkTime()
+        calTimer.mark(temp: currentTemp)
     }
     
     @IBOutlet weak var minLabel: UILabel!
     @IBOutlet weak var secLabel: UILabel!
-    @IBOutlet weak var timerResetButton: TimerButton!
     @IBOutlet weak var startButton: TimerButton!
     @IBOutlet weak var markButton: TimerButton!
     @IBOutlet weak var modelLabel: UILabel!
