@@ -31,6 +31,10 @@ class CalibrationViewController: UIViewController {
         Reset()
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        ResetTimer()
+    }
+    
     private func Quantize(_ temp:Float) -> Float {
         if temp < crossover {
             return smallstep*round(temp/smallstep)
