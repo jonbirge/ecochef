@@ -135,6 +135,10 @@ class CalibrationViewController: UIViewController {
     
     // MARK: - IB
     
+    @IBAction func ambientClicked() {
+        Reset()
+    }
+    
     @IBAction func currentTempChanged(_ sender: UISlider) {
         currentTemp = Quantize(sender.value)
         currentTempLabel.text = String(Int(currentTemp))
