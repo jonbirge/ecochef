@@ -202,27 +202,14 @@ class HeatingDataSet : NSObject, NSCoding {
     
     // Add new heating data to maintain sorted order
     func addDataPoint(_ datapoint: HeatingDataPoint) {
-        if measlist.count == 0 {
-            measlist.append(datapoint)
-        } else {
-            var inserted = false  // assume end
-            for k in 0...(measlist.count - 1) {
-                if datapoint.time < measlist[k].time {
-                    measlist.insert(datapoint, at: k)
-                    inserted = true
-                    break
-                }
-            }
-            if !inserted {
-                measlist.append(datapoint)
-            }
-        }
+        measlist.append(datapoint)
+        sort()
     }
     
     func sort() {
-        measlist = measlist.sorted(by: { (pointA, pointB) -> Bool in
-            return pointA.time > pointB.time
-        })
+        measlist = measlist.sorted() { (pointA, pointB) -> Bool in
+            return pointA.time < pointB.time
+        }
     }
     
     subscript(index: Int) -> HeatingDataPoint {
@@ -239,20 +226,22 @@ class HeatingDataPoint : NSObject, NSCoding {
     var Tstart : Float = 72
     var Tfinal : Float = 350
     var time : Float = 10  // minutes (est. or actual)
-    // TODO: denote estimated or not, and direction
+    var date : Date = Date()
     
     struct Keys {
         static let tamb = "tamb"
         static let tstart = "tstart"
         static let tfinal = "tfinal"
         static let time = "time"
+        static let date = "date"
     }
     
-    init(time: Float, Tstart: Float, Tfinal: Float, Tamb: Float) {
+    init(time: Float, Tstart: Float, Tfinal: Float, Tamb: Float, date: Date) {
         self.Tamb = Tamb
         self.Tstart = Tstart
         self.Tfinal = Tfinal
         self.time = time
+        self.date = date
     }
     
     override init() {
@@ -263,11 +252,16 @@ class HeatingDataPoint : NSObject, NSCoding {
         self.init(time: source.time,
                   Tstart: source.Tstart,
                   Tfinal: source.Tfinal,
-                  Tamb: source.Tamb)
+                  Tamb: source.Tamb,
+                  date: source.date)
     }
     
     convenience init(time: Float, Tstart: Float, Tfinal: Float) {
-        self.init(time: time, Tstart: Tstart, Tfinal: Tfinal, Tamb: Tstart)
+        self.init(time: time, Tstart: Tstart, Tfinal: Tfinal, Tamb: Tstart, date: Date())
+    }
+    
+    convenience init(time: Float, Tstart: Float, Tfinal: Float, Tamb: Float) {
+        self.init(time: time, Tstart: Tstart, Tfinal: Tfinal, Tamb: Tamb, date: Date())
     }
     
     required convenience init(coder aDecoder: NSCoder) {
@@ -275,7 +269,11 @@ class HeatingDataPoint : NSObject, NSCoding {
         let Tstart = aDecoder.decodeFloat(forKey: Keys.tstart)
         let Tfinal = aDecoder.decodeFloat(forKey: Keys.tfinal)
         let time = aDecoder.decodeFloat(forKey: Keys.time)
-        self.init(time: time, Tstart: Tstart, Tfinal: Tfinal, Tamb: Tamb)
+        var date = Date()
+        if let dateread = aDecoder.decodeObject(forKey: Keys.date) as? Date {
+            date = dateread
+        }
+        self.init(time: time, Tstart: Tstart, Tfinal: Tfinal, Tamb: Tamb, date: date)
     }
     
     func encode(with aCoder: NSCoder) {
@@ -379,12 +377,6 @@ class ThermalModel : CustomStringConvertible {
         return b + Tamb
     }
     
-    // load from struct
-    func setfrom(params:ThermalModelParams) {
-        a = params.a
-        b = params.b
-    }
-    
     // time in fractional minutes
     func time(totemp:Float) -> Float? {
         return time(totemp:totemp, fromtemp:Tamb)
@@ -419,5 +411,13 @@ class ThermalModel : CustomStringConvertible {
     
     func tempAfterCooling(time t:Float, fromtemp Tstart:Float) -> Float {
         return Tamb + exp(-t/a)*(Tstart - Tamb)
+    }
+}
+
+// load from struct
+extension ThermalModel {
+    func setfrom(params:ThermalModelParams) {
+        a = params.a
+        b = params.b
     }
 }

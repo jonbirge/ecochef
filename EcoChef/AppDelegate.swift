@@ -11,16 +11,31 @@ import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
     var window: UIWindow?
+    var state: EcoChefState?
 
+    var stateURL: URL {
+        let docsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        return docsURL.appendingPathComponent("state")
+    }
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         let center = UNUserNotificationCenter.current()
         center.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
             // Enable or disable features based on authorization.
+            print("granted: \(granted), error: \(String(describing: error))")
         }
-        
+        LoadState()
         return true
+    }
+    
+    private func LoadState() {
+        let stateURL = EcoChefState.stateURL
+        if let state = NSKeyedUnarchiver.unarchiveObject(withFile: stateURL.path) as? EcoChefState {
+            self.state = state
+        } else {
+            self.state = EcoChefState()
+        }
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

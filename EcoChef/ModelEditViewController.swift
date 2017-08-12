@@ -10,14 +10,12 @@ import UIKit
 
 class ModelEditViewController: UITableViewController {
     var modelParams: ThermalModelParams?
-    //var modelFitter: ThermalModelFitter!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         if modelParams == nil {
             modelParams = ThermalModelParams(name: "New Model")
         }
-        //modelFitter = ThermalModelFitter(params: modelParams!)
         nameField.text = modelParams!.name
         noteField.text = modelParams!.note
         rcField.text = String(modelParams!.a)
@@ -33,7 +31,8 @@ class ModelEditViewController: UITableViewController {
     // MARK: - Table view data source
     
     func updateView() {
-        if fitSwitch.isOn {
+        let isLearning = fitSwitch.isOn
+        if isLearning {
             rcField.text = String(modelParams!.a)
             hrField.text = String(modelParams!.b)
             rcField.isEnabled = false
@@ -56,8 +55,9 @@ class ModelEditViewController: UITableViewController {
                 dataLabel.text = "1 data point"
             }
         }
-        dataLabel.isEnabled = fitSwitch.isOn
-        dataCell.isUserInteractionEnabled = fitSwitch.isOn
+        dataLabel.isEnabled = isLearning
+        dataCell.isUserInteractionEnabled = isLearning
+        calibrateButton.isEnabled = isLearning
     }
 
     // MARK: - Navigation
@@ -66,8 +66,12 @@ class ModelEditViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let measView = segue.destination as? MeasTableViewController {
             measView.modelParams = modelParams
+        } else if let calView = segue.destination as? CalibrationViewController {
+            calView.modelParams = modelParams
         }
     }
+
+    // MARK: - IB
     
     @IBAction func clickedSave(_ sender: UIBarButtonItem) {
         guard let name = nameField.text,
@@ -100,6 +104,7 @@ class ModelEditViewController: UITableViewController {
         updateView()
     }
 
+    @IBOutlet weak var calibrateButton: UIButton!
     @IBOutlet weak var dataCell: UITableViewCell!
     @IBOutlet weak var fitSwitch: UISwitch!
     @IBOutlet weak var dataLabel: UILabel!
