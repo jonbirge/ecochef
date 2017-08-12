@@ -202,27 +202,14 @@ class HeatingDataSet : NSObject, NSCoding {
     
     // Add new heating data to maintain sorted order
     func addDataPoint(_ datapoint: HeatingDataPoint) {
-        if measlist.count == 0 {
-            measlist.append(datapoint)
-        } else {
-            var inserted = false  // assume end
-            for k in 0...(measlist.count - 1) {
-                if datapoint.time < measlist[k].time {
-                    measlist.insert(datapoint, at: k)
-                    inserted = true
-                    break
-                }
-            }
-            if !inserted {
-                measlist.append(datapoint)
-            }
-        }
+        measlist.append(datapoint)
+        sort()
     }
     
     func sort() {
-        measlist = measlist.sorted(by: { (pointA, pointB) -> Bool in
-            return pointA.time > pointB.time
-        })
+        measlist = measlist.sorted() { (pointA, pointB) -> Bool in
+            return pointA.time < pointB.time
+        }
     }
     
     subscript(index: Int) -> HeatingDataPoint {
@@ -390,12 +377,6 @@ class ThermalModel : CustomStringConvertible {
         return b + Tamb
     }
     
-    // load from struct
-    func setfrom(params:ThermalModelParams) {
-        a = params.a
-        b = params.b
-    }
-    
     // time in fractional minutes
     func time(totemp:Float) -> Float? {
         return time(totemp:totemp, fromtemp:Tamb)
@@ -430,5 +411,13 @@ class ThermalModel : CustomStringConvertible {
     
     func tempAfterCooling(time t:Float, fromtemp Tstart:Float) -> Float {
         return Tamb + exp(-t/a)*(Tstart - Tamb)
+    }
+}
+
+// load from struct
+extension ThermalModel {
+    func setfrom(params:ThermalModelParams) {
+        a = params.a
+        b = params.b
     }
 }

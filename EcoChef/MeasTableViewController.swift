@@ -75,6 +75,7 @@ class MeasTableViewController: UITableViewController {
     }
     
     @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
+        modelParams.measurements.sort()
         tableView.reloadData()
         modelParams.fitfromdata()
     }
