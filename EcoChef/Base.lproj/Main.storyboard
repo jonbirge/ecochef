@@ -490,38 +490,10 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Time constant" footerTitle="The time it takes the oven to cool by a certain fraction. Higher values generally mean more energy efficiency." id="0D4-mp-cbE">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="j5U-ON-E1f">
-                                        <rect key="frame" x="0.0" y="163" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="j5U-ON-E1f" id="qEb-7O-kqy">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="minutes" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7oS-aK-1gF">
-                                                    <rect key="frame" x="296" y="12" width="61" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Time constant" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Bzg-XY-paB">
-                                                    <rect key="frame" x="16" y="8" width="290" height="30"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                                    <nil key="textColor"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                </textField>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
                             <tableViewSection headerTitle="Steady-State Offset" footerTitle="Achievable difference above ambient." id="CzQ-wG-oqq">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="si2-dQ-QzZ">
-                                        <rect key="frame" x="0.0" y="298.5" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="163" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="si2-dQ-QzZ" id="XZL-cr-hyO">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -536,6 +508,34 @@
                                                 </label>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Temp differential" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="A3E-LD-RKK">
                                                     <rect key="frame" x="16" y="8" width="301" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="Time constant" footerTitle="The time it takes the oven to cool by a certain fraction. Higher values generally mean more energy efficiency." id="0D4-mp-cbE">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="j5U-ON-E1f">
+                                        <rect key="frame" x="0.0" y="282.5" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="j5U-ON-E1f" id="qEb-7O-kqy">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="minutes" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7oS-aK-1gF">
+                                                    <rect key="frame" x="296" y="12" width="61" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Time constant" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Bzg-XY-paB">
+                                                    <rect key="frame" x="16" y="8" width="290" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -592,32 +592,30 @@
                                             <segue destination="dYc-GE-e27" kind="show" id="K6d-9W-mQX"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="Sne-4c-Qpe" style="IBUITableViewCellStyleDefault" id="wV6-vI-K76">
-                                        <rect key="frame" x="0.0" y="498.5" width="375" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="32" id="wV6-vI-K76">
+                                        <rect key="frame" x="0.0" y="498.5" width="375" height="32"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" tableViewCell="wV6-vI-K76" id="X7k-3V-g05">
-                                            <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="31.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Calibration timer" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Sne-4c-Qpe">
-                                                    <rect key="frame" x="15" y="0.0" width="325" height="43.5"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A2d-Nz-0EZ">
+                                                    <rect key="frame" x="111.5" y="1" width="150" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <state key="normal" title="Calibration timer"/>
+                                                    <connections>
+                                                        <segue destination="l70-eN-l8r" kind="show" id="A12-Sm-TZZ"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="l70-eN-l8r" kind="show" id="Z5b-fE-Sa5"/>
-                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection headerTitle="Notes" id="cuY-VS-8N7">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="zR0-jH-nrf">
-                                        <rect key="frame" x="0.0" y="598.5" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="586.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zR0-jH-nrf" id="odA-pv-OqP">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -649,8 +647,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="calibrateCell" destination="wV6-vI-K76" id="X8P-co-XJT"/>
-                        <outlet property="calibrateLabel" destination="Sne-4c-Qpe" id="lys-zD-JW8"/>
+                        <outlet property="calibrateButton" destination="A2d-Nz-0EZ" id="4ZY-z4-1ny"/>
                         <outlet property="dataCell" destination="g3r-Jf-YJd" id="dyo-6I-5gC"/>
                         <outlet property="dataLabel" destination="yQK-8x-zO4" id="0Ld-GU-5xx"/>
                         <outlet property="fitSwitch" destination="Vvf-eb-hTt" id="ah0-FE-8WM"/>
@@ -1000,17 +997,6 @@
                                     <action selector="ambientClicked" destination="l70-eN-l8r" eventType="touchUpInside" id="e3y-Rn-zds"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dCm-Vx-1Nt" customClass="SimpleButton" customModule="EcoChef" customModuleProvider="target">
-                                <rect key="frame" x="145.5" y="158.5" width="84" height="39"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="84" id="diC-zj-H4W"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
-                                <state key="normal" title="Start"/>
-                                <connections>
-                                    <action selector="startTimerClicked" destination="l70-eN-l8r" eventType="touchUpInside" id="iul-8T-1Ko"/>
-                                </connections>
-                            </button>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="100" minValue="50" maxValue="500" translatesAutoresizingMaskIntoConstraints="NO" id="Acb-Rv-rvH">
                                 <rect key="frame" x="30" y="352" width="315" height="31"/>
                                 <connections>
@@ -1029,8 +1015,19 @@
                                     <action selector="markClicked" destination="l70-eN-l8r" eventType="touchUpInside" id="F7s-Pr-bld"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dCm-Vx-1Nt" customClass="SimpleButton" customModule="EcoChef" customModuleProvider="target">
+                                <rect key="frame" x="145" y="159" width="84" height="39"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="84" id="diC-zj-H4W"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                <state key="normal" title="Start"/>
+                                <connections>
+                                    <action selector="startTimerClicked" destination="l70-eN-l8r" eventType="touchUpInside" id="iul-8T-1Ko"/>
+                                </connections>
+                            </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.3037555520304569" green="0.3037555520304569" blue="0.3037555520304569" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="backgroundColor" red="0.32047112944162437" green="0.32047112944162437" blue="0.32047112944162437" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="Acb-Rv-rvH" firstAttribute="top" secondItem="EZu-f1-QZp" secondAttribute="bottom" constant="8" symbolic="YES" id="3Ra-UM-YYo"/>
                             <constraint firstItem="EZu-f1-QZp" firstAttribute="leading" secondItem="4ls-dY-Fiv" secondAttribute="trailing" constant="24" id="4Dt-sm-TW2"/>

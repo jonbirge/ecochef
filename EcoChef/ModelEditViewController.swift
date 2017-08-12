@@ -31,7 +31,8 @@ class ModelEditViewController: UITableViewController {
     // MARK: - Table view data source
     
     func updateView() {
-        if fitSwitch.isOn {
+        let isLearning = fitSwitch.isOn
+        if isLearning {
             rcField.text = String(modelParams!.a)
             hrField.text = String(modelParams!.b)
             rcField.isEnabled = false
@@ -54,11 +55,9 @@ class ModelEditViewController: UITableViewController {
                 dataLabel.text = "1 data point"
             }
         }
-        let isLearning = fitSwitch.isOn
         dataLabel.isEnabled = isLearning
         dataCell.isUserInteractionEnabled = isLearning
-        calibrateLabel.isEnabled = isLearning
-        calibrateCell.isUserInteractionEnabled = isLearning
+        calibrateButton.isEnabled = isLearning
     }
 
     // MARK: - Navigation
@@ -105,10 +104,9 @@ class ModelEditViewController: UITableViewController {
         updateView()
     }
 
-    @IBOutlet weak var calibrateCell: UITableViewCell!
+    @IBOutlet weak var calibrateButton: UIButton!
     @IBOutlet weak var dataCell: UITableViewCell!
     @IBOutlet weak var fitSwitch: UISwitch!
-    @IBOutlet weak var calibrateLabel: UILabel!
     @IBOutlet weak var dataLabel: UILabel!
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var rcField: UITextField!
