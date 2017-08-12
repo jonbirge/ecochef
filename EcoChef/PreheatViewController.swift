@@ -357,17 +357,14 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
             preheatLabel.text = "Cooling \(modelname)"
             preheatLabel.textColor = coolingColor
         }
-        
         DisableTimerControls()
-        
         AddNotification()
     }
     
     // Data collection for models
-    func LearnTime(offset: Float = 1) {
+    func LearnTime() {
         let isHeating = modelTimer.isHeating
-        let elapsed = modelTimer.minutesElapsed()
-        let thetime = elapsed * offset
+        let thetime = modelTimer.minutesElapsed()
         if thetime > 0 && isHeating {
             modelData.selectedModelData.addDataPoint(time: thetime,
                                                      Tstart: modelTimer.initialTemp,
@@ -443,17 +440,8 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
                     self.currentTempSlider.value = self.desiredTempSlider.value
                     self.UpdateView()
                 }
-                alert.addAction(noAction)
                 alert.addAction(yesAction)
-                
-                if !modelTimer.snoozing {
-                    let missedAction = UIAlertAction(title: "Earlier", style: .destructive) { action in
-                        self.LearnTime(offset: 0.9)
-                        self.currentTempSlider.value = self.desiredTempSlider.value
-                        self.UpdateView()
-                    }
-                    alert.addAction(missedAction)
-                }
+                alert.addAction(noAction)
                 
                 present(alert, animated: true)
             }
