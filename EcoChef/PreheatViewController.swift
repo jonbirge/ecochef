@@ -22,6 +22,8 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     private var currentTemp: Float = 70
     private var state: EcoChefState?
     private var timerDisabledControls: [UIControl]!
+    private var timer: Timer?
+    private var initialCurrentTemp: Float = 0
     
     var Tamb : Float {
         get { return model.Tamb }
@@ -31,32 +33,34 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         }
     }
     
-    var stateURL: URL {
-        let docsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        return docsURL.appendingPathComponent("state")
-    }
-    
     // MARK: - Startup
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Get state from application object
+        let app = UIApplication.shared.delegate as! AppDelegate
+        state = app.state
+        print("state Tamb: \(String(describing: state?.Tamb))")
+        print("state des: \(String(describing: state?.desiredTemp))")
+        
         timerDisabledControls =
             [currentTempSlider, desiredTempSlider, tempResetButton, settingsButton]
         modelTimer.thermalModel = model
         modelData.LoadModelData()
-        LoadState()
         UpdateFromState()
         UpdateLimits()
         Reset()
         
+        // Notification setup
         let notificationCenter = NotificationCenter.default
         
         notificationCenter.addObserver(self, selector: #selector(PreheatViewController.didEnterBackground), name: Notification.Name.UIApplicationDidEnterBackground, object: nil)
         notificationCenter.addObserver(self, selector: #selector(PreheatViewController.didBecomeActive), name: Notification.Name.UIApplicationWillEnterForeground, object: nil)
 
+        // UI notification setup
         let usernotificationCenter = UNUserNotificationCenter.current()
         usernotificationCenter.delegate = self
-        
         let earlyAction = UNNotificationAction(identifier: "TIMER_SNOOZE", title: "Continue timer",
                                                 options: .destructive)
         let rightAction = UNNotificationAction(identifier: "TIMER_GOOD", title: "Preheated",
@@ -89,18 +93,13 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
                                      selector: #selector(PreheatViewController.TimerCount),
                                      userInfo: nil,
                                      repeats: true)
+        } else {
+            StopTimer()
+            UpdateView()
         }
     }
     
     // MARK: - State
-    
-    private func LoadState() {
-        if let state = NSKeyedUnarchiver.unarchiveObject(withFile: stateURL.path) as? EcoChefState {
-            self.state = state
-        } else {
-            self.state = EcoChefState()
-        }
-    }
     
     private func UpdateFromState() {
         desiredTempSlider.value = state!.desiredTemp
@@ -111,7 +110,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     
     func WriteStateToDisk() {
         state!.desiredTemp = desiredTemp
-        NSKeyedArchiver.archiveRootObject(state!, toFile: stateURL.path)
+        state!.writeStateToDisk()
     }
     
     // MARK: - UI & model
@@ -206,9 +205,6 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     
     // MARK: - Notification and timer functionality
     
-    private var timer: Timer?
-    private var initialCurrentTemp: Float = 0
-    
     // Delegate for notification action
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse,
@@ -243,14 +239,6 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         }
     }
     
-    func ResetTimer() {
-        CancelNotification()
-        StopTimer()
-        EnableTimerControls()
-        currentTempSlider.value = Float(initialCurrentTemp)
-        UpdateView()
-    }
-    
     private func AddNotification() {
         let modelParams = modelData.selectedModelData
         let content = UNMutableNotificationContent()
@@ -261,7 +249,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
             notifyTitle = "Cooling done"
         }
 
-        if modelParams.calibrated {
+        if modelParams.calibrated && modelTimer.isHeating {
             content.categoryIdentifier = "TIMER_FEEDBACK"
             let notifyText = "\(modelData.selectedModelData.name) should be \(Int(desiredTemp))º. Pull down to provide model learning data."
             content.body = NSString.localizedUserNotificationString(forKey: notifyText, arguments: nil)
@@ -311,8 +299,14 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         timerResetButton.isEnabled = true
     }
     
+    func ResetTimer() {
+        CancelNotification()
+        StopTimer()
+        currentTempSlider.value = Float(initialCurrentTemp)
+        UpdateView()
+    }
+
     func StopTimer() {
-        // Timer stuff
         modelTimer.stopTimer()
         timer?.invalidate()
         EnableTimerControls()
@@ -433,13 +427,13 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     @IBAction func StartButton(_ sender: UIButton) {
         if modelTimer.isNotRunning {
             StartTimer()
-        } else {
+        } else {  // done
             CancelNotification()
             StopTimer()
             
             // UI learning interface
             let modelParams = modelData.selectedModelData
-            if modelParams.calibrated {
+            if modelParams.calibrated && modelTimer.isHeating {
                 let alert = UIAlertController(title: "Model learning",
                                               message: "Did \(modelParams.name) reach the desired temperature?", preferredStyle: .alert)
                 
@@ -460,6 +454,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
                     }
                     alert.addAction(missedAction)
                 }
+                
                 present(alert, animated: true)
             }
         }
