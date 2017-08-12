@@ -239,20 +239,22 @@ class HeatingDataPoint : NSObject, NSCoding {
     var Tstart : Float = 72
     var Tfinal : Float = 350
     var time : Float = 10  // minutes (est. or actual)
-    // TODO: denote estimated or not, and direction
+    var date : Date = Date()
     
     struct Keys {
         static let tamb = "tamb"
         static let tstart = "tstart"
         static let tfinal = "tfinal"
         static let time = "time"
+        static let date = "date"
     }
     
-    init(time: Float, Tstart: Float, Tfinal: Float, Tamb: Float) {
+    init(time: Float, Tstart: Float, Tfinal: Float, Tamb: Float, date: Date) {
         self.Tamb = Tamb
         self.Tstart = Tstart
         self.Tfinal = Tfinal
         self.time = time
+        self.date = date
     }
     
     override init() {
@@ -263,11 +265,16 @@ class HeatingDataPoint : NSObject, NSCoding {
         self.init(time: source.time,
                   Tstart: source.Tstart,
                   Tfinal: source.Tfinal,
-                  Tamb: source.Tamb)
+                  Tamb: source.Tamb,
+                  date: source.date)
     }
     
     convenience init(time: Float, Tstart: Float, Tfinal: Float) {
-        self.init(time: time, Tstart: Tstart, Tfinal: Tfinal, Tamb: Tstart)
+        self.init(time: time, Tstart: Tstart, Tfinal: Tfinal, Tamb: Tstart, date: Date())
+    }
+    
+    convenience init(time: Float, Tstart: Float, Tfinal: Float, Tamb: Float) {
+        self.init(time: time, Tstart: Tstart, Tfinal: Tfinal, Tamb: Tamb, date: Date())
     }
     
     required convenience init(coder aDecoder: NSCoder) {
@@ -275,7 +282,11 @@ class HeatingDataPoint : NSObject, NSCoding {
         let Tstart = aDecoder.decodeFloat(forKey: Keys.tstart)
         let Tfinal = aDecoder.decodeFloat(forKey: Keys.tfinal)
         let time = aDecoder.decodeFloat(forKey: Keys.time)
-        self.init(time: time, Tstart: Tstart, Tfinal: Tfinal, Tamb: Tamb)
+        var date = Date()
+        if let dateread = aDecoder.decodeObject(forKey: Keys.date) as? Date {
+            date = dateread
+        }
+        self.init(time: time, Tstart: Tstart, Tfinal: Tfinal, Tamb: Tamb, date: date)
     }
     
     func encode(with aCoder: NSCoder) {
