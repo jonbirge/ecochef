@@ -9,16 +9,18 @@
 import Foundation
 
 class EcoChefState : NSObject, NSCoding {
-    let TambDefault: Float = 70
-    let desiredTempDefault: Float = 350
+    private let TambDefault: Float = 70
+    private let desiredTempDefault: Float = 350
     var Tamb: Float
     var selectedModel: Int
     var desiredTemp: Float
+    var notOnBoarded: Bool = true
     
     struct PropertyKeys {
         static let Tamb = "tamb"
         static let selectedModel = "selectedmodel"
         static let desiredTemp = "desiredtemp"
+        static let notOnBoard = "notonboard"
     }
     
     static var stateURL: URL {
@@ -33,29 +35,26 @@ class EcoChefState : NSObject, NSCoding {
         super.init()
     }
     
-    init(Tamb: Float, selectedModel: Int, desiredTemp: Float) {
+    init(Tamb: Float, selectedModel: Int, desiredTemp: Float, notOnBoarded: Bool) {
         self.Tamb = Tamb
         self.selectedModel = selectedModel
         self.desiredTemp = desiredTemp
+        self.notOnBoarded = notOnBoarded
     }
     
     required convenience init(coder aDecoder: NSCoder) {
-        var Tamb = aDecoder.decodeFloat(forKey: PropertyKeys.Tamb)
-        if Tamb == 0 {
-            Tamb = 70
-        }
+        let Tamb = aDecoder.decodeFloat(forKey: PropertyKeys.Tamb)
         let selectedModel = aDecoder.decodeInteger(forKey: PropertyKeys.selectedModel)
-        var desiredTemp = aDecoder.decodeFloat(forKey: PropertyKeys.desiredTemp)
-        if desiredTemp == 0 {
-            desiredTemp = 350
-        }
-        self.init(Tamb: Tamb, selectedModel: selectedModel, desiredTemp: desiredTemp)
+        let desiredTemp = aDecoder.decodeFloat(forKey: PropertyKeys.desiredTemp)
+        let notonboarded = aDecoder.decodeBool(forKey: PropertyKeys.notOnBoard)
+        self.init(Tamb: Tamb, selectedModel: selectedModel, desiredTemp: desiredTemp, notOnBoarded: notonboarded)
     }
     
     func encode(with aCoder: NSCoder) {
         aCoder.encode(Tamb, forKey: PropertyKeys.Tamb)
         aCoder.encode(selectedModel, forKey: PropertyKeys.selectedModel)
         aCoder.encode(desiredTemp, forKey: PropertyKeys.desiredTemp)
+        aCoder.encode(notOnBoarded, forKey: PropertyKeys.notOnBoard)
     }
     
     func writeStateToDisk() {

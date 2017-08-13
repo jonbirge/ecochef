@@ -41,7 +41,7 @@
                                 </connections>
                             </slider>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="70" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4z5-mr-Y9b" userLabel="CurrTemp">
-                                <rect key="frame" x="155.5" y="387" width="64" height="24"/>
+                                <rect key="frame" x="156" y="387" width="64" height="24"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="64" id="3b0-8x-mYT"/>
                                 </constraints>
@@ -56,7 +56,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="350" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GDg-mc-Nd8" userLabel="DesTemp">
-                                <rect key="frame" x="155.5" y="476" width="64" height="24"/>
+                                <rect key="frame" x="156" y="476" width="64" height="24"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -107,7 +107,7 @@
                                     <constraint firstAttribute="height" constant="32" id="jEC-tQ-d0S"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Menlo-Bold" family="Menlo" pointSize="42"/>
-                                <state key="normal" title="❁"/>
+                                <state key="normal" title="⚙"/>
                                 <connections>
                                     <segue destination="vre-sg-JdI" kind="show" identifier="ShowSettings" id="3SX-HB-Wfs"/>
                                 </connections>
@@ -166,6 +166,13 @@
                                     <action selector="ResetButton:" destination="9pv-A4-QxB" eventType="touchUpInside" id="Xyf-GN-Ow5"/>
                                 </connections>
                             </button>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Help and settings here →  " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YIn-MW-QDW">
+                                <rect key="frame" x="124" y="622" width="195" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                <color key="textColor" red="0.67373889590000002" green="0.18172778840000001" blue="0.12551686719999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -214,6 +221,7 @@
                         <outlet property="currentTempSlider" destination="moH-Te-Xzb" id="sHn-5F-eh1"/>
                         <outlet property="desiredTempLabel" destination="GDg-mc-Nd8" id="cQi-ac-FLv"/>
                         <outlet property="desiredTempSlider" destination="InP-Vp-TcT" id="spw-kb-kNL"/>
+                        <outlet property="helpLabel" destination="YIn-MW-QDW" id="Ez0-rp-wp0"/>
                         <outlet property="minLabel" destination="QVQ-IA-R7s" id="IiD-JR-DuY"/>
                         <outlet property="preheatLabel" destination="1cO-cu-AuE" id="6lg-LB-wJr"/>
                         <outlet property="secLabel" destination="X3y-il-6FY" id="4jO-R8-OG8"/>
@@ -261,7 +269,7 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Thermal Models" id="IcB-6H-yfg">
+                            <tableViewSection headerTitle="Edit Thermal Models" id="IcB-6H-yfg">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="FAQ" textLabel="gkl-4c-jHz" style="IBUITableViewCellStyleDefault" id="DrC-9y-kBI">
                                         <rect key="frame" x="0.0" y="205.5" width="375" height="44"/>
@@ -270,7 +278,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Edit thermal models" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gkl-4c-jHz">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Thermal models" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gkl-4c-jHz">
                                                     <rect key="frame" x="15" y="0.0" width="325" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>

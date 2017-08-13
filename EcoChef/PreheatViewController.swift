@@ -8,6 +8,7 @@
 
 import UIKit
 import UserNotifications
+import SafariServices
 
 class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate {
     let model = ThermalModel()
@@ -41,8 +42,10 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         // Get state from application object
         let app = UIApplication.shared.delegate as! AppDelegate
         state = app.state
-        print("state Tamb: \(String(describing: state?.Tamb))")
-        print("state des: \(String(describing: state?.desiredTemp))")
+        // state!.notOnBoarded = true // TESTING
+        print("state Tamb: \(state!.Tamb)")
+        print("state desT: \(state!.desiredTemp)")
+        print("state notOnBoarded: \(state!.notOnBoarded)")
         
         timerDisabledControls =
             [currentTempSlider, desiredTempSlider, tempResetButton, settingsButton]
@@ -51,6 +54,14 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         UpdateFromState()
         UpdateLimits()
         Reset()
+        
+        // Onboarding
+        if state!.notOnBoarded {
+            helpLabel.isHidden = false
+            
+            state!.notOnBoarded = false
+            state!.writeStateToDisk()
+        }
         
         // Notification setup
         let notificationCenter = NotificationCenter.default
@@ -388,6 +399,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         if let settingsView = segue.destination as? SettingsViewController {
             settingsView.initialTamb = Tamb
             settingsView.modelData = modelData
+            helpLabel.isHidden = true
         }
     }
     
@@ -408,6 +420,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     
     // MARK: - IBOutlets and IBActions
     
+    @IBOutlet weak var helpLabel: UILabel!
     @IBOutlet weak var minLabel: UILabel!
     @IBOutlet weak var secLabel: UILabel!
     @IBOutlet weak var currentTempLabel: UILabel!
