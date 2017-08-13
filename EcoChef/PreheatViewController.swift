@@ -57,7 +57,23 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         
         // Onboarding
         if state!.notOnBoarded {
-            helpLabel.isHidden = false
+            let alert = UIAlertController(title: "Welcome to EcoChef!",
+                                          message: "Would you like to read the FAQ?", preferredStyle: .alert)
+            
+            let noAction = UIAlertAction(title: "Dismiss", style: .cancel) {
+                action in
+                self.helpLabel.isHidden = false
+            }
+            let yesAction = UIAlertAction(title: "Yes", style: .default) { action in
+                if let faqURL = URL(string: "https://www.birge.us/ecochef-faq") {
+                    let safariViewController = SFSafariViewController(url:faqURL)
+                    self.present(safariViewController, animated: true, completion: nil)
+                }
+                self.helpLabel.isHidden = false
+            }
+            alert.addAction(yesAction)
+            alert.addAction(noAction)
+            present(alert, animated: true)
             
             state!.notOnBoarded = false
             state!.writeStateToDisk()

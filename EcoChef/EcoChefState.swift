@@ -9,11 +9,9 @@
 import Foundation
 
 class EcoChefState : NSObject, NSCoding {
-    private let TambDefault: Float = 70
-    private let desiredTempDefault: Float = 350
-    var Tamb: Float
-    var selectedModel: Int
-    var desiredTemp: Float
+    var Tamb: Float = 70
+    var selectedModel: Int = 0
+    var desiredTemp: Float = 350
     var notOnBoarded: Bool = true
     
     struct PropertyKeys {
@@ -29,9 +27,6 @@ class EcoChefState : NSObject, NSCoding {
     }
     
     override init() {
-        self.selectedModel = 0
-        self.Tamb = TambDefault
-        self.desiredTemp = desiredTempDefault
         super.init()
     }
     
@@ -40,6 +35,7 @@ class EcoChefState : NSObject, NSCoding {
         self.selectedModel = selectedModel
         self.desiredTemp = desiredTemp
         self.notOnBoarded = notOnBoarded
+        //self.notOnBoarded = true  // TEST
     }
     
     required convenience init(coder aDecoder: NSCoder) {
