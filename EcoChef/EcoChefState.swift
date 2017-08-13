@@ -13,7 +13,6 @@ class EcoChefState : NSObject, NSCoding {
     var selectedModel: Int = 0
     var desiredTemp: Float = 350
     var notOnBoarded: Bool = true
-    
     struct PropertyKeys {
         static let Tamb = "tamb"
         static let selectedModel = "selectedmodel"
@@ -24,6 +23,14 @@ class EcoChefState : NSObject, NSCoding {
     static var stateURL: URL {
         let docsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         return docsURL.appendingPathComponent("state")
+    }
+    
+    static var faqURL: String {
+        return "https://www.birge.us/ecochef-faq"
+    }
+    
+    static var siteURL: String {
+        return "https://www.birge.us/ecochef"
     }
     
     override init() {

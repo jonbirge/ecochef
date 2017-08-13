@@ -65,7 +65,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
                 self.helpLabel.isHidden = false
             }
             let yesAction = UIAlertAction(title: "Yes", style: .default) { action in
-                if let faqURL = URL(string: "https://www.birge.us/ecochef-faq") {
+                if let faqURL = URL(string: EcoChefState.faqURL) {
                     let safariViewController = SFSafariViewController(url:faqURL)
                     self.present(safariViewController, animated: true, completion: nil)
                 }
