@@ -32,7 +32,10 @@ class CalibrationViewController: UIViewController {
     }
     
     override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
         ResetTimer()
+        modelParams.fitfromdata()
     }
     
     private func Quantize(_ temp:Float) -> Float {
