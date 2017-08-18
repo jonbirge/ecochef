@@ -309,7 +309,7 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
-                                                <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" wraps="YES" value="70" minimumValue="60" maximumValue="100" stepValue="2" translatesAutoresizingMaskIntoConstraints="NO" id="SOs-vQ-KKq">
+                                                <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" wraps="YES" value="70" minimumValue="40" maximumValue="100" stepValue="2" translatesAutoresizingMaskIntoConstraints="NO" id="SOs-vQ-KKq">
                                                     <rect key="frame" x="273" y="8" width="94" height="29"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <connections>
