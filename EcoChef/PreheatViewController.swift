@@ -8,6 +8,7 @@
 
 import UIKit
 import UserNotifications
+import SafariServices
 
 class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate {
     let model = ThermalModel()
@@ -20,7 +21,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     let coolingColor: UIColor = UIColor.purple
     private var desiredTemp: Float = 350
     private var currentTemp: Float = 70
-    private var state: EcoChefState?
+    private var state: EcoChefState!
     private var timerDisabledControls: [UIControl]!
     private var timer: Timer?
     private var initialCurrentTemp: Float = 0
@@ -41,8 +42,10 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         // Get state from application object
         let app = UIApplication.shared.delegate as! AppDelegate
         state = app.state
-        print("state Tamb: \(String(describing: state?.Tamb))")
-        print("state des: \(String(describing: state?.desiredTemp))")
+        // state!.notOnBoarded = true // TESTING
+        print("state Tamb: \(state!.Tamb)")
+        print("state desT: \(state!.desiredTemp)")
+        print("state notOnBoarded: \(state!.notOnBoarded)")
         
         timerDisabledControls =
             [currentTempSlider, desiredTempSlider, tempResetButton, settingsButton]
@@ -51,6 +54,13 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         UpdateFromState()
         UpdateLimits()
         Reset()
+        
+        // Onboarding
+        if state.notOnBoarded {
+            onBoarding()
+            state.notOnBoarded = false
+            state.writeStateToDisk()
+        }
         
         // Notification setup
         let notificationCenter = NotificationCenter.default
@@ -76,6 +86,30 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
                                    intentIdentifiers: [],
                                    options: UNNotificationCategoryOptions(rawValue: 0))
         usernotificationCenter.setNotificationCategories([timerFeedbackCategory, timerDoneCategory])
+    }
+    
+    private func onBoarding() {
+        let alert = UIAlertController(title: "Welcome to EcoChef!",
+                                      message: "Would you like to read the FAQ?", preferredStyle: .alert)
+        
+        let noAction = UIAlertAction(title: "No", style: .cancel) {
+            action in
+            UIView.transition(with: self.helpLabel, duration: 1.2,
+                              options: .transitionFlipFromLeft,
+                              animations: {
+                                self.helpLabel.isHidden = false },
+                              completion: nil)
+        }
+        let yesAction = UIAlertAction(title: "Yes", style: .default) { action in
+            if let faqURL = URL(string: EcoChefState.faqURL) {
+                let safariViewController = SFSafariViewController(url:faqURL)
+                self.present(safariViewController, animated: true, completion: nil)
+            }
+            self.helpLabel.isHidden = false
+        }
+        alert.addAction(yesAction)
+        alert.addAction(noAction)
+        present(alert, animated: true)
     }
     
     func didEnterBackground() {
@@ -388,6 +422,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         if let settingsView = segue.destination as? SettingsViewController {
             settingsView.initialTamb = Tamb
             settingsView.modelData = modelData
+            helpLabel.isHidden = true
         }
     }
     
@@ -408,6 +443,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     
     // MARK: - IBOutlets and IBActions
     
+    @IBOutlet weak var helpLabel: UILabel!
     @IBOutlet weak var minLabel: UILabel!
     @IBOutlet weak var secLabel: UILabel!
     @IBOutlet weak var currentTempLabel: UILabel!

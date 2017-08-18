@@ -81,15 +81,15 @@ UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     }
     
     func showFAQ() {
-        if let faqURL = URL(string: "https://www.birge.us/ecochef-faq") {
+        if let faqURL = URL(string: EcoChefState.faqURL) {
             let safariViewController = SFSafariViewController(url:faqURL)
             present(safariViewController, animated: true, completion: nil)
         }
     }
     
     func showSite() {
-        if let faqURL = URL(string: "https://www.birge.us/ecochef") {
-            let safariViewController = SFSafariViewController(url:faqURL)
+        if let siteURL = URL(string: EcoChefState.siteURL) {
+            let safariViewController = SFSafariViewController(url:siteURL)
             present(safariViewController, animated: true, completion: nil)
         }
     }
