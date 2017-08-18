@@ -32,12 +32,13 @@ class MeasTableViewController: UITableViewController {
 
         // Configure the cell...
         let thedata = measData[indexPath.row]
-        cell.textLabel?.text = "\(thedata.time) min"
+        let thetime = round(100*thedata.time)/100
+        cell.textLabel?.text = "\(thetime) min"
         if thedata.Tstart == thedata.Tamb {
-            cell.detailTextLabel?.text = "\(thedata.Tstart)º ➔ \(thedata.Tfinal)º"
+            cell.detailTextLabel?.text = "\(Int(thedata.Tstart))º ➔ \(Int(thedata.Tfinal))º"
         } else {
             cell.detailTextLabel?.text =
-            "\(thedata.Tstart)º ➔ \(thedata.Tfinal)º at \(thedata.Tamb)º"
+            "\(Int(thedata.Tstart))º ➔ \(Int(thedata.Tfinal))º at \(Int(thedata.Tamb))º"
         }
         
         return cell
