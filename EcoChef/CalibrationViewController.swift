@@ -161,6 +161,9 @@ class CalibrationViewController: UIViewController {
     
     @IBAction func markClicked() {
         calTimer.mark(temp: currentTemp)
+        let mins = round(100*calTimer.minutesElapsed())/100
+        let update = "\(currentTemp) at \(mins) mins."
+        modelLabel.text = update
     }
     
     @IBOutlet weak var minLabel: UILabel!
