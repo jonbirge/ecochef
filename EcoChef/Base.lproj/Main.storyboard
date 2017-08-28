@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="tMG-s0-RCW">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="zgt-Vy-HQm">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -24,7 +24,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="100" minValue="50" maxValue="500" translatesAutoresizingMaskIntoConstraints="NO" id="moH-Te-Xzb">
-                                <rect key="frame" x="30" y="418" width="315" height="31"/>
+                                <rect key="frame" x="30" y="369" width="315" height="31"/>
                                 <color key="minimumTrackTintColor" red="0.38632217639593913" green="0.38632217639593913" blue="0.38632217639593913" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <color key="maximumTrackTintColor" red="0.75495717005076146" green="0.75495717005076146" blue="0.75495717005076146" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <connections>
@@ -33,7 +33,7 @@
                                 </connections>
                             </slider>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="350" minValue="50" maxValue="500" translatesAutoresizingMaskIntoConstraints="NO" id="InP-Vp-TcT">
-                                <rect key="frame" x="30" y="509" width="315" height="31"/>
+                                <rect key="frame" x="30" y="460" width="315" height="31"/>
                                 <color key="minimumTrackTintColor" red="0.85622223984771573" green="0.22233978877993463" blue="0.13874736178681857" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <connections>
                                     <action selector="DesiredTempChange:" destination="9pv-A4-QxB" eventType="valueChanged" id="Ykb-Np-7q9"/>
@@ -41,7 +41,7 @@
                                 </connections>
                             </slider>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="70" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4z5-mr-Y9b" userLabel="CurrTemp">
-                                <rect key="frame" x="155.5" y="387" width="64" height="24"/>
+                                <rect key="frame" x="155.5" y="338" width="64" height="24"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="64" id="3b0-8x-mYT"/>
                                 </constraints>
@@ -50,19 +50,19 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Desired Temp" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yxc-k7-e3x">
-                                <rect key="frame" x="32" y="477" width="101" height="23"/>
+                                <rect key="frame" x="32" y="428" width="101" height="23"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="350" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GDg-mc-Nd8" userLabel="DesTemp">
-                                <rect key="frame" x="155.5" y="476" width="64" height="24"/>
+                                <rect key="frame" x="155.5" y="427" width="64" height="24"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="00" textAlignment="right" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="QVQ-IA-R7s">
-                                <rect key="frame" x="87" y="127" width="91" height="86"/>
+                                <rect key="frame" x="87" y="83" width="91" height="86"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="91" id="KHd-sq-jOH"/>
@@ -73,7 +73,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="00" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="X3y-il-6FY">
-                                <rect key="frame" x="197" y="127" width="91" height="86"/>
+                                <rect key="frame" x="197" y="83" width="91" height="86"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="91" id="YXR-2b-eiQ"/>
@@ -84,7 +84,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text=":" textAlignment="right" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="pAx-TJ-5bS">
-                                <rect key="frame" x="178" y="127" width="19" height="86"/>
+                                <rect key="frame" x="178" y="83" width="19" height="86"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="19" id="63I-7q-pCr"/>
@@ -95,13 +95,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Temp" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qfS-D6-HFC">
-                                <rect key="frame" x="32" y="387" width="100" height="24"/>
+                                <rect key="frame" x="32" y="338" width="100" height="24"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jLP-zd-iGG">
-                                <rect key="frame" x="319" y="614" width="32" height="32"/>
+                                <rect key="frame" x="319" y="565" width="32" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="32" id="ddD-b5-SgO"/>
                                     <constraint firstAttribute="height" constant="32" id="jEC-tQ-d0S"/>
@@ -113,7 +113,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ANQ-uz-xo0" customClass="TimerButton" customModule="EcoChef" customModuleProvider="target">
-                                <rect key="frame" x="69" y="263" width="84" height="36"/>
+                                <rect key="frame" x="69" y="214" width="84" height="36"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="84" id="qCA-a7-P7E"/>
                                 </constraints>
@@ -132,7 +132,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gCO-mA-Prx" customClass="TimerButton" customModule="EcoChef" customModuleProvider="target">
-                                <rect key="frame" x="223" y="263" width="84" height="36"/>
+                                <rect key="frame" x="223" y="214" width="84" height="36"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="84" id="nFs-1h-1h2"/>
                                 </constraints>
@@ -153,13 +153,13 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Preheating/Cooling" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1cO-cu-AuE">
-                                <rect key="frame" x="114" y="106" width="147" height="21"/>
+                                <rect key="frame" x="114" y="62" width="147" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nHw-Lj-crR">
-                                <rect key="frame" x="279" y="383" width="64" height="33"/>
+                                <rect key="frame" x="279" y="334" width="64" height="33"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <state key="normal" title="Ambient"/>
                                 <connections>
@@ -216,6 +216,7 @@
                             <constraint firstItem="InP-Vp-TcT" firstAttribute="top" secondItem="Yxc-k7-e3x" secondAttribute="bottom" constant="9" id="zX7-WH-he7"/>
                         </constraints>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="61p-my-ej9"/>
                     <navigationItem key="navigationItem" title="Preheat Timer" id="zg3-oF-go0"/>
                     <connections>
                         <outlet property="curTempLabel" destination="qfS-D6-HFC" id="yFW-kZ-mqs"/>
@@ -468,7 +469,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zhg-Tu-HDj" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="IPn-5M-c9f" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-370.39999999999998" y="-663.41829085457277"/>
+            <point key="canvasLocation" x="-334" y="-732"/>
         </scene>
         <!--Edit Model-->
         <scene sceneID="66k-Ts-YfA">
@@ -671,7 +672,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hKm-9I-Sgp" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="h4s-2t-mRx" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="389.60000000000002" y="-663.41829085457277"/>
+            <point key="canvasLocation" x="426" y="-732"/>
         </scene>
         <!--Measurement List-->
         <scene sceneID="cZh-xJ-PQf">
@@ -725,7 +726,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c9p-J8-sju" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1153" y="-663"/>
+            <point key="canvasLocation" x="1190" y="-732"/>
         </scene>
         <!--Edit Measurement-->
         <scene sceneID="mfA-91-4Tf">
@@ -844,7 +845,53 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zcT-mv-O2A" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Ktu-i3-Njb" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1936.8" y="-663.41829085457277"/>
+            <point key="canvasLocation" x="1974" y="-732"/>
+        </scene>
+        <!--Timers-->
+        <scene sceneID="T2s-ny-jYb">
+            <objects>
+                <viewController id="Hq4-Rk-YES" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ntl-72-aUi"/>
+                        <viewControllerLayoutGuide type="bottom" id="0dW-4w-NKj"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Wt1-KJ-Pwi">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Timer Page" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xi8-yA-vuo">
+                                <rect key="frame" x="16" y="323" width="343" height="38"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Timers" id="Rp9-7k-cnI"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZsX-MD-XLc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2703" y="385"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="qKh-MB-CrI">
+            <objects>
+                <tabBarController id="zgt-Vy-HQm" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="oiY-ma-rba">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="Hq4-Rk-YES" kind="relationship" relationship="viewControllers" id="tlt-KN-rpo"/>
+                        <segue destination="tMG-s0-RCW" kind="relationship" relationship="viewControllers" id="iHJ-mj-m9j"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JZD-Ru-TcM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3682" y="1"/>
         </scene>
         <!--Credits-->
         <scene sceneID="JHD-Xx-Xc6">
@@ -930,12 +977,13 @@
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-371.25" y="60"/>
+            <point key="canvasLocation" x="-335" y="-9"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Preheat-->
         <scene sceneID="p31-ys-d4b">
             <objects>
                 <navigationController id="tMG-s0-RCW" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Preheat" id="QTh-Je-4hc"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="88X-q5-GUX">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1080,7 +1128,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SlZ-bh-era" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="390" y="60"/>
+            <point key="canvasLocation" x="426" y="-9"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
