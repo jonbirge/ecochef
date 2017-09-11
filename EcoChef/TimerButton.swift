@@ -19,7 +19,7 @@ class TimerButton: SimpleButton {
         setCornerRadius(cornerRadius)
         
         if let normalColor = titleColorNormal {
-            setBackgroundColor(.white, for: .normal)
+            //setBackgroundColor(.white, for: .normal)
             setBorderColor(normalColor, for: .normal)
             setTitleColor(normalColor, for: .normal)
             var hue: CGFloat = 0

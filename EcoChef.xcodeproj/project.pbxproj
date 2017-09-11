@@ -13,6 +13,7 @@
 		AB007F221F1C7B8000AD9552 /* Optimization.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB007F201F1C7B8000AD9552 /* Optimization.swift */; };
 		AB0373891F020DD7005D1880 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB0373881F020DD7005D1880 /* LaunchScreen.storyboard */; };
 		AB2EF88F1F36D74100584390 /* CalibrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2EF88E1F36D74100584390 /* CalibrationViewController.swift */; };
+		AB3BB8391F5F9CA000CDF182 /* TimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3BB8381F5F9CA000CDF182 /* TimerViewController.swift */; };
 		AB43B1771EEB871E00B6A96B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB43B1761EEB871E00B6A96B /* AppDelegate.swift */; };
 		AB43B1791EEB871E00B6A96B /* PreheatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB43B1781EEB871E00B6A96B /* PreheatViewController.swift */; };
 		AB43B17E1EEB871E00B6A96B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB43B17C1EEB871E00B6A96B /* Main.storyboard */; };
@@ -72,6 +73,7 @@
 		AB007F201F1C7B8000AD9552 /* Optimization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Optimization.swift; sourceTree = "<group>"; };
 		AB0373881F020DD7005D1880 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AB2EF88E1F36D74100584390 /* CalibrationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalibrationViewController.swift; sourceTree = "<group>"; };
+		AB3BB8381F5F9CA000CDF182 /* TimerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerViewController.swift; sourceTree = "<group>"; };
 		AB43B1731EEB871E00B6A96B /* EcoChef.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EcoChef.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB43B1761EEB871E00B6A96B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AB43B1781EEB871E00B6A96B /* PreheatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreheatViewController.swift; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 				AB007F1C1F1BE67E00AD9552 /* MeasTableViewController.swift */,
 				AB007F1E1F1C109000AD9552 /* DataEditViewController.swift */,
 				ABC7A8741EF8EE7900F25317 /* AboutViewController.swift */,
+				AB3BB8381F5F9CA000CDF182 /* TimerViewController.swift */,
 				ABEBBB9F1F05AC1C00527B4F /* TimerButton.swift */,
 				AB43B17C1EEB871E00B6A96B /* Main.storyboard */,
 				AB0373881F020DD7005D1880 /* LaunchScreen.storyboard */,
@@ -348,6 +351,7 @@
 				ABEB05BD1F1DB90200C7B635 /* FFT.swift in Sources */,
 				ABEB05C11F1DB90200C7B635 /* Trigonometric.swift in Sources */,
 				AB53D56E1F0DD85900ACA17A /* EcoChefThermalModel.swift in Sources */,
+				AB3BB8391F5F9CA000CDF182 /* TimerViewController.swift in Sources */,
 				ABEBBBA61F05B06400527B4F /* SimpleButton.swift in Sources */,
 				ABEBBBA81F05B06400527B4F /* SimpleButtonStateChangeValue.swift in Sources */,
 				AB43B18B1EEBAEA100B6A96B /* ThermalModel.swift in Sources */,
