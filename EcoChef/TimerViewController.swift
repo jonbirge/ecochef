@@ -91,9 +91,22 @@ class DualTimerController {
     }
     
     private func formatTimeFrom(seconds: Float) -> String {
+        var minstr : String
+        var secstr : String
+
         let min = Int(floor(seconds/60))
+        if min < 10 {
+            minstr = "0\(min)"
+        } else {
+            minstr = "\(min)"
+        }
         let sec = round(10*(seconds - Float(60*min)))/10
-        let timeform = "\(min):\(sec)"
+        if sec < 10 {
+            secstr = "0\(sec)"
+        } else {
+            secstr = "\(sec)"
+        }
+        let timeform = minstr + ":" + secstr
         return timeform
     }
 }
