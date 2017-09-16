@@ -13,14 +13,17 @@ class TimerButton: SimpleButton {
     @IBInspectable var cornerRadius: CGFloat = 5
     @IBInspectable var titleColorNormal: UIColor?
     
+    override func setTitleColor(_ color: UIColor?, for state: UIControlState) {
+        super.setTitleColor(color, for: state)
+        setBorderColor(color!, for: state)
+    }
+    
     override func configureButtonStyles() {
         super.configureButtonStyles()
         
         setCornerRadius(cornerRadius)
         
         if let normalColor = titleColorNormal {
-            //setBackgroundColor(.white, for: .normal)
-            setBorderColor(normalColor, for: .normal)
             setTitleColor(normalColor, for: .normal)
             var hue: CGFloat = 0
             var sat: CGFloat = 0

@@ -13,6 +13,7 @@ class DualTimerController {
     var bottomLabel: UILabel
     var sumLabel: UILabel
     var timerButton: UIButton
+    var isSelected: Bool = false
     private var topside: Bool = true
     private var topcum: Float = 0
     private var bottomcum: Float = 0
@@ -30,6 +31,15 @@ class DualTimerController {
         bottomLabel = bottom
         sumLabel = sum
         timerButton = timer
+    }
+    
+    func toggle() {
+        isSelected = !isSelected
+        if isSelected {
+            timerButton.setTitleColor(.red, for: .normal)
+        } else {
+            timerButton.setTitleColor(.black, for: .normal)
+        }
     }
     
     func flip() {
@@ -112,18 +122,31 @@ class DualTimerController {
 }
 
 class TimerViewController: UIViewController {
-    var currentTimer: DualTimerController!
-    var timerList: [DualTimerController] = []
-
+    private var currentTimer: DualTimerController!  // convenience
+    private var timerList: [DualTimerController] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         timerList.append(DualTimerController(topLabel1, bottomLabel1, sumLabel1, timerButton1))
+        timerList.append(DualTimerController(topLabel2, bottomLabel2, sumLabel2, timerButton2))
         currentTimer = timerList.first
+        currentTimer.toggle()
+    }
+    
+    func selectTimer(_ num: Int) {
+        currentTimer.toggle()
+        currentTimer = timerList[num]
+        currentTimer.toggle()
     }
 
     // MARK: - IB
     @IBAction func clickTimer1(_ sender: UIButton) {
+        selectTimer(0)
+    }
+    
+    @IBAction func clickTimer2(_ sender: UIButton) {
+        selectTimer(1)
     }
     
     @IBAction func startCounter(_ sender: UIButton) {
@@ -139,7 +162,13 @@ class TimerViewController: UIViewController {
     }
     
     @IBOutlet weak var timerButton1: TimerButton!
-    @IBOutlet weak var bottomLabel1: UILabel!
     @IBOutlet weak var topLabel1: UILabel!
+    @IBOutlet weak var bottomLabel1: UILabel!
     @IBOutlet weak var sumLabel1: UILabel!
+    
+    @IBOutlet weak var timerButton2: TimerButton!
+    @IBOutlet weak var topLabel2: UILabel!
+    @IBOutlet weak var bottomLabel2: UILabel!
+    @IBOutlet weak var sumLabel2: UILabel!
+    
 }
