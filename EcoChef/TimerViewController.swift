@@ -130,6 +130,9 @@ class TimerViewController: UIViewController {
         
         timerList.append(DualTimerController(topLabel1, bottomLabel1, sumLabel1, timerButton1))
         timerList.append(DualTimerController(topLabel2, bottomLabel2, sumLabel2, timerButton2))
+        timerList.append(DualTimerController(topLabel3, bottomLabel3, sumLabel3, timerButton3))
+        timerList.append(DualTimerController(topLabel4, bottomLabel4, sumLabel4, timerButton4))
+        timerList.append(DualTimerController(topLabel5, bottomLabel5, sumLabel5, timerButton5))
         currentTimer = timerList.first
         currentTimer.toggle()
     }
@@ -147,6 +150,18 @@ class TimerViewController: UIViewController {
     
     @IBAction func clickTimer2(_ sender: UIButton) {
         selectTimer(1)
+    }
+    
+    @IBAction func clickTimer3(_ sender: UIButton) {
+        selectTimer(2)
+    }
+    
+    @IBAction func clickTimer4(_ sender: UIButton) {
+        selectTimer(3)
+    }
+    
+    @IBAction func clickTimer5(_ sender: UIButton) {
+        selectTimer(4)
     }
     
     @IBAction func startCounter(_ sender: UIButton) {
@@ -171,4 +186,18 @@ class TimerViewController: UIViewController {
     @IBOutlet weak var bottomLabel2: UILabel!
     @IBOutlet weak var sumLabel2: UILabel!
     
+    @IBOutlet weak var timerButton3: TimerButton!
+    @IBOutlet weak var topLabel3: UILabel!
+    @IBOutlet weak var bottomLabel3: UILabel!
+    @IBOutlet weak var sumLabel3: UILabel!
+
+    @IBOutlet weak var timerButton4: TimerButton!
+    @IBOutlet weak var topLabel4: UILabel!
+    @IBOutlet weak var bottomLabel4: UILabel!
+    @IBOutlet weak var sumLabel4: UILabel!
+    
+    @IBOutlet weak var timerButton5: TimerButton!
+    @IBOutlet weak var topLabel5: UILabel!
+    @IBOutlet weak var bottomLabel5: UILabel!
+    @IBOutlet weak var sumLabel5: UILabel!
 }

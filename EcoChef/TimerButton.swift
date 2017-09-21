@@ -14,8 +14,14 @@ class TimerButton: SimpleButton {
     @IBInspectable var titleColorNormal: UIColor?
     
     override func setTitleColor(_ color: UIColor?, for state: UIControlState) {
+        if let thecolor = color {
+            if state != .disabled {
+                setBorderColor(thecolor, for: state)
+            } else {
+                setBorderColor(thecolor, for: state, animated: true, animationDuration: 0.1)
+            }
+        }
         super.setTitleColor(color, for: state)
-        setBorderColor(color!, for: state)
     }
     
     override func configureButtonStyles() {
@@ -32,11 +38,9 @@ class TimerButton: SimpleButton {
             let highlightbrightness: CGFloat = 1 - (1 - brightness)/3
             let highlightColor = UIColor(hue: hue, saturation: sat, brightness: highlightbrightness, alpha: 1)
             setTitleColor(highlightColor, for: .highlighted)
-            setBorderColor(highlightColor, for: .highlighted)
         }
         
         setBorderWidth(1.0)
-        setBorderColor(lightgrey, for: .disabled, animated: true, animationDuration: 0.1)
         setTitleColor(lightgrey, for: .disabled)
     }
     
