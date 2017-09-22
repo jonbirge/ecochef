@@ -9,10 +9,10 @@
 import UIKit
 
 class DualTimerController {
-    var topLabel: UILabel
-    var bottomLabel: UILabel
-    var sumLabel: UILabel
-    var timerButton: UIButton
+    private var topLabel: UILabel
+    private var bottomLabel: UILabel
+    private var sumLabel: UILabel
+    private var timerButton: UIButton
     var isSelected: Bool = false
     private var topside: Bool = true
     private var topcum: Float = 0
@@ -43,13 +43,15 @@ class DualTimerController {
     }
     
     func flip() {
-        if topside {
-            topcum += secondsElapsed()
-        } else {
-            bottomcum += secondsElapsed()
+        if localIsRunning {
+            if topside {
+                topcum += secondsElapsed()
+            } else {
+                bottomcum += secondsElapsed()
+            }
+            startTime = Date()
+            topside = !topside
         }
-        startTime = Date()
-        topside = !topside
     }
     
     func reset() {
@@ -62,7 +64,7 @@ class DualTimerController {
     func start() {
         localIsRunning = true
         startTime = Date()
-        timer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: true) { (timer) in
+        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { (timer) in
             self.updateTimes()
         }
     }
@@ -97,7 +99,8 @@ class DualTimerController {
         if let then = startTime {
             seconds = then.timeIntervalSinceNow
         }
-        return -Float(seconds)
+        
+        return Float(-seconds)
     }
     
     private func formatTimeFrom(seconds: Float) -> String {
@@ -110,13 +113,14 @@ class DualTimerController {
         } else {
             minstr = "\(min)"
         }
-        let sec = round(10*(seconds - Float(60*min)))/10
+        let sec = Int(round(seconds - Float(60*min)))
         if sec < 10 {
             secstr = "0\(sec)"
         } else {
             secstr = "\(sec)"
         }
         let timeform = minstr + ":" + secstr
+        
         return timeform
     }
 }
