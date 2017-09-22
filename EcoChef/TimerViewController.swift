@@ -88,9 +88,9 @@ class DualTimerController {
                 bottomTotal += secondsElapsed()
             }
         }
-        let sumTotal: Float = topTotal + bottomTotal
-        topLabel.text = formatTimeFrom(seconds: topTotal)
-        bottomLabel.text = formatTimeFrom(seconds: bottomTotal)
+        let sumTotal: Float = floor(topTotal) + floor(bottomTotal)
+        topLabel.text = formatTimeFrom(seconds: floor(topTotal))
+        bottomLabel.text = formatTimeFrom(seconds: floor(bottomTotal))
         sumLabel.text = formatTimeFrom(seconds: sumTotal)
     }
     
