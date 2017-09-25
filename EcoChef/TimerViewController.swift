@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UserNotifications
 
 class DualTimerController {
     private var topLabel: UILabel
@@ -20,6 +21,7 @@ class DualTimerController {
     private var localIsRunning: Bool = false
     private var startTime: Date?
     private var timer: Timer?
+    private let timeInt: Double = 0.2
     
     var isRunning: Bool {
         return localIsRunning
@@ -64,7 +66,7 @@ class DualTimerController {
     func start() {
         localIsRunning = true
         startTime = Date()
-        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { (timer) in
+        timer = Timer.scheduledTimer(withTimeInterval: timeInt, repeats: true) { (timer) in
             self.updateTimes()
         }
     }
@@ -75,6 +77,20 @@ class DualTimerController {
             topcum = topcum + secondsElapsed()
         } else {
             bottomcum = topcum + secondsElapsed()
+        }
+    }
+    
+    func pause() {
+        if localIsRunning {
+            timer?.invalidate()
+        }
+    }
+    
+    func resume() {
+        if localIsRunning {
+            timer = Timer.scheduledTimer(withTimeInterval: timeInt, repeats: true) { (timer) in
+                self.updateTimes()
+            }
         }
     }
     
@@ -125,13 +141,20 @@ class DualTimerController {
     }
 }
 
-class TimerViewController: UIViewController {
+class TimerViewController: UIViewController, UNUserNotificationCenterDelegate {
     private var currentTimer: DualTimerController!  // convenience
     private var timerList: [DualTimerController] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Notification setup
+        let notificationCenter = NotificationCenter.default
+        
+        notificationCenter.addObserver(self, selector: #selector(PreheatViewController.didEnterBackground), name: Notification.Name.UIApplicationDidEnterBackground, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(PreheatViewController.didBecomeActive), name: Notification.Name.UIApplicationWillEnterForeground, object: nil)
+        
+        // Timer controllers
         timerList.append(DualTimerController(topLabel1, bottomLabel1, sumLabel1, timerButton1))
         timerList.append(DualTimerController(topLabel2, bottomLabel2, sumLabel2, timerButton2))
         timerList.append(DualTimerController(topLabel3, bottomLabel3, sumLabel3, timerButton3))
@@ -139,6 +162,18 @@ class TimerViewController: UIViewController {
         timerList.append(DualTimerController(topLabel5, bottomLabel5, sumLabel5, timerButton5))
         currentTimer = timerList.first
         currentTimer.toggle()
+    }
+    
+    func didEnterBackground() {
+        for eachDualTimer in timerList {
+            eachDualTimer.pause()
+        }
+    }
+    
+    func didBecomeActive() {
+        for eachDualTimer in timerList {
+            eachDualTimer.resume()
+        }
     }
     
     func selectTimer(_ num: Int) {
