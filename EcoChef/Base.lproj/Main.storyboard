@@ -318,13 +318,13 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v3f-QP-Q0q">
-                                <rect key="frame" x="35" y="546" width="74" height="33"/>
+                                <rect key="frame" x="38" y="509" width="44" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                <state key="normal" title="Set Timer"/>
+                                <state key="normal" title="Timer"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ytj-cO-kfv">
-                                <rect key="frame" x="291" y="546" width="48" height="30"/>
+                                <rect key="frame" x="288" y="509" width="48" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <state key="normal" title="Turn"/>
@@ -426,10 +426,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zfH-Qz-PPo">
-                                <rect key="frame" x="156" y="545" width="65" height="33"/>
+                                <rect key="frame" x="213" y="508" width="38" height="33"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                <state key="normal" title="Time Up"/>
+                                <state key="normal" title="Start"/>
                                 <connections>
                                     <action selector="startCounter:" destination="tkb-wK-zkw" eventType="touchUpInside" id="O6c-cm-Zee"/>
                                 </connections>
@@ -513,6 +513,21 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KwT-YZ-NPI">
+                                <rect key="frame" x="157" y="580" width="60" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                <state key="normal" title="Reset All"/>
+                                <connections>
+                                    <action selector="clickResetAll:" destination="tkb-wK-zkw" eventType="touchUpInside" id="qpN-9v-vJu"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MiL-uO-mU2">
+                                <rect key="frame" x="129" y="508" width="44" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <state key="normal" title="Reset"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -523,6 +538,7 @@
                         <outlet property="bottomLabel3" destination="Fmh-Od-LyQ" id="Co8-BS-uas"/>
                         <outlet property="bottomLabel4" destination="JXY-lt-mDs" id="iY0-7q-Che"/>
                         <outlet property="bottomLabel5" destination="852-Xo-5hf" id="Kik-tH-xOJ"/>
+                        <outlet property="startButton" destination="zfH-Qz-PPo" id="d08-g9-ncM"/>
                         <outlet property="sumLabel1" destination="D6J-3X-Eeu" id="0ey-at-OHi"/>
                         <outlet property="sumLabel2" destination="vlw-PH-Ulv" id="fTx-G6-bgt"/>
                         <outlet property="sumLabel3" destination="8ia-I5-dUt" id="2UC-lq-T01"/>

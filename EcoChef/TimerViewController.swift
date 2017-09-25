@@ -57,10 +57,10 @@ class DualTimerController {
     }
     
     func reset() {
+        stop()
         topcum = 0
         bottomcum = 0
-        localIsRunning = false
-        timer?.invalidate()
+        updateTimes()
     }
     
     func start() {
@@ -72,11 +72,14 @@ class DualTimerController {
     }
     
     func stop() {
-        localIsRunning = false
-        if topside {
-            topcum = topcum + secondsElapsed()
-        } else {
-            bottomcum = topcum + secondsElapsed()
+        if localIsRunning {
+            localIsRunning = false
+            timer?.invalidate()
+            if topside {
+                topcum = topcum + secondsElapsed()
+            } else {
+                bottomcum = topcum + secondsElapsed()
+            }
         }
     }
     
@@ -165,24 +168,35 @@ class TimerViewController: UIViewController, UNUserNotificationCenterDelegate {
     }
     
     func didEnterBackground() {
-        for eachDualTimer in timerList {
-            eachDualTimer.pause()
+        for eachTimer in timerList {
+            eachTimer.pause()
         }
     }
     
     func didBecomeActive() {
-        for eachDualTimer in timerList {
-            eachDualTimer.resume()
+        for eachTimer in timerList {
+            eachTimer.resume()
         }
     }
     
-    func selectTimer(_ num: Int) {
+    private func selectTimer(_ num: Int) {
         currentTimer.toggle()
         currentTimer = timerList[num]
         currentTimer.toggle()
+        updateView()
     }
 
+    private func updateView() {
+        if currentTimer.isRunning {
+            startButton.setTitle("Stop", for: .normal)
+        } else {
+            startButton.setTitle("Start", for: .normal)
+        }
+    }
+    
     // MARK: - IB
+    @IBOutlet weak var startButton: UIButton!
+    
     @IBAction func clickTimer1(_ sender: UIButton) {
         selectTimer(0)
     }
@@ -209,10 +223,29 @@ class TimerViewController: UIViewController, UNUserNotificationCenterDelegate {
         } else {
             currentTimer?.start()
         }
+        updateView()
     }
     
     @IBAction func clickTurn(_ sender: UIButton) {
         currentTimer.flip()
+    }
+    
+    @IBAction func clickResetAll(_ sender: UIButton) {
+        let alert = UIAlertController(title: "Reset all timers?", message: nil, preferredStyle: .actionSheet)
+        
+        let resetAction = UIAlertAction(title: "Reset", style: .destructive) {
+            action in
+            for eachTimer in self.timerList {
+                eachTimer.reset()
+            }
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        
+        alert.addAction(resetAction)
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true)
     }
     
     @IBOutlet weak var timerButton1: TimerButton!
