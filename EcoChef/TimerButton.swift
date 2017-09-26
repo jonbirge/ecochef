@@ -20,6 +20,13 @@ class TimerButton: SimpleButton {
             } else {
                 setBorderColor(thecolor, for: state, animated: true, animationDuration: 0.1)
             }
+        } else {
+            let defaultColor = titleColor(for: state)
+            if state != .disabled {
+                setBorderColor(defaultColor!, for: state)
+            } else {
+                setBorderColor(defaultColor!, for: state, animated: true, animationDuration: 0.1)
+            }
         }
         super.setTitleColor(color, for: state)
     }

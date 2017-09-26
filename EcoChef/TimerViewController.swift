@@ -230,6 +230,10 @@ class TimerViewController: UIViewController, UNUserNotificationCenterDelegate {
         currentTimer.flip()
     }
     
+    @IBAction func clickReset(_ sender: UIButton) {
+        currentTimer.reset()
+    }
+    
     @IBAction func clickResetAll(_ sender: UIButton) {
         let alert = UIAlertController(title: "Reset all timers?", message: nil, preferredStyle: .actionSheet)
         
