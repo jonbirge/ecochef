@@ -151,26 +151,6 @@ extension Matrix: CustomStringConvertible {
     }
 }
 
-// MARK: - SequenceType
-
-extension Matrix: Sequence {
-    public func makeIterator() -> AnyIterator<ArraySlice<Element>> {
-        let endIndex = rows * columns
-        var nextRowStartIndex = 0
-
-        return AnyIterator {
-            if nextRowStartIndex == endIndex {
-                return nil
-            }
-
-            let currentRowStartIndex = nextRowStartIndex
-            nextRowStartIndex += self.columns
-
-            return self.grid[currentRowStartIndex..<nextRowStartIndex]
-        }
-    }
-}
-
 extension Matrix: Equatable {}
 public func ==<T> (lhs: Matrix<T>, rhs: Matrix<T>) -> Bool {
     return lhs.rows == rhs.rows && lhs.columns == rhs.columns && lhs.grid == rhs.grid
