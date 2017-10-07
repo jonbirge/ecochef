@@ -304,9 +304,11 @@ public func inv(_ x : Matrix<Float>) throws -> Matrix<Float> {
     var work = [CFloat](repeating: 0.0, count: Int(lwork))
     var error: __CLPK_integer = 0
     var nc = __CLPK_integer(x.columns)
-
-    sgetrf_(&nc, &nc, &(results.grid), &nc, &ipiv, &error)
-    sgetri_(&nc, &(results.grid), &nc, &ipiv, &work, &lwork, &error)
+    var nc_temp1 = nc
+    var nc_temp2 = nc
+    
+    sgetrf_(&nc_temp1, &nc_temp2, &(results.grid), &nc, &ipiv, &error)
+    sgetri_(&nc_temp1, &(results.grid), &nc, &ipiv, &work, &lwork, &error)
 
     if error != 0 {
         throw SurgeError.matrixSingular
@@ -325,9 +327,11 @@ public func inv(_ x : Matrix<Double>) throws -> Matrix<Double> {
     var work = [CDouble](repeating: 0.0, count: Int(lwork))
     var error: __CLPK_integer = 0
     var nc = __CLPK_integer(x.columns)
-
-    dgetrf_(&nc, &nc, &(results.grid), &nc, &ipiv, &error)
-    dgetri_(&nc, &(results.grid), &nc, &ipiv, &work, &lwork, &error)
+    var nc_temp1 = nc
+    var nc_temp2 = nc
+    
+    dgetrf_(&nc_temp1, &nc_temp2, &(results.grid), &nc, &ipiv, &error)
+    dgetri_(&nc_temp1, &(results.grid), &nc, &ipiv, &work, &lwork, &error)
 
     if error != 0 {
         throw SurgeError.matrixSingular
