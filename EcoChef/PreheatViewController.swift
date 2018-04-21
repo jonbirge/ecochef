@@ -112,6 +112,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         present(alert, animated: true)
     }
     
+    // App entered background
     @objc func didEnterBackground() {
         if modelTimer.isRunning {
             timer?.invalidate()
@@ -119,6 +120,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         }
     }
     
+    // App entered foreground
     @objc func didBecomeActive() {
         if modelTimer.isRunning {
             timer =
