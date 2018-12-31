@@ -112,14 +112,16 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         present(alert, animated: true)
     }
     
-    func didEnterBackground() {
+    // App entered background
+    @objc func didEnterBackground() {
         if modelTimer.isRunning {
             timer?.invalidate()
             timer = nil
         }
     }
     
-    func didBecomeActive() {
+    // App entered foreground
+    @objc func didBecomeActive() {
         if modelTimer.isRunning {
             timer =
                 Timer.scheduledTimer(timeInterval: 0.2,
@@ -255,7 +257,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     }
     
     // Timer delegate function
-    func TimerCount() {
+    @objc func TimerCount() {
         let minutesLeft = modelTimer.minutesLeft()
         if modelTimer.isNotDone {
             ShowTime(minutes: abs(minutesLeft))

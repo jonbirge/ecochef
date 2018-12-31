@@ -91,7 +91,7 @@ class CalibrationViewController: UIViewController {
     // MARK: - Notification and timer functionality
     
     // Timer delegate function
-    func TimerCount() {
+    @objc func TimerCount() {
         let mins = calTimer.minutesElapsed()
         ShowTime(minutes: mins)
     }

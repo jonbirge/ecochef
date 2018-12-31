@@ -167,13 +167,13 @@ class TimerViewController: UIViewController, UNUserNotificationCenterDelegate {
         currentTimer.toggle()
     }
     
-    func didEnterBackground() {
+    @objc func didEnterBackground() {
         for eachTimer in timerList {
             eachTimer.pause()
         }
     }
     
-    func didBecomeActive() {
+    @objc func didBecomeActive() {
         for eachTimer in timerList {
             eachTimer.resume()
         }
