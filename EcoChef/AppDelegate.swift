@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let center = UNUserNotificationCenter.current()
         center.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
             // Enable or disable features based on authorization.
-            print("granted: \(granted), error: \(String(describing: error))")
+            print("ui notif granted: \(granted), error: \(String(describing: error))")
         }
         LoadState()
         return true
@@ -32,8 +32,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func LoadState() {
         let stateURL = EcoChefState.stateURL
         if let state = NSKeyedUnarchiver.unarchiveObject(withFile: stateURL.path) as? EcoChefState {
+            print("unarchiving saved state")
             self.state = state
         } else {
+            print("creating new state")
             self.state = EcoChefState()
         }
     }

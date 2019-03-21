@@ -160,9 +160,8 @@
                                     <action selector="ResetButton:" destination="9pv-A4-QxB" eventType="touchUpInside" id="Xyf-GN-Ow5"/>
                                 </connections>
                             </button>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Help and settings here →  " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YIn-MW-QDW">
-                                <rect key="frame" x="124" y="622" width="195" height="20"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Help and settings here →  " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YIn-MW-QDW">
+                                <rect key="frame" x="117" y="573" width="201" height="20"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -181,6 +180,8 @@
                             <constraint firstItem="moH-Te-Xzb" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" constant="16" id="B0O-j9-Ni1"/>
                             <constraint firstItem="gCO-mA-Prx" firstAttribute="centerX" secondItem="X3y-il-6FY" secondAttribute="centerX" constant="22" id="B1x-Qc-Tob"/>
                             <constraint firstItem="GDg-mc-Nd8" firstAttribute="centerX" secondItem="tsR-hK-woN" secondAttribute="centerX" id="B9a-xC-sTR"/>
+                            <constraint firstItem="4ug-Mw-9AY" firstAttribute="top" secondItem="YIn-MW-QDW" secondAttribute="bottom" constant="25" id="DZR-PV-ZKX"/>
+                            <constraint firstItem="jLP-zd-iGG" firstAttribute="leading" secondItem="YIn-MW-QDW" secondAttribute="trailing" constant="1" id="EBa-w3-821"/>
                             <constraint firstItem="nHw-Lj-crR" firstAttribute="top" secondItem="gCO-mA-Prx" secondAttribute="bottom" priority="260" constant="84" id="EhD-RO-bQ3"/>
                             <constraint firstAttribute="trailingMargin" secondItem="moH-Te-Xzb" secondAttribute="trailing" constant="16" id="FLg-vy-EhA"/>
                             <constraint firstItem="InP-Vp-TcT" firstAttribute="trailing" secondItem="moH-Te-Xzb" secondAttribute="trailing" id="FzQ-tX-z0h"/>
