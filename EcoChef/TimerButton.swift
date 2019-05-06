@@ -47,7 +47,7 @@ class TimerButton: SimpleButton {
             setTitleColor(highlightColor, for: .highlighted)
         }
         
-        setBorderWidth(1.0)
+        setBorderWidth(2.0)
         setTitleColor(lightgrey, for: .disabled)
     }
     
