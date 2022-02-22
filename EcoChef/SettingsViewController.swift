@@ -22,7 +22,7 @@ UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
         super.viewDidLoad()
 
         modelPicker.selectRow(modelData.selectedIndex, inComponent: 0, animated: true)
-        modelPicker.showsSelectionIndicator = true
+        //modelPicker.showsSelectionIndicator = true
         ambientStepper.value = Double(initialTamb)
         updateViews()
     }

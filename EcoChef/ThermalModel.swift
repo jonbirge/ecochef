@@ -352,7 +352,7 @@ class ThermalModelFitter : Fittable {
         if fittable {
             do {
                 fitter.verbose = verbose
-                var p: [Double] = try fitter.fit()
+                let p: [Double] = try fitter.fit()
                 modelparams.a = Float(round(10*p[IndexKeys.a])/10)
                 modelparams.b = Float(round(p[IndexKeys.b]))
             } catch let err {

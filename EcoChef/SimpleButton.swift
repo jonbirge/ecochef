@@ -122,7 +122,7 @@ open class SimpleButton: UIButton {
             if isLoading {
                 self.isUserInteractionEnabled = false
                 if loadingView == nil {
-                    let activityIndicator = UIActivityIndicatorView(style: .white)
+                    let activityIndicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.medium)
                     activityIndicator.startAnimating()
                     activityIndicator.hidesWhenStopped = false
                     loadingView = activityIndicator

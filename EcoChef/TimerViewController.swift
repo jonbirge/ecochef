@@ -38,9 +38,9 @@ class DualTimerController {
     func toggle() {
         isSelected = !isSelected
         if isSelected {
-            timerButton.setTitleColor(.red, for: .normal)
+            timerButton.setTitleColor(.systemRed, for: .normal)
         } else {
-            timerButton.setTitleColor(.black, for: .normal)
+            timerButton.setTitleColor(.label, for: .normal)
         }
     }
     
