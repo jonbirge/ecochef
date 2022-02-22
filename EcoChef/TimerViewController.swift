@@ -154,8 +154,8 @@ class TimerViewController: UIViewController, UNUserNotificationCenterDelegate {
         // Notification setup
         let notificationCenter = NotificationCenter.default
         
-        notificationCenter.addObserver(self, selector: #selector(PreheatViewController.didEnterBackground), name: Notification.Name.UIApplicationDidEnterBackground, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(PreheatViewController.didBecomeActive), name: Notification.Name.UIApplicationWillEnterForeground, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(PreheatViewController.didEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(PreheatViewController.didBecomeActive), name: UIApplication.willEnterForegroundNotification, object: nil)
         
         // Timer controllers
         timerList.append(DualTimerController(topLabel1, bottomLabel1, sumLabel1, timerButton1))

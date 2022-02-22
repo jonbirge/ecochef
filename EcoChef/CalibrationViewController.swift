@@ -97,13 +97,13 @@ class CalibrationViewController: UIViewController {
     }
     
     private func EnableTimerControls() {
-        startButton.setTitle("Start", for: UIControlState.normal)
+        startButton.setTitle("Start", for: UIControl.State.normal)
         markButton.isEnabled = false
         UpdateView()
     }
     
     private func DisableTimerControls () {
-        startButton.setTitle("Reset", for: UIControlState.normal)
+        startButton.setTitle("Reset", for: UIControl.State.normal)
         startButton.isEnabled = true
         markButton.isEnabled = true
     }

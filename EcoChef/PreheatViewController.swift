@@ -65,8 +65,8 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         // Notification setup
         let notificationCenter = NotificationCenter.default
         
-        notificationCenter.addObserver(self, selector: #selector(PreheatViewController.didEnterBackground), name: Notification.Name.UIApplicationDidEnterBackground, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(PreheatViewController.didBecomeActive), name: Notification.Name.UIApplicationWillEnterForeground, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(PreheatViewController.didEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(PreheatViewController.didBecomeActive), name: UIApplication.willEnterForegroundNotification, object: nil)
 
         // UI notification setup
         let usernotificationCenter = UNUserNotificationCenter.current()
@@ -295,7 +295,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
             content.body = NSString.localizedUserNotificationString(forKey: notifyText, arguments: nil)
         }
         content.title = NSString.localizedUserNotificationString(forKey: notifyTitle, arguments: nil)
-        content.sound = UNNotificationSound(named: "birge-ring.aiff")
+        content.sound = UNNotificationSound(named: convertToUNNotificationSoundName("birge-ring.aiff"))
         
         let timeLeft = Double(modelTimer.minutesLeft())
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60.0*timeLeft, repeats: false)
@@ -320,7 +320,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         for theControl in timerDisabledControls {
             theControl.isEnabled = true
         }
-        startButton.setTitle("Start", for: UIControlState.normal)
+        startButton.setTitle("Start", for: UIControl.State.normal)
         timerResetButton.isEnabled = false
         UpdateView()
         CheckTimerEnable()
@@ -330,7 +330,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         for theControl in timerDisabledControls {
             theControl.isEnabled = false
         }
-        startButton.setTitle("Done", for: UIControlState.normal)
+        startButton.setTitle("Done", for: UIControl.State.normal)
         startButton.isEnabled = true
         timerResetButton.isEnabled = true
     }
@@ -512,4 +512,9 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     @IBAction func ResetButton(_ sender: UIButton) {
         Reset()
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUNNotificationSoundName(_ input: String) -> UNNotificationSoundName {
+	return UNNotificationSoundName(rawValue: input)
 }

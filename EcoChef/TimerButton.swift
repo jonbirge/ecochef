@@ -13,7 +13,7 @@ class TimerButton: SimpleButton {
     @IBInspectable var cornerRadius: CGFloat = 5
     @IBInspectable var titleColorNormal: UIColor?
     
-    override func setTitleColor(_ color: UIColor?, for state: UIControlState) {
+    override func setTitleColor(_ color: UIColor?, for state: UIControl.State) {
         if let thecolor = color {
             if state != .disabled {
                 setBorderColor(thecolor, for: state)
