@@ -6,4 +6,4 @@ iOS app to help with cooking by providing multiple simultaneous timers and a pre
 
 ## Website
 
-https://www.birgefuller.com/ecochef
+https://ecochef-faq.birgefuller.com
