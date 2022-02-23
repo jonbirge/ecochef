@@ -11,8 +11,8 @@ import Foundation
 // Timer model
 class ThermalTimer {
     var thermalModel: ThermalModel?
-    var startTime: Date?
-    var stopTime: Date?
+    private var startTime: Date?
+    private var stopTime: Date?
     var snoozeTime: Float = 0
     var isHeating: Bool = true
     var initialTemp: Float = 0

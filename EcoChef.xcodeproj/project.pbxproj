@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -11,8 +11,8 @@
 		AB007F1F1F1C109000AD9552 /* DataEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB007F1E1F1C109000AD9552 /* DataEditViewController.swift */; };
 		AB007F211F1C7B8000AD9552 /* Optimization.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB007F201F1C7B8000AD9552 /* Optimization.swift */; };
 		AB007F221F1C7B8000AD9552 /* Optimization.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB007F201F1C7B8000AD9552 /* Optimization.swift */; };
-		AB0373891F020DD7005D1880 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB0373881F020DD7005D1880 /* LaunchScreen.storyboard */; };
 		AB2EF88F1F36D74100584390 /* CalibrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2EF88E1F36D74100584390 /* CalibrationViewController.swift */; };
+		AB3BB8391F5F9CA000CDF182 /* TimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3BB8381F5F9CA000CDF182 /* TimerViewController.swift */; };
 		AB43B1771EEB871E00B6A96B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB43B1761EEB871E00B6A96B /* AppDelegate.swift */; };
 		AB43B1791EEB871E00B6A96B /* PreheatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB43B1781EEB871E00B6A96B /* PreheatViewController.swift */; };
 		AB43B17E1EEB871E00B6A96B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB43B17C1EEB871E00B6A96B /* Main.storyboard */; };
@@ -70,8 +70,8 @@
 		AB007F1C1F1BE67E00AD9552 /* MeasTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeasTableViewController.swift; sourceTree = "<group>"; };
 		AB007F1E1F1C109000AD9552 /* DataEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataEditViewController.swift; sourceTree = "<group>"; };
 		AB007F201F1C7B8000AD9552 /* Optimization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Optimization.swift; sourceTree = "<group>"; };
-		AB0373881F020DD7005D1880 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AB2EF88E1F36D74100584390 /* CalibrationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalibrationViewController.swift; sourceTree = "<group>"; };
+		AB3BB8381F5F9CA000CDF182 /* TimerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerViewController.swift; sourceTree = "<group>"; };
 		AB43B1731EEB871E00B6A96B /* EcoChef.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EcoChef.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB43B1761EEB871E00B6A96B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AB43B1781EEB871E00B6A96B /* PreheatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreheatViewController.swift; sourceTree = "<group>"; };
@@ -164,9 +164,9 @@
 				AB007F1C1F1BE67E00AD9552 /* MeasTableViewController.swift */,
 				AB007F1E1F1C109000AD9552 /* DataEditViewController.swift */,
 				ABC7A8741EF8EE7900F25317 /* AboutViewController.swift */,
+				AB3BB8381F5F9CA000CDF182 /* TimerViewController.swift */,
 				ABEBBB9F1F05AC1C00527B4F /* TimerButton.swift */,
 				AB43B17C1EEB871E00B6A96B /* Main.storyboard */,
-				AB0373881F020DD7005D1880 /* LaunchScreen.storyboard */,
 				AB43B1841EEB871E00B6A96B /* Info.plist */,
 				AB43B17F1EEB871E00B6A96B /* Assets.xcassets */,
 				ABEBBBAA1F05B5D400527B4F /* Media */,
@@ -268,11 +268,12 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0830;
-				ORGANIZATIONNAME = "Birge Clocks";
+				LastUpgradeCheck = 1320;
+				ORGANIZATIONNAME = "Birge & Fuller, LLC";
 				TargetAttributes = {
 					AB43B1721EEB871E00B6A96B = {
 						CreatedOnToolsVersion = 8.3.2;
+						LastSwiftMigration = 1320;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -282,14 +283,15 @@
 					};
 					ABD4127B1F1134C900429887 = {
 						CreatedOnToolsVersion = 8.3.3;
+						LastSwiftMigration = 1320;
 						ProvisioningStyle = Automatic;
 						TestTargetID = AB43B1721EEB871E00B6A96B;
 					};
 				};
 			};
 			buildConfigurationList = AB43B16E1EEB871E00B6A96B /* Build configuration list for PBXProject "EcoChef" */;
-			compatibilityVersion = "Xcode 8.0";
-			developmentRegion = English;
+			compatibilityVersion = "Xcode 10.0";
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -311,7 +313,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB0373891F020DD7005D1880 /* LaunchScreen.storyboard in Resources */,
 				AB57E5DB1F0492F700D37EF8 /* birge-ring.aiff in Resources */,
 				AB43B1801EEB871E00B6A96B /* Assets.xcassets in Resources */,
 				AB43B17E1EEB871E00B6A96B /* Main.storyboard in Resources */,
@@ -348,6 +349,7 @@
 				ABEB05BD1F1DB90200C7B635 /* FFT.swift in Sources */,
 				ABEB05C11F1DB90200C7B635 /* Trigonometric.swift in Sources */,
 				AB53D56E1F0DD85900ACA17A /* EcoChefThermalModel.swift in Sources */,
+				AB3BB8391F5F9CA000CDF182 /* TimerViewController.swift in Sources */,
 				ABEBBBA61F05B06400527B4F /* SimpleButton.swift in Sources */,
 				ABEBBBA81F05B06400527B4F /* SimpleButtonStateChangeValue.swift in Sources */,
 				AB43B18B1EEBAEA100B6A96B /* ThermalModel.swift in Sources */,
@@ -411,50 +413,56 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = NO;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = NO;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = NO;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = NO;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_DYNAMIC_NO_PIC = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_OPTIMIZATION_LEVEL = 2;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -462,42 +470,50 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = NO;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = NO;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = NO;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = NO;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -512,11 +528,16 @@
 					"$(PROJECT_DIR)/EcoChef",
 				);
 				INFOPLIST_FILE = EcoChef/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.9;
 				PRODUCT_BUNDLE_IDENTIFIER = us.birge.EcoChef;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -532,11 +553,16 @@
 					"$(PROJECT_DIR)/EcoChef",
 				);
 				INFOPLIST_FILE = EcoChef/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.9;
 				PRODUCT_BUNDLE_IDENTIFIER = us.birge.EcoChef;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -548,10 +574,15 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = YB79GC96TU;
 				INFOPLIST_FILE = EcoChefTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = us.birge.EcoChefTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EcoChef.app/EcoChef";
 			};
 			name = Debug;
@@ -562,10 +593,15 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = YB79GC96TU;
 				INFOPLIST_FILE = EcoChefTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = us.birge.EcoChefTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EcoChef.app/EcoChef";
 			};
 			name = Release;

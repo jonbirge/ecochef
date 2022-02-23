@@ -37,13 +37,13 @@ class ModelEditViewController: UITableViewController {
             hrField.text = String(modelParams!.b)
             rcField.isEnabled = false
             hrField.isEnabled = false
-            rcField.textColor = .lightGray
-            hrField.textColor = .lightGray
+            rcField.textColor = .systemGray
+            hrField.textColor = .systemGray
         } else {
             rcField.isEnabled = true
             hrField.isEnabled = true
-            rcField.textColor = .black
-            hrField.textColor = .black
+            rcField.textColor = .label
+            hrField.textColor = .label
         }
         let measData = modelParams!.measurements
         if measData.count == 0 {

@@ -91,19 +91,19 @@ class CalibrationViewController: UIViewController {
     // MARK: - Notification and timer functionality
     
     // Timer delegate function
-    func TimerCount() {
+    @objc func TimerCount() {
         let mins = calTimer.minutesElapsed()
         ShowTime(minutes: mins)
     }
     
     private func EnableTimerControls() {
-        startButton.setTitle("Start", for: UIControlState.normal)
+        startButton.setTitle("Start", for: UIControl.State.normal)
         markButton.isEnabled = false
         UpdateView()
     }
     
     private func DisableTimerControls () {
-        startButton.setTitle("Reset", for: UIControlState.normal)
+        startButton.setTitle("Reset", for: UIControl.State.normal)
         startButton.isEnabled = true
         markButton.isEnabled = true
     }

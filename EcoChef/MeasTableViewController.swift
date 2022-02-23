@@ -45,7 +45,7 @@ class MeasTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView,
-                            commit editingStyle: UITableViewCellEditingStyle,
+                            commit editingStyle: UITableViewCell.EditingStyle,
                             forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             measData.measlist.remove(at: indexPath.row)

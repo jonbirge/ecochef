@@ -25,12 +25,13 @@ class EcoChefState : NSObject, NSCoding {
         return docsURL.appendingPathComponent("state")
     }
     
+    // We keep these URLs here in case we want to do a bit of load balancing in the app
     static var faqURL: String {
-        return "https://www.birge.us/ecochef-faq"
+        return "https://ecochef-faq.birgefuller.com"
     }
     
     static var siteURL: String {
-        return "https://www.birge.us/ecochef"
+        return "https://www.birgefuller.com"
     }
     
     override init() {
