@@ -90,9 +90,9 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     
     private func onBoarding() {
         let alert = UIAlertController(title: "Welcome to EcoChef!",
-                                      message: "Would you like to read the FAQ?", preferredStyle: .alert)
-        
-        let noAction = UIAlertAction(title: "No", style: .cancel) {
+                                      message: "Select settings on the lower right to get help.",
+                                      preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .cancel) {
             action in
             UIView.transition(with: self.helpLabel, duration: 1.2,
                               options: .transitionFlipFromLeft,
@@ -100,15 +100,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
                                 self.helpLabel.isHidden = false },
                               completion: nil)
         }
-        let yesAction = UIAlertAction(title: "Yes", style: .default) { action in
-            if let faqURL = URL(string: EcoChefState.faqURL) {
-                let safariViewController = SFSafariViewController(url:faqURL)
-                self.present(safariViewController, animated: true, completion: nil)
-            }
-            self.helpLabel.isHidden = false
-        }
-        alert.addAction(yesAction)
-        alert.addAction(noAction)
+        alert.addAction(okAction)
         present(alert, animated: true)
     }
     
