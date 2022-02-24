@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MessageUI
 import SafariServices
 
 class SettingsViewController:
@@ -88,9 +89,25 @@ UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     }
     
     func showSite() {
-        if let siteURL = URL(string: EcoChefState.siteURL) {
-            let safariViewCont = SFSafariViewController(url:siteURL)
-            present(safariViewCont, animated: true, completion: nil)
+        let email = "ecochef@birgefuller.com"
+        let subject = "EcoChef"
+        //let bodyText = "Type your message here..."
+        
+        // https://developer.apple.com/documentation/messageui/mfmailcomposeviewcontroller
+        if MFMailComposeViewController.canSendMail()
+        {
+            let mailComposerVC = MFMailComposeViewController()
+            mailComposerVC.mailComposeDelegate = self as? MFMailComposeViewControllerDelegate
+            
+            mailComposerVC.setToRecipients([email])
+            mailComposerVC.setSubject(subject)
+            //mailComposerVC.setMessageBody(bodyText, isHTML: false)
+            
+            present(mailComposerVC, animated: true, completion: nil)
+        }
+        else
+        {
+            print("Device not configured to send email...")
         }
     }
 
