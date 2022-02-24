@@ -23,7 +23,6 @@ UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
         super.viewDidLoad()
 
         modelPicker.selectRow(modelData.selectedIndex, inComponent: 0, animated: true)
-        //modelPicker.showsSelectionIndicator = true
         ambientStepper.value = Double(initialTamb)
         updateViews()
     }
@@ -98,11 +97,9 @@ UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
         {
             let mailComposerVC = MFMailComposeViewController()
             mailComposerVC.mailComposeDelegate = self as? MFMailComposeViewControllerDelegate
-            
             mailComposerVC.setToRecipients([email])
             mailComposerVC.setSubject(subject)
             //mailComposerVC.setMessageBody(bodyText, isHTML: false)
-            
             present(mailComposerVC, animated: true, completion: nil)
         }
         else
