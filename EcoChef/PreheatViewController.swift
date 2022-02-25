@@ -55,13 +55,6 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         UpdateLimits()
         Reset()
         
-        // Onboarding
-        if state.notOnBoarded {
-            onBoarding()
-            state.notOnBoarded = false
-            state.writeStateToDisk()
-        }
-        
         // Notification setup
         let notificationCenter = NotificationCenter.default
         
@@ -69,6 +62,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         notificationCenter.addObserver(self, selector: #selector(PreheatViewController.didBecomeActive), name: UIApplication.willEnterForegroundNotification, object: nil)
 
         // UI notification setup
+        // TODO: Put this elsewhere, maybe only when actually needed?
         let usernotificationCenter = UNUserNotificationCenter.current()
         usernotificationCenter.delegate = self
         let earlyAction = UNNotificationAction(identifier: "TIMER_SNOOZE", title: "Continue timer",
@@ -88,27 +82,31 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         usernotificationCenter.setNotificationCategories([timerFeedbackCategory, timerDoneCategory])
     }
     
+    override func viewDidAppear(_ animated: Bool)
+    {
+        super.viewDidAppear(animated)
+        // Onboarding
+        if state.notOnBoarded {
+            onBoarding()
+            state.notOnBoarded = false
+            state.writeStateToDisk()
+        }
+    }
+    
     private func onBoarding() {
         let alert = UIAlertController(title: "Welcome to EcoChef!",
-                                      message: "Would you like to read the FAQ?", preferredStyle: .alert)
-        
-        let noAction = UIAlertAction(title: "No", style: .cancel) {
+                                      message: "Click settings ⚙ on the lower right to get help and configure the app.",
+                                      preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default)
+        {
             action in
-            UIView.transition(with: self.helpLabel, duration: 1.2,
-                              options: .transitionFlipFromLeft,
+            UIView.transition(with: self.helpLabel, duration: 1.5,
+                              options: .transitionFlipFromBottom,
                               animations: {
                                 self.helpLabel.isHidden = false },
                               completion: nil)
         }
-        let yesAction = UIAlertAction(title: "Yes", style: .default) { action in
-            if let faqURL = URL(string: EcoChefState.faqURL) {
-                let safariViewController = SFSafariViewController(url:faqURL)
-                self.present(safariViewController, animated: true, completion: nil)
-            }
-            self.helpLabel.isHidden = false
-        }
-        alert.addAction(yesAction)
-        alert.addAction(noAction)
+        alert.addAction(okAction)
         present(alert, animated: true)
     }
     
