@@ -55,13 +55,6 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         UpdateLimits()
         Reset()
         
-        // Onboarding
-        if state.notOnBoarded {
-            onBoarding()
-            state.notOnBoarded = false
-            state.writeStateToDisk()
-        }
-        
         // Notification setup
         let notificationCenter = NotificationCenter.default
         
@@ -69,6 +62,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         notificationCenter.addObserver(self, selector: #selector(PreheatViewController.didBecomeActive), name: UIApplication.willEnterForegroundNotification, object: nil)
 
         // UI notification setup
+        // TODO: Put this elsewhere, maybe only when actually needed?
         let usernotificationCenter = UNUserNotificationCenter.current()
         usernotificationCenter.delegate = self
         let earlyAction = UNNotificationAction(identifier: "TIMER_SNOOZE", title: "Continue timer",
@@ -86,6 +80,17 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
                                    intentIdentifiers: [],
                                    options: UNNotificationCategoryOptions(rawValue: 0))
         usernotificationCenter.setNotificationCategories([timerFeedbackCategory, timerDoneCategory])
+    }
+    
+    override func viewDidAppear(_ animated: Bool)
+    {
+        super.viewDidAppear(animated)
+        // Onboarding
+        if state.notOnBoarded {
+            onBoarding()
+            state.notOnBoarded = false
+            state.writeStateToDisk()
+        }
     }
     
     private func onBoarding() {
