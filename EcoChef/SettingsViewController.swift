@@ -11,13 +11,15 @@ import MessageUI
 import SafariServices
 
 class SettingsViewController:
-UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+    UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate, MFMailComposeViewControllerDelegate {
     var modelData: ThermalModelData!
     var initialTamb: Float = 0.0
     
     @IBOutlet weak var ambientField: UITextField!
     @IBOutlet weak var ambientStepper: UIStepper!
     @IBOutlet weak var modelPicker: UIPickerView!
+    @IBOutlet var siteLabel: UILabel!
+    @IBOutlet var siteCell: UITableViewCell!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +27,12 @@ UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
         modelPicker.selectRow(modelData.selectedIndex, inComponent: 0, animated: true)
         ambientStepper.value = Double(initialTamb)
         updateViews()
+        
+        if !MFMailComposeViewController.canSendMail() {
+            print("Mail services are not available.")
+            siteLabel.isEnabled = false
+            siteCell.isUserInteractionEnabled = false
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -87,27 +95,35 @@ UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate {
         }
     }
     
+    // Eventually this should launch a website which includes contact pages
     func showSite() {
         let email = "ecochef@birgefuller.com"
         let subject = "EcoChef"
-        //let bodyText = "Type your message here..."
         
         // https://developer.apple.com/documentation/messageui/mfmailcomposeviewcontroller
         if MFMailComposeViewController.canSendMail()
         {
-            let mailComposerVC = MFMailComposeViewController()
-            mailComposerVC.mailComposeDelegate = self as? MFMailComposeViewControllerDelegate
-            mailComposerVC.setToRecipients([email])
-            mailComposerVC.setSubject(subject)
-            //mailComposerVC.setMessageBody(bodyText, isHTML: false)
-            present(mailComposerVC, animated: true, completion: nil)
+            let mailComposer = MFMailComposeViewController()
+            mailComposer.mailComposeDelegate = self
+            mailComposer.setToRecipients([email])
+            mailComposer.setSubject(subject)
+            present(mailComposer, animated: true, completion: nil)
+            print("Displayed mail modal...")
         }
         else
         {
-            print("Device not configured to send email...")
+            print("Device not configured to send email, yet it was enabled!")
         }
     }
-
+    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        // Dismiss the mail compose view controller.
+        print("In mailComposeController delegate function...")
+        print(result.rawValue)
+        siteCell.isSelected = false
+        controller.dismiss(animated: true, completion: nil)
+    }
+    
     @IBAction func clickedSave(_ sender: UIBarButtonItem) {
         modelData.selectedIndex = selectedModel
         performSegue(withIdentifier: "UnwindSettings", sender: self)

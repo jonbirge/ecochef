@@ -658,10 +658,10 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="Information" id="8x6-ps-OZl">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="FAQ" textLabel="0Pk-6W-acw" style="IBUITableViewCellStyleDefault" id="e9p-fS-kgf">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="FAQCell" textLabel="0Pk-6W-acw" style="IBUITableViewCellStyleDefault" id="e9p-fS-kgf" userLabel="FAQ Cell">
                                         <rect key="frame" x="0.0" y="415.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="e9p-fS-kgf" id="rV5-Sf-NzV">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="e9p-fS-kgf" id="rV5-Sf-NzV" userLabel="FAQView">
                                             <rect key="frame" x="0.0" y="0.0" width="350.5" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
@@ -678,11 +678,11 @@
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Web" textLabel="SzZ-OC-HO1" style="IBUITableViewCellStyleDefault" id="uEj-q2-60k">
                                         <rect key="frame" x="0.0" y="459.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uEj-q2-60k" id="RG8-oz-w7t">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uEj-q2-60k" id="RG8-oz-w7t" userLabel="SiteView">
                                             <rect key="frame" x="0.0" y="0.0" width="350.5" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Contact Birge &amp; Fuller" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="SzZ-OC-HO1">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Contact Birge &amp; Fuller" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="SzZ-OC-HO1" userLabel="SiteLabel">
                                                     <rect key="frame" x="16" y="0.0" width="326.5" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
@@ -691,15 +691,18 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <accessibilityTraits key="traits" notEnabled="YES"/>
+                                        </accessibility>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="vQG-n3-yEL" style="IBUITableViewCellStyleDefault" id="UCS-ZW-ysM">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="CreditsCell" textLabel="vQG-n3-yEL" style="IBUITableViewCellStyleDefault" id="UCS-ZW-ysM" userLabel="Credits Cell">
                                         <rect key="frame" x="0.0" y="503.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UCS-ZW-ysM" id="8KB-WY-6mn">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UCS-ZW-ysM" id="8KB-WY-6mn" userLabel="CreditsView">
                                             <rect key="frame" x="0.0" y="0.0" width="350.5" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Credits" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vQG-n3-yEL">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Credits" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vQG-n3-yEL" userLabel="CreditsLabel">
                                                     <rect key="frame" x="16" y="0.0" width="326.5" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
@@ -733,6 +736,8 @@
                         <outlet property="ambientField" destination="4P0-G3-aHN" id="Hbh-sE-Lf7"/>
                         <outlet property="ambientStepper" destination="SOs-vQ-KKq" id="UUK-35-shG"/>
                         <outlet property="modelPicker" destination="mx9-0g-gJQ" id="3vB-RE-Lp7"/>
+                        <outlet property="siteCell" destination="uEj-q2-60k" id="zSs-a0-b3t"/>
+                        <outlet property="siteLabel" destination="SzZ-OC-HO1" id="yaU-NX-ha7"/>
                         <segue destination="eBp-dt-Jg6" kind="unwind" identifier="UnwindSettings" unwindAction="prepareForUnwindWithSegue:" id="inD-y5-keh"/>
                     </connections>
                 </tableViewController>
