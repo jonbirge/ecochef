@@ -17,8 +17,8 @@ class AboutViewController: UIViewController {
         super.viewDidLoad()
     }
     
+    // TODO: Update version number programmatically
     override func viewWillAppear(_ animated: Bool) {
-        titleLabel.textColor = .black
         eggTextView.textColor = .white
     }
     
@@ -36,5 +36,6 @@ class AboutViewController: UIViewController {
                           animations:
             { self.eggTextView.textColor = .red },
                           completion: nil)
+        print("swiped up")
     }
 }

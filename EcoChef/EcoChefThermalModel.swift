@@ -3,7 +3,7 @@
 //  EcoChef
 //
 //  Created by Jonathan Birge on 7/5/17.
-//  Copyright © 2017 Birge Clocks. All rights reserved.
+//  Copyright © 2022 Birge & Fuller. All rights reserved.
 //
 
 import Foundation
