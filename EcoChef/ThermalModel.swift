@@ -410,6 +410,24 @@ class ThermalModel : CustomStringConvertible {
     func tempAfterCooling(time t:Float, fromtemp Tstart:Float) -> Float {
         return Tamb + exp(-t/a)*(Tstart - Tamb)
     }
+    
+    static func DisplayC(temp Tf:Float) -> String {
+        let Tc = FtoC(temp:Tf)
+        let TcQuant = round(2*Tc)/2.0
+        return String(TcQuant) + "º C"
+    }
+    
+    static func DisplayF(temp Tf:Float) -> String {
+        return String(Int(Tf)) + "º F"
+    }
+    
+    static func FtoC(temp Tf:Float) -> Float {
+        return (Tf - 32.0)/1.8
+    }
+    
+    static func CtoF(temp Tc:Float) -> Float {
+        return Tc*1.8 + 32.0
+    }
 }
 
 // load from struct

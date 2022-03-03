@@ -2,8 +2,7 @@
 //  SettingsViewController.swift
 //  EcoChef
 //
-//  Created by Jonathan Birge on 6/20/17.
-//  Copyright © 2017 Birge Clocks. All rights reserved.
+//  Copyright © 2022 Birge Clocks. All rights reserved.
 //
 
 import UIKit
@@ -13,8 +12,9 @@ import SafariServices
 class SettingsViewController:
     UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate, MFMailComposeViewControllerDelegate {
     var modelData: ThermalModelData!
-    var initialTamb: Float = 0.0
-    var useCelcius: Bool = false
+    var initialTamb: Float!  // F
+    var useCelcius: Bool!
+    var Tamb: Float = 0.0  // F
     
     @IBOutlet var ambientField: UITextField!
     @IBOutlet var ambientStepper: UIStepper!
@@ -27,8 +27,11 @@ class SettingsViewController:
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        modelPicker.selectRow(modelData.selectedIndex, inComponent: 0, animated: true)
-        ambientStepper.value = Double(initialTamb)
+        modelPicker.selectRow(
+            modelData.selectedIndex,
+            inComponent: 0, animated: false)
+        Tamb = initialTamb
+        updateUnits()
         updateViews()
         
         if !MFMailComposeViewController.canSendMail() {
@@ -45,8 +48,29 @@ class SettingsViewController:
         modelData.WriteToDisk()
     }
     
-    func updateViews() {
-        let ambientStr = String(Int(Tamb)) + "º F"
+    private func updateUnits() {
+        // Check useCelcius and change units of stepper to align
+        if useCelcius {
+            ambientStepper.maximumValue = 40
+            ambientStepper.minimumValue = -20
+            ambientStepper.stepValue = 0.5
+            ambientStepper.value = Double(round(2*ThermalModel.FtoC(temp:Tamb))/2)
+        } else {
+            ambientStepper.maximumValue = 110
+            ambientStepper.minimumValue = 0
+            ambientStepper.stepValue = 1
+            ambientStepper.value = Double(round(Tamb))
+        }
+    }
+    
+    // Update all views from data models
+    private func updateViews() {
+        var ambientStr : String?
+        if useCelcius {
+            ambientStr = ThermalModel.DisplayC(temp: Tamb)
+        } else {
+            ambientStr = ThermalModel.DisplayF(temp: Tamb)
+        }
         ambientField.text = ambientStr
         
         if useCelcius {
@@ -62,10 +86,6 @@ class SettingsViewController:
     
     var selectedModel: Int {
         return modelPicker.selectedRow(inComponent: 0)
-    }
-    
-    var Tamb: Float {
-        return Float(ambientStepper.value)
     }
 
     // MARK: UIPickerView handling
@@ -96,6 +116,7 @@ class SettingsViewController:
                 useCelcius = false
                 farenheitCell.isSelected = false
             }
+            updateUnits()
             updateViews()
         }
         
@@ -118,10 +139,9 @@ class SettingsViewController:
         }
     }
     
-    // Eventually this should launch a website which includes contact pages
     func showSite() {
         let email = "ecochef@birgefuller.com"
-        let subject = "EcoChef"
+        let subject = "[EcoChef] Question"
         
         // https://developer.apple.com/documentation/messageui/mfmailcomposeviewcontroller
         if MFMailComposeViewController.canSendMail()
@@ -131,11 +151,11 @@ class SettingsViewController:
             mailComposer.setToRecipients([email])
             mailComposer.setSubject(subject)
             present(mailComposer, animated: true, completion: nil)
-            print("Displayed mail modal...")
+            print("Displayed mail modal dialog")
         }
         else
         {
-            print("Device not configured to send email, yet it was enabled!")
+            print("Error: Device not configured for email, yet button was enabled!")
         }
     }
     
@@ -153,6 +173,11 @@ class SettingsViewController:
     }
     
     @IBAction func clickAmbientStepper(_ sender: UIStepper) {
+        if useCelcius {
+            Tamb = ThermalModel.CtoF(temp: Float(ambientStepper.value))
+        } else {
+            Tamb = Float(ambientStepper.value)
+        }
         updateViews()
     }
     
