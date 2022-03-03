@@ -10,16 +10,17 @@ import UIKit
 
 class AboutViewController: UIViewController {
 
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var eggTextView: UITextView!
+    @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var eggTextView: UITextView!
+    @IBOutlet var versionLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
-    // TODO: Update version number programmatically
     override func viewWillAppear(_ animated: Bool) {
-        eggTextView.textColor = .white
+        let appVersionString: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
+        versionLabel.text = appVersionString
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -30,12 +31,12 @@ class AboutViewController: UIViewController {
                           completion: nil)
     }
 
-    @IBAction func swipeUp(_ sender: UISwipeGestureRecognizer) {
+    func doEgg() {
+        print("swiped up")
         UIView.transition(with: eggTextView, duration: 5,
                           options: .transitionCrossDissolve,
                           animations:
-            { self.eggTextView.textColor = .red },
+                            { self.eggTextView.isHidden = false },
                           completion: nil)
-        print("swiped up")
     }
 }

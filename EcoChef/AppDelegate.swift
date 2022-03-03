@@ -31,13 +31,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func LoadState() {
         let stateURL = EcoChefState.stateURL
         if let rawData = try? Data(contentsOf: stateURL) {
-            print("successfully read raw archive data")
+            print("read raw archive data")
             do {
                 let state = try NSKeyedUnarchiver.unarchivedObject(ofClass: EcoChefState.self, from: rawData)
                 self.state = state
-                print("successfully decoded archive")
+                print("decoded archive")
             } catch let err {
-                print("error unarchiving state: \(err)")
+                print("error decoding state: \(err)")
                 print("creating new state...")
                 self.state = EcoChefState()
                 // we perhaps should do more here, since this should never happen...
