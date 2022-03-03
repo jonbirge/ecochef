@@ -14,12 +14,15 @@ class SettingsViewController:
     UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate, MFMailComposeViewControllerDelegate {
     var modelData: ThermalModelData!
     var initialTamb: Float = 0.0
+    var useCelcius: Bool = false
     
-    @IBOutlet weak var ambientField: UITextField!
-    @IBOutlet weak var ambientStepper: UIStepper!
-    @IBOutlet weak var modelPicker: UIPickerView!
+    @IBOutlet var ambientField: UITextField!
+    @IBOutlet var ambientStepper: UIStepper!
+    @IBOutlet var modelPicker: UIPickerView!
     @IBOutlet var siteLabel: UILabel!
     @IBOutlet var siteCell: UITableViewCell!
+    @IBOutlet var celciusCell: UITableViewCell!
+    @IBOutlet var farenheitCell: UITableViewCell!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +43,19 @@ class SettingsViewController:
         
         modelPicker.reloadAllComponents()
         modelData.WriteToDisk()
+    }
+    
+    func updateViews() {
+        let ambientStr = String(Int(Tamb)) + "º F"
+        ambientField.text = ambientStr
+        
+        if useCelcius {
+            celciusCell.accessoryType = UITableViewCell.AccessoryType.checkmark
+            farenheitCell.accessoryType = UITableViewCell.AccessoryType.none
+        } else {
+            celciusCell.accessoryType = UITableViewCell.AccessoryType.none
+            farenheitCell.accessoryType = UITableViewCell.AccessoryType.checkmark
+        }
     }
     
     // MARK: Output handling
@@ -71,7 +87,19 @@ class SettingsViewController:
     
     override func tableView(_ tableView: UITableView,
                             didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 3 {
+        
+        if indexPath.section == 3 {  // UNITS
+            if indexPath.row == 0 {
+                useCelcius = true
+                celciusCell.isSelected = false
+            } else {
+                useCelcius = false
+                farenheitCell.isSelected = false
+            }
+            updateViews()
+        }
+        
+        if indexPath.section == 4 {  // INFO
             switch indexPath.row {
             case 0:
                 showFAQ()
@@ -81,11 +109,6 @@ class SettingsViewController:
                 return
             }
         }
-    }
-    
-    func updateViews() {
-        let ambientStr = String(Int(Tamb)) + "º F"
-        ambientField.text = ambientStr
     }
     
     func showFAQ() {

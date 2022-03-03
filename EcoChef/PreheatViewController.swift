@@ -44,9 +44,10 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         let app = UIApplication.shared.delegate as! AppDelegate
         state = app.state
         // state!.notOnBoarded = true // TESTING
-        print("state Tamb: \(state!.Tamb)")
-        print("state desT: \(state!.desiredTemp)")
-        print("state notOnBoarded: \(state!.notOnBoarded)")
+        print("Tamb: \(state!.Tamb)")
+        print("desT: \(state!.desiredTemp)")
+        print("useCelcius: \(state!.useCelcius)")
+        print("notOnBoarded: \(state!.notOnBoarded)")
         
         timerDisabledControls =
             [currentTempSlider, desiredTempSlider, tempResetButton, settingsButton]
@@ -422,6 +423,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let settingsView = segue.destination as? SettingsViewController {
             settingsView.initialTamb = Tamb
+            settingsView.useCelcius = state.useCelcius
             settingsView.modelData = modelData
             helpLabel.isHidden = true
         }
@@ -432,7 +434,8 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         
         // Pull data from SettingsViewController
         model.setfrom(params: modelData.selectedModelData)
-        state!.selectedModel = modelData.selectedIndex
+        state.selectedModel = modelData.selectedIndex
+        state.useCelcius = source.useCelcius
         Tamb = source.Tamb
         UpdateLimits()
         UpdateView()
