@@ -11,10 +11,10 @@ import SafariServices
 
 class SettingsViewController:
     UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate, MFMailComposeViewControllerDelegate {
-    var modelData: ThermalModelData!
-    var initialTamb: Float!  // F
-    var useCelcius: Bool!
-    var Tamb: Float = 0.0  // F
+    var modelData: ThermalModelData?
+    var initialTamb: Float?  // F
+    var useCelcius: Bool = false
+    var Tamb: Float!  // F
     
     @IBOutlet var ambientField: UITextField!
     @IBOutlet var ambientStepper: UIStepper!
@@ -27,10 +27,12 @@ class SettingsViewController:
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        modelPicker.selectRow(
-            modelData.selectedIndex,
+        Tamb = initialTamb ?? 70
+           
+        if let modelIndex = modelData?.selectedIndex {
+        modelPicker.selectRow(modelIndex,
             inComponent: 0, animated: false)
-        Tamb = initialTamb
+        }
         updateUnits()
         updateViews()
         
@@ -45,7 +47,7 @@ class SettingsViewController:
         super.viewWillAppear(animated)
         
         modelPicker.reloadAllComponents()
-        modelData.WriteToDisk()
+        modelData?.WriteToDisk()
     }
     
     private func updateUnits() {
@@ -96,11 +98,15 @@ class SettingsViewController:
     
     func pickerView(_ pickerView: UIPickerView,
                     numberOfRowsInComponent component: Int) -> Int {
-        return modelData.modelArray.count
+        guard let theCount = modelData?.modelArray.count else {
+            return 0
+        }
+        return theCount
     }
     
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        return NSAttributedString(string: modelData.modelArray[row].name)
+        guard let theString = modelData?.modelArray[row].name else { return nil }
+        return NSAttributedString(string: theString)
     }
     
     // MARK: UITableView handling
@@ -161,14 +167,14 @@ class SettingsViewController:
     
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         // Dismiss the mail compose view controller.
-        print("In mailComposeController delegate function...")
+        print("In mailComposeController delegate...")
         print(result.rawValue)
         siteCell.isSelected = false
         controller.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func clickedSave(_ sender: UIBarButtonItem) {
-        modelData.selectedIndex = selectedModel
+        modelData?.selectedIndex = selectedModel
         performSegue(withIdentifier: "UnwindSettings", sender: self)
     }
     
