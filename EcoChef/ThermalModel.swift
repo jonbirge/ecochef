@@ -72,8 +72,8 @@ class ThermalModelData {
 
 class ThermalModelParams : NSObject, NSCoding {
     var name: String
-    var a: Float
-    var b: Float
+    var a: Float  // minutes
+    var b: Float  // degrees F
     var note: String
     var mod: Date
     var measurements: HeatingDataSet
@@ -130,7 +130,6 @@ class ThermalModelParams : NSObject, NSCoding {
         fitter = ThermalModelFitter(params: self)
     }
     
-    // TODO: Rename
     func fitfromdata() {
         if fitter == nil {
             initFitter()
@@ -222,10 +221,10 @@ class HeatingDataSet : NSObject, NSCoding {
 }
 
 class HeatingDataPoint : NSObject, NSCoding {
-    var Tamb : Float = 72
-    var Tstart : Float = 72
-    var Tfinal : Float = 350
-    var time : Float = 10  // minutes (est. or actual)
+    var Tamb : Float = 72  // deg F
+    var Tstart : Float = 72  // deg F
+    var Tfinal : Float = 350  // deg F
+    var time : Float = 10  // minutes
     var date : Date = Date()
     
     struct Keys {
@@ -284,7 +283,8 @@ class HeatingDataPoint : NSObject, NSCoding {
     }
 }
 
-// MARK: - Model fitting
+
+// MARK: - Computational model and regression
 
 class ThermalModelFitter : Fittable {
     var verbose: Bool = false
@@ -362,12 +362,10 @@ class ThermalModelFitter : Fittable {
     }
 }
 
-// MARK: - Computational model
-
 class ThermalModel : CustomStringConvertible {
-    var a: Float = 12.0  // RC time constant
-    var b: Float = 600.0  // RH coefficient (s.s. temp above ambient)
-    var Tamb: Float = 70.0  // T_ambient
+    var a: Float = 12.0  // RC time constant (minutes)
+    var b: Float = 600.0  // RH coefficient, s.s. temp above ambient (deg F)
+    var Tamb: Float = 70.0  // T_ambient (deg F)
     
     var description: String {
         return "ThermalModel: \((a, b)), Tamb = \(Tamb)"

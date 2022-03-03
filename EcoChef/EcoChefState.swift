@@ -8,10 +8,11 @@
 
 import Foundation
 
-class EcoChefState : NSObject, NSCoding {
-    var Tamb: Float = 70
+class EcoChefState : NSObject, NSSecureCoding {
+    static var supportsSecureCoding: Bool = true
+    var Tamb: Float = 70  // deg F
     var selectedModel: Int = 0
-    var desiredTemp: Float = 350
+    var desiredTemp: Float = 350  // def F
     var notOnBoarded: Bool = true
     struct PropertyKeys {
         static let Tamb = "tamb"
@@ -62,6 +63,13 @@ class EcoChefState : NSObject, NSCoding {
     }
     
     func writeStateToDisk() {
-        NSKeyedArchiver.archiveRootObject(self, toFile: EcoChefState.stateURL.path)
+        do {
+            let theArchive = try NSKeyedArchiver.archivedData(withRootObject: self, requiringSecureCoding: true)
+            try theArchive.write(to:EcoChefState.stateURL)
+            print("EcoChefState: wrote to disk")
+        }
+        catch let err {
+            print("EcoChefState: failed to write with error \(err)")
+        }
     }
 }

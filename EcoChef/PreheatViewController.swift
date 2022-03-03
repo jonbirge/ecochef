@@ -35,6 +35,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     }
     
     // MARK: - Startup
+    // TODO: Should this be here or in AppDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
