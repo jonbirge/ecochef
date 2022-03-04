@@ -12,10 +12,9 @@ import Foundation
 
 class ThermalModelData {
     var modelArray: [ThermalModelParams] = []
-    var selectedIndex: Int = 1
+    var selectedIndex: Int = 0
     
     // The currently selected model
-    // TODO: Refactor as selectedModel
     var selectedModelData: ThermalModelParams {
         if selectedIndex < modelArray.count {
             return modelArray[selectedIndex]
@@ -33,18 +32,18 @@ class ThermalModelData {
         var theparams : ThermalModelParams
         var defaultModels : [ThermalModelParams] = []
         
-        theparams = ThermalModelParams(name: "Electric (EnergyStar)")
+        theparams = ThermalModelParams(name: "Electric Oven (EnergyStar)")
         theparams.a *= 2
         theparams.note = "Bosch"
         defaultModels.append(theparams)
         
-        theparams = ThermalModelParams(name: "Electric (Fast)")
+        theparams = ThermalModelParams(name: "Electric Oven (Fast)")
         theparams.a *= 1.5
         theparams.b = 700
         theparams.note = "Bosch; fast preheat setting"
         defaultModels.append(theparams)
         
-        theparams = ThermalModelParams(name: "Convection")
+        theparams = ThermalModelParams(name: "Convection Oven")
         theparams.a *= 1.1
         theparams.note = "Bosch; normal convection preheat"
         defaultModels.append(theparams)
@@ -70,7 +69,8 @@ class ThermalModelData {
     }
 }
 
-class ThermalModelParams : NSObject, NSCoding {
+class ThermalModelParams : NSObject, NSSecureCoding {
+    static var supportsSecureCoding: Bool = true
     var name: String
     var a: Float  // minutes
     var b: Float  // degrees F
@@ -138,7 +138,12 @@ class ThermalModelParams : NSObject, NSCoding {
     }
     
     required convenience init(coder aDecoder: NSCoder) {
-        let name = aDecoder.decodeObject(forKey: Keys.name) as! String
+        var name: String
+        if let nameread = aDecoder.decodeObject(forKey: Keys.name) as? String {
+            name = nameread
+        } else {
+            name = "Untitled"
+        }
         let a = aDecoder.decodeFloat(forKey: Keys.a)
         let b = aDecoder.decodeFloat(forKey: Keys.b)
         var note: String
@@ -153,7 +158,13 @@ class ThermalModelParams : NSObject, NSCoding {
         } else {
             mod = Date()
         }
-        let meas = aDecoder.decodeObject(forKey: Keys.meas) as! HeatingDataSet
+        var meas: HeatingDataSet
+        if let measread = aDecoder.decodeObject(forKey: Keys.meas) as? HeatingDataSet {
+            meas = measread
+        } else {
+            print("ThermalModel: Failed to decode HeatingDataSet")
+            meas = HeatingDataSet()
+        }
         let cal = aDecoder.decodeBool(forKey: Keys.cal)
         self.init(name: name, a: a, b: b, note: note, mod: mod, meas: meas, cal: cal)
     }
@@ -175,7 +186,9 @@ class ThermalModelParams : NSObject, NSCoding {
 
 // MARK: - Measurements
 
-class HeatingDataSet : NSObject, NSCoding {
+class HeatingDataSet : NSObject, NSSecureCoding {
+    static var supportsSecureCoding: Bool = true
+    
     var measlist: [HeatingDataPoint] = []
     
     struct Keys {
@@ -191,8 +204,12 @@ class HeatingDataSet : NSObject, NSCoding {
     }
     
     required convenience init(coder aDecoder: NSCoder) {
-        let measlistread = aDecoder.decodeObject(forKey: Keys.measlist) as! [HeatingDataPoint]
-        self.init(measlist: measlistread)
+        if let measlistread = aDecoder.decodeObject(forKey: Keys.measlist) as? [HeatingDataPoint]
+        {
+            self.init(measlist: measlistread)
+        } else {
+            self.init()
+        }
     }
     
     func encode(with aCoder: NSCoder) {
@@ -220,7 +237,9 @@ class HeatingDataSet : NSObject, NSCoding {
     }
 }
 
-class HeatingDataPoint : NSObject, NSCoding {
+class HeatingDataPoint : NSObject, NSSecureCoding {
+    static var supportsSecureCoding: Bool = true
+
     var Tamb : Float = 72  // deg F
     var Tstart : Float = 72  // deg F
     var Tfinal : Float = 350  // deg F

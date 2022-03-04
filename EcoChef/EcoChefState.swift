@@ -2,7 +2,6 @@
 //  EcoChefState.swift
 //  EcoChef
 //
-//  Created by Jonathan Birge on 6/30/17.
 //  Copyright © 2022 Birge & Fuller. All rights reserved.
 //
 
@@ -12,7 +11,7 @@ class EcoChefState : NSObject, NSSecureCoding {
     static var supportsSecureCoding: Bool = true
     var Tamb: Float = 70  // deg F
     var selectedModel: Int = 0
-    var desiredTemp: Float = 350  // def F
+    var desiredTemp: Float = 350  // deg F
     var useCelcius: Bool = false  // TODO: set by region or initial query
     var notOnBoarded: Bool = true
     struct PropertyKeys {
