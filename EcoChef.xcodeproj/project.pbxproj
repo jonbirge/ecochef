@@ -25,9 +25,7 @@
 		AB57E5DB1F0492F700D37EF8 /* birge-ring.aiff in Resources */ = {isa = PBXBuildFile; fileRef = AB57E5DA1F0492F700D37EF8 /* birge-ring.aiff */; };
 		AB9506111F2580E1004A2EA9 /* Arithmetic.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB05AF1F1DB90200C7B635 /* Arithmetic.swift */; };
 		AB9506121F2580E1004A2EA9 /* Auxiliary.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB05B01F1DB90200C7B635 /* Auxiliary.swift */; };
-		AB9506131F2580E1004A2EA9 /* Convolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB05B11F1DB90200C7B635 /* Convolution.swift */; };
 		AB9506141F2580E1004A2EA9 /* Exponential.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB05B21F1DB90200C7B635 /* Exponential.swift */; };
-		AB9506151F2580E1004A2EA9 /* FFT.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB05B31F1DB90200C7B635 /* FFT.swift */; };
 		AB9506161F2580E1004A2EA9 /* Hyperbolic.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB05B41F1DB90200C7B635 /* Hyperbolic.swift */; };
 		AB9506171F2580E1004A2EA9 /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB05B51F1DB90200C7B635 /* Matrix.swift */; };
 		AB9506181F2580E1004A2EA9 /* Power.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB05B61F1DB90200C7B635 /* Power.swift */; };
@@ -39,9 +37,7 @@
 		ABD412861F11375400429887 /* ThermalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB43B18A1EEBAEA100B6A96B /* ThermalModel.swift */; };
 		ABEB05B91F1DB90200C7B635 /* Arithmetic.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB05AF1F1DB90200C7B635 /* Arithmetic.swift */; };
 		ABEB05BA1F1DB90200C7B635 /* Auxiliary.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB05B01F1DB90200C7B635 /* Auxiliary.swift */; };
-		ABEB05BB1F1DB90200C7B635 /* Convolution.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB05B11F1DB90200C7B635 /* Convolution.swift */; };
 		ABEB05BC1F1DB90200C7B635 /* Exponential.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB05B21F1DB90200C7B635 /* Exponential.swift */; };
-		ABEB05BD1F1DB90200C7B635 /* FFT.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB05B31F1DB90200C7B635 /* FFT.swift */; };
 		ABEB05BE1F1DB90200C7B635 /* Hyperbolic.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB05B41F1DB90200C7B635 /* Hyperbolic.swift */; };
 		ABEB05BF1F1DB90200C7B635 /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB05B51F1DB90200C7B635 /* Matrix.swift */; };
 		ABEB05C01F1DB90200C7B635 /* Power.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB05B61F1DB90200C7B635 /* Power.swift */; };
@@ -91,9 +87,7 @@
 		ABD412801F1134C900429887 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ABEB05AF1F1DB90200C7B635 /* Arithmetic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Arithmetic.swift; sourceTree = "<group>"; };
 		ABEB05B01F1DB90200C7B635 /* Auxiliary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Auxiliary.swift; sourceTree = "<group>"; };
-		ABEB05B11F1DB90200C7B635 /* Convolution.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Convolution.swift; sourceTree = "<group>"; };
 		ABEB05B21F1DB90200C7B635 /* Exponential.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Exponential.swift; sourceTree = "<group>"; };
-		ABEB05B31F1DB90200C7B635 /* FFT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FFT.swift; sourceTree = "<group>"; };
 		ABEB05B41F1DB90200C7B635 /* Hyperbolic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hyperbolic.swift; sourceTree = "<group>"; };
 		ABEB05B51F1DB90200C7B635 /* Matrix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Matrix.swift; sourceTree = "<group>"; };
 		ABEB05B61F1DB90200C7B635 /* Power.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Power.swift; sourceTree = "<group>"; };
@@ -193,9 +187,7 @@
 				ABEB05B71F1DB90200C7B635 /* Surge.h */,
 				ABEB05AF1F1DB90200C7B635 /* Arithmetic.swift */,
 				ABEB05B01F1DB90200C7B635 /* Auxiliary.swift */,
-				ABEB05B11F1DB90200C7B635 /* Convolution.swift */,
 				ABEB05B21F1DB90200C7B635 /* Exponential.swift */,
-				ABEB05B31F1DB90200C7B635 /* FFT.swift */,
 				ABEB05B41F1DB90200C7B635 /* Hyperbolic.swift */,
 				ABEB05B51F1DB90200C7B635 /* Matrix.swift */,
 				ABEB05B61F1DB90200C7B635 /* Power.swift */,
@@ -346,7 +338,6 @@
 				ABEBBBA01F05AC1C00527B4F /* TimerButton.swift in Sources */,
 				ABEBBBA71F05B06400527B4F /* SimpleButtonControlState.swift in Sources */,
 				ABEB05B91F1DB90200C7B635 /* Arithmetic.swift in Sources */,
-				ABEB05BD1F1DB90200C7B635 /* FFT.swift in Sources */,
 				ABEB05C11F1DB90200C7B635 /* Trigonometric.swift in Sources */,
 				AB53D56E1F0DD85900ACA17A /* EcoChefThermalModel.swift in Sources */,
 				AB3BB8391F5F9CA000CDF182 /* TimerViewController.swift in Sources */,
@@ -355,7 +346,6 @@
 				AB43B18B1EEBAEA100B6A96B /* ThermalModel.swift in Sources */,
 				AB2EF88F1F36D74100584390 /* CalibrationViewController.swift in Sources */,
 				AB007F211F1C7B8000AD9552 /* Optimization.swift in Sources */,
-				ABEB05BB1F1DB90200C7B635 /* Convolution.swift in Sources */,
 				ABEB05BF1F1DB90200C7B635 /* Matrix.swift in Sources */,
 				ABEB6F1D1F02A6E300ABD199 /* ThermalTimer.swift in Sources */,
 				ABEB05C01F1DB90200C7B635 /* Power.swift in Sources */,
@@ -377,13 +367,11 @@
 				AB9506141F2580E1004A2EA9 /* Exponential.swift in Sources */,
 				AB007F221F1C7B8000AD9552 /* Optimization.swift in Sources */,
 				AB9506171F2580E1004A2EA9 /* Matrix.swift in Sources */,
-				AB9506131F2580E1004A2EA9 /* Convolution.swift in Sources */,
 				AB47A6CD1F27A4F400044D74 /* MatrixTests.swift in Sources */,
 				AB9506181F2580E1004A2EA9 /* Power.swift in Sources */,
 				ABD4127F1F1134C900429887 /* EcoChefTests.swift in Sources */,
 				ABD412861F11375400429887 /* ThermalModel.swift in Sources */,
 				AB9506161F2580E1004A2EA9 /* Hyperbolic.swift in Sources */,
-				AB9506151F2580E1004A2EA9 /* FFT.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
