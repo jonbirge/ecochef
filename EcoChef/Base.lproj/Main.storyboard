@@ -98,9 +98,8 @@
                                     <segue destination="vre-sg-JdI" kind="show" identifier="ShowSettings" id="3SX-HB-Wfs"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ANQ-uz-xo0" customClass="TimerButton" customModule="EcoChef" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ANQ-uz-xo0" customClass="TimerButton" customModule="EcoChef" customModuleProvider="target">
                                 <rect key="frame" x="32" y="441" width="146" height="34"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="Cancel">
                                     <color key="titleColor" systemColor="linkColor"/>
                                 </state>
@@ -116,16 +115,15 @@
                                     <action selector="TimerReset:" destination="9pv-A4-QxB" eventType="touchUpInside" id="jkP-Mu-Rj1"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gCO-mA-Prx" customClass="TimerButton" customModule="EcoChef" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gCO-mA-Prx" customClass="TimerButton" customModule="EcoChef" customModuleProvider="target">
                                 <rect key="frame" x="197" y="441" width="146" height="34"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <size key="titleShadowOffset" width="2" height="2"/>
                                 <state key="normal" title="Start">
-                                    <color key="titleColor" systemColor="labelColor"/>
+                                    <color key="titleColor" systemColor="linkColor"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="titleColorNormal">
-                                        <color key="value" systemColor="labelColor"/>
+                                        <color key="value" systemColor="linkColor"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="7"/>

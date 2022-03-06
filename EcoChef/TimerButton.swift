@@ -3,15 +3,18 @@
 //
 
 import UIKit
+import SimpleButton
 
 @IBDesignable
 
 class TimerButton: SimpleButton {
-    let lightgrey = UIColor(white: 0.9, alpha: 1)
-    
-    // Background color for normal state
     @IBInspectable var cornerRadius: CGFloat = 9
     @IBInspectable var titleColorNormal: UIColor?
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        setBorderColor(currentTitleColor)
+    }
     
     override func setTitleColor(_ color: UIColor?, for state: UIControl.State) {
         if let thecolor = color {
@@ -48,7 +51,7 @@ class TimerButton: SimpleButton {
         }
         
         setBorderWidth(2.0)
-        setTitleColor(lightgrey, for: .disabled)
+        setTitleColor(.systemGray, for: .disabled)
     }
     
 }
