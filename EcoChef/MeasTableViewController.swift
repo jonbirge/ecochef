@@ -75,10 +75,12 @@ class MeasTableViewController: UITableViewController {
         }
     }
     
-    @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
-        modelParams.measurements.sort()
-        tableView.reloadData()
-        modelParams.fitfromdata()
-    }
+    // TODO: This evidently isn't needed or getting fired
+    //    @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
+    //        print("MeasTableViewController:prepareForUnwind()")
+    //        modelParams.measurements.sort()
+    //        tableView.reloadData()
+    //        modelParams.fitfromdata()
+    //    }
 
 }

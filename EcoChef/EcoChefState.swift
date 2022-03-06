@@ -2,22 +2,24 @@
 //  EcoChefState.swift
 //  EcoChef
 //
-//  Created by Jonathan Birge on 6/30/17.
 //  Copyright © 2022 Birge & Fuller. All rights reserved.
 //
 
 import Foundation
 
-class EcoChefState : NSObject, NSCoding {
-    var Tamb: Float = 70
+class EcoChefState : NSObject, NSSecureCoding {
+    static var supportsSecureCoding: Bool = true
+    var Tamb: Float = 70  // deg F
     var selectedModel: Int = 0
-    var desiredTemp: Float = 350
+    var desiredTemp: Float = 350  // deg F
+    var useCelcius: Bool = false  // TODO: set by region or initial query
     var notOnBoarded: Bool = true
     struct PropertyKeys {
         static let Tamb = "tamb"
         static let selectedModel = "selectedmodel"
         static let desiredTemp = "desiredtemp"
         static let notOnBoard = "notonboard"
+        static let useCelcius = "usecelcius"
     }
     
     static var stateURL: URL {
@@ -38,10 +40,11 @@ class EcoChefState : NSObject, NSCoding {
         super.init()
     }
     
-    init(Tamb: Float, selectedModel: Int, desiredTemp: Float, notOnBoarded: Bool) {
+    init(Tamb: Float, selectedModel: Int, desiredTemp: Float, useCelcius: Bool, notOnBoarded: Bool) {
         self.Tamb = Tamb
         self.selectedModel = selectedModel
         self.desiredTemp = desiredTemp
+        self.useCelcius = useCelcius
         self.notOnBoarded = notOnBoarded
         //self.notOnBoarded = true  // TEST
     }
@@ -50,18 +53,27 @@ class EcoChefState : NSObject, NSCoding {
         let Tamb = aDecoder.decodeFloat(forKey: PropertyKeys.Tamb)
         let selectedModel = aDecoder.decodeInteger(forKey: PropertyKeys.selectedModel)
         let desiredTemp = aDecoder.decodeFloat(forKey: PropertyKeys.desiredTemp)
+        let useCelcius = aDecoder.decodeBool(forKey: PropertyKeys.useCelcius)
         let notonboarded = aDecoder.decodeBool(forKey: PropertyKeys.notOnBoard)
-        self.init(Tamb: Tamb, selectedModel: selectedModel, desiredTemp: desiredTemp, notOnBoarded: notonboarded)
+        self.init(Tamb: Tamb, selectedModel: selectedModel, desiredTemp: desiredTemp, useCelcius: useCelcius, notOnBoarded: notonboarded)
     }
     
     func encode(with aCoder: NSCoder) {
         aCoder.encode(Tamb, forKey: PropertyKeys.Tamb)
         aCoder.encode(selectedModel, forKey: PropertyKeys.selectedModel)
         aCoder.encode(desiredTemp, forKey: PropertyKeys.desiredTemp)
+        aCoder.encode(useCelcius, forKey: PropertyKeys.useCelcius)
         aCoder.encode(notOnBoarded, forKey: PropertyKeys.notOnBoard)
     }
     
     func writeStateToDisk() {
-        NSKeyedArchiver.archiveRootObject(self, toFile: EcoChefState.stateURL.path)
+        do {
+            let theArchive = try NSKeyedArchiver.archivedData(withRootObject: self, requiringSecureCoding: true)
+            try theArchive.write(to:EcoChefState.stateURL)
+            print("EcoChefState: wrote to disk")
+        }
+        catch let err {
+            print("EcoChefState: failed to write with error \(err)")
+        }
     }
 }

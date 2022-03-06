@@ -31,6 +31,7 @@ class ModelEditViewController: UITableViewController {
     // MARK: - Table view data source
     
     func updateView() {
+        guard modelParams != nil else { return }
         let isLearning = fitSwitch.isOn
         if isLearning {
             rcField.text = String(modelParams!.a)
@@ -99,7 +100,7 @@ class ModelEditViewController: UITableViewController {
     
     @IBAction func clickFitSwitch() {
         if fitSwitch.isOn {
-            modelParams!.fitfromdata()
+            modelParams?.fitfromdata()
         }
         updateView()
     }

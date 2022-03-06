@@ -105,10 +105,12 @@ class ModelTableViewController: UITableViewController {
     }
 
     @IBAction func goBack(_ sender: UIBarButtonItem) {
+        print("ModelTableViewController:goBack()")
         performSegue(withIdentifier: "UnwindModelList", sender: self)
     }
     
     @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
+        print("ModelTableViewController:prepareForUnwind()")
         guard let source = segue.source as? ModelEditViewController,
         let modelParams = source.modelParams
             else { return }

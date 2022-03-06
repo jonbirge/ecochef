@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 // Extension for reading and writing using UIKit API
+// TODO: Make functions to display and quantize temps based on app unit state
 extension ThermalModelData {
     var modelURL: URL {
         let modelURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
@@ -17,14 +18,35 @@ extension ThermalModelData {
     }
     
     func LoadModelData() {
-        if let models = NSKeyedUnarchiver.unarchiveObject(withFile: modelURL.path) as? [ThermalModelParams] {
-            self.modelArray = models
-        } else {
+        do {
+            print("ThermalModelDataExt: decoding...")
+            let rawData = try Data(contentsOf: modelURL)
+            if let models = try
+                NSKeyedUnarchiver.unarchivedObject(
+                    ofClasses: [NSArray.self, ThermalModelParams.self, NSString.self, NSDate.self, HeatingDataSet.self, HeatingDataPoint.self],
+                    from: rawData) as? [ThermalModelParams]
+            {
+                self.modelArray = models
+            }
+            else
+            {
+                print("ThermalModelDataExt: error decoding!")
+                LoadDefaultModelData()
+            }
+        } catch let err {
+            print("ThermalModelDataExt: unable to read/decode data: \(err)")
             LoadDefaultModelData()
         }
     }
     
     func WriteToDisk() {
-        NSKeyedArchiver.archiveRootObject(modelArray, toFile: modelURL.path)
+        do {
+            let rawData = try NSKeyedArchiver.archivedData(withRootObject: modelArray, requiringSecureCoding: true)
+            try rawData.write(to: modelURL)
+            print("ThermalModelDataExt: wrote to file...") }
+        catch let err {
+            print("ThermalModelData: error encoding data: \(err)")
+            return
+        }
     }
 }
