@@ -9,8 +9,8 @@ import UIKit
 class TimerButton: SimpleButton {
     let lightgrey = UIColor(white: 0.9, alpha: 1)
     
-    /// Background color for normal state
-    @IBInspectable var cornerRadius: CGFloat = 5
+    // Background color for normal state
+    @IBInspectable var cornerRadius: CGFloat = 9
     @IBInspectable var titleColorNormal: UIColor?
     
     override func setTitleColor(_ color: UIColor?, for state: UIControl.State) {
@@ -18,14 +18,14 @@ class TimerButton: SimpleButton {
             if state != .disabled {
                 setBorderColor(thecolor, for: state)
             } else {
-                setBorderColor(thecolor, for: state, animated: true, animationDuration: 0.1)
+                setBorderColor(thecolor, for: state, animated: true, animationDuration: 0.3)
             }
         } else {
             let defaultColor = titleColor(for: state)
             if state != .disabled {
                 setBorderColor(defaultColor!, for: state)
             } else {
-                setBorderColor(defaultColor!, for: state, animated: true, animationDuration: 0.1)
+                setBorderColor(defaultColor!, for: state, animated: true, animationDuration: 0.3)
             }
         }
         super.setTitleColor(color, for: state)

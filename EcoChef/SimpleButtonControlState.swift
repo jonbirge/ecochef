@@ -9,10 +9,7 @@
 import Foundation
 import UIKit
 
-/**
- *  Custom SimpleButton control state
- */
 public struct SimpleButtonControlState {
-    /// Indicates loading state of SimpleButton
+    // Indicates loading state of SimpleButton
     public static let loading: UIControl.State = UIControl.State(rawValue: 1 << 16)
 }
