@@ -2,8 +2,7 @@
 //  FirstViewController.swift
 //  EcoChef
 //
-//  Created by Jonathan Birge on 6/9/17.
-//  Copyright © 2017 Birge Clocks. All rights reserved.
+//  Copyright © 2022 Birge & Fuller. All rights reserved.
 //
 
 import UIKit
@@ -11,16 +10,21 @@ import UserNotifications
 import SafariServices
 
 class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate {
-    let model = ThermalModel()
-    let modelTimer = ThermalTimer()
-    var modelData = ThermalModelData()
-    let smallstep: Float = 2
-    let largestep: Float = 25
-    let crossover: Float = 100
-    let heatingColor: UIColor = UIColor.red
-    let coolingColor: UIColor = UIColor.purple
+    
+    private let model = ThermalModel()
+    private let modelTimer = ThermalTimer()
+    private let smallstep: Float = 2
+    private let largestep: Float = 25
+    private let crossover: Float = 100
+    private let smallstepC: Float = 1
+    private let largestepC: Float = 10
+    private let crossoverC: Float = 50
+    private let heatingColor: UIColor = UIColor.red
+    private let coolingColor: UIColor = UIColor.purple
+    
     private var desiredTemp: Float = 350
     private var currentTemp: Float = 70
+    private var modelData = ThermalModelData()
     private var state: EcoChefState!
     private var timerDisabledControls: [UIControl]!
     private var timer: Timer?
@@ -43,7 +47,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         // Get state from application object
         let app = UIApplication.shared.delegate as! AppDelegate
         state = app.state
-        // state!.notOnBoarded = true // TESTING
+        // state!.notOnBoarded = true // FOR TESTING
         print("Tamb: \(state!.Tamb)")
         print("desT: \(state!.desiredTemp)")
         print("useCelcius: \(state!.useCelcius)")
@@ -54,7 +58,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         modelTimer.thermalModel = model
         modelData.LoadModelData()
         UpdateFromState()
-        UpdateLimits()
+        UpdateSliders()
         Reset()
         
         // Notification setup
@@ -84,8 +88,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         usernotificationCenter.setNotificationCategories([timerFeedbackCategory, timerDoneCategory])
     }
     
-    override func viewDidAppear(_ animated: Bool)
-    {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // Onboarding
         if state.notOnBoarded {
@@ -138,15 +141,19 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     // MARK: - State
     
     private func UpdateFromState() {
-        desiredTempSlider.value = state!.desiredTemp
-        modelData.selectedIndex = state!.selectedModel
+        if state.useCelcius {
+            desiredTempSlider.value = ThermalModel.FtoC(temp: state.desiredTemp)
+        } else {
+            desiredTempSlider.value = state.desiredTemp
+        }
+        modelData.selectedIndex = state.selectedModel
         model.setfrom(params: modelData.selectedModelData)
         UpdateView()
     }
     
-    func WriteStateToDisk() {
-        state!.desiredTemp = desiredTemp
-        state!.writeStateToDisk()
+    private func WriteStateToDisk() {
+        state.desiredTemp = desiredTemp
+        state.writeStateToDisk()
     }
     
     // MARK: - UI & model
@@ -159,16 +166,39 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         }
     }
     
+    private func QuantizeC(_ temp:Float) -> Float {
+        if temp < crossoverC {
+            return smallstepC*round(temp/smallstepC)
+        } else {
+            return largestepC*round(temp/largestepC)
+        }
+    }
+    
+    // Pull in data from sliders
+    private func ReadSliders() {
+        if state.useCelcius {
+            currentTemp = ThermalModel.CtoF(temp: (currentTempSlider.value))  // TODO: round?
+            desiredTemp = ThermalModel.CtoF(temp: QuantizeC(desiredTempSlider.value))
+        } else {
+            currentTemp = (currentTempSlider.value)  // TODO: round?
+            desiredTemp = Quantize(desiredTempSlider.value)
+        }
+    }
+    
     // Update view while time is not engaged
-    // TODO: Integrate timer view updates
-    func UpdateView() {
-        // Pull from sliders
-        currentTemp = round(currentTempSlider.value)
-        desiredTemp = Quantize(desiredTempSlider.value)
+    private func UpdateView() {
+        if state.useCelcius {
+            currentTemp = ThermalModel.CtoF(temp: (currentTempSlider.value))  // TODO: round?
+            desiredTemp = ThermalModel.CtoF(temp: QuantizeC(desiredTempSlider.value))
+            currentTempLabel.text = ThermalModel.DisplayC(temp: currentTemp)
+            desiredTempLabel.text = ThermalModel.DisplayC(temp: desiredTemp)
+        } else {
+            currentTemp = (currentTempSlider.value)  // TODO: round?
+            desiredTemp = Quantize(desiredTempSlider.value)
+            currentTempLabel.text = ThermalModel.DisplayF(temp: currentTemp)
+            desiredTempLabel.text = ThermalModel.DisplayF(temp: desiredTemp)
+        }
         
-        // Labels
-        currentTempLabel.text = String(Int(currentTemp))
-        desiredTempLabel.text = String(Int(desiredTemp))
         preheatLabel.textColor = .darkGray
         preheatLabel.text = modelData.selectedModelData.name
         
@@ -186,7 +216,46 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         
         // Run model
         let minfrac = model.time(totemp: desiredTemp, fromtemp: currentTemp)
-        ShowTime(minutes: minfrac!)  // faster?
+        ShowTime(minutes: minfrac)  // faster?
+    }
+    
+    func UpdateSliders() {
+        var desiredMax, desiredMin: Float  // F
+        var currentMax, currentMin: Float  // F
+        
+        print("PreviewViewController:UpdateLimits()")
+        
+        desiredMin = 70
+        model.Tamb = state.Tamb
+        
+        let maxTemp = Quantize(model.Tmax)  // F
+        if maxTemp > 500 {
+            desiredMax = 500
+        } else {
+            desiredMax = Quantize(model.Tmax)
+        }
+        
+        currentMax = desiredMax
+        currentMin = Tamb
+        
+        if state.useCelcius {
+            currentTempSlider.maximumValue = round(ThermalModel.FtoC(temp: currentMax))
+            currentTempSlider.minimumValue = round(ThermalModel.FtoC(temp: currentMin))
+            desiredTempSlider.maximumValue = round(ThermalModel.FtoC(temp: desiredMax))
+            desiredTempSlider.minimumValue = round(ThermalModel.FtoC(temp: desiredMin))
+            currentTempSlider.value = ThermalModel.FtoC(temp: currentTemp)
+            desiredTempSlider.value = QuantizeC(desiredTemp)
+        } else {
+            currentTempSlider.maximumValue = currentMax
+            currentTempSlider.minimumValue = currentMin
+            desiredTempSlider.maximumValue = desiredMax
+            desiredTempSlider.minimumValue = desiredMin
+            currentTempSlider.value = currentTemp
+            desiredTempSlider.value = Quantize(desiredTemp)
+        }
+        
+        UpdateView()
+        CheckTimerEnable()
     }
     
     func ShowTime(minutes: Float?) {
@@ -207,26 +276,13 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         }
     }
     
-    func UpdateLimits() {
-        model.Tamb = state!.Tamb
-        let maxTemp = Quantize(model.Tmax)
-        if maxTemp > 500 {
-            desiredTempSlider.maximumValue = 500
-        } else {
-            desiredTempSlider.maximumValue = Quantize(model.Tmax)
-        }
-        currentTempSlider.minimumValue = Tamb
-        desiredTempSlider.minimumValue = Tamb + smallstep
-        if desiredTempSlider.value < (Tamb + smallstep) {
-            desiredTempSlider.value = Tamb + smallstep
-        }
-        UpdateView()
-        CheckTimerEnable()
-    }
-    
     func Reset() {
         currentTempSlider.value = currentTempSlider.minimumValue
-        desiredTempSlider.value = state!.desiredTemp
+        if state.useCelcius {
+            desiredTempSlider.value = ThermalModel.FtoC(temp: state.desiredTemp)
+        } else {
+            desiredTempSlider.value = state.desiredTemp
+        }
         UpdateView()
         CheckTimerEnable()
     }
@@ -338,7 +394,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     func ResetTimer() {
         CancelNotification()
         StopTimer()
-        currentTempSlider.value = Float(initialCurrentTemp)
+        // currentTempSlider.value = Float(initialCurrentTemp)
         UpdateView()
     }
 
@@ -437,7 +493,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         state.selectedModel = modelData.selectedIndex
         state.useCelcius = source.useCelcius
         Tamb = source.Tamb
-        UpdateLimits()
+        UpdateSliders()
         UpdateView()
         
         // Save to disk
@@ -493,21 +549,23 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     }
     
     @IBAction func CurrentTempChange(_ sender: UISlider) {
+        ReadSliders()
         UpdateView()
     }
     
     @IBAction func DesiredTempChange(_ sender: UISlider) {
+        ReadSliders()
         UpdateView()
     }
     
     @IBAction func DesiredTouchUpIn() {
-        desiredTempSlider.value = desiredTemp
+        //desiredTempSlider.value = desiredTemp
         CheckTimerEnable()
         WriteStateToDisk()
     }
     
     @IBAction func CurrentTouchUpIn() {
-        currentTempSlider.value = currentTemp
+        //currentTempSlider.value = currentTemp
         CheckTimerEnable()
     }
     

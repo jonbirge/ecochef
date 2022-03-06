@@ -38,9 +38,9 @@
                                 </connections>
                             </slider>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="70" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4z5-mr-Y9b" userLabel="CurrTemp">
-                                <rect key="frame" x="163" y="539" width="64" height="24"/>
+                                <rect key="frame" x="154" y="539" width="82" height="24"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="64" id="MVy-4G-4E6"/>
+                                    <constraint firstAttribute="width" constant="82" id="MVy-4G-4E6"/>
                                     <constraint firstAttribute="height" constant="24" id="PiF-Qn-H8c"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
@@ -160,9 +160,9 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="350" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GDg-mc-Nd8" userLabel="DesTemp">
-                                <rect key="frame" x="163" y="624" width="64" height="24"/>
+                                <rect key="frame" x="154" y="624" width="82" height="24"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="64" id="0K3-7w-bVf"/>
+                                    <constraint firstAttribute="width" constant="82" id="0K3-7w-bVf"/>
                                     <constraint firstAttribute="height" constant="24" id="FhW-bg-yyM"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
@@ -1353,46 +1353,46 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="70" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EZu-f1-QZp" userLabel="CurrTemp">
-                                <rect key="frame" x="163" y="307" width="64" height="24"/>
+                                <rect key="frame" x="163" y="310" width="64" height="24"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="64" id="qiA-ws-dcQ"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="textColor" systemColor="systemOrangeColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="00" textAlignment="right" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="GPv-8a-XKv">
-                                <rect key="frame" x="96.666666666666686" y="57" width="89" height="91"/>
+                                <rect key="frame" x="96.666666666666686" y="60" width="89" height="91"/>
                                 <fontDescription key="fontDescription" type="system" weight="thin" pointSize="76"/>
                                 <color key="textColor" systemColor="systemOrangeColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text=":" textAlignment="right" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="giX-nA-qQG">
-                                <rect key="frame" x="187.66666666666666" y="57" width="15" height="91"/>
+                                <rect key="frame" x="187.66666666666666" y="60" width="15" height="91"/>
                                 <fontDescription key="fontDescription" type="system" weight="thin" pointSize="76"/>
                                 <color key="textColor" systemColor="systemOrangeColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="00" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="Qkk-Iu-dE2">
-                                <rect key="frame" x="206.66666666666666" y="57" width="88.999999999999972" height="91"/>
+                                <rect key="frame" x="206.66666666666666" y="60" width="88.999999999999972" height="91"/>
                                 <fontDescription key="fontDescription" type="system" weight="thin" pointSize="76"/>
                                 <color key="textColor" systemColor="systemOrangeColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Temp" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4ls-dY-Fiv">
-                                <rect key="frame" x="32" y="307" width="83" height="24"/>
+                                <rect key="frame" x="32" y="310" width="83" height="24"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="textColor" systemColor="systemOrangeColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Calibration" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dW2-kT-WQX">
-                                <rect key="frame" x="88" y="36" width="214" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <rect key="frame" x="88" y="36" width="214" height="24"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <color key="textColor" systemColor="systemOrangeColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OvZ-T6-Kag">
-                                <rect key="frame" x="304" y="304.66666666666669" width="54" height="29"/>
+                                <rect key="frame" x="304" y="307.66666666666669" width="54" height="29"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <state key="normal" title="Ambient"/>
                                 <connections>
@@ -1400,14 +1400,14 @@
                                 </connections>
                             </button>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="100" minValue="50" maxValue="500" translatesAutoresizingMaskIntoConstraints="NO" id="Acb-Rv-rvH">
-                                <rect key="frame" x="30" y="339" width="330" height="31"/>
+                                <rect key="frame" x="30" y="342" width="330" height="31"/>
                                 <connections>
                                     <action selector="currentTempChanged:" destination="l70-eN-l8r" eventType="valueChanged" id="bY5-YJ-4o4"/>
                                     <action selector="currentTempDoneChanging:" destination="l70-eN-l8r" eventType="touchUpInside" id="E9V-z1-nYP"/>
                                 </connections>
                             </slider>
                             <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OhM-Ha-8Vy" customClass="SimpleButton" customModule="EcoChef" customModuleProvider="target">
-                                <rect key="frame" x="144" y="394" width="102" height="35"/>
+                                <rect key="frame" x="144" y="397" width="102" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="102" id="IwR-td-lQw"/>
                                 </constraints>
@@ -1418,7 +1418,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dCm-Vx-1Nt" customClass="SimpleButton" customModule="EcoChef" customModuleProvider="target">
-                                <rect key="frame" x="153" y="150" width="84" height="35"/>
+                                <rect key="frame" x="153" y="153" width="84" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="84" id="diC-zj-H4W"/>
                                 </constraints>
@@ -1429,7 +1429,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.32047112944162437" green="0.32047112944162437" blue="0.32047112944162437" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="backgroundColor" red="0.14449480838245821" green="0.14449480838245821" blue="0.14449480838245821" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="Acb-Rv-rvH" firstAttribute="top" secondItem="EZu-f1-QZp" secondAttribute="bottom" constant="8" symbolic="YES" id="3Ra-UM-YYo"/>
                             <constraint firstItem="EZu-f1-QZp" firstAttribute="top" secondItem="dCm-Vx-1Nt" secondAttribute="bottom" priority="250" constant="122" id="4Ac-fn-QZh"/>

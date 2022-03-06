@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 // Extension for reading and writing using UIKit API
+// TODO: Make functions to display and quantize temps based on app unit state
 extension ThermalModelData {
     var modelURL: URL {
         let modelURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!

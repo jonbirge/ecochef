@@ -13,8 +13,8 @@ class SettingsViewController:
     UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate, MFMailComposeViewControllerDelegate {
     var modelData: ThermalModelData?
     var initialTamb: Float?  // F
-    var useCelcius: Bool = false
     var Tamb: Float!  // F
+    var useCelcius: Bool = false
     
     @IBOutlet var ambientField: UITextField!
     @IBOutlet var ambientStepper: UIStepper!

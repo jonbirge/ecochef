@@ -432,8 +432,7 @@ class ThermalModel : CustomStringConvertible {
     
     static func DisplayC(temp Tf:Float) -> String {
         let Tc = FtoC(temp:Tf)
-        let TcQuant = round(2*Tc)/2.0
-        return String(TcQuant) + "º C"
+        return String(Int(round(Tc))) + "º C"
     }
     
     static func DisplayF(temp Tf:Float) -> String {
