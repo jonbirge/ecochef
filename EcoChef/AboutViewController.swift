@@ -24,19 +24,41 @@ class AboutViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        UIView.transition(with: titleLabel, duration: 3,
-                          options: .transitionCrossDissolve,
-                          animations:
-            { self.titleLabel.textColor = .red },
-                          completion: nil)
+        UIView.transition(
+            with: titleLabel, duration: 3,
+            options: .transitionCrossDissolve,
+            animations:
+                { self.titleLabel.textColor = .systemRed },
+            completion: nil
+        )
+        doEgg()
     }
-
+    
+    @IBAction func doLongPress(_ sender: UILongPressGestureRecognizer) {
+        hideEgg()
+    }
+    
     func doEgg() {
-        print("swiped up")
-        UIView.transition(with: eggTextView, duration: 5,
-                          options: .transitionCrossDissolve,
-                          animations:
-                            { self.eggTextView.isHidden = false },
-                          completion: nil)
+        print("Hi, Nathy and Alex!")
+        UIView.transition(
+            with: eggTextView, duration: 5,
+            options: .transitionCrossDissolve,
+            animations:
+                { self.eggTextView.isHidden = false
+                    self.eggTextView.textColor = .label
+                },
+            completion: nil
+        )
+    }
+    
+    func hideEgg() {
+        print("Hi, Nathy and Alex!")
+        UIView.transition(
+            with: eggTextView, duration: 5,
+            options: .transitionCrossDissolve,
+            animations:
+                { self.eggTextView.textColor = .systemBackground },
+            completion: nil
+        )
     }
 }
