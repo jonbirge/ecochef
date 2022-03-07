@@ -55,7 +55,7 @@ class SettingsViewController:
         if useCelcius {
             ambientStepper.maximumValue = 40
             ambientStepper.minimumValue = -20
-            ambientStepper.stepValue = 0.5
+            ambientStepper.stepValue = 1
             ambientStepper.value = Double(round(2*ThermalModel.FtoC(temp:Tamb))/2)
         } else {
             ambientStepper.maximumValue = 110
@@ -67,7 +67,7 @@ class SettingsViewController:
     
     /// Update all views from data models
     private func updateViews() {
-        var ambientStr : String?
+        var ambientStr : String
         if useCelcius {
             ambientStr = ThermalModel.DisplayC(temp: Tamb)
         } else {
@@ -182,8 +182,10 @@ class SettingsViewController:
     
     @IBAction func clickAmbientStepper(_ sender: UIStepper) {
         if useCelcius {
+            print("Tamb = " + String(ambientStepper.value) + " C")
             Tamb = ThermalModel.CtoF(temp: Float(ambientStepper.value))
         } else {
+            print("Tamb = " + String(ambientStepper.value) + " F")
             Tamb = Float(ambientStepper.value)
         }
         updateViews()
