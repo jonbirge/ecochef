@@ -430,13 +430,15 @@ class ThermalModel : CustomStringConvertible {
         return Tamb + exp(-t/a)*(Tstart - Tamb)
     }
     
+    /// Convert **Farenheit** `temp` to **Celcius** and return a `String` displaying it with appropriate significant digits.
     static func DisplayC(temp Tf:Float) -> String {
         let Tc = FtoC(temp:Tf)
-        return String(Int(round(Tc))) + "º C"
+        return String(Int(round(Tc))) + " ºC"
     }
     
+    /// Return a `String` displaying Farenheit `temp`.
     static func DisplayF(temp Tf:Float) -> String {
-        return String(Int(Tf)) + "º F"
+        return String(Int(Tf)) + " ºF"
     }
     
     static func FtoC(temp Tf:Float) -> Float {

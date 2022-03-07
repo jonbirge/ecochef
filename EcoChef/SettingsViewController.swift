@@ -50,8 +50,8 @@ class SettingsViewController:
         modelData?.WriteToDisk()
     }
     
+    /// Called when temp units are changed in interface by user
     private func updateUnits() {
-        // Check useCelcius and change units of stepper to align
         if useCelcius {
             ambientStepper.maximumValue = 40
             ambientStepper.minimumValue = -20
@@ -65,7 +65,7 @@ class SettingsViewController:
         }
     }
     
-    // Update all views from data models
+    /// Update all views from data models
     private func updateViews() {
         var ambientStr : String?
         if useCelcius {
@@ -138,6 +138,7 @@ class SettingsViewController:
         }
     }
     
+    /// Use web view to show FAQ
     func showFAQ() {
         if let faqURL = URL(string: EcoChefState.faqURL) {
             let safariViewCont = SFSafariViewController(url:faqURL)
@@ -145,6 +146,7 @@ class SettingsViewController:
         }
     }
     
+    /// Show online help from **birgefuller.com**
     func showSite() {
         let email = "ecochef@birgefuller.com"
         let subject = "[EcoChef] Question"
