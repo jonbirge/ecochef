@@ -9,11 +9,12 @@
 import UIKit
 import UserNotifications
 
+/// Pseudo view controller for cooking timer
 class DualTimerController {
-    private var topLabel: UILabel
-    private var bottomLabel: UILabel
-    private var sumLabel: UILabel
-    private var timerButton: UIButton
+    var topLabel: UILabel
+    var bottomLabel: UILabel
+    var sumLabel: UILabel
+    var timerButton: UIButton
     var isSelected: Bool = false
     private var topside: Bool = true
     private var topcum: Float = 0
@@ -38,7 +39,7 @@ class DualTimerController {
     func toggle() {
         isSelected = !isSelected
         if isSelected {
-            timerButton.setTitleColor(.systemRed, for: .normal)
+            timerButton.setTitleColor(.orange, for: .normal)
         } else {
             timerButton.setTitleColor(.label, for: .normal)
         }
@@ -163,6 +164,9 @@ class TimerViewController: UIViewController, UNUserNotificationCenterDelegate {
         timerList.append(DualTimerController(topLabel3, bottomLabel3, sumLabel3, timerButton3))
         timerList.append(DualTimerController(topLabel4, bottomLabel4, sumLabel4, timerButton4))
         timerList.append(DualTimerController(topLabel5, bottomLabel5, sumLabel5, timerButton5))
+        timerList.append(DualTimerController(topLabel6, bottomLabel6, sumLabel6, timerButton6))
+        timerList.append(DualTimerController(topLabel7, bottomLabel7, sumLabel7, timerButton7))
+        timerList.append(DualTimerController(topLabel8, bottomLabel8, sumLabel8, timerButton8))
         currentTimer = timerList.first
         currentTimer.toggle()
     }
@@ -195,7 +199,8 @@ class TimerViewController: UIViewController, UNUserNotificationCenterDelegate {
     }
     
     // MARK: - IB
-    @IBOutlet weak var startButton: UIButton!
+    
+    @IBOutlet var startButton: UIButton!
     
     @IBAction func clickTimer1(_ sender: UIButton) {
         selectTimer(0)
@@ -217,11 +222,23 @@ class TimerViewController: UIViewController, UNUserNotificationCenterDelegate {
         selectTimer(4)
     }
     
+    @IBAction func clickTimer6(_ sender: UIButton) {
+        selectTimer(5)
+    }
+    
+    @IBAction func clickTimer7(_ sender: UIButton) {
+        selectTimer(6)
+    }
+    
+    @IBAction func clickTimer8(_ sender: UIButton) {
+        selectTimer(7)
+    }
+    
     @IBAction func startCounter(_ sender: UIButton) {
         if currentTimer.isRunning {
-            currentTimer?.stop()
+            currentTimer.stop()
         } else {
-            currentTimer?.start()
+            currentTimer.start()
         }
         updateView()
     }
@@ -252,28 +269,43 @@ class TimerViewController: UIViewController, UNUserNotificationCenterDelegate {
         present(alert, animated: true)
     }
     
-    @IBOutlet weak var timerButton1: TimerButton!
-    @IBOutlet weak var topLabel1: UILabel!
-    @IBOutlet weak var bottomLabel1: UILabel!
-    @IBOutlet weak var sumLabel1: UILabel!
+    @IBOutlet var timerButton1: TimerButton!
+    @IBOutlet var topLabel1: UILabel!
+    @IBOutlet var bottomLabel1: UILabel!
+    @IBOutlet var sumLabel1: UILabel!
     
-    @IBOutlet weak var timerButton2: TimerButton!
-    @IBOutlet weak var topLabel2: UILabel!
-    @IBOutlet weak var bottomLabel2: UILabel!
-    @IBOutlet weak var sumLabel2: UILabel!
+    @IBOutlet var timerButton2: TimerButton!
+    @IBOutlet var topLabel2: UILabel!
+    @IBOutlet var bottomLabel2: UILabel!
+    @IBOutlet var sumLabel2: UILabel!
     
-    @IBOutlet weak var timerButton3: TimerButton!
-    @IBOutlet weak var topLabel3: UILabel!
-    @IBOutlet weak var bottomLabel3: UILabel!
-    @IBOutlet weak var sumLabel3: UILabel!
+    @IBOutlet var timerButton3: TimerButton!
+    @IBOutlet var topLabel3: UILabel!
+    @IBOutlet var bottomLabel3: UILabel!
+    @IBOutlet var sumLabel3: UILabel!
 
-    @IBOutlet weak var timerButton4: TimerButton!
-    @IBOutlet weak var topLabel4: UILabel!
-    @IBOutlet weak var bottomLabel4: UILabel!
-    @IBOutlet weak var sumLabel4: UILabel!
+    @IBOutlet var timerButton4: TimerButton!
+    @IBOutlet var topLabel4: UILabel!
+    @IBOutlet var bottomLabel4: UILabel!
+    @IBOutlet var sumLabel4: UILabel!
     
-    @IBOutlet weak var timerButton5: TimerButton!
-    @IBOutlet weak var topLabel5: UILabel!
-    @IBOutlet weak var bottomLabel5: UILabel!
-    @IBOutlet weak var sumLabel5: UILabel!
+    @IBOutlet var timerButton5: TimerButton!
+    @IBOutlet var topLabel5: UILabel!
+    @IBOutlet var bottomLabel5: UILabel!
+    @IBOutlet var sumLabel5: UILabel!
+    
+    @IBOutlet var timerButton6: TimerButton!
+    @IBOutlet var topLabel6: UILabel!
+    @IBOutlet var bottomLabel6: UILabel!
+    @IBOutlet var sumLabel6: UILabel!
+    
+    @IBOutlet var timerButton7: TimerButton!
+    @IBOutlet var topLabel7: UILabel!
+    @IBOutlet var bottomLabel7: UILabel!
+    @IBOutlet var sumLabel7: UILabel!
+    
+    @IBOutlet var timerButton8: TimerButton!
+    @IBOutlet var topLabel8: UILabel!
+    @IBOutlet var bottomLabel8: UILabel!
+    @IBOutlet var sumLabel8: UILabel!
 }

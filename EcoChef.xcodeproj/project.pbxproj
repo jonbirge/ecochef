@@ -11,6 +11,7 @@
 		AB007F1F1F1C109000AD9552 /* DataEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB007F1E1F1C109000AD9552 /* DataEditViewController.swift */; };
 		AB007F211F1C7B8000AD9552 /* Optimization.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB007F201F1C7B8000AD9552 /* Optimization.swift */; };
 		AB007F221F1C7B8000AD9552 /* Optimization.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB007F201F1C7B8000AD9552 /* Optimization.swift */; };
+		AB27E75B27D4A38A00C83D4D /* SimpleButton in Frameworks */ = {isa = PBXBuildFile; productRef = AB27E75A27D4A38A00C83D4D /* SimpleButton */; };
 		AB2EF88F1F36D74100584390 /* CalibrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2EF88E1F36D74100584390 /* CalibrationViewController.swift */; };
 		AB3BB8391F5F9CA000CDF182 /* TimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3BB8381F5F9CA000CDF182 /* TimerViewController.swift */; };
 		AB43B1771EEB871E00B6A96B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB43B1761EEB871E00B6A96B /* AppDelegate.swift */; };
@@ -45,9 +46,6 @@
 		ABEB05C31F1EEDF000C7B635 /* OptimizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB05C21F1EEDF000C7B635 /* OptimizationTests.swift */; };
 		ABEB6F1D1F02A6E300ABD199 /* ThermalTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB6F1C1F02A6E300ABD199 /* ThermalTimer.swift */; };
 		ABEBBBA01F05AC1C00527B4F /* TimerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEBBB9F1F05AC1C00527B4F /* TimerButton.swift */; };
-		ABEBBBA61F05B06400527B4F /* SimpleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEBBBA31F05B06400527B4F /* SimpleButton.swift */; };
-		ABEBBBA71F05B06400527B4F /* SimpleButtonControlState.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEBBBA41F05B06400527B4F /* SimpleButtonControlState.swift */; };
-		ABEBBBA81F05B06400527B4F /* SimpleButtonStateChangeValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEBBBA51F05B06400527B4F /* SimpleButtonStateChangeValue.swift */; };
 		ABEDA1BE1F09F75600FAE1E1 /* ModelTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEDA1BC1F09F75600FAE1E1 /* ModelTableViewController.swift */; };
 		ABEDA1C11F09FDAD00FAE1E1 /* ModelEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEDA1C01F09FDAD00FAE1E1 /* ModelEditViewController.swift */; };
 /* End PBXBuildFile section */
@@ -96,9 +94,6 @@
 		ABEB05C21F1EEDF000C7B635 /* OptimizationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptimizationTests.swift; sourceTree = "<group>"; };
 		ABEB6F1C1F02A6E300ABD199 /* ThermalTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThermalTimer.swift; sourceTree = "<group>"; };
 		ABEBBB9F1F05AC1C00527B4F /* TimerButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerButton.swift; sourceTree = "<group>"; };
-		ABEBBBA31F05B06400527B4F /* SimpleButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleButton.swift; sourceTree = "<group>"; };
-		ABEBBBA41F05B06400527B4F /* SimpleButtonControlState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleButtonControlState.swift; sourceTree = "<group>"; };
-		ABEBBBA51F05B06400527B4F /* SimpleButtonStateChangeValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleButtonStateChangeValue.swift; sourceTree = "<group>"; };
 		ABEDA1BC1F09F75600FAE1E1 /* ModelTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelTableViewController.swift; sourceTree = "<group>"; };
 		ABEDA1C01F09FDAD00FAE1E1 /* ModelEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelEditViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -108,6 +103,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB27E75B27D4A38A00C83D4D /* SimpleButton in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,7 +121,6 @@
 			isa = PBXGroup;
 			children = (
 				ABEB05AE1F1DB90200C7B635 /* Surge */,
-				ABEBBBA91F05B56E00527B4F /* SimpleButton */,
 				AB43B1751EEB871E00B6A96B /* EcoChef */,
 				ABD4127D1F1134C900429887 /* Tests */,
 				AB43B1741EEB871E00B6A96B /* Products */,
@@ -197,17 +192,6 @@
 			path = Source;
 			sourceTree = "<group>";
 		};
-		ABEBBBA91F05B56E00527B4F /* SimpleButton */ = {
-			isa = PBXGroup;
-			children = (
-				ABEBBBA31F05B06400527B4F /* SimpleButton.swift */,
-				ABEBBBA41F05B06400527B4F /* SimpleButtonControlState.swift */,
-				ABEBBBA51F05B06400527B4F /* SimpleButtonStateChangeValue.swift */,
-			);
-			name = SimpleButton;
-			path = EcoChef;
-			sourceTree = "<group>";
-		};
 		ABEBBBAA1F05B5D400527B4F /* Media */ = {
 			isa = PBXGroup;
 			children = (
@@ -232,6 +216,9 @@
 			dependencies = (
 			);
 			name = EcoChef;
+			packageProductDependencies = (
+				AB27E75A27D4A38A00C83D4D /* SimpleButton */,
+			);
 			productName = EcoChef;
 			productReference = AB43B1731EEB871E00B6A96B /* EcoChef.app */;
 			productType = "com.apple.product-type.application";
@@ -290,6 +277,9 @@
 				Base,
 			);
 			mainGroup = AB43B16A1EEB871E00B6A96B;
+			packageReferences = (
+				AB27E75927D4A38A00C83D4D /* XCRemoteSwiftPackageReference "SimpleButton" */,
+			);
 			productRefGroup = AB43B1741EEB871E00B6A96B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -336,13 +326,10 @@
 				AB43B1791EEB871E00B6A96B /* PreheatViewController.swift in Sources */,
 				AB007F1F1F1C109000AD9552 /* DataEditViewController.swift in Sources */,
 				ABEBBBA01F05AC1C00527B4F /* TimerButton.swift in Sources */,
-				ABEBBBA71F05B06400527B4F /* SimpleButtonControlState.swift in Sources */,
 				ABEB05B91F1DB90200C7B635 /* Arithmetic.swift in Sources */,
 				ABEB05C11F1DB90200C7B635 /* Trigonometric.swift in Sources */,
 				AB53D56E1F0DD85900ACA17A /* EcoChefThermalModel.swift in Sources */,
 				AB3BB8391F5F9CA000CDF182 /* TimerViewController.swift in Sources */,
-				ABEBBBA61F05B06400527B4F /* SimpleButton.swift in Sources */,
-				ABEBBBA81F05B06400527B4F /* SimpleButtonStateChangeValue.swift in Sources */,
 				AB43B18B1EEBAEA100B6A96B /* ThermalModel.swift in Sources */,
 				AB2EF88F1F36D74100584390 /* CalibrationViewController.swift in Sources */,
 				AB007F211F1C7B8000AD9552 /* Optimization.swift in Sources */,
@@ -637,6 +624,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		AB27E75927D4A38A00C83D4D /* XCRemoteSwiftPackageReference "SimpleButton" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/aloco/SimpleButton";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		AB27E75A27D4A38A00C83D4D /* SimpleButton */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AB27E75927D4A38A00C83D4D /* XCRemoteSwiftPackageReference "SimpleButton" */;
+			productName = SimpleButton;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = AB43B16B1EEB871E00B6A96B /* Project object */;
 }
