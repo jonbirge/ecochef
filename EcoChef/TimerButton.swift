@@ -8,7 +8,7 @@ import SimpleButton
 @IBDesignable
 
 class TimerButton: SimpleButton {
-    @IBInspectable var cornerRadius: CGFloat = 9
+    @IBInspectable var cornerRadius: CGFloat = 7
     @IBInspectable var titleColorNormal: UIColor?
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -35,8 +35,6 @@ class TimerButton: SimpleButton {
     }
     
     override func configureButtonStyles() {
-        super.configureButtonStyles()
-        
         setCornerRadius(cornerRadius)
         
         if let normalColor = titleColorNormal {
@@ -48,10 +46,14 @@ class TimerButton: SimpleButton {
             let highlightbrightness: CGFloat = 1 - (1 - brightness)/3
             let highlightColor = UIColor(hue: hue, saturation: sat, brightness: highlightbrightness, alpha: 1)
             setTitleColor(highlightColor, for: .highlighted)
+            setTitleColor(.systemGray, for: .disabled)
+            setBackgroundColor(UIColor(white: 0.5, alpha: 0.05), for: .disabled)
+            let normalBackgroundColor = UIColor(hue: hue, saturation: sat, brightness: brightness, alpha: 0.1)
+            setBackgroundColor(normalBackgroundColor, for: .normal)
+            // setBackgroundColor(UIColor(white: 0.75, alpha: 0.1), for: .normal)
         }
         
-        setBorderWidth(2.0)
-        setTitleColor(.systemGray, for: .disabled)
+        setBorderWidth(1.5)
     }
     
 }

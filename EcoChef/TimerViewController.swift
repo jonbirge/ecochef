@@ -9,6 +9,7 @@
 import UIKit
 import UserNotifications
 
+/// Pseudo view controller for cooking timer
 class DualTimerController {
     var topLabel: UILabel
     var bottomLabel: UILabel
