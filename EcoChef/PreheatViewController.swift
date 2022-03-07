@@ -219,7 +219,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         ShowTime(minutes: minfrac)  // faster?
     }
     
-    func UpdateSliders() {
+    private func UpdateSliders() {
         var desiredMax, desiredMin: Float  // F
         var currentMax, currentMin: Float  // F
         
@@ -244,7 +244,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
             desiredTempSlider.maximumValue = round(ThermalModel.FtoC(temp: desiredMax))
             desiredTempSlider.minimumValue = round(ThermalModel.FtoC(temp: desiredMin))
             currentTempSlider.value = ThermalModel.FtoC(temp: currentTemp)
-            desiredTempSlider.value = QuantizeC(desiredTemp)
+            desiredTempSlider.value = QuantizeC(ThermalModel.FtoC(temp: desiredTemp))
         } else {
             currentTempSlider.maximumValue = currentMax
             currentTempSlider.minimumValue = currentMin
@@ -488,6 +488,8 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
         guard let source = segue.source as? SettingsViewController else { return }
         
+        print("Unwinding from SettingsViewController...")
+        
         // Pull data from SettingsViewController
         model.setfrom(params: modelData.selectedModelData)
         state.selectedModel = modelData.selectedIndex
@@ -503,19 +505,19 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     
     // MARK: - IBOutlets and IBActions
     
-    @IBOutlet weak var helpLabel: UILabel!
-    @IBOutlet weak var minLabel: UILabel!
-    @IBOutlet weak var secLabel: UILabel!
-    @IBOutlet weak var currentTempLabel: UILabel!
-    @IBOutlet weak var desiredTempLabel: UILabel!
-    @IBOutlet weak var currentTempSlider: UISlider!
-    @IBOutlet weak var desiredTempSlider: UISlider!
-    @IBOutlet weak var startButton: UIButton!
-    @IBOutlet weak var timerResetButton: UIButton!
-    @IBOutlet weak var curTempLabel: UILabel!
-    @IBOutlet weak var tempResetButton: UIButton!
-    @IBOutlet weak var preheatLabel: UILabel!
-    @IBOutlet weak var settingsButton: UIButton!
+    @IBOutlet var helpLabel: UILabel!
+    @IBOutlet var minLabel: UILabel!
+    @IBOutlet var secLabel: UILabel!
+    @IBOutlet var currentTempLabel: UILabel!
+    @IBOutlet var desiredTempLabel: UILabel!
+    @IBOutlet var currentTempSlider: UISlider!
+    @IBOutlet var desiredTempSlider: UISlider!
+    @IBOutlet var startButton: UIButton!
+    @IBOutlet var timerResetButton: UIButton!
+    @IBOutlet var curTempLabel: UILabel!
+    @IBOutlet var tempResetButton: UIButton!
+    @IBOutlet var preheatLabel: UILabel!
+    @IBOutlet var settingsButton: UIButton!
     
     @IBAction func StartButton(_ sender: UIButton) {
         if modelTimer.isNotRunning {
@@ -548,18 +550,17 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
        ResetTimer()
     }
     
-    @IBAction func CurrentTempChange(_ sender: UISlider) {
-        ReadSliders()
-        UpdateView()
-    }
-    
-    @IBAction func DesiredTempChange(_ sender: UISlider) {
+    @IBAction func SliderTempChange(_ sender: UISlider) {
         ReadSliders()
         UpdateView()
     }
     
     @IBAction func DesiredTouchUpIn() {
-        //desiredTempSlider.value = desiredTemp
+        if state.useCelcius {
+            desiredTempSlider.value = ThermalModel.FtoC(temp: desiredTemp)
+        } else {
+            desiredTempSlider.value = desiredTemp
+        }
         CheckTimerEnable()
         WriteStateToDisk()
     }
