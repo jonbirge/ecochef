@@ -2,8 +2,7 @@
 //  TimerViewController.swift
 //  EcoChef
 //
-//  Created by Jonathan Birge on 9/5/17.
-//  Copyright © 2017 Birge Clocks. All rights reserved.
+//  Copyright © 2017-2022 Birge Clocks. All rights reserved.
 //
 
 import UIKit
@@ -14,7 +13,7 @@ class DualTimerController {
     var topLabel: UILabel
     var bottomLabel: UILabel
     var sumLabel: UILabel
-    var timerButton: UIButton
+    var timerButton: TimerButton
     var isSelected: Bool = false
     private var topside: Bool = true
     private var topcum: Float = 0
@@ -23,25 +22,31 @@ class DualTimerController {
     private var startTime: Date?
     private var timer: Timer?
     private let timeInt: Double = 0.2
+    private let normalColor: UIColor = .systemBlue
+    private let selectedColor: UIColor = .systemOrange
     
     var isRunning: Bool {
         return localIsRunning
     }
     
     init(_ top: UILabel, _ bottom: UILabel, _ sum: UILabel,
-         _ timer: UIButton) {
+         _ timer: TimerButton) {
         topLabel = top
         bottomLabel = bottom
         sumLabel = sum
         timerButton = timer
+        
+        timerButton.setTitleColor(normalColor, for: .normal)
     }
     
     func toggle() {
         isSelected = !isSelected
         if isSelected {
-            timerButton.setTitleColor(.orange, for: .normal)
+            timerButton.setTitleColor(selectedColor, for: .normal)
+            timerButton.setEdgeThickness(3.0)
         } else {
-            timerButton.setTitleColor(.label, for: .normal)
+            timerButton.setTitleColor(normalColor, for: .normal)
+            timerButton.setEdgeThickness(1.5)
         }
     }
     

@@ -376,17 +376,17 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         for theControl in timerDisabledControls {
             theControl.isEnabled = true
         }
-        startButton.setTitle("Start", for: UIControl.State.normal)
+        startButton.setTitle("Start", for: .normal)
         timerResetButton.isEnabled = false
         UpdateView()
         CheckTimerEnable()
     }
     
-    private func DisableTimerControls () {
+    private func DisableTimerControls() {
         for theControl in timerDisabledControls {
             theControl.isEnabled = false
         }
-        startButton.setTitle("Done", for: UIControl.State.normal)
+        startButton.setTitle("Done", for: .normal)
         startButton.isEnabled = true
         timerResetButton.isEnabled = true
     }
