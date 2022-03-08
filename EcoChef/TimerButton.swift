@@ -12,8 +12,6 @@ class TimerButton: SimpleButton {
     @IBInspectable var cornerRadius: CGFloat = 7
     /// line thickness of border
     @IBInspectable var edgeThickness: CGFloat = 1.5
-    /// color of both title and button body under normal conditions
-    @IBInspectable var titleColorNormal: UIColor?
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
@@ -48,13 +46,12 @@ class TimerButton: SimpleButton {
     }
     
     override func configureButtonStyles() {
+        // Set IBInspectable stuff
         setCornerRadius(cornerRadius)
         setBorderWidth(edgeThickness)
         
-        if let normalColor = titleColorNormal {
-            setTitleColor(normalColor, for: .normal)
-        }
-        
+        // Invoke TimerButton title color function
+        setTitleColor(titleColor(for: .normal), for: .normal)
         setTitleColor(.systemGray, for: .disabled)
     }
     
