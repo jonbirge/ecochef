@@ -62,6 +62,8 @@ class MeasTableViewController: UITableViewController {
         guard let theview = segue.destination as? DataEditViewController else
         { return }
         
+        print("MeasTableViewController:prepare for segue")
+        
         if let path = tableView.indexPathForSelectedRow {  // old one
             theview.dataPoint = measData[path.row]
         } else {  // new one
@@ -75,12 +77,11 @@ class MeasTableViewController: UITableViewController {
         }
     }
     
-    // TODO: This evidently isn't needed or getting fired
-    //    @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
-    //        print("MeasTableViewController:prepareForUnwind()")
-    //        modelParams.measurements.sort()
-    //        tableView.reloadData()
-    //        modelParams.fitfromdata()
-    //    }
+    @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
+        print("MeasTableViewController:prepareForUnwind()")
+        modelParams.measurements.sort()
+        tableView.reloadData()
+        modelParams.fitfromdata()
+    }
 
 }

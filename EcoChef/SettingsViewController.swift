@@ -182,10 +182,10 @@ class SettingsViewController:
     
     @IBAction func clickAmbientStepper(_ sender: UIStepper) {
         if useCelcius {
-            print("Tamb = " + String(ambientStepper.value) + " C")
+            //print("Tamb = " + String(ambientStepper.value) + " C")
             Tamb = ThermalModel.CtoF(temp: Float(ambientStepper.value))
         } else {
-            print("Tamb = " + String(ambientStepper.value) + " F")
+            //print("Tamb = " + String(ambientStepper.value) + " F")
             Tamb = Float(ambientStepper.value)
         }
         updateViews()

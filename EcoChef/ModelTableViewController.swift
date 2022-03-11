@@ -103,11 +103,6 @@ class ModelTableViewController: UITableViewController {
             
         present(alertController, animated: true)
     }
-
-    @IBAction func goBack(_ sender: UIBarButtonItem) {
-        print("ModelTableViewController:goBack()")
-        performSegue(withIdentifier: "UnwindModelList", sender: self)
-    }
     
     @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
         print("ModelTableViewController:prepareForUnwind()")
