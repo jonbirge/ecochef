@@ -69,6 +69,7 @@ class Fitter {
     }
 }
 
+// TODO: Check for convergence in parent class
 class GaussNewtonFitter : Fitter {
     override func fit() throws -> [Double] {
         var beta: Matrix<Double>

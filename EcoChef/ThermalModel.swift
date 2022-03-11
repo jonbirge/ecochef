@@ -34,21 +34,22 @@ class ThermalModelData {
         
         theparams = ThermalModelParams(name: "Electric Oven (EnergyStar)")
         theparams.a *= 2
-        theparams.note = "Bosch"
+        theparams.note = "Bosch electric oven"
         defaultModels.append(theparams)
         
         theparams = ThermalModelParams(name: "Electric Oven (Fast)")
         theparams.a *= 1.5
         theparams.b = 700
-        theparams.note = "Bosch; fast preheat setting"
+        theparams.note = "Bosch oven on fast preheat setting"
+        defaultModels.append(theparams)
+        
+        theparams = ThermalModelParams(name: "Gas Oven")
+        theparams.a = 17.6
+        theparams.b = 717
+        theparams.note = "Bosch gas oven"
         defaultModels.append(theparams)
         
         theparams = ThermalModelParams(name: "Convection Oven")
-        theparams.a *= 1.1
-        theparams.note = "Bosch; normal convection preheat"
-        defaultModels.append(theparams)
-        
-        theparams = ThermalModelParams(name: "Speed Oven")
         theparams.a *= 1.0
         theparams.b = 500
         theparams.note = "Bosch speed oven; normal convection preheat"
