@@ -3,7 +3,7 @@
 //  EcoChef
 //
 //  Created by Jonathan Birge on 7/3/17.
-//  Copyright © 2017 Birge Clocks. All rights reserved.
+//  Copyright © 2017-2022 Birge & Fuller. All rights reserved.
 //
 
 import UIKit
@@ -25,6 +25,7 @@ class ModelEditViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        print("ModelEditViewCont:WillAppear")
         updateView()
     }
 
@@ -32,6 +33,7 @@ class ModelEditViewController: UITableViewController {
     
     func updateView() {
         guard modelParams != nil else { return }
+        print("ModelEditViewCont:updateView")
         let isLearning = fitSwitch.isOn
         if isLearning {
             rcField.text = String(modelParams!.a)
@@ -63,7 +65,7 @@ class ModelEditViewController: UITableViewController {
 
     // MARK: - Navigation
     
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    // Preparation before navigation to measured data point list
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let measView = segue.destination as? MeasTableViewController {
             measView.modelParams = modelParams
@@ -71,6 +73,12 @@ class ModelEditViewController: UITableViewController {
             calView.modelParams = modelParams
         }
     }
+    
+    // Unwind from measured data point list editing scene
+    @IBAction func prepareForUnwind(for segue: UIStoryboardSegue) {
+        print("ModelEditViewCont:prepForUnwind")
+    }
+    
 
     // MARK: - IB
     
@@ -80,9 +88,9 @@ class ModelEditViewController: UITableViewController {
             let hr = Float(hrField.text!),
             let note = noteField.text else
         {
-            // TODO: Actually handle this!
+            // TODO: Actually handle this and tell user!
             performSegue(withIdentifier: "UnwindToModelList", sender: self)
-            print("ModelEditController: can't save poorly formed data.")
+            print("ModelEditCont: can't save poorly formed data.")
             return
         }
         

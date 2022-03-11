@@ -19,7 +19,7 @@ class ThermalModelData {
         if selectedIndex < modelArray.count {
             return modelArray[selectedIndex]
         } else {
-            return modelArray.first!
+            return modelArray.first!  // TODO: Return optional
         }
     }
     

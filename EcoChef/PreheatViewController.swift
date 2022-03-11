@@ -39,7 +39,8 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     }
     
     // MARK: - Startup
-    // TODO: Should this be here or in AppDelegate?
+    
+    // TODO: Should some of this be in AppDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -300,7 +301,8 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     // Delegate for notification action
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse,
-                                withCompletionHandler completionHandler: @escaping () -> Void) {
+                                withCompletionHandler completionHandler: @escaping () -> Void)
+    {
         if response.actionIdentifier == "TIMER_SNOOZE" {
             SnoozeTimer()
         } else if response.actionIdentifier == "TIMER_GOOD" {  // user agrees we're done
@@ -453,15 +455,19 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         AddNotification()
     }
     
-    // Data collection for models
+    /// Data collection for models
     func LearnTime() {
         let isHeating = modelTimer.isHeating
-        let thetime = modelTimer.minutesElapsed()
-        if thetime > 0 && isHeating {
-            modelData.selectedModelData.addDataPoint(time: thetime,
-                                                     Tstart: modelTimer.initialTemp,
-                                                     Tfinal: desiredTemp,
-                                                     Tamb: Tamb)
+        let theTime = modelTimer.minutesElapsed()
+        let theModel = modelData.selectedModelData
+        if theTime > 0 && isHeating {
+            theModel.addDataPoint(time: theTime,
+                                  Tstart: modelTimer.initialTemp,
+                                  Tfinal: desiredTemp,
+                                  Tamb: Tamb)
+            if theModel.calibrated {
+                theModel.fitfromdata()
+            }
             modelData.WriteToDisk()
         }
     }
