@@ -14,7 +14,7 @@ class DualTimerController {
     var bottomLabel: UILabel
     var sumLabel: UILabel
     var timerButton: TimerButton
-    var isSelected: Bool = false
+    private var selected: Bool = false
     private var topside: Bool = true
     private var topcum: Float = 0
     private var bottomcum: Float = 0
@@ -24,9 +24,15 @@ class DualTimerController {
     private let timeInt: Double = 0.2
     private let normalColor: UIColor = .systemBlue
     private let selectedColor: UIColor = .systemOrange
+    private let thinEdge: CGFloat = 1
+    private let selEdge: CGFloat = 3
     
     var isRunning: Bool {
         return localIsRunning
+    }
+    
+    var isSelected: Bool {
+        return selected
     }
     
     init(_ top: UILabel, _ bottom: UILabel, _ sum: UILabel,
@@ -37,16 +43,17 @@ class DualTimerController {
         timerButton = timer
         
         timerButton.setTitleColor(normalColor, for: .normal)
+        timerButton.setEdgeThickness(thinEdge)
     }
     
     func toggle() {
-        isSelected = !isSelected
-        if isSelected {
+        selected = !selected
+        if selected {
             timerButton.setTitleColor(selectedColor, for: .normal)
-            timerButton.setEdgeThickness(3.0)
+            timerButton.setEdgeThickness(selEdge)
         } else {
             timerButton.setTitleColor(normalColor, for: .normal)
-            timerButton.setEdgeThickness(1.5)
+            timerButton.setEdgeThickness(thinEdge)
         }
     }
     

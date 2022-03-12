@@ -1382,7 +1382,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zcT-mv-O2A" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Ktu-i3-Njb" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1973.8461538461538" y="-732.22748815165869"/>
+            <point key="canvasLocation" x="1969" y="-732"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="qKh-MB-CrI">
@@ -1506,7 +1506,7 @@
         <scene sceneID="p31-ys-d4b">
             <objects>
                 <navigationController id="tMG-s0-RCW" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Preheat Timer" image="timer.square" catalog="system" id="QTh-Je-4hc"/>
+                    <tabBarItem key="tabBarItem" title="Preheat Timer" image="timelapse" catalog="system" id="QTh-Je-4hc"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="88X-q5-GUX">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1517,7 +1517,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Wq-8S-KIa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2703" y="-370"/>
+            <point key="canvasLocation" x="-2703" y="-374"/>
         </scene>
         <!--Calibrate-->
         <scene sceneID="kF4-iF-yTA">
@@ -1694,8 +1694,8 @@
         <segue reference="3SX-HB-Wfs"/>
     </inferredMetricsTieBreakers>
     <resources>
+        <image name="timelapse" catalog="system" width="128" height="122"/>
         <image name="timer" catalog="system" width="128" height="121"/>
-        <image name="timer.square" catalog="system" width="128" height="114"/>
         <systemColor name="groupTableViewBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
