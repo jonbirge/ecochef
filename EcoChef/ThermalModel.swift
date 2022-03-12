@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import OptimizationKit
 
 // MARK: - Data model
 
@@ -310,7 +311,7 @@ class ThermalModelFitter : Fittable {
     var verbose: Bool = false
     var fitmodel: ThermalModel
     var modelparams: ThermalModelParams
-    private var fitter: GaussNewtonFitter!
+    private var fitter: GaussNewtonFitter!  // TODO: Use optional
     
     struct IndexKeys {
         static let a = 0
@@ -331,6 +332,8 @@ class ThermalModelFitter : Fittable {
         return p
     }
     
+    // TODO: Implement this as part of Fittable and have Fitters check
+    /// Decide if there are enough data points to successfully fit a model
     var fittable: Bool {
         if fitnpoints > 2 {
             return true
@@ -339,6 +342,17 @@ class ThermalModelFitter : Fittable {
         }
     }
     
+    convenience init(params: ThermalModelParams) {
+        self.init(model: ThermalModel(), params: params)
+    }
+    
+    init(model: ThermalModel, params: ThermalModelParams) {
+        fitmodel = model
+        modelparams = params
+        fitter = GaussNewtonFitter(with: self)
+    }
+    
+    /// Implements Fittable prototype
     func fitresiduals(for params: [Double]) throws -> [Double] {
         fitmodel.a = Float(params[IndexKeys.a])
         fitmodel.b = Float(params[IndexKeys.b])
@@ -352,20 +366,6 @@ class ThermalModelFitter : Fittable {
             res.append(Double(Tcomp - Tmeas))
         }
         return res
-    }
-    
-    convenience init(params: ThermalModelParams) {
-        self.init(model: ThermalModel(), params: params)
-    }
-    
-    init(model: ThermalModel, params: ThermalModelParams) {
-        fitmodel = model
-        modelparams = params
-        setup()
-    }
-    
-    func setup() {
-        fitter = GaussNewtonFitter(with: self)
     }
     
     func fitfromdata() {
