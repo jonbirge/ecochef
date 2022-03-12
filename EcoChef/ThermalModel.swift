@@ -308,10 +308,10 @@ class HeatingDataPoint : NSObject, NSSecureCoding {
 // MARK: - Computational model and regression
 
 class ThermalModelFitter : Fittable {
-    var verbose: Bool = false
+    var verbose: Bool = true  // Debuging
     var fitmodel: ThermalModel
     var modelparams: ThermalModelParams
-    private var fitter: GaussNewtonFitter!  // TODO: Use optional
+    private var fitter: GaussNewtonFitter!
     
     struct IndexKeys {
         static let a = 0
@@ -326,7 +326,7 @@ class ThermalModelFitter : Fittable {
         return modelparams.measurements.count
     }
     
-    var fitinitparams: [Double] {
+    var fitparams: [Double] {
         let p: [Double] =
             [Double(modelparams.a), Double(modelparams.b)]
         return p
@@ -352,7 +352,7 @@ class ThermalModelFitter : Fittable {
         fitter = GaussNewtonFitter(with: self)
     }
     
-    /// Implements Fittable prototype
+    /// Implements `Fittable` prototype.
     func fitresiduals(for params: [Double]) throws -> [Double] {
         fitmodel.a = Float(params[IndexKeys.a])
         fitmodel.b = Float(params[IndexKeys.b])
@@ -371,7 +371,6 @@ class ThermalModelFitter : Fittable {
     func fitfromdata() {
         if fittable {
             do {
-                print("ThermalModelFitter: attempting fit...")
                 fitter.verbose = verbose
                 let p: [Double] = try fitter.fit()
                 modelparams.a = Float(round(10*p[IndexKeys.a])/10)

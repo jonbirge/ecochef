@@ -112,12 +112,12 @@ class ModelEditViewController: UITableViewController {
         updateView()
     }
 
-    @IBOutlet weak var calibrateButton: UIButton!
-    @IBOutlet weak var dataCell: UITableViewCell!
-    @IBOutlet weak var fitSwitch: UISwitch!
-    @IBOutlet weak var dataLabel: UILabel!
-    @IBOutlet weak var nameField: UITextField!
-    @IBOutlet weak var rcField: UITextField!
-    @IBOutlet weak var hrField: UITextField!
-    @IBOutlet weak var noteField: UITextField!
+    @IBOutlet var calibrateButton: UIButton!
+    @IBOutlet var dataCell: UITableViewCell!
+    @IBOutlet var fitSwitch: UISwitch!
+    @IBOutlet var dataLabel: UILabel!
+    @IBOutlet var nameField: UITextField!
+    @IBOutlet var rcField: UITextField!
+    @IBOutlet var hrField: UITextField!
+    @IBOutlet var noteField: UITextField!
 }
