@@ -48,7 +48,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="00" textAlignment="right" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="QVQ-IA-R7s">
-                                <rect key="frame" x="87" y="187.33333333333334" width="91" height="86.000000000000028"/>
+                                <rect key="frame" x="87" y="179.33333333333334" width="91" height="86.000000000000028"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="91" id="KHd-sq-jOH"/>
@@ -59,7 +59,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text="00" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="X3y-il-6FY">
-                                <rect key="frame" x="197" y="187.33333333333334" width="91" height="86.000000000000028"/>
+                                <rect key="frame" x="197" y="179.33333333333334" width="91" height="86.000000000000028"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="91" id="YXR-2b-eiQ"/>
@@ -70,7 +70,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" text=":" textAlignment="center" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="pAx-TJ-5bS">
-                                <rect key="frame" x="178" y="187" width="19" height="86"/>
+                                <rect key="frame" x="178" y="179" width="19" height="86"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="19" id="63I-7q-pCr"/>
@@ -205,7 +205,7 @@
                             <constraint firstItem="jLP-zd-iGG" firstAttribute="top" secondItem="InP-Vp-TcT" secondAttribute="bottom" constant="34" id="O5J-1T-afu"/>
                             <constraint firstItem="ANQ-uz-xo0" firstAttribute="trailing" secondItem="QVQ-IA-R7s" secondAttribute="trailing" id="REi-j2-ZC0"/>
                             <constraint firstAttribute="trailingMargin" secondItem="jLP-zd-iGG" secondAttribute="trailing" constant="8" id="Rdy-Jq-2wh"/>
-                            <constraint firstItem="pAx-TJ-5bS" firstAttribute="top" secondItem="ehU-CT-E63" secondAttribute="bottom" constant="8" symbolic="YES" id="Snp-ve-m0K"/>
+                            <constraint firstItem="pAx-TJ-5bS" firstAttribute="top" secondItem="ehU-CT-E63" secondAttribute="bottom" id="Snp-ve-m0K"/>
                             <constraint firstItem="InP-Vp-TcT" firstAttribute="centerX" secondItem="GDg-mc-Nd8" secondAttribute="centerX" id="UY9-gW-MQa"/>
                             <constraint firstItem="4z5-mr-Y9b" firstAttribute="top" secondItem="gCO-mA-Prx" secondAttribute="bottom" constant="32" id="VHR-vc-Mte"/>
                             <constraint firstItem="gCO-mA-Prx" firstAttribute="leading" secondItem="X3y-il-6FY" secondAttribute="leading" id="ZPA-ji-oKA"/>

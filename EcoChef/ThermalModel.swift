@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import OptimizationKit
 
 // MARK: - Data model
 
@@ -307,7 +308,7 @@ class HeatingDataPoint : NSObject, NSSecureCoding {
 // MARK: - Computational model and regression
 
 class ThermalModelFitter : Fittable {
-    var verbose: Bool = false
+    var verbose: Bool = true  // Debuging
     var fitmodel: ThermalModel
     var modelparams: ThermalModelParams
     private var fitter: GaussNewtonFitter!
@@ -325,12 +326,14 @@ class ThermalModelFitter : Fittable {
         return modelparams.measurements.count
     }
     
-    var fitinitparams: [Double] {
+    var fitparams: [Double] {
         let p: [Double] =
             [Double(modelparams.a), Double(modelparams.b)]
         return p
     }
     
+    // TODO: Implement this as part of Fittable and have Fitters check
+    /// Decide if there are enough data points to successfully fit a model
     var fittable: Bool {
         if fitnpoints > 2 {
             return true
@@ -339,6 +342,17 @@ class ThermalModelFitter : Fittable {
         }
     }
     
+    convenience init(params: ThermalModelParams) {
+        self.init(model: ThermalModel(), params: params)
+    }
+    
+    init(model: ThermalModel, params: ThermalModelParams) {
+        fitmodel = model
+        modelparams = params
+        fitter = GaussNewtonFitter(with: self)
+    }
+    
+    /// Implements `Fittable` prototype.
     func fitresiduals(for params: [Double]) throws -> [Double] {
         fitmodel.a = Float(params[IndexKeys.a])
         fitmodel.b = Float(params[IndexKeys.b])
@@ -354,24 +368,9 @@ class ThermalModelFitter : Fittable {
         return res
     }
     
-    convenience init(params: ThermalModelParams) {
-        self.init(model: ThermalModel(), params: params)
-    }
-    
-    init(model: ThermalModel, params: ThermalModelParams) {
-        fitmodel = model
-        modelparams = params
-        setup()
-    }
-    
-    func setup() {
-        fitter = GaussNewtonFitter(with: self)
-    }
-    
     func fitfromdata() {
         if fittable {
             do {
-                print("ThermalModelFitter: attempting fit...")
                 fitter.verbose = verbose
                 let p: [Double] = try fitter.fit()
                 modelparams.a = Float(round(10*p[IndexKeys.a])/10)
