@@ -134,12 +134,6 @@
                                     <action selector="StartButton:" destination="9pv-A4-QxB" eventType="touchUpInside" id="q0A-nR-wLp"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Preheating/Cooling" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1cO-cu-AuE">
-                                <rect key="frame" x="111" y="166" width="153" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nHw-Lj-crR">
                                 <rect key="frame" x="282" y="503" width="61" height="32"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -173,6 +167,22 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ehU-CT-E63">
+                                <rect key="frame" x="60" y="153" width="256" height="26"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <bool key="isElement" value="NO"/>
+                                </accessibility>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="26" id="BZu-bg-Mm7"/>
+                                    <constraint firstAttribute="width" constant="256" id="u63-2B-RaY"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Current Model"/>
+                                <connections>
+                                    <segue destination="vre-sg-JdI" kind="show" identifier="ShowModel" id="d8T-oi-IcR"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
@@ -195,6 +205,7 @@
                             <constraint firstItem="jLP-zd-iGG" firstAttribute="top" secondItem="InP-Vp-TcT" secondAttribute="bottom" constant="34" id="O5J-1T-afu"/>
                             <constraint firstItem="ANQ-uz-xo0" firstAttribute="trailing" secondItem="QVQ-IA-R7s" secondAttribute="trailing" id="REi-j2-ZC0"/>
                             <constraint firstAttribute="trailingMargin" secondItem="jLP-zd-iGG" secondAttribute="trailing" constant="8" id="Rdy-Jq-2wh"/>
+                            <constraint firstItem="pAx-TJ-5bS" firstAttribute="top" secondItem="ehU-CT-E63" secondAttribute="bottom" constant="8" symbolic="YES" id="Snp-ve-m0K"/>
                             <constraint firstItem="InP-Vp-TcT" firstAttribute="centerX" secondItem="GDg-mc-Nd8" secondAttribute="centerX" id="UY9-gW-MQa"/>
                             <constraint firstItem="4z5-mr-Y9b" firstAttribute="top" secondItem="gCO-mA-Prx" secondAttribute="bottom" constant="32" id="VHR-vc-Mte"/>
                             <constraint firstItem="gCO-mA-Prx" firstAttribute="leading" secondItem="X3y-il-6FY" secondAttribute="leading" id="ZPA-ji-oKA"/>
@@ -202,13 +213,12 @@
                             <constraint firstItem="GDg-mc-Nd8" firstAttribute="top" secondItem="moH-Te-Xzb" secondAttribute="bottom" constant="23" id="agn-bg-nt0"/>
                             <constraint firstItem="4z5-mr-Y9b" firstAttribute="centerY" secondItem="qfS-D6-HFC" secondAttribute="centerY" id="blr-2R-3y3"/>
                             <constraint firstItem="X3y-il-6FY" firstAttribute="leading" secondItem="pAx-TJ-5bS" secondAttribute="trailing" id="cxw-Kd-aKP"/>
-                            <constraint firstItem="1cO-cu-AuE" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" constant="78" id="eOG-RM-Ynx"/>
-                            <constraint firstItem="1cO-cu-AuE" firstAttribute="centerX" secondItem="tsR-hK-woN" secondAttribute="centerX" id="ebr-AC-Wms"/>
                             <constraint firstItem="pAx-TJ-5bS" firstAttribute="baseline" secondItem="QVQ-IA-R7s" secondAttribute="baseline" id="hc4-oO-32q"/>
                             <constraint firstItem="4ug-Mw-9AY" firstAttribute="top" secondItem="jLP-zd-iGG" secondAttribute="bottom" constant="8" symbolic="YES" id="iH7-qO-0XQ"/>
+                            <constraint firstItem="ehU-CT-E63" firstAttribute="centerX" secondItem="tsR-hK-woN" secondAttribute="centerX" id="jMp-sr-2Au"/>
                             <constraint firstItem="moH-Te-Xzb" firstAttribute="leading" secondItem="qfS-D6-HFC" secondAttribute="leading" constant="-2" id="jkf-A3-FEM"/>
                             <constraint firstItem="pAx-TJ-5bS" firstAttribute="centerX" secondItem="tsR-hK-woN" secondAttribute="centerX" id="l7q-k1-W3R"/>
-                            <constraint firstItem="pAx-TJ-5bS" firstAttribute="top" secondItem="1cO-cu-AuE" secondAttribute="bottom" id="pk4-gS-Nk4"/>
+                            <constraint firstItem="ehU-CT-E63" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" constant="65" id="qlz-AL-DSf"/>
                             <constraint firstItem="InP-Vp-TcT" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" constant="16" id="rHx-U4-BKq"/>
                             <constraint firstItem="jLP-zd-iGG" firstAttribute="centerY" secondItem="YIn-MW-QDW" secondAttribute="centerY" constant="-2" id="xaP-rX-t85"/>
                         </constraints>
@@ -222,7 +232,7 @@
                         <outlet property="desiredTempSlider" destination="InP-Vp-TcT" id="spw-kb-kNL"/>
                         <outlet property="helpLabel" destination="YIn-MW-QDW" id="Ez0-rp-wp0"/>
                         <outlet property="minLabel" destination="QVQ-IA-R7s" id="IiD-JR-DuY"/>
-                        <outlet property="preheatLabel" destination="1cO-cu-AuE" id="6lg-LB-wJr"/>
+                        <outlet property="modelButton" destination="ehU-CT-E63" id="vLl-3s-0ei"/>
                         <outlet property="secLabel" destination="X3y-il-6FY" id="4jO-R8-OG8"/>
                         <outlet property="settingsButton" destination="jLP-zd-iGG" id="wqG-Pf-6Ns"/>
                         <outlet property="startButton" destination="gCO-mA-Prx" id="vBl-Vr-ZK0"/>
@@ -232,7 +242,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1947.1962616822429" y="-371.92224622030238"/>
+            <point key="canvasLocation" x="-1948" y="-372.41379310344831"/>
         </scene>
         <!--Settings-->
         <scene sceneID="vIN-4i-crW">
@@ -1169,7 +1179,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hKm-9I-Sgp" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="h4s-2t-mRx" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="425.625" y="-732.04225352112678"/>
+            <point key="canvasLocation" x="425" y="-732"/>
         </scene>
         <!--Measurement List-->
         <scene sceneID="cZh-xJ-PQf">
@@ -1682,6 +1692,7 @@
     </designables>
     <inferredMetricsTieBreakers>
         <segue reference="SN2-Ya-5CE"/>
+        <segue reference="3SX-HB-Wfs"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="timer" catalog="system" width="128" height="121"/>
