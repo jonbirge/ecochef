@@ -2,7 +2,7 @@
 //  FirstViewController.swift
 //  EcoChef
 //
-//  Copyright © 2022 Birge & Fuller. All rights reserved.
+//  Copyright © 2017-2022 Birge & Fuller. All rights reserved.
 //
 
 import UIKit
@@ -54,8 +54,9 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         print("useCelcius: \(state!.useCelcius)")
         print("notOnBoarded: \(state!.notOnBoarded)")
         
-        timerDisabledControls =
-            [currentTempSlider, desiredTempSlider, tempResetButton, settingsButton]
+        timerDisabledControls = [modelButton,
+                                 currentTempSlider, desiredTempSlider,
+                                 tempResetButton, settingsButton]
         modelTimer.thermalModel = model
         modelData.LoadModelData()
         UpdateFromState()
@@ -64,28 +65,33 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         
         // Notification setup
         let notificationCenter = NotificationCenter.default
-        
-        notificationCenter.addObserver(self, selector: #selector(PreheatViewController.didEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(PreheatViewController.didBecomeActive), name: UIApplication.willEnterForegroundNotification, object: nil)
+        notificationCenter.addObserver(
+            self, selector: #selector(PreheatViewController.didEnterBackground),
+            name: UIApplication.didEnterBackgroundNotification, object: nil)
+        notificationCenter.addObserver(
+            self, selector: #selector(PreheatViewController.didBecomeActive),
+            name: UIApplication.willEnterForegroundNotification, object: nil)
 
         // UI notification setup
         // TODO: Put this elsewhere, maybe only when actually needed?
         let usernotificationCenter = UNUserNotificationCenter.current()
         usernotificationCenter.delegate = self
-        let earlyAction = UNNotificationAction(identifier: "TIMER_SNOOZE", title: "Continue timer",
-                                                options: .destructive)
-        let rightAction = UNNotificationAction(identifier: "TIMER_GOOD", title: "Preheated",
-                                              options: UNNotificationActionOptions(rawValue: 0))
-        let timerFeedbackCategory =
-            UNNotificationCategory(identifier: "TIMER_FEEDBACK",
-                                   actions: [earlyAction, rightAction],
-                                   intentIdentifiers: [],
-                                   options: UNNotificationCategoryOptions(rawValue: 0))
-        let timerDoneCategory =
-            UNNotificationCategory(identifier: "TIMER_SIMPLE",
-                                   actions: [],
-                                   intentIdentifiers: [],
-                                   options: UNNotificationCategoryOptions(rawValue: 0))
+        let earlyAction = UNNotificationAction(
+            identifier: "TIMER_SNOOZE", title: "Continue timer",
+            options: .destructive)
+        let rightAction = UNNotificationAction(
+            identifier: "TIMER_GOOD", title: "Preheated",
+            options: UNNotificationActionOptions(rawValue: 0))
+        let timerFeedbackCategory = UNNotificationCategory(
+            identifier: "TIMER_FEEDBACK",
+            actions: [earlyAction, rightAction],
+            intentIdentifiers: [],
+            options: UNNotificationCategoryOptions(rawValue: 0))
+        let timerDoneCategory = UNNotificationCategory(
+            identifier: "TIMER_SIMPLE",
+            actions: [],
+            intentIdentifiers: [],
+            options: UNNotificationCategoryOptions(rawValue: 0))
         usernotificationCenter.setNotificationCategories([timerFeedbackCategory, timerDoneCategory])
     }
     
@@ -100,17 +106,18 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     }
     
     private func onBoarding() {
-        let alert = UIAlertController(title: "Welcome to EcoChef!",
-                                      message: "Click settings ⚙ on the lower right to get help and configure the app.",
-                                      preferredStyle: .alert)
+        let alert = UIAlertController(
+            title: "Welcome to EcoChef!",
+            message: "Click settings ⚙ on the lower right to get help and configure the app.",
+            preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default)
         {
-            action in
-            UIView.transition(with: self.helpLabel, duration: 1.5,
-                              options: .transitionFlipFromBottom,
-                              animations: {
-                                self.helpLabel.isHidden = false },
-                              completion: nil)
+            action in UIView.transition(
+                with: self.helpLabel, duration: 1.5,
+                options: .transitionFlipFromBottom,
+                animations: {
+                    self.helpLabel.isHidden = false },
+                completion: nil)
         }
         alert.addAction(okAction)
         present(alert, animated: true)
@@ -127,12 +134,12 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     // App entered foreground
     @objc func didBecomeActive() {
         if modelTimer.isRunning {
-            timer =
-                Timer.scheduledTimer(timeInterval: 0.2,
-                                     target: self,
-                                     selector: #selector(PreheatViewController.TimerCount),
-                                     userInfo: nil,
-                                     repeats: true)
+            timer = Timer.scheduledTimer(
+                timeInterval: 0.2,
+                target: self,
+                selector: #selector(PreheatViewController.TimerCount),
+                userInfo: nil,
+                repeats: true)
         } else {
             StopTimer()
             UpdateView()
@@ -200,8 +207,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
             desiredTempLabel.text = ThermalModel.DisplayF(temp: desiredTemp)
         }
         
-        preheatLabel.textColor = .darkGray
-        preheatLabel.text = modelData.selectedModelData.name
+        modelButton.setTitle(modelData.selectedModelData.name, for: .normal)
         
         // Colors
         var uiColor: UIColor
@@ -224,7 +230,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         var desiredMax, desiredMin: Float  // F
         var currentMax, currentMin: Float  // F
         
-        print("PreviewViewController:UpdateLimits()")
+        print("PreviewViewController:UpdateSliders")
         
         desiredMin = 70
         model.Tamb = state.Tamb
@@ -353,7 +359,8 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
             content.body = NSString.localizedUserNotificationString(forKey: notifyText, arguments: nil)
         }
         content.title = NSString.localizedUserNotificationString(forKey: notifyTitle, arguments: nil)
-        content.sound = UNNotificationSound(named: convertToUNNotificationSoundName("birge-ring.aiff"))
+        content.sound = UNNotificationSound(
+            named: UNNotificationSoundName(rawValue: "birge-ring.aiff"))
         
         let timeLeft = Double(modelTimer.minutesLeft())
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60.0*timeLeft, repeats: false)
@@ -409,23 +416,23 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     func SnoozeTimer() {
         // Start new timer
         modelTimer.snoozeTimer(for: 2.5)
-        timer =
-            Timer.scheduledTimer(timeInterval: 0.2,
-                                 target: self,
-                                 selector: #selector(PreheatViewController.TimerCount),
-                                 userInfo: nil,
-                                 repeats: true)
+        timer = Timer.scheduledTimer(
+            timeInterval: 0.2,
+            target: self,
+            selector: #selector(PreheatViewController.TimerCount),
+            userInfo: nil,
+            repeats: true)
         
         // UI
-        DisableTimerControls()
         let modelname = modelData.selectedModelData.name
         if modelTimer.isHeating {
-            preheatLabel.text = "Timing \(modelname)"
-            preheatLabel.textColor = heatingColor
+            modelButton.setTitleColor(heatingColor, for: .disabled)
+            modelButton.setTitle("Timing \(modelname)", for: .disabled)
         } else {
-            preheatLabel.text = "Timing \(modelname)"
-            preheatLabel.textColor = coolingColor
+            modelButton.setTitleColor(coolingColor, for: .disabled)
+            modelButton.setTitle("Timing \(modelname)", for: .disabled)
         }
+        DisableTimerControls()
         
         // Throw up another notification
         AddNotification()
@@ -434,22 +441,22 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     func StartTimer() {
         // Timer
         modelTimer.startTimer(fromTemp: currentTemp, toTemp: desiredTemp)
-        timer =
-            Timer.scheduledTimer(timeInterval: 0.2,
-                                 target: self,
-                                 selector: #selector(PreheatViewController.TimerCount),
-                                 userInfo: nil,
-                                 repeats: true)
+        timer = Timer.scheduledTimer(
+            timeInterval: 0.2,
+            target: self,
+            selector: #selector(PreheatViewController.TimerCount),
+            userInfo: nil,
+            repeats: true)
         
         // UI
         initialCurrentTemp = currentTemp
         let modelname = modelData.selectedModelData.name
         if modelTimer.isHeating {
-            preheatLabel.text = "Preheating \(modelname)"
-            preheatLabel.textColor = heatingColor
+            modelButton.setTitle("Preheating \(modelname)", for: .disabled)
+            modelButton.setTitleColor(heatingColor, for: .disabled)
         } else {
-            preheatLabel.text = "Cooling \(modelname)"
-            preheatLabel.textColor = coolingColor
+            modelButton.setTitle("Cooling \(modelname)", for: .disabled)
+            modelButton.setTitleColor(coolingColor, for: .disabled)
         }
         DisableTimerControls()
         AddNotification()
@@ -460,7 +467,8 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         let isHeating = modelTimer.isHeating
         let theTime = modelTimer.minutesElapsed()
         let theModel = modelData.selectedModelData
-        if theTime > 0 && isHeating {
+        if theTime > 0 && isHeating
+        {
             theModel.addDataPoint(time: theTime,
                                   Tstart: modelTimer.initialTemp,
                                   Tfinal: desiredTemp,
@@ -522,8 +530,8 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     @IBOutlet var timerResetButton: UIButton!
     @IBOutlet var curTempLabel: UILabel!
     @IBOutlet var tempResetButton: UIButton!
-    @IBOutlet var preheatLabel: UILabel!
     @IBOutlet var settingsButton: UIButton!
+    @IBOutlet var modelButton: UIButton!
     
     @IBAction func StartButton(_ sender: UIButton) {
         if modelTimer.isNotRunning {
@@ -579,9 +587,4 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     @IBAction func ResetButton(_ sender: UIButton) {
         Reset()
     }
-}
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertToUNNotificationSoundName(_ input: String) -> UNNotificationSoundName {
-	return UNNotificationSoundName(rawValue: input)
 }

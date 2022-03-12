@@ -28,6 +28,7 @@ class TimerButton: SimpleButton {
         guard let thecolor = color else { return }
         
         setBorderColor(thecolor, for: state)
+        
         if state == .normal {
             var hue = CGFloat()
             var sat: CGFloat = 0
@@ -37,9 +38,12 @@ class TimerButton: SimpleButton {
             let highlightBrightness: CGFloat = 1 - (1 - brightness)/3
             let highlightColor = UIColor(hue: hue, saturation: sat, brightness: highlightBrightness, alpha: 1)
             super.setTitleColor(highlightColor, for: .highlighted)
-            setBackgroundColor(UIColor(white: 0.5, alpha: 0.025), for: .disabled)
-            let backgroundColor = UIColor(hue: hue, saturation: sat, brightness: brightness, alpha: 0.05)
+            let backgroundColor = UIColor(hue: hue, saturation: sat, brightness: brightness, alpha: 0.1)
             setBackgroundColor(backgroundColor, for: .normal)
+        }
+        
+        if state == .disabled {
+            setBackgroundColor(UIColor(white: 0.5, alpha: 0.025), for: .disabled)
         }
         
         super.setTitleColor(color, for: state)
