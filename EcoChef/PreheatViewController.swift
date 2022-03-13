@@ -314,7 +314,12 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     private func ResetTimer() {
         CancelNotification()
         StopTimer()
-        currentTempSlider.value = Float(initialCurrentTemp)  // TODO: Why?
+        if state.useCelcius {
+            currentTempSlider.value = ThermalModel.FtoC(temp: Float(initialCurrentTemp))
+        } else {
+            currentTempSlider.value = Float(initialCurrentTemp)
+        }
+        // currentTemp = initialCurrentTemp
         UpdateView()
     }
 

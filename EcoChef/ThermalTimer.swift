@@ -44,6 +44,7 @@ class ThermalTimer {
     
     func startTimer(fromTemp: Float, toTemp: Float) {
         running = true
+        snoozing = false
         initialTemp = fromTemp
         if let timerMinutes = thermalModel!.time(totemp: toTemp, fromtemp: fromTemp) {
             startTime = Date()
