@@ -106,21 +106,12 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     }
     
     private func onBoarding() {
-        let alert = UIAlertController(
-            title: "Welcome to EcoChef!",
-            message: "Click settings ⚙ on the lower right to get help and configure the app.",
-            preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default)
-        {
-            action in UIView.transition(
-                with: self.helpLabel, duration: 1.5,
-                options: .transitionFlipFromBottom,
-                animations: {
-                    self.helpLabel.isHidden = false },
-                completion: nil)
-        }
-        alert.addAction(okAction)
-        present(alert, animated: true)
+        UIView.transition(
+            with: self.helpLabel, duration: 1.5,
+            options: .transitionFlipFromBottom,
+            animations: {
+                self.helpLabel.isHidden = false },
+            completion: nil)
     }
     
     // App entered background
