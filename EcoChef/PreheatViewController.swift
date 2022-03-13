@@ -41,7 +41,6 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     // MARK: - Startup
     
     // TODO: Should some of this be in AppDelegate?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -114,7 +113,6 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
             completion: nil)
     }
     
-    // App entered background
     @objc func didEnterBackground() {
         if modelTimer.isRunning {
             timer?.invalidate()
@@ -122,7 +120,6 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         }
     }
     
-    // App entered foreground
     @objc func didBecomeActive() {
         if modelTimer.isRunning {
             timer = Timer.scheduledTimer(
@@ -173,7 +170,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         }
     }
     
-    // Pull in data from sliders
+    /// Pull in data from sliders
     private func ReadSliders() {
         if state.useCelcius {
             currentTemp = ThermalModel.CtoF(temp: (currentTempSlider.value))  // TODO: round?
@@ -184,7 +181,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         }
     }
     
-    // Update view while time is not engaged
+    /// Update view while time is not engaged
     private func UpdateView() {
         if state.useCelcius {
             currentTemp = ThermalModel.CtoF(temp: (currentTempSlider.value))  // TODO: round?
@@ -295,7 +292,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     
     // MARK: - Notification and timer functionality
     
-    // Delegate for notification action
+    /// Delegate for notification action
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void)
@@ -311,7 +308,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         completionHandler()
     }
     
-    // Timer delegate function
+    /// Timer delegate function
     @objc func TimerCount() {
         let minutesLeft = modelTimer.minutesLeft()
         if modelTimer.isNotDone {
@@ -342,7 +339,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
 
         if modelParams.calibrated && modelTimer.isHeating {
             content.categoryIdentifier = "TIMER_FEEDBACK"
-            let notifyText = "\(modelData.selectedModelData.name) should be \(Int(desiredTemp))º. Pull down to provide model learning data."
+            let notifyText = "\(modelData.selectedModelData.name) should be \(Int(desiredTemp))º. Hold down to provide model learning data."
             content.body = NSString.localizedUserNotificationString(forKey: notifyText, arguments: nil)
         } else {
             content.categoryIdentifier = "TIMER_SIMPLE"
@@ -453,7 +450,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         AddNotification()
     }
     
-    /// Data collection for models
+    /// Collect data from notification
     func LearnTime() {
         let isHeating = modelTimer.isHeating
         let theTime = modelTimer.minutesElapsed()
@@ -468,6 +465,27 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
                 theModel.fitfromdata()
             }
             modelData.WriteToDisk()
+        }
+    }
+    
+    /// Ask user if we should collect data manually stopped timer
+    func QueryLearning() {
+        let modelParams = modelData.selectedModelData
+        if modelParams.calibrated && modelTimer.isHeating {
+            let alert = UIAlertController(title: "Model Learning",
+                                          message: "Should the \(modelParams.name) model learn from this preheat time?",
+                                          preferredStyle: .alert)
+            
+            let noAction = UIAlertAction(title: "Ignore", style: .cancel)
+            let yesAction = UIAlertAction(title: "Learn", style: .destructive) { action in
+                self.LearnTime()
+                self.currentTempSlider.value = self.desiredTempSlider.value
+                self.UpdateView()
+            }
+            alert.addAction(yesAction)
+            alert.addAction(noAction)
+            
+            present(alert, animated: true)
         }
     }
     
@@ -525,29 +543,12 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     @IBOutlet var modelButton: UIButton!
     
     @IBAction func StartButton(_ sender: UIButton) {
-        if modelTimer.isNotRunning {
+        if modelTimer.isNotRunning {  // start
             StartTimer()
         } else {  // done
             CancelNotification()
             StopTimer()
-            
-            // UI learning interface
-            let modelParams = modelData.selectedModelData
-            if modelParams.calibrated && modelTimer.isHeating {
-                let alert = UIAlertController(title: "Model learning",
-                                              message: "Did \(modelParams.name) reach the desired temperature?", preferredStyle: .alert)
-                
-                let noAction = UIAlertAction(title: "Dismiss", style: .cancel)
-                let yesAction = UIAlertAction(title: "Yes", style: .destructive) { action in
-                    self.LearnTime()
-                    self.currentTempSlider.value = self.desiredTempSlider.value
-                    self.UpdateView()
-                }
-                alert.addAction(yesAction)
-                alert.addAction(noAction)
-                
-                present(alert, animated: true)
-            }
+            QueryLearning()
         }
     }
     
