@@ -26,8 +26,8 @@ class DualTimerController {
     private let normalColor: UIColor = .systemGray
     private let selectedColor: UIColor = .systemOrange
     private let timingColor: UIColor = .systemRed
-    private let thinEdge: CGFloat = 1
-    private let selEdge: CGFloat = 3
+    private let thinEdge: CGFloat = 0
+    private let selEdge: CGFloat = 2
     
     var isRunning: Bool {
         return localIsRunning
