@@ -29,8 +29,9 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     private var timerDisabledControls: [UIControl]!
     private var timer: Timer?
     private var initialCurrentTemp: Float = 0
+    private var backgrounded: Bool = false
     
-    var Tamb : Float {
+    private var Tamb : Float {
         get { return model.Tamb }
         set (newTamb) {
             model.Tamb = Quantize(newTamb)
@@ -38,7 +39,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         }
     }
     
-    // MARK: - Startup
+    // MARK: - View handling
     
     // TODO: Should some of this be in AppDelegate?
     override func viewDidLoad() {
@@ -114,13 +115,16 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     }
     
     @objc func didEnterBackground() {
+        backgrounded = true
         if modelTimer.isRunning {
             timer?.invalidate()
             timer = nil
         }
     }
-    
+
+    // TODO: Handle case where timer is running on snooze and set sliders appropriately!
     @objc func didBecomeActive() {
+        backgrounded = false
         if modelTimer.isRunning {
             timer = Timer.scheduledTimer(
                 timeInterval: 0.2,
@@ -154,6 +158,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     
     // MARK: - UI & timer model
 
+    /// Quantize desired temperature (F)
     private func Quantize(_ temp:Float) -> Float {
         if temp < crossover {
             return smallstep*round(temp/smallstep)
@@ -161,7 +166,8 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
             return largestep*round(temp/largestep)
         }
     }
-    
+
+    /// Quantize desired temperature (C)
     private func QuantizeC(_ temp:Float) -> Float {
         if temp < crossoverC {
             return smallstepC*round(temp/smallstepC)
@@ -182,8 +188,10 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     }
 
     // TODO: Make utility function that converts F temp into appropriate display based on `state`
-    /// Update view while time is not engaged
+    /// Update view while timer is not engaged
     private func UpdateView() {
+        // print("PreheatViewCont:UpdateView")
+
         if state.useCelcius {
             currentTemp = ThermalModel.CtoF(temp: (currentTempSlider.value))  // TODO: round?
             desiredTemp = ThermalModel.CtoF(temp: QuantizeC(desiredTempSlider.value))
@@ -209,7 +217,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
             uiColor = .darkGray
         }
         desiredTempSlider.minimumTrackTintColor = uiColor
-        
+
         // Run model
         let minfrac = model.time(totemp: desiredTemp, fromtemp: currentTemp)
         ShowTime(minutes: minfrac)  // faster?
@@ -330,14 +338,16 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     }
 
     private func SnoozeTimer() {
-        // Start new timer
+        // Start new timer if we're in foreground
         modelTimer.snoozeTimer(for: 2.0)
-        timer = Timer.scheduledTimer(
-            timeInterval: 0.2,
-            target: self,
-            selector: #selector(PreheatViewController.TimerCount),
-            userInfo: nil,
-            repeats: true)
+        if !backgrounded {
+            timer = Timer.scheduledTimer(
+                timeInterval: 0.2,
+                target: self,
+                selector: #selector(PreheatViewController.TimerCount),
+                userInfo: nil,
+                repeats: true)
+        }
 
         // UI
         let modelname = modelData.selectedModelData.name
@@ -423,9 +433,11 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
                                 withCompletionHandler completionHandler: @escaping () -> Void)
     {
         if response.actionIdentifier == "TIMER_SNOOZE" {
+            print("TIMER_SNOOZE")
             SnoozeTimer()
         } else if response.actionIdentifier == "TIMER_GOOD" {  // user agrees we're done
-            if modelTimer.isSnoozing {
+            print("TIMER_GOOD")
+            if modelTimer.isSnoozing {  // if time is good, then no training needed
                 LearnTime()
             }
             EnableTimerControls()
@@ -487,7 +499,8 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         let timeLeft = Double(modelTimer.minutesLeft())
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60.0*timeLeft, repeats: false)
         let request = UNNotificationRequest(identifier: "PREHEAT_ALARM", content: content, trigger: trigger)
-        
+
+        // Actually submit timed notification
         let center = UNUserNotificationCenter.current()
         center.add(request) { (error : Error?) in
             if let theError = error {
