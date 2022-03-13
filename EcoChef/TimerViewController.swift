@@ -20,7 +20,7 @@ class DualTimerController {
     private var topside: Bool = true
     private var topcum: Float = 0
     private var bottomcum: Float = 0
-    private var localIsRunning: Bool = false
+    private var running: Bool = false
     private var startTime: Date?
     private let timeInt: Double = 0.2
     private let normalColor: UIColor = .systemGray
@@ -30,7 +30,7 @@ class DualTimerController {
     private let selEdge: CGFloat = 2
     
     var isRunning: Bool {
-        return localIsRunning
+        return running
     }
     
     var isSelected: Bool {
@@ -64,7 +64,7 @@ class DualTimerController {
     }
     
     func flip() {
-        if localIsRunning {
+        if running {
             if topside {
                 topcum += secondsElapsed()
             } else {
@@ -84,7 +84,7 @@ class DualTimerController {
     
     func start() {
         timerButton.setTitleColor(timingColor, for: .normal)
-        localIsRunning = true
+        running = true
         startTime = Date()
         timer = Timer.scheduledTimer(withTimeInterval: timeInt, repeats: true) { (timer) in
             self.updateTimes()
@@ -92,9 +92,13 @@ class DualTimerController {
     }
     
     func stop() {
-        timerButton.setTitleColor(normalColor, for: .normal)
-        if localIsRunning {
-            localIsRunning = false
+        if selected {
+            timerButton.setTitleColor(selectedColor, for: .normal)
+        } else {
+            timerButton.setTitleColor(normalColor, for: .normal)
+        }
+        if running {
+            running = false
             timer?.invalidate()
             if topside {
                 topcum = topcum + secondsElapsed()
@@ -105,13 +109,13 @@ class DualTimerController {
     }
     
     func pause() {
-        if localIsRunning {
+        if running {
             timer?.invalidate()
         }
     }
     
     func resume() {
-        if localIsRunning {
+        if running {
             timer = Timer.scheduledTimer(withTimeInterval: timeInt, repeats: true) { (timer) in
                 self.updateTimes()
             }
@@ -121,7 +125,7 @@ class DualTimerController {
     func updateTimes() {
         var topTotal: Float = topcum
         var bottomTotal: Float = bottomcum
-        if localIsRunning {
+        if running {
             if topside {
                 topTotal += secondsElapsed()
             } else {
