@@ -8,22 +8,24 @@
 import UIKit
 import UserNotifications
 
-/// Pseudo view controller for cooking timer
+// TODO: Turn into real view controller with graphics
+/// Pseudo-view controller for cooking timer
 class DualTimerController {
     var topLabel: UILabel
     var bottomLabel: UILabel
     var sumLabel: UILabel
     var timerButton: TimerButton
+    private var timer: Timer?
     private var selected: Bool = false
     private var topside: Bool = true
     private var topcum: Float = 0
     private var bottomcum: Float = 0
     private var localIsRunning: Bool = false
     private var startTime: Date?
-    private var timer: Timer?
     private let timeInt: Double = 0.2
-    private let normalColor: UIColor = .systemBlue
+    private let normalColor: UIColor = .systemGray
     private let selectedColor: UIColor = .systemOrange
+    private let timingColor: UIColor = .systemRed
     private let thinEdge: CGFloat = 1
     private let selEdge: CGFloat = 3
     
@@ -52,7 +54,11 @@ class DualTimerController {
             timerButton.setTitleColor(selectedColor, for: .normal)
             timerButton.setEdgeThickness(selEdge)
         } else {
-            timerButton.setTitleColor(normalColor, for: .normal)
+            if isRunning {
+                timerButton.setTitleColor(timingColor, for: .normal)
+            } else {
+                timerButton.setTitleColor(normalColor, for: .normal)
+            }
             timerButton.setEdgeThickness(thinEdge)
         }
     }
@@ -77,6 +83,7 @@ class DualTimerController {
     }
     
     func start() {
+        timerButton.setTitleColor(timingColor, for: .normal)
         localIsRunning = true
         startTime = Date()
         timer = Timer.scheduledTimer(withTimeInterval: timeInt, repeats: true) { (timer) in
@@ -85,6 +92,7 @@ class DualTimerController {
     }
     
     func stop() {
+        timerButton.setTitleColor(normalColor, for: .normal)
         if localIsRunning {
             localIsRunning = false
             timer?.invalidate()

@@ -21,30 +21,30 @@ class TimerButton: SimpleButton {
     /// automatically animate change in border thickness
     func setEdgeThickness(_ width: CGFloat) {
         edgeThickness = width
-        setBorderWidth(width, for: .normal, animated: true, animationDuration: 0.5)
+        setBorderWidth(width, for: .normal, animated: true, animationDuration: 0.25)
     }
     
     override func setTitleColor(_ color: UIColor?, for state: UIControl.State) {
-        guard let thecolor = color else { return }
-        
-        setBorderColor(thecolor, for: state)
-        
-        if state == .normal {
-            var hue = CGFloat()
-            var sat: CGFloat = 0
-            var brightness: CGFloat = 0
-            
-            thecolor.getHue(&hue, saturation: &sat, brightness: &brightness, alpha: nil)
-            let highlightBrightness: CGFloat = 1 - (1 - brightness)/3
-            let highlightColor = UIColor(hue: hue, saturation: sat, brightness: highlightBrightness, alpha: 1)
-            super.setTitleColor(highlightColor, for: .highlighted)
-            let backgroundColor = UIColor(hue: hue, saturation: sat, brightness: brightness, alpha: 0.1)
-            setBackgroundColor(backgroundColor, for: .normal)
+        guard let thecolor = color else {
+            print("TimerButton: nil color given to setTitleColor")
+            return
         }
         
-        if state == .disabled {
-            setBackgroundColor(UIColor(white: 0.5, alpha: 0.025), for: .disabled)
-        }
+        setBorderColor(thecolor, for: state, animated: true, animationDuration: 0.5)
+        
+        var hue = CGFloat()
+        var sat: CGFloat = 0
+        var brightness: CGFloat = 0
+        thecolor.getHue(&hue, saturation: &sat, brightness: &brightness, alpha: nil)
+        let highlightBrightness: CGFloat = 1 - (1 - brightness)/3
+        let highlightColor = UIColor(hue: hue, saturation: sat, brightness: highlightBrightness, alpha: 1)
+        super.setTitleColor(highlightColor, for: .highlighted)
+        let backgroundColor = UIColor(hue: hue, saturation: sat, brightness: brightness, alpha: 0.1)
+        setBackgroundColor(backgroundColor, for: .normal, animated: true, animationDuration: 1)
+        
+        //        if state == .disabled {
+        //            setBackgroundColor(UIColor(white: 0.5, alpha: 0.025), for: .disabled)
+        //        }
         
         super.setTitleColor(color, for: state)
     }
