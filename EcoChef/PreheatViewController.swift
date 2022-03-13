@@ -176,7 +176,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
             currentTemp = ThermalModel.CtoF(temp: (currentTempSlider.value))  // TODO: round?
             desiredTemp = ThermalModel.CtoF(temp: QuantizeC(desiredTempSlider.value))
         } else {
-            currentTemp = (currentTempSlider.value)  // TODO: round?
+            currentTemp = currentTempSlider.value  // TODO: round?
             desiredTemp = Quantize(desiredTempSlider.value)
         }
     }
@@ -189,7 +189,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
             currentTempLabel.text = ThermalModel.DisplayC(temp: currentTemp)
             desiredTempLabel.text = ThermalModel.DisplayC(temp: desiredTemp)
         } else {
-            currentTemp = (currentTempSlider.value)  // TODO: round?
+            currentTemp = currentTempSlider.value  // TODO: round?
             desiredTemp = Quantize(desiredTempSlider.value)
             currentTempLabel.text = ThermalModel.DisplayF(temp: currentTemp)
             desiredTempLabel.text = ThermalModel.DisplayF(temp: desiredTemp)
@@ -253,7 +253,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         CheckTimerEnable()
     }
     
-    func ShowTime(minutes: Float?) {
+    private func ShowTime(minutes: Float?) {
         if let min = minutes {
             let pretimemin = floor(min)
             let pretimesec = round(60*(min - pretimemin))
@@ -271,7 +271,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         }
     }
     
-    func Reset() {
+    private func Reset() {
         currentTempSlider.value = currentTempSlider.minimumValue
         if state.useCelcius {
             desiredTempSlider.value = ThermalModel.FtoC(temp: state.desiredTemp)
@@ -282,7 +282,8 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         CheckTimerEnable()
     }
     
-    func CheckTimerEnable() {
+    // TODO: Should instead check if modeled time would round to zero
+    private func CheckTimerEnable() {
         if desiredTemp == currentTemp {
             startButton.isEnabled = false
         } else {
@@ -300,7 +301,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         if response.actionIdentifier == "TIMER_SNOOZE" {
             SnoozeTimer()
         } else if response.actionIdentifier == "TIMER_GOOD" {  // user agrees we're done
-            if modelTimer.snoozing {
+            if modelTimer.isSnoozing {
                 LearnTime()
             }
             EnableTimerControls()
@@ -313,7 +314,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         let minutesLeft = modelTimer.minutesLeft()
         if modelTimer.isNotDone {
             ShowTime(minutes: abs(minutesLeft))
-            if !modelTimer.snoozing {
+            if !modelTimer.isSnoozing {
                 let tempEst = modelTimer.tempEstimate()
                 currentTempLabel.text = String(Int(round(tempEst)))
                 currentTempSlider.value = tempEst
@@ -388,22 +389,22 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         timerResetButton.isEnabled = true
     }
     
-    func ResetTimer() {
+    private func ResetTimer() {
         CancelNotification()
         StopTimer()
-        // currentTempSlider.value = Float(initialCurrentTemp)
+        currentTempSlider.value = Float(initialCurrentTemp)  // TODO: Why?
         UpdateView()
     }
 
-    func StopTimer() {
+    private func StopTimer() {
         modelTimer.stopTimer()
         timer?.invalidate()
         EnableTimerControls()
     }
     
-    func SnoozeTimer() {
+    private func SnoozeTimer() {
         // Start new timer
-        modelTimer.snoozeTimer(for: 2.5)
+        modelTimer.snoozeTimer(for: 2.0)
         timer = Timer.scheduledTimer(
             timeInterval: 0.2,
             target: self,
@@ -421,12 +422,10 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
             modelButton.setTitle("Timing \(modelname)", for: .disabled)
         }
         DisableTimerControls()
-        
-        // Throw up another notification
         AddNotification()
     }
     
-    func StartTimer() {
+    private func StartTimer() {
         // Timer
         modelTimer.startTimer(fromTemp: currentTemp, toTemp: desiredTemp)
         timer = Timer.scheduledTimer(
@@ -450,8 +449,8 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         AddNotification()
     }
     
-    /// Collect data from notification
-    func LearnTime() {
+    /// Collect data from user
+    private func LearnTime() {
         let isHeating = modelTimer.isHeating
         let theTime = modelTimer.minutesElapsed()
         let theModel = modelData.selectedModelData
@@ -461,7 +460,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
                                   Tstart: modelTimer.initialTemp,
                                   Tfinal: desiredTemp,
                                   Tamb: Tamb)
-            if theModel.calibrated {
+            if theModel.calibrated {  // TODO: always true?
                 theModel.fitfromdata()
             }
             modelData.WriteToDisk()
@@ -469,7 +468,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     }
     
     /// Ask user if we should collect data manually stopped timer
-    func QueryLearning() {
+    private func QueryLearning() {
         let modelParams = modelData.selectedModelData
         if modelParams.calibrated && modelTimer.isHeating {
             let alert = UIAlertController(title: "Model Learning",
@@ -572,7 +571,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     }
     
     @IBAction func CurrentTouchUpIn() {
-        //currentTempSlider.value = currentTemp
+        currentTempSlider.value = currentTemp  // TODO: why is this needed?
         CheckTimerEnable()
     }
     
