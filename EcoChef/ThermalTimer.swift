@@ -11,35 +11,40 @@ import Foundation
 // Timer model
 class ThermalTimer {
     var thermalModel: ThermalModel?
-    private var startTime: Date?
-    private var stopTime: Date?
     var snoozeTime: Float = 0
     var isHeating: Bool = true
     var initialTemp: Float = 0
-    var snoozing: Bool = false
+    private var snoozing: Bool = false
+    private var startTime: Date?
+    private var stopTime: Date?
     private var timerMinutes: Float = 0
     private var startTemp: Float = 0
-    private var localIsRunning: Bool = false
+    private var running: Bool = false
     
     var isRunning: Bool {
-        return localIsRunning
+        return running
     }
     
     var isNotRunning: Bool {
-        return !localIsRunning
+        return !running
     }
     
     var isNotDone: Bool {
         return minutesLeft() > 0
     }
     
+    var isSnoozing: Bool {
+        return snoozing
+    }
+    
     func stopTimer() {
-        localIsRunning = false
+        running = false
         stopTime = Date()
     }
     
     func startTimer(fromTemp: Float, toTemp: Float) {
-        localIsRunning = true
+        running = true
+        snoozing = false
         initialTemp = fromTemp
         if let timerMinutes = thermalModel!.time(totemp: toTemp, fromtemp: fromTemp) {
             startTime = Date()
@@ -54,7 +59,7 @@ class ThermalTimer {
     }
     
     func snoozeTimer(for minutes: Float) {
-        localIsRunning = true
+        running = true
         snoozing = true
         timerMinutes = timerMinutes + minutes
     }
@@ -75,7 +80,7 @@ class ThermalTimer {
     }
     
     func secondsElapsed() -> Float {
-        let now = localIsRunning ? Date() : stopTime!
+        let now = running ? Date() : stopTime!
         var seconds: TimeInterval = 0
         if let then = startTime {
             seconds = now.timeIntervalSince(then)

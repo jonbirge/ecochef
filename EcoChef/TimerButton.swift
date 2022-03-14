@@ -24,13 +24,14 @@ class TimerButton: SimpleButton {
         setBorderWidth(width, for: .normal, animated: true, animationDuration: 0.25)
     }
     
+    /// set title color and matching background and highlight colors
     override func setTitleColor(_ color: UIColor?, for state: UIControl.State) {
         guard let thecolor = color else {
             print("TimerButton: nil color given to setTitleColor")
             return
         }
         
-        setBorderColor(thecolor, for: state, animated: true, animationDuration: 0.5)
+        setBorderColor(thecolor, for: state, animated: true, animationDuration: 0.25)
         
         var hue = CGFloat()
         var sat: CGFloat = 0
@@ -39,12 +40,8 @@ class TimerButton: SimpleButton {
         let highlightBrightness: CGFloat = 1 - (1 - brightness)/3
         let highlightColor = UIColor(hue: hue, saturation: sat, brightness: highlightBrightness, alpha: 1)
         super.setTitleColor(highlightColor, for: .highlighted)
-        let backgroundColor = UIColor(hue: hue, saturation: sat, brightness: brightness, alpha: 0.1)
+        let backgroundColor = UIColor(hue: hue, saturation: sat, brightness: brightness, alpha: 0.15)
         setBackgroundColor(backgroundColor, for: .normal, animated: true, animationDuration: 1)
-        
-        //        if state == .disabled {
-        //            setBackgroundColor(UIColor(white: 0.5, alpha: 0.025), for: .disabled)
-        //        }
         
         super.setTitleColor(color, for: state)
     }

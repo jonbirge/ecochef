@@ -20,7 +20,12 @@ class AboutViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         let appVersionString: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String
-        versionLabel.text = appVersionString
+        let appBuildString: String? = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String
+        if appBuildString == nil {
+            versionLabel.text = appVersionString
+        } else {
+            versionLabel.text = appVersionString + " (" + appBuildString! + ")"
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -32,10 +37,6 @@ class AboutViewController: UIViewController {
             completion: nil
         )
         doEgg()
-    }
-    
-    @IBAction func doLongPress(_ sender: UILongPressGestureRecognizer) {
-        hideEgg()
     }
     
     func doEgg() {
@@ -52,7 +53,7 @@ class AboutViewController: UIViewController {
     }
     
     func hideEgg() {
-        print("Hi, Nathy and Alex!")
+        print("Bye, Nathy and Alex!")
         UIView.transition(
             with: eggTextView, duration: 5,
             options: .transitionCrossDissolve,
