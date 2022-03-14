@@ -167,13 +167,12 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ehU-CT-E63">
-                                <rect key="frame" x="59.666666666666657" y="153" width="255.99999999999997" height="26"/>
+                                <rect key="frame" x="32" y="153" width="311" height="26"/>
                                 <accessibility key="accessibilityConfiguration">
                                     <bool key="isElement" value="NO"/>
                                 </accessibility>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="26" id="BZu-bg-Mm7"/>
-                                    <constraint firstAttribute="width" constant="256" id="u63-2B-RaY"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -207,6 +206,7 @@
                             <constraint firstItem="pAx-TJ-5bS" firstAttribute="top" secondItem="ehU-CT-E63" secondAttribute="bottom" id="Snp-ve-m0K"/>
                             <constraint firstItem="InP-Vp-TcT" firstAttribute="centerX" secondItem="GDg-mc-Nd8" secondAttribute="centerX" id="UY9-gW-MQa"/>
                             <constraint firstItem="4z5-mr-Y9b" firstAttribute="top" secondItem="gCO-mA-Prx" secondAttribute="bottom" constant="32" id="VHR-vc-Mte"/>
+                            <constraint firstItem="ehU-CT-E63" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" constant="16" id="VS7-qG-H9f"/>
                             <constraint firstItem="gCO-mA-Prx" firstAttribute="leading" secondItem="X3y-il-6FY" secondAttribute="leading" id="ZPA-ji-oKA"/>
                             <constraint firstItem="InP-Vp-TcT" firstAttribute="top" secondItem="GDg-mc-Nd8" secondAttribute="bottom" constant="8" symbolic="YES" id="acD-NB-T78"/>
                             <constraint firstItem="GDg-mc-Nd8" firstAttribute="top" secondItem="moH-Te-Xzb" secondAttribute="bottom" constant="23" id="agn-bg-nt0"/>
@@ -217,6 +217,7 @@
                             <constraint firstItem="ehU-CT-E63" firstAttribute="centerX" secondItem="tsR-hK-woN" secondAttribute="centerX" id="jMp-sr-2Au"/>
                             <constraint firstItem="moH-Te-Xzb" firstAttribute="leading" secondItem="qfS-D6-HFC" secondAttribute="leading" constant="-2" id="jkf-A3-FEM"/>
                             <constraint firstItem="pAx-TJ-5bS" firstAttribute="centerX" secondItem="tsR-hK-woN" secondAttribute="centerX" id="l7q-k1-W3R"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ehU-CT-E63" secondAttribute="trailing" constant="16" id="mj9-6u-2s0"/>
                             <constraint firstItem="ehU-CT-E63" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" constant="65" id="qlz-AL-DSf"/>
                             <constraint firstItem="InP-Vp-TcT" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" constant="16" id="rHx-U4-BKq"/>
                             <constraint firstItem="jLP-zd-iGG" firstAttribute="centerY" secondItem="YIn-MW-QDW" secondAttribute="centerY" constant="-2" id="xaP-rX-t85"/>
@@ -520,7 +521,7 @@
                                     <action selector="clickReset:" destination="tkb-wK-zkw" eventType="touchUpInside" id="HTl-K8-Nsu"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ytj-cO-kfv">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ytj-cO-kfv">
                                 <rect key="frame" x="259" y="662" width="80" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -911,6 +912,7 @@
                         <outlet property="bottomLabel6" destination="bXl-LA-3HR" id="sK8-cC-okI"/>
                         <outlet property="bottomLabel7" destination="qqG-Xp-XPe" id="gVG-ff-TBR"/>
                         <outlet property="bottomLabel8" destination="tC2-sq-MkU" id="6yX-j0-5KX"/>
+                        <outlet property="resetButton" destination="MiL-uO-mU2" id="k28-sr-7AS"/>
                         <outlet property="startButton" destination="zfH-Qz-PPo" id="d08-g9-ncM"/>
                         <outlet property="sumLabel1" destination="D6J-3X-Eeu" id="0ey-at-OHi"/>
                         <outlet property="sumLabel2" destination="vlw-PH-Ulv" id="fTx-G6-bgt"/>
@@ -936,6 +938,7 @@
                         <outlet property="topLabel6" destination="pZg-OC-d4e" id="eWf-jU-MFg"/>
                         <outlet property="topLabel7" destination="It2-ps-ypu" id="imN-SQ-VaO"/>
                         <outlet property="topLabel8" destination="B9l-Hw-Nvp" id="oqn-PM-j0z"/>
+                        <outlet property="turnButton" destination="Ytj-cO-kfv" id="GoH-U8-3qJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dJw-Pd-cTE" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1502,6 +1505,25 @@
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Swift OptimizationKit" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CGp-gE-Wc7">
+                                <rect key="frame" x="48" y="326" width="279" height="22"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="©2022 Jonathan R. Birge" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vAt-2N-0wW" userLabel="SimpleButton author">
+                                <rect key="frame" x="48" y="354" width="279" height="20"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <bool key="isElement" value="NO"/>
+                                </accessibility>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="16"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <gestureRecognizers/>

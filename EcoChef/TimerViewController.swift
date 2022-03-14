@@ -217,8 +217,12 @@ class TimerViewController: UIViewController, UNUserNotificationCenterDelegate {
     private func updateView() {
         if currentTimer.isRunning {
             startButton.setTitle("Stop", for: .normal)
+            resetButton.isEnabled = false
+            turnButton.isEnabled = true
         } else {
             startButton.setTitle("Start", for: .normal)
+            resetButton.isEnabled = true
+            turnButton.isEnabled = false
         }
     }
     
@@ -292,7 +296,10 @@ class TimerViewController: UIViewController, UNUserNotificationCenterDelegate {
         
         present(alert, animated: true)
     }
-    
+
+    @IBOutlet var turnButton: UIButton!
+    @IBOutlet var resetButton: UIButton!
+
     @IBOutlet var timerButton1: TimerButton!
     @IBOutlet var topLabel1: UILabel!
     @IBOutlet var bottomLabel1: UILabel!
