@@ -953,6 +953,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <button key="tableFooterView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="D6z-yE-0RD">
+                            <rect key="frame" x="0.0" y="123.33333206176758" width="375" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" title="Reset all models"/>
+                            <connections>
+                                <action selector="resetAllModels" destination="zjn-9A-oq7" eventType="touchUpInside" id="dc6-Je-K4B"/>
+                            </connections>
+                        </button>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="ModelCell" textLabel="nMg-Ml-RC3" rowHeight="56" style="IBUITableViewCellStyleDefault" id="UiB-Cu-OVV">
                                 <rect key="frame" x="0.0" y="44.666666030883789" width="375" height="56"/>
@@ -1492,7 +1501,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" bounces="NO" scrollEnabled="NO" bouncesZoom="NO" editable="NO" text="Thanks to Alexander and Nathaniel for being such wonderful sons!" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dEl-m8-ic1" userLabel="Egg Text">
+                            <textView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" bounces="NO" scrollEnabled="NO" bouncesZoom="NO" editable="NO" text="Thanks to Nath and Alex!" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dEl-m8-ic1" userLabel="Egg Text">
                                 <rect key="frame" x="16" y="616" width="343" height="64"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>

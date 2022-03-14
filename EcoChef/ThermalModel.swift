@@ -57,14 +57,16 @@ class ThermalModelData {
         defaultModels.append(theparams)
         
         theparams = ThermalModelParams(name: "Gas Grill", a: 16.3, b: 642, note: "MHP grill")
-        //        theparams.addDataPoint(HeatingDataPoint(time: 2.5, Tstart: 64, Tfinal: 155))
-        //        theparams.addDataPoint(HeatingDataPoint(time: 4, Tstart: 64, Tfinal: 200))
-        //        theparams.addDataPoint(HeatingDataPoint(time: 7.5, Tstart: 64, Tfinal: 300))
-        //        theparams.addDataPoint(HeatingDataPoint(time: 5.5, Tstart: 64, Tfinal: 250))
-        //        theparams.addDataPoint(HeatingDataPoint(time: 10, Tstart: 64, Tfinal: 365))
-        //        theparams.addDataPoint(HeatingDataPoint(time: 12.25, Tstart: 64, Tfinal: 400))
-        //        theparams.calibrated = true
-        //        theparams.fitfromdata()
+#if DEBUG
+        theparams.addDataPoint(HeatingDataPoint(time: 2.5, Tstart: 64, Tfinal: 155))
+        theparams.addDataPoint(HeatingDataPoint(time: 4, Tstart: 64, Tfinal: 200))
+        theparams.addDataPoint(HeatingDataPoint(time: 7.5, Tstart: 64, Tfinal: 300))
+        theparams.addDataPoint(HeatingDataPoint(time: 5.5, Tstart: 64, Tfinal: 250))
+        theparams.addDataPoint(HeatingDataPoint(time: 10, Tstart: 64, Tfinal: 365))
+        theparams.addDataPoint(HeatingDataPoint(time: 12.25, Tstart: 64, Tfinal: 400))
+        theparams.calibrated = true
+        theparams.fitfromdata()
+#endif
         defaultModels.append(theparams)
         
         return defaultModels

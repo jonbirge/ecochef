@@ -70,7 +70,9 @@ class ModelTableViewController: UITableViewController {
             editController.modelParams = modelData.modelArray[indexPath.row]
         }
     }
-    
+
+    // MARK: - IB
+
     @IBAction func doEdit(_ sender: UIBarButtonItem) {
         if self.isEditing {
             self.setEditing(false, animated: true)
@@ -120,5 +122,26 @@ class ModelTableViewController: UITableViewController {
         
         tableView.reloadData()
     }
-    
+
+    @IBAction func resetAllModels() {
+        let alert = UIAlertController(
+            title: "Reset model data to defaults?",
+            message: "You will lose any learning data or manual changes!",
+            preferredStyle: .alert)
+
+        let resetAction = UIAlertAction(title: "Reset", style: .destructive) {
+            action in
+            self.modelData.LoadDefaultModelData()
+            self.tableView.reloadData()
+        }
+
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+
+        alert.addAction(resetAction)
+        alert.addAction(cancelAction)
+
+        present(alert, animated: true)
+    }
+
+
 }
