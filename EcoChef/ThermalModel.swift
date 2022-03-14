@@ -51,20 +51,20 @@ class ThermalModelData {
         defaultModels.append(theparams)
         
         theparams = ThermalModelParams(name: "Convection Oven")
-        theparams.a *= 1.0
-        theparams.b = 500
+        theparams.a = 10.5
+        theparams.b = 650.0
         theparams.note = "Bosch speed oven; normal convection preheat"
         defaultModels.append(theparams)
         
-        theparams = ThermalModelParams(name: "Gas Grill", a: 16.0, b: 640, note: "MHP grill")
-        theparams.addDataPoint(HeatingDataPoint(time: 2.5, Tstart: 64, Tfinal: 155))
-        theparams.addDataPoint(HeatingDataPoint(time: 4, Tstart: 64, Tfinal: 200))
-        theparams.addDataPoint(HeatingDataPoint(time: 7.5, Tstart: 64, Tfinal: 300))
-        theparams.addDataPoint(HeatingDataPoint(time: 5.5, Tstart: 64, Tfinal: 250))
-        theparams.addDataPoint(HeatingDataPoint(time: 10, Tstart: 64, Tfinal: 365))
-        theparams.addDataPoint(HeatingDataPoint(time: 12.25, Tstart: 64, Tfinal: 400))
-        theparams.calibrated = true
-        theparams.fitfromdata()
+        theparams = ThermalModelParams(name: "Gas Grill", a: 16.3, b: 642, note: "MHP grill")
+        //        theparams.addDataPoint(HeatingDataPoint(time: 2.5, Tstart: 64, Tfinal: 155))
+        //        theparams.addDataPoint(HeatingDataPoint(time: 4, Tstart: 64, Tfinal: 200))
+        //        theparams.addDataPoint(HeatingDataPoint(time: 7.5, Tstart: 64, Tfinal: 300))
+        //        theparams.addDataPoint(HeatingDataPoint(time: 5.5, Tstart: 64, Tfinal: 250))
+        //        theparams.addDataPoint(HeatingDataPoint(time: 10, Tstart: 64, Tfinal: 365))
+        //        theparams.addDataPoint(HeatingDataPoint(time: 12.25, Tstart: 64, Tfinal: 400))
+        //        theparams.calibrated = true
+        //        theparams.fitfromdata()
         defaultModels.append(theparams)
         
         return defaultModels
