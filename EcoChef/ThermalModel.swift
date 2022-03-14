@@ -3,24 +3,24 @@
 //  EcoChef
 //
 //  Created by Jonathan Birge on 6/10/17.
-//  Copyright © 2017 Birge Clocks. All rights reserved.
+//  Copyright © 2022 Birge & Fuller. All rights reserved.
 //
 
 import Foundation
+import OptimizationKit
 
 // MARK: - Data model
 
 class ThermalModelData {
     var modelArray: [ThermalModelParams] = []
-    var selectedIndex: Int = 1
+    var selectedIndex: Int = 0
     
     // The currently selected model
-    // TODO: Refactor as selectedModel
     var selectedModelData: ThermalModelParams {
         if selectedIndex < modelArray.count {
             return modelArray[selectedIndex]
         } else {
-            return modelArray.first!
+            return modelArray.first!  // TODO: Return optional
         }
     }
     
@@ -33,29 +33,31 @@ class ThermalModelData {
         var theparams : ThermalModelParams
         var defaultModels : [ThermalModelParams] = []
         
-        theparams = ThermalModelParams(name: "Electric (EnergyStar)")
+        theparams = ThermalModelParams(name: "Electric Oven (EnergyStar)")
         theparams.a *= 2
-        theparams.note = "Bosch"
+        theparams.note = "Bosch electric oven"
         defaultModels.append(theparams)
         
-        theparams = ThermalModelParams(name: "Electric (Fast)")
+        theparams = ThermalModelParams(name: "Electric Oven (Fast)")
         theparams.a *= 1.5
         theparams.b = 700
-        theparams.note = "Bosch; fast preheat setting"
+        theparams.note = "Bosch oven on fast preheat setting"
         defaultModels.append(theparams)
         
-        theparams = ThermalModelParams(name: "Convection")
-        theparams.a *= 1.1
-        theparams.note = "Bosch; normal convection preheat"
+        theparams = ThermalModelParams(name: "Gas Oven")
+        theparams.a = 17.6
+        theparams.b = 717
+        theparams.note = "Bosch gas oven"
         defaultModels.append(theparams)
         
-        theparams = ThermalModelParams(name: "Speed Oven")
-        theparams.a *= 1.0
-        theparams.b = 500
+        theparams = ThermalModelParams(name: "Convection Oven")
+        theparams.a = 10.5
+        theparams.b = 650.0
         theparams.note = "Bosch speed oven; normal convection preheat"
         defaultModels.append(theparams)
         
-        theparams = ThermalModelParams(name: "Gas Grill", a: 16.0, b: 640, note: "MHP grill")
+        theparams = ThermalModelParams(name: "Gas Grill", a: 16.3, b: 642, note: "MHP grill")
+#if DEBUG
         theparams.addDataPoint(HeatingDataPoint(time: 2.5, Tstart: 64, Tfinal: 155))
         theparams.addDataPoint(HeatingDataPoint(time: 4, Tstart: 64, Tfinal: 200))
         theparams.addDataPoint(HeatingDataPoint(time: 7.5, Tstart: 64, Tfinal: 300))
@@ -64,16 +66,18 @@ class ThermalModelData {
         theparams.addDataPoint(HeatingDataPoint(time: 12.25, Tstart: 64, Tfinal: 400))
         theparams.calibrated = true
         theparams.fitfromdata()
+#endif
         defaultModels.append(theparams)
         
         return defaultModels
     }
 }
 
-class ThermalModelParams : NSObject, NSCoding {
+class ThermalModelParams : NSObject, NSSecureCoding {
+    static var supportsSecureCoding: Bool = true
     var name: String
-    var a: Float
-    var b: Float
+    var a: Float  // minutes
+    var b: Float  // degrees F
     var note: String
     var mod: Date
     var measurements: HeatingDataSet
@@ -130,7 +134,6 @@ class ThermalModelParams : NSObject, NSCoding {
         fitter = ThermalModelFitter(params: self)
     }
     
-    // TODO: Rename
     func fitfromdata() {
         if fitter == nil {
             initFitter()
@@ -139,7 +142,12 @@ class ThermalModelParams : NSObject, NSCoding {
     }
     
     required convenience init(coder aDecoder: NSCoder) {
-        let name = aDecoder.decodeObject(forKey: Keys.name) as! String
+        var name: String
+        if let nameread = aDecoder.decodeObject(forKey: Keys.name) as? String {
+            name = nameread
+        } else {
+            name = "Untitled"
+        }
         let a = aDecoder.decodeFloat(forKey: Keys.a)
         let b = aDecoder.decodeFloat(forKey: Keys.b)
         var note: String
@@ -154,7 +162,13 @@ class ThermalModelParams : NSObject, NSCoding {
         } else {
             mod = Date()
         }
-        let meas = aDecoder.decodeObject(forKey: Keys.meas) as! HeatingDataSet
+        var meas: HeatingDataSet
+        if let measread = aDecoder.decodeObject(forKey: Keys.meas) as? HeatingDataSet {
+            meas = measread
+        } else {
+            print("ThermalModel: Failed to decode HeatingDataSet")
+            meas = HeatingDataSet()
+        }
         let cal = aDecoder.decodeBool(forKey: Keys.cal)
         self.init(name: name, a: a, b: b, note: note, mod: mod, meas: meas, cal: cal)
     }
@@ -176,7 +190,9 @@ class ThermalModelParams : NSObject, NSCoding {
 
 // MARK: - Measurements
 
-class HeatingDataSet : NSObject, NSCoding {
+class HeatingDataSet : NSObject, NSSecureCoding {
+    static var supportsSecureCoding: Bool = true
+    
     var measlist: [HeatingDataPoint] = []
     
     struct Keys {
@@ -192,8 +208,12 @@ class HeatingDataSet : NSObject, NSCoding {
     }
     
     required convenience init(coder aDecoder: NSCoder) {
-        let measlistread = aDecoder.decodeObject(forKey: Keys.measlist) as! [HeatingDataPoint]
-        self.init(measlist: measlistread)
+        if let measlistread = aDecoder.decodeObject(forKey: Keys.measlist) as? [HeatingDataPoint]
+        {
+            self.init(measlist: measlistread)
+        } else {
+            self.init()
+        }
     }
     
     func encode(with aCoder: NSCoder) {
@@ -221,11 +241,13 @@ class HeatingDataSet : NSObject, NSCoding {
     }
 }
 
-class HeatingDataPoint : NSObject, NSCoding {
-    var Tamb : Float = 72
-    var Tstart : Float = 72
-    var Tfinal : Float = 350
-    var time : Float = 10  // minutes (est. or actual)
+class HeatingDataPoint : NSObject, NSSecureCoding {
+    static var supportsSecureCoding: Bool = true
+
+    var Tamb : Float = 72  // deg F
+    var Tstart : Float = 72  // deg F
+    var Tfinal : Float = 350  // deg F
+    var time : Float = 10  // minutes
     var date : Date = Date()
     
     struct Keys {
@@ -284,10 +306,11 @@ class HeatingDataPoint : NSObject, NSCoding {
     }
 }
 
-// MARK: - Model fitting
+
+// MARK: - Computational model and regression
 
 class ThermalModelFitter : Fittable {
-    var verbose: Bool = false
+    var verbose: Bool = true  // Debuging
     var fitmodel: ThermalModel
     var modelparams: ThermalModelParams
     private var fitter: GaussNewtonFitter!
@@ -305,12 +328,14 @@ class ThermalModelFitter : Fittable {
         return modelparams.measurements.count
     }
     
-    var fitinitparams: [Double] {
+    var fitparams: [Double] {
         let p: [Double] =
             [Double(modelparams.a), Double(modelparams.b)]
         return p
     }
     
+    // TODO: Implement this as part of Fittable and have Fitters check
+    /// Decide if there are enough data points to successfully fit a model
     var fittable: Bool {
         if fitnpoints > 2 {
             return true
@@ -319,6 +344,17 @@ class ThermalModelFitter : Fittable {
         }
     }
     
+    convenience init(params: ThermalModelParams) {
+        self.init(model: ThermalModel(), params: params)
+    }
+    
+    init(model: ThermalModel, params: ThermalModelParams) {
+        fitmodel = model
+        modelparams = params
+        fitter = GaussNewtonFitter(with: self)
+    }
+    
+    /// Implements `Fittable` prototype.
     func fitresiduals(for params: [Double]) throws -> [Double] {
         fitmodel.a = Float(params[IndexKeys.a])
         fitmodel.b = Float(params[IndexKeys.b])
@@ -334,25 +370,11 @@ class ThermalModelFitter : Fittable {
         return res
     }
     
-    convenience init(params: ThermalModelParams) {
-        self.init(model: ThermalModel(), params: params)
-    }
-    
-    init(model: ThermalModel, params: ThermalModelParams) {
-        fitmodel = model
-        modelparams = params
-        setup()
-    }
-    
-    func setup() {
-        fitter = GaussNewtonFitter(with: self)
-    }
-    
     func fitfromdata() {
         if fittable {
             do {
-                let p: [Double] = try fitter.fit()
                 fitter.verbose = verbose
+                let p: [Double] = try fitter.fit()
                 modelparams.a = Float(round(10*p[IndexKeys.a])/10)
                 modelparams.b = Float(round(p[IndexKeys.b]))
             } catch let err {
@@ -362,12 +384,10 @@ class ThermalModelFitter : Fittable {
     }
 }
 
-// MARK: - Computational model
-
 class ThermalModel : CustomStringConvertible {
-    var a: Float = 12.0  // RC time constant
-    var b: Float = 600.0  // RH coefficient (s.s. temp above ambient)
-    var Tamb: Float = 70.0  // T_ambient
+    var a: Float = 12.0  // RC time constant (minutes)
+    var b: Float = 600.0  // RH coefficient, s.s. temp above ambient (deg F)
+    var Tamb: Float = 70.0  // T_ambient (deg F)
     
     var description: String {
         return "ThermalModel: \((a, b)), Tamb = \(Tamb)"
@@ -411,6 +431,25 @@ class ThermalModel : CustomStringConvertible {
     
     func tempAfterCooling(time t:Float, fromtemp Tstart:Float) -> Float {
         return Tamb + exp(-t/a)*(Tstart - Tamb)
+    }
+    
+    /// Convert **Farenheit** `temp` to **Celcius** and return a `String` displaying it with appropriate significant digits.
+    static func DisplayC(temp Tf:Float) -> String {
+        let Tc = FtoC(temp:Tf)
+        return String(Int(round(Tc))) + " ºC"
+    }
+    
+    /// Return a `String` displaying Farenheit `temp`.
+    static func DisplayF(temp Tf:Float) -> String {
+        return String(Int(Tf)) + " ºF"
+    }
+    
+    static func FtoC(temp Tf:Float) -> Float {
+        return (Tf - 32.0)/1.8
+    }
+    
+    static func CtoF(temp Tc:Float) -> Float {
+        return Tc*1.8 + 32.0
     }
 }
 

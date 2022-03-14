@@ -3,7 +3,7 @@
 //  EcoChef
 //
 //  Created by Jonathan Birge on 7/3/17.
-//  Copyright © 2017 Birge Clocks. All rights reserved.
+//  Copyright © 2017-2022 Birge & Fuller. All rights reserved.
 //
 
 import UIKit
@@ -31,6 +31,8 @@ class ModelEditViewController: UITableViewController {
     // MARK: - Table view data source
     
     func updateView() {
+        guard modelParams != nil else { return }
+        print("ModelEditViewCont:updateView")
         let isLearning = fitSwitch.isOn
         if isLearning {
             rcField.text = String(modelParams!.a)
@@ -62,7 +64,7 @@ class ModelEditViewController: UITableViewController {
 
     // MARK: - Navigation
     
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    // Preparation before navigation to measured data point list
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let measView = segue.destination as? MeasTableViewController {
             measView.modelParams = modelParams
@@ -70,6 +72,12 @@ class ModelEditViewController: UITableViewController {
             calView.modelParams = modelParams
         }
     }
+    
+    // Unwind from measured data point list editing scene
+    @IBAction func prepareForUnwind(for segue: UIStoryboardSegue) {
+        print("ModelEditViewCont:prepForUnwind")
+    }
+    
 
     // MARK: - IB
     
@@ -79,9 +87,9 @@ class ModelEditViewController: UITableViewController {
             let hr = Float(hrField.text!),
             let note = noteField.text else
         {
-            // TODO: Actually handle this!
+            // TODO: Actually handle this and tell user!
             performSegue(withIdentifier: "UnwindToModelList", sender: self)
-            print("ModelEditController: can't save poorly formed data.")
+            print("ModelEditCont: can't save poorly formed data.")
             return
         }
         
@@ -99,17 +107,17 @@ class ModelEditViewController: UITableViewController {
     
     @IBAction func clickFitSwitch() {
         if fitSwitch.isOn {
-            modelParams!.fitfromdata()
+            modelParams?.fitfromdata()
         }
         updateView()
     }
 
-    @IBOutlet weak var calibrateButton: UIButton!
-    @IBOutlet weak var dataCell: UITableViewCell!
-    @IBOutlet weak var fitSwitch: UISwitch!
-    @IBOutlet weak var dataLabel: UILabel!
-    @IBOutlet weak var nameField: UITextField!
-    @IBOutlet weak var rcField: UITextField!
-    @IBOutlet weak var hrField: UITextField!
-    @IBOutlet weak var noteField: UITextField!
+    @IBOutlet var calibrateButton: UIButton!
+    @IBOutlet var dataCell: UITableViewCell!
+    @IBOutlet var fitSwitch: UISwitch!
+    @IBOutlet var dataLabel: UILabel!
+    @IBOutlet var nameField: UITextField!
+    @IBOutlet var rcField: UITextField!
+    @IBOutlet var hrField: UITextField!
+    @IBOutlet var noteField: UITextField!
 }

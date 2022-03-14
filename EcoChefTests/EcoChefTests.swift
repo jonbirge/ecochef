@@ -96,9 +96,9 @@ class ThermalModelTests: XCTestCase {
         let b2 = testparams.b
         
         XCTAssertNotEqual(a0, a1)
-        XCTAssertEqualWithAccuracy(a1, a2, accuracy: 0.1)
+        XCTAssertEqual(a1, a2, accuracy: 0.1)
         XCTAssertNotEqual(b0, b1)
-        XCTAssertEqualWithAccuracy(b1, b2, accuracy: 1)
+        XCTAssertEqual(b1, b2, accuracy: 1)
     }
     
     func testModelFitAccuracy() {
@@ -120,8 +120,8 @@ class ThermalModelTests: XCTestCase {
         let a = testparams.a
         let b = testparams.b
         
-        XCTAssertEqualWithAccuracy(a, 16, accuracy: 0.5)
-        XCTAssertEqualWithAccuracy(b, 645, accuracy: 5)
+        XCTAssertEqual(a, 16, accuracy: 0.5)
+        XCTAssertEqual(b, 645, accuracy: 5)
     }
     
     func testModelFitConvergence() {
@@ -149,8 +149,8 @@ class ThermalModelTests: XCTestCase {
                 let a = testparams.a
                 let b = testparams.b
                 
-                XCTAssertEqualWithAccuracy(a, 16, accuracy: 1)
-                XCTAssertEqualWithAccuracy(b, 645, accuracy: 5)
+                XCTAssertEqual(a, 16, accuracy: 1)
+                XCTAssertEqual(b, 645, accuracy: 5)
             }
         }
     }

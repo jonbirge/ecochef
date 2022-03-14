@@ -2,8 +2,7 @@
 //  SettingsViewController.swift
 //  EcoChef
 //
-//  Created by Jonathan Birge on 6/20/17.
-//  Copyright © 2017 Birge Clocks. All rights reserved.
+//  Copyright © 2022 Birge Clocks. All rights reserved.
 //
 
 import UIKit
@@ -12,20 +11,29 @@ import SafariServices
 
 class SettingsViewController:
     UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate, MFMailComposeViewControllerDelegate {
-    var modelData: ThermalModelData!
-    var initialTamb: Float = 0.0
+    var modelData: ThermalModelData?
+    var initialTamb: Float?  // F
+    var Tamb: Float!  // F
+    var useCelcius: Bool = false
     
-    @IBOutlet weak var ambientField: UITextField!
-    @IBOutlet weak var ambientStepper: UIStepper!
-    @IBOutlet weak var modelPicker: UIPickerView!
+    @IBOutlet var ambientField: UITextField!
+    @IBOutlet var ambientStepper: UIStepper!
+    @IBOutlet var modelPicker: UIPickerView!
     @IBOutlet var siteLabel: UILabel!
     @IBOutlet var siteCell: UITableViewCell!
+    @IBOutlet var celciusCell: UITableViewCell!
+    @IBOutlet var farenheitCell: UITableViewCell!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        modelPicker.selectRow(modelData.selectedIndex, inComponent: 0, animated: true)
-        ambientStepper.value = Double(initialTamb)
+        Tamb = initialTamb ?? 70
+           
+        if let modelIndex = modelData?.selectedIndex {
+        modelPicker.selectRow(modelIndex,
+            inComponent: 0, animated: false)
+        }
+        updateUnits()
         updateViews()
         
         if !MFMailComposeViewController.canSendMail() {
@@ -39,17 +47,47 @@ class SettingsViewController:
         super.viewWillAppear(animated)
         
         modelPicker.reloadAllComponents()
-        modelData.WriteToDisk()
+        modelData?.WriteToDisk()
+    }
+    
+    /// Called when temp units are changed in interface by user
+    private func updateUnits() {
+        if useCelcius {
+            ambientStepper.maximumValue = 40
+            ambientStepper.minimumValue = -20
+            ambientStepper.stepValue = 1
+            ambientStepper.value = Double(round(2*ThermalModel.FtoC(temp:Tamb))/2)
+        } else {
+            ambientStepper.maximumValue = 110
+            ambientStepper.minimumValue = 0
+            ambientStepper.stepValue = 1
+            ambientStepper.value = Double(round(Tamb))
+        }
+    }
+    
+    /// Update all views from data models
+    private func updateViews() {
+        var ambientStr : String
+        if useCelcius {
+            ambientStr = ThermalModel.DisplayC(temp: Tamb)
+        } else {
+            ambientStr = ThermalModel.DisplayF(temp: Tamb)
+        }
+        ambientField.text = ambientStr
+        
+        if useCelcius {
+            celciusCell.accessoryType = UITableViewCell.AccessoryType.checkmark
+            farenheitCell.accessoryType = UITableViewCell.AccessoryType.none
+        } else {
+            celciusCell.accessoryType = UITableViewCell.AccessoryType.none
+            farenheitCell.accessoryType = UITableViewCell.AccessoryType.checkmark
+        }
     }
     
     // MARK: Output handling
     
     var selectedModel: Int {
         return modelPicker.selectedRow(inComponent: 0)
-    }
-    
-    var Tamb: Float {
-        return Float(ambientStepper.value)
     }
 
     // MARK: UIPickerView handling
@@ -60,18 +98,35 @@ class SettingsViewController:
     
     func pickerView(_ pickerView: UIPickerView,
                     numberOfRowsInComponent component: Int) -> Int {
-        return modelData.modelArray.count
+        guard let theCount = modelData?.modelArray.count else {
+            return 0
+        }
+        return theCount
     }
     
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        return NSAttributedString(string: modelData.modelArray[row].name)
+        guard let theString = modelData?.modelArray[row].name else { return nil }
+        return NSAttributedString(string: theString)
     }
     
     // MARK: UITableView handling
     
     override func tableView(_ tableView: UITableView,
                             didSelectRowAt indexPath: IndexPath) {
-        if indexPath.section == 3 {
+        
+        if indexPath.section == 3 {  // UNITS
+            if indexPath.row == 0 {
+                useCelcius = true
+                celciusCell.isSelected = false
+            } else {
+                useCelcius = false
+                farenheitCell.isSelected = false
+            }
+            updateUnits()
+            updateViews()
+        }
+        
+        if indexPath.section == 4 {  // INFO
             switch indexPath.row {
             case 0:
                 showFAQ()
@@ -83,11 +138,7 @@ class SettingsViewController:
         }
     }
     
-    func updateViews() {
-        let ambientStr = String(Int(Tamb)) + "º F"
-        ambientField.text = ambientStr
-    }
-    
+    /// Use web view to show FAQ
     func showFAQ() {
         if let faqURL = URL(string: EcoChefState.faqURL) {
             let safariViewCont = SFSafariViewController(url:faqURL)
@@ -95,10 +146,10 @@ class SettingsViewController:
         }
     }
     
-    // Eventually this should launch a website which includes contact pages
+    /// Show online help from **birgefuller.com**
     func showSite() {
         let email = "ecochef@birgefuller.com"
-        let subject = "EcoChef"
+        let subject = "[EcoChef] Question"
         
         // https://developer.apple.com/documentation/messageui/mfmailcomposeviewcontroller
         if MFMailComposeViewController.canSendMail()
@@ -108,28 +159,35 @@ class SettingsViewController:
             mailComposer.setToRecipients([email])
             mailComposer.setSubject(subject)
             present(mailComposer, animated: true, completion: nil)
-            print("Displayed mail modal...")
+            print("Displayed mail modal dialog")
         }
         else
         {
-            print("Device not configured to send email, yet it was enabled!")
+            print("Error: Device not configured for email, yet button was enabled!")
         }
     }
     
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         // Dismiss the mail compose view controller.
-        print("In mailComposeController delegate function...")
+        print("In mailComposeController delegate...")
         print(result.rawValue)
         siteCell.isSelected = false
         controller.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func clickedSave(_ sender: UIBarButtonItem) {
-        modelData.selectedIndex = selectedModel
+        modelData?.selectedIndex = selectedModel
         performSegue(withIdentifier: "UnwindSettings", sender: self)
     }
     
     @IBAction func clickAmbientStepper(_ sender: UIStepper) {
+        if useCelcius {
+            //print("Tamb = " + String(ambientStepper.value) + " C")
+            Tamb = ThermalModel.CtoF(temp: Float(ambientStepper.value))
+        } else {
+            //print("Tamb = " + String(ambientStepper.value) + " F")
+            Tamb = Float(ambientStepper.value)
+        }
         updateViews()
     }
     

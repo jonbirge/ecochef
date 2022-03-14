@@ -3,7 +3,7 @@
 //  EcoChef
 //
 //  Created by Jonathan Birge on 6/9/17.
-//  Copyright © 2017 Birge Clocks. All rights reserved.
+//  Copyright © 2022 Birge & Fuller. All rights reserved.
 //
 
 import UIKit
@@ -13,7 +13,6 @@ import UserNotifications
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var state: EcoChefState?
-
     var stateURL: URL {
         let docsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         return docsURL.appendingPathComponent("state")
@@ -31,11 +30,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func LoadState() {
         let stateURL = EcoChefState.stateURL
-        if let state = NSKeyedUnarchiver.unarchiveObject(withFile: stateURL.path) as? EcoChefState {
-            print("unarchiving saved state")
-            self.state = state
+        if let rawData = try? Data(contentsOf: stateURL) {
+            print("read raw archive data")
+            do {
+                let state = try NSKeyedUnarchiver.unarchivedObject(ofClass: EcoChefState.self, from: rawData)
+                self.state = state
+                print("decoded archive")
+            } catch let err {
+                print("error decoding state: \(err)")
+                print("creating new state...")
+                self.state = EcoChefState()
+                // we perhaps should do more here, since this should never happen...
+            }
         } else {
-            print("creating new state")
+            print("no saved state data found")
             self.state = EcoChefState()
         }
     }

@@ -2,8 +2,7 @@
 //  FirstViewController.swift
 //  EcoChef
 //
-//  Created by Jonathan Birge on 6/9/17.
-//  Copyright © 2017 Birge Clocks. All rights reserved.
+//  Copyright © 2017-2022 Birge & Fuller. All rights reserved.
 //
 
 import UIKit
@@ -11,22 +10,28 @@ import UserNotifications
 import SafariServices
 
 class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate {
-    let model = ThermalModel()
-    let modelTimer = ThermalTimer()
-    var modelData = ThermalModelData()
-    let smallstep: Float = 2
-    let largestep: Float = 25
-    let crossover: Float = 100
-    let heatingColor: UIColor = UIColor.red
-    let coolingColor: UIColor = UIColor.purple
+    
+    private let model = ThermalModel()
+    private let modelTimer = ThermalTimer()
+    private let smallstep: Float = 2
+    private let largestep: Float = 25
+    private let crossover: Float = 100
+    private let smallstepC: Float = 1
+    private let largestepC: Float = 10
+    private let crossoverC: Float = 50
+    private let heatingColor: UIColor = UIColor.red
+    private let coolingColor: UIColor = UIColor.purple
+    
     private var desiredTemp: Float = 350
     private var currentTemp: Float = 70
+    private var modelData = ThermalModelData()
     private var state: EcoChefState!
     private var timerDisabledControls: [UIControl]!
     private var timer: Timer?
     private var initialCurrentTemp: Float = 0
+    private var backgrounded: Bool = false
     
-    var Tamb : Float {
+    private var Tamb : Float {
         get { return model.Tamb }
         set (newTamb) {
             model.Tamb = Quantize(newTamb)
@@ -34,56 +39,63 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         }
     }
     
-    // MARK: - Startup
+    // MARK: - View handling
     
+    // TODO: Should some of this be in AppDelegate?
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Get state from application object
         let app = UIApplication.shared.delegate as! AppDelegate
         state = app.state
-        // state!.notOnBoarded = true // TESTING
-        print("state Tamb: \(state!.Tamb)")
-        print("state desT: \(state!.desiredTemp)")
-        print("state notOnBoarded: \(state!.notOnBoarded)")
+        // state!.notOnBoarded = true // FOR TESTING
+        print("Tamb: \(state!.Tamb)")
+        print("desT: \(state!.desiredTemp)")
+        print("useCelcius: \(state!.useCelcius)")
+        print("notOnBoarded: \(state!.notOnBoarded)")
         
-        timerDisabledControls =
-            [currentTempSlider, desiredTempSlider, tempResetButton, settingsButton]
+        timerDisabledControls = [modelButton,
+                                 currentTempSlider, desiredTempSlider,
+                                 tempResetButton, settingsButton]
         modelTimer.thermalModel = model
         modelData.LoadModelData()
         UpdateFromState()
-        UpdateLimits()
+        UpdateSliders()
         Reset()
         
         // Notification setup
         let notificationCenter = NotificationCenter.default
-        
-        notificationCenter.addObserver(self, selector: #selector(PreheatViewController.didEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(PreheatViewController.didBecomeActive), name: UIApplication.willEnterForegroundNotification, object: nil)
+        notificationCenter.addObserver(
+            self, selector: #selector(PreheatViewController.didEnterBackground),
+            name: UIApplication.didEnterBackgroundNotification, object: nil)
+        notificationCenter.addObserver(
+            self, selector: #selector(PreheatViewController.didBecomeActive),
+            name: UIApplication.willEnterForegroundNotification, object: nil)
 
         // UI notification setup
         // TODO: Put this elsewhere, maybe only when actually needed?
         let usernotificationCenter = UNUserNotificationCenter.current()
         usernotificationCenter.delegate = self
-        let earlyAction = UNNotificationAction(identifier: "TIMER_SNOOZE", title: "Continue timer",
-                                                options: .destructive)
-        let rightAction = UNNotificationAction(identifier: "TIMER_GOOD", title: "Preheated",
-                                              options: UNNotificationActionOptions(rawValue: 0))
-        let timerFeedbackCategory =
-            UNNotificationCategory(identifier: "TIMER_FEEDBACK",
-                                   actions: [earlyAction, rightAction],
-                                   intentIdentifiers: [],
-                                   options: UNNotificationCategoryOptions(rawValue: 0))
-        let timerDoneCategory =
-            UNNotificationCategory(identifier: "TIMER_SIMPLE",
-                                   actions: [],
-                                   intentIdentifiers: [],
-                                   options: UNNotificationCategoryOptions(rawValue: 0))
+        let earlyAction = UNNotificationAction(
+            identifier: "TIMER_SNOOZE", title: "Continue timer",
+            options: .destructive)
+        let rightAction = UNNotificationAction(
+            identifier: "TIMER_GOOD", title: "Preheated",
+            options: UNNotificationActionOptions(rawValue: 0))
+        let timerFeedbackCategory = UNNotificationCategory(
+            identifier: "TIMER_FEEDBACK",
+            actions: [earlyAction, rightAction],
+            intentIdentifiers: [],
+            options: UNNotificationCategoryOptions(rawValue: 0))
+        let timerDoneCategory = UNNotificationCategory(
+            identifier: "TIMER_SIMPLE",
+            actions: [],
+            intentIdentifiers: [],
+            options: UNNotificationCategoryOptions(rawValue: 0))
         usernotificationCenter.setNotificationCategories([timerFeedbackCategory, timerDoneCategory])
     }
     
-    override func viewDidAppear(_ animated: Bool)
-    {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // Onboarding
         if state.notOnBoarded {
@@ -94,39 +106,32 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     }
     
     private func onBoarding() {
-        let alert = UIAlertController(title: "Welcome to EcoChef!",
-                                      message: "Click settings ⚙ on the lower right to get help and configure the app.",
-                                      preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default)
-        {
-            action in
-            UIView.transition(with: self.helpLabel, duration: 1.5,
-                              options: .transitionFlipFromBottom,
-                              animations: {
-                                self.helpLabel.isHidden = false },
-                              completion: nil)
-        }
-        alert.addAction(okAction)
-        present(alert, animated: true)
+        UIView.transition(
+            with: self.helpLabel, duration: 1.5,
+            options: .transitionFlipFromBottom,
+            animations: {
+                self.helpLabel.isHidden = false },
+            completion: nil)
     }
     
-    // App entered background
     @objc func didEnterBackground() {
+        backgrounded = true
         if modelTimer.isRunning {
             timer?.invalidate()
             timer = nil
         }
     }
-    
-    // App entered foreground
+
+    // TODO: Handle case where timer is running on snooze and set sliders appropriately!
     @objc func didBecomeActive() {
+        backgrounded = false
         if modelTimer.isRunning {
-            timer =
-                Timer.scheduledTimer(timeInterval: 0.2,
-                                     target: self,
-                                     selector: #selector(PreheatViewController.TimerCount),
-                                     userInfo: nil,
-                                     repeats: true)
+            timer = Timer.scheduledTimer(
+                timeInterval: 0.2,
+                target: self,
+                selector: #selector(PreheatViewController.TimerCount),
+                userInfo: nil,
+                repeats: true)
         } else {
             StopTimer()
             UpdateView()
@@ -136,19 +141,24 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     // MARK: - State
     
     private func UpdateFromState() {
-        desiredTempSlider.value = state!.desiredTemp
-        modelData.selectedIndex = state!.selectedModel
+        if state.useCelcius {
+            desiredTempSlider.value = ThermalModel.FtoC(temp: state.desiredTemp)
+        } else {
+            desiredTempSlider.value = state.desiredTemp
+        }
+        modelData.selectedIndex = state.selectedModel
         model.setfrom(params: modelData.selectedModelData)
         UpdateView()
     }
     
-    func WriteStateToDisk() {
-        state!.desiredTemp = desiredTemp
-        state!.writeStateToDisk()
+    private func WriteStateToDisk() {
+        state.desiredTemp = desiredTemp
+        state.writeStateToDisk()
     }
     
-    // MARK: - UI & model
+    // MARK: - UI & timer model
 
+    /// Quantize desired temperature (F)
     private func Quantize(_ temp:Float) -> Float {
         if temp < crossover {
             return smallstep*round(temp/smallstep)
@@ -156,19 +166,45 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
             return largestep*round(temp/largestep)
         }
     }
+
+    /// Quantize desired temperature (C)
+    private func QuantizeC(_ temp:Float) -> Float {
+        if temp < crossoverC {
+            return smallstepC*round(temp/smallstepC)
+        } else {
+            return largestepC*round(temp/largestepC)
+        }
+    }
     
-    // Update view while time is not engaged
-    // TODO: Integrate timer view updates
-    func UpdateView() {
-        // Pull from sliders
-        currentTemp = round(currentTempSlider.value)
-        desiredTemp = Quantize(desiredTempSlider.value)
+    /// Pull in data from sliders
+    private func ReadSliders() {
+        if state.useCelcius {
+            currentTemp = ThermalModel.CtoF(temp: (currentTempSlider.value))  // TODO: round?
+            desiredTemp = ThermalModel.CtoF(temp: QuantizeC(desiredTempSlider.value))
+        } else {
+            currentTemp = currentTempSlider.value  // TODO: round?
+            desiredTemp = Quantize(desiredTempSlider.value)
+        }
+    }
+
+    // TODO: Make utility function that converts F temp into appropriate display based on `state`
+    /// Update view while timer is not engaged
+    private func UpdateView() {
+        // print("PreheatViewCont:UpdateView")
+
+        if state.useCelcius {
+            currentTemp = ThermalModel.CtoF(temp: (currentTempSlider.value))  // TODO: round?
+            desiredTemp = ThermalModel.CtoF(temp: QuantizeC(desiredTempSlider.value))
+            currentTempLabel.text = ThermalModel.DisplayC(temp: currentTemp)
+            desiredTempLabel.text = ThermalModel.DisplayC(temp: desiredTemp)
+        } else {
+            currentTemp = currentTempSlider.value  // TODO: round?
+            desiredTemp = Quantize(desiredTempSlider.value)
+            currentTempLabel.text = ThermalModel.DisplayF(temp: currentTemp)
+            desiredTempLabel.text = ThermalModel.DisplayF(temp: desiredTemp)
+        }
         
-        // Labels
-        currentTempLabel.text = String(Int(currentTemp))
-        desiredTempLabel.text = String(Int(desiredTemp))
-        preheatLabel.textColor = .darkGray
-        preheatLabel.text = modelData.selectedModelData.name
+        modelButton.setTitle(modelData.selectedModelData.name, for: .normal)
         
         // Colors
         var uiColor: UIColor
@@ -181,13 +217,52 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
             uiColor = .darkGray
         }
         desiredTempSlider.minimumTrackTintColor = uiColor
-        
+
         // Run model
         let minfrac = model.time(totemp: desiredTemp, fromtemp: currentTemp)
-        ShowTime(minutes: minfrac!)  // faster?
+        ShowTime(minutes: minfrac)  // faster?
     }
     
-    func ShowTime(minutes: Float?) {
+    private func UpdateSliders() {
+        var desiredMax, desiredMin: Float  // F
+        var currentMax, currentMin: Float  // F
+        
+        print("PreviewViewController:UpdateSliders")
+        
+        desiredMin = 70
+        model.Tamb = state.Tamb
+        
+        let maxTemp = Quantize(model.Tmax)  // F
+        if maxTemp > 500 {
+            desiredMax = 500
+        } else {
+            desiredMax = Quantize(model.Tmax)
+        }
+        
+        currentMax = desiredMax
+        currentMin = Tamb
+        
+        if state.useCelcius {
+            currentTempSlider.maximumValue = round(ThermalModel.FtoC(temp: currentMax))
+            currentTempSlider.minimumValue = round(ThermalModel.FtoC(temp: currentMin))
+            desiredTempSlider.maximumValue = round(ThermalModel.FtoC(temp: desiredMax))
+            desiredTempSlider.minimumValue = round(ThermalModel.FtoC(temp: desiredMin))
+            currentTempSlider.value = ThermalModel.FtoC(temp: currentTemp)
+            desiredTempSlider.value = QuantizeC(ThermalModel.FtoC(temp: desiredTemp))
+        } else {
+            currentTempSlider.maximumValue = currentMax
+            currentTempSlider.minimumValue = currentMin
+            desiredTempSlider.maximumValue = desiredMax
+            desiredTempSlider.minimumValue = desiredMin
+            currentTempSlider.value = currentTemp
+            desiredTempSlider.value = Quantize(desiredTemp)
+        }
+        
+        UpdateView()
+        CheckTimerEnable()
+    }
+    
+    private func ShowTime(minutes: Float?) {
         if let min = minutes {
             let pretimemin = floor(min)
             let pretimesec = round(60*(min - pretimemin))
@@ -205,48 +280,164 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         }
     }
     
-    func UpdateLimits() {
-        model.Tamb = state!.Tamb
-        let maxTemp = Quantize(model.Tmax)
-        if maxTemp > 500 {
-            desiredTempSlider.maximumValue = 500
-        } else {
-            desiredTempSlider.maximumValue = Quantize(model.Tmax)
-        }
-        currentTempSlider.minimumValue = Tamb
-        desiredTempSlider.minimumValue = Tamb + smallstep
-        if desiredTempSlider.value < (Tamb + smallstep) {
-            desiredTempSlider.value = Tamb + smallstep
-        }
-        UpdateView()
-        CheckTimerEnable()
-    }
-    
-    func Reset() {
+    private func Reset() {
         currentTempSlider.value = currentTempSlider.minimumValue
-        desiredTempSlider.value = state!.desiredTemp
+        if state.useCelcius {
+            desiredTempSlider.value = ThermalModel.FtoC(temp: state.desiredTemp)
+        } else {
+            desiredTempSlider.value = state.desiredTemp
+        }
         UpdateView()
         CheckTimerEnable()
     }
     
-    func CheckTimerEnable() {
+    // TODO: Should instead check if modeled time would round to zero
+    private func CheckTimerEnable() {
         if desiredTemp == currentTemp {
             startButton.isEnabled = false
         } else {
             startButton.isEnabled = true
         }
     }
+
+    private func EnableTimerControls() {
+        for theControl in timerDisabledControls {
+            theControl.isEnabled = true
+        }
+        startButton.setTitle("Start", for: .normal)
+        timerResetButton.isEnabled = false
+        UpdateView()
+        CheckTimerEnable()
+    }
+
+    private func DisableTimerControls() {
+        for theControl in timerDisabledControls {
+            theControl.isEnabled = false
+        }
+        startButton.setTitle("Done", for: .normal)
+        startButton.isEnabled = true
+        timerResetButton.isEnabled = true
+    }
+
+    private func ResetTimer() {
+        CancelNotification()
+        StopTimer()
+        if state.useCelcius {
+            currentTempSlider.value = ThermalModel.FtoC(temp: Float(initialCurrentTemp))
+        } else {
+            currentTempSlider.value = Float(initialCurrentTemp)
+        }
+        // currentTemp = initialCurrentTemp
+        UpdateView()
+    }
+
+    private func StopTimer() {
+        modelTimer.stopTimer()
+        timer?.invalidate()
+        EnableTimerControls()
+    }
+
+    private func SnoozeTimer() {
+        // Start new timer if we're in foreground
+        modelTimer.snoozeTimer(for: 2.0)
+        if !backgrounded {
+            timer = Timer.scheduledTimer(
+                timeInterval: 0.2,
+                target: self,
+                selector: #selector(PreheatViewController.TimerCount),
+                userInfo: nil,
+                repeats: true)
+        }
+
+        // UI
+        let modelname = modelData.selectedModelData.name
+        if modelTimer.isHeating {
+            modelButton.setTitleColor(heatingColor, for: .disabled)
+            modelButton.setTitle("Timing \(modelname)", for: .disabled)
+        } else {
+            modelButton.setTitleColor(coolingColor, for: .disabled)
+            modelButton.setTitle("Timing \(modelname)", for: .disabled)
+        }
+        DisableTimerControls()
+        AddNotification()
+    }
+
+    private func StartTimer() {
+        // Timer
+        modelTimer.startTimer(fromTemp: currentTemp, toTemp: desiredTemp)
+        timer = Timer.scheduledTimer(
+            timeInterval: 0.2,
+            target: self,
+            selector: #selector(PreheatViewController.TimerCount),
+            userInfo: nil,
+            repeats: true)
+
+        // UI
+        initialCurrentTemp = currentTemp
+        let modelname = modelData.selectedModelData.name
+        if modelTimer.isHeating {
+            modelButton.setTitle("Preheating \(modelname)", for: .disabled)
+            modelButton.setTitleColor(heatingColor, for: .disabled)
+        } else {
+            modelButton.setTitle("Cooling \(modelname)", for: .disabled)
+            modelButton.setTitleColor(coolingColor, for: .disabled)
+        }
+        DisableTimerControls()
+        AddNotification()
+    }
+
+    /// Collect data from user
+    private func LearnTime() {
+        let isHeating = modelTimer.isHeating
+        let theTime = modelTimer.minutesElapsed()
+        let theModel = modelData.selectedModelData
+        if theTime > 0 && isHeating
+        {
+            theModel.addDataPoint(time: theTime,
+                                  Tstart: modelTimer.initialTemp,
+                                  Tfinal: desiredTemp,
+                                  Tamb: Tamb)
+            if theModel.calibrated {  // TODO: always true?
+                theModel.fitfromdata()
+            }
+            modelData.WriteToDisk()
+        }
+    }
+
+    /// Ask user if we should collect data manually stopped timer
+    private func QueryLearning() {
+        let modelParams = modelData.selectedModelData
+        if modelParams.calibrated && modelTimer.isHeating {
+            let alert = UIAlertController(title: "Model Learning",
+                                          message: "Should the \(modelParams.name) model learn from this preheat time?",
+                                          preferredStyle: .alert)
+
+            let noAction = UIAlertAction(title: "Ignore", style: .cancel)
+            let yesAction = UIAlertAction(title: "Learn", style: .destructive) { action in
+                self.LearnTime()
+                self.currentTempSlider.value = self.desiredTempSlider.value
+                self.UpdateView()
+            }
+            alert.addAction(yesAction)
+            alert.addAction(noAction)
+
+            present(alert, animated: true)
+        }
+    }
+
+    // MARK: - Notification
     
-    // MARK: - Notification and timer functionality
-    
-    // Delegate for notification action
+    /// Delegate for notification action
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse,
-                                withCompletionHandler completionHandler: @escaping () -> Void) {
+                                withCompletionHandler completionHandler: @escaping () -> Void)
+    {
         if response.actionIdentifier == "TIMER_SNOOZE" {
+            print("TIMER_SNOOZE")
             SnoozeTimer()
         } else if response.actionIdentifier == "TIMER_GOOD" {  // user agrees we're done
-            if modelTimer.snoozing {
+            print("TIMER_GOOD")
+            if modelTimer.isSnoozing {  // if time is good, then no training needed
                 LearnTime()
             }
             EnableTimerControls()
@@ -254,20 +445,29 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         completionHandler()
     }
     
-    // Timer delegate function
+    /// Timer delegate function
     @objc func TimerCount() {
         let minutesLeft = modelTimer.minutesLeft()
         if modelTimer.isNotDone {
             ShowTime(minutes: abs(minutesLeft))
-            if !modelTimer.snoozing {
-                let tempEst = modelTimer.tempEstimate()
-                currentTempLabel.text = String(Int(round(tempEst)))
-                currentTempSlider.value = tempEst
+            if !modelTimer.isSnoozing {
+                let tempEst = modelTimer.tempEstimate()  // F
+                if state.useCelcius {
+                    currentTempLabel.text = ThermalModel.DisplayC(temp: tempEst)
+                    currentTempSlider.value = ThermalModel.FtoC(temp: tempEst)
+                } else {
+                    currentTempLabel.text = ThermalModel.DisplayF(temp: tempEst)
+                    currentTempSlider.value = tempEst
+                }
                 currentTemp = round(tempEst)
             }
         } else {
             let Tset = desiredTemp
-            currentTempSlider.value = Tset
+            if state.useCelcius {
+                currentTempSlider.value = ThermalModel.FtoC(temp: Tset)
+            } else {
+                currentTempSlider.value = Tset
+            }
             UpdateView()
             StopTimer()
         }
@@ -285,7 +485,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
 
         if modelParams.calibrated && modelTimer.isHeating {
             content.categoryIdentifier = "TIMER_FEEDBACK"
-            let notifyText = "\(modelData.selectedModelData.name) should be \(Int(desiredTemp))º. Pull down to provide model learning data."
+            let notifyText = "\(modelData.selectedModelData.name) should be \(Int(desiredTemp))º. Hold down to provide model learning data."
             content.body = NSString.localizedUserNotificationString(forKey: notifyText, arguments: nil)
         } else {
             content.categoryIdentifier = "TIMER_SIMPLE"
@@ -293,12 +493,14 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
             content.body = NSString.localizedUserNotificationString(forKey: notifyText, arguments: nil)
         }
         content.title = NSString.localizedUserNotificationString(forKey: notifyTitle, arguments: nil)
-        content.sound = UNNotificationSound(named: convertToUNNotificationSoundName("birge-ring.aiff"))
+        content.sound = UNNotificationSound(
+            named: UNNotificationSoundName(rawValue: "birge-ring.aiff"))
         
         let timeLeft = Double(modelTimer.minutesLeft())
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60.0*timeLeft, repeats: false)
         let request = UNNotificationRequest(identifier: "PREHEAT_ALARM", content: content, trigger: trigger)
-        
+
+        // Actually submit timed notification
         let center = UNUserNotificationCenter.current()
         center.add(request) { (error : Error?) in
             if let theError = error {
@@ -314,100 +516,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         center.removeAllPendingNotificationRequests()
     }
     
-    private func EnableTimerControls() {
-        for theControl in timerDisabledControls {
-            theControl.isEnabled = true
-        }
-        startButton.setTitle("Start", for: UIControl.State.normal)
-        timerResetButton.isEnabled = false
-        UpdateView()
-        CheckTimerEnable()
-    }
-    
-    private func DisableTimerControls () {
-        for theControl in timerDisabledControls {
-            theControl.isEnabled = false
-        }
-        startButton.setTitle("Done", for: UIControl.State.normal)
-        startButton.isEnabled = true
-        timerResetButton.isEnabled = true
-    }
-    
-    func ResetTimer() {
-        CancelNotification()
-        StopTimer()
-        currentTempSlider.value = Float(initialCurrentTemp)
-        UpdateView()
-    }
-
-    func StopTimer() {
-        modelTimer.stopTimer()
-        timer?.invalidate()
-        EnableTimerControls()
-    }
-    
-    func SnoozeTimer() {
-        // Start new timer
-        modelTimer.snoozeTimer(for: 2.5)
-        timer =
-            Timer.scheduledTimer(timeInterval: 0.2,
-                                 target: self,
-                                 selector: #selector(PreheatViewController.TimerCount),
-                                 userInfo: nil,
-                                 repeats: true)
-        
-        // UI
-        DisableTimerControls()
-        let modelname = modelData.selectedModelData.name
-        if modelTimer.isHeating {
-            preheatLabel.text = "Timing \(modelname)"
-            preheatLabel.textColor = heatingColor
-        } else {
-            preheatLabel.text = "Timing \(modelname)"
-            preheatLabel.textColor = coolingColor
-        }
-        
-        // Throw up another notification
-        AddNotification()
-    }
-    
-    func StartTimer() {
-        // Timer
-        modelTimer.startTimer(fromTemp: currentTemp, toTemp: desiredTemp)
-        timer =
-            Timer.scheduledTimer(timeInterval: 0.2,
-                                 target: self,
-                                 selector: #selector(PreheatViewController.TimerCount),
-                                 userInfo: nil,
-                                 repeats: true)
-        
-        // UI
-        initialCurrentTemp = currentTemp
-        let modelname = modelData.selectedModelData.name
-        if modelTimer.isHeating {
-            preheatLabel.text = "Preheating \(modelname)"
-            preheatLabel.textColor = heatingColor
-        } else {
-            preheatLabel.text = "Cooling \(modelname)"
-            preheatLabel.textColor = coolingColor
-        }
-        DisableTimerControls()
-        AddNotification()
-    }
-    
-    // Data collection for models
-    func LearnTime() {
-        let isHeating = modelTimer.isHeating
-        let thetime = modelTimer.minutesElapsed()
-        if thetime > 0 && isHeating {
-            modelData.selectedModelData.addDataPoint(time: thetime,
-                                                     Tstart: modelTimer.initialTemp,
-                                                     Tfinal: desiredTemp,
-                                                     Tamb: Tamb)
-            modelData.WriteToDisk()
-        }
-    }
-    
+    // Delegate
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
@@ -421,6 +530,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let settingsView = segue.destination as? SettingsViewController {
             settingsView.initialTamb = Tamb
+            settingsView.useCelcius = state.useCelcius
             settingsView.modelData = modelData
             helpLabel.isHidden = true
         }
@@ -429,11 +539,14 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     @IBAction func prepareForUnwind(segue: UIStoryboardSegue) {
         guard let source = segue.source as? SettingsViewController else { return }
         
+        print("Unwinding from SettingsViewController...")
+        
         // Pull data from SettingsViewController
         model.setfrom(params: modelData.selectedModelData)
-        state!.selectedModel = modelData.selectedIndex
+        state.selectedModel = modelData.selectedIndex
+        state.useCelcius = source.useCelcius
         Tamb = source.Tamb
-        UpdateLimits()
+        UpdateSliders()
         UpdateView()
         
         // Save to disk
@@ -443,44 +556,27 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     
     // MARK: - IBOutlets and IBActions
     
-    @IBOutlet weak var helpLabel: UILabel!
-    @IBOutlet weak var minLabel: UILabel!
-    @IBOutlet weak var secLabel: UILabel!
-    @IBOutlet weak var currentTempLabel: UILabel!
-    @IBOutlet weak var desiredTempLabel: UILabel!
-    @IBOutlet weak var currentTempSlider: UISlider!
-    @IBOutlet weak var desiredTempSlider: UISlider!
-    @IBOutlet weak var startButton: UIButton!
-    @IBOutlet weak var timerResetButton: UIButton!
-    @IBOutlet weak var curTempLabel: UILabel!
-    @IBOutlet weak var tempResetButton: UIButton!
-    @IBOutlet weak var preheatLabel: UILabel!
-    @IBOutlet weak var settingsButton: UIButton!
+    @IBOutlet var helpLabel: UILabel!
+    @IBOutlet var minLabel: UILabel!
+    @IBOutlet var secLabel: UILabel!
+    @IBOutlet var currentTempLabel: UILabel!
+    @IBOutlet var desiredTempLabel: UILabel!
+    @IBOutlet var currentTempSlider: UISlider!
+    @IBOutlet var desiredTempSlider: UISlider!
+    @IBOutlet var startButton: UIButton!
+    @IBOutlet var timerResetButton: UIButton!
+    @IBOutlet var curTempLabel: UILabel!
+    @IBOutlet var tempResetButton: UIButton!
+    @IBOutlet var settingsButton: UIButton!
+    @IBOutlet var modelButton: UIButton!
     
     @IBAction func StartButton(_ sender: UIButton) {
-        if modelTimer.isNotRunning {
+        if modelTimer.isNotRunning {  // start
             StartTimer()
         } else {  // done
             CancelNotification()
             StopTimer()
-            
-            // UI learning interface
-            let modelParams = modelData.selectedModelData
-            if modelParams.calibrated && modelTimer.isHeating {
-                let alert = UIAlertController(title: "Model learning",
-                                              message: "Did \(modelParams.name) reach the desired temperature?", preferredStyle: .alert)
-                
-                let noAction = UIAlertAction(title: "Dismiss", style: .cancel)
-                let yesAction = UIAlertAction(title: "Yes", style: .destructive) { action in
-                    self.LearnTime()
-                    self.currentTempSlider.value = self.desiredTempSlider.value
-                    self.UpdateView()
-                }
-                alert.addAction(yesAction)
-                alert.addAction(noAction)
-                
-                present(alert, animated: true)
-            }
+            QueryLearning()
         }
     }
     
@@ -488,31 +584,31 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
        ResetTimer()
     }
     
-    @IBAction func CurrentTempChange(_ sender: UISlider) {
-        UpdateView()
-    }
-    
-    @IBAction func DesiredTempChange(_ sender: UISlider) {
+    @IBAction func SliderTempChange(_ sender: UISlider) {
+        ReadSliders()
         UpdateView()
     }
     
     @IBAction func DesiredTouchUpIn() {
-        desiredTempSlider.value = desiredTemp
+        if state.useCelcius {
+            desiredTempSlider.value = ThermalModel.FtoC(temp: desiredTemp)
+        } else {
+            desiredTempSlider.value = desiredTemp
+        }
         CheckTimerEnable()
         WriteStateToDisk()
     }
     
     @IBAction func CurrentTouchUpIn() {
-        currentTempSlider.value = currentTemp
+        if state.useCelcius {
+            currentTempSlider.value = ThermalModel.FtoC(temp: currentTemp)
+        } else {
+            currentTempSlider.value = currentTemp
+        }
         CheckTimerEnable()
     }
     
     @IBAction func ResetButton(_ sender: UIButton) {
         Reset()
     }
-}
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertToUNNotificationSoundName(_ input: String) -> UNNotificationSoundName {
-	return UNNotificationSoundName(rawValue: input)
 }
