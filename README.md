@@ -14,4 +14,4 @@ https://ecochef-faq.birgefuller.com
 
 ## Contributing
 
-The app will be freely available on the Apple AppStore as EcoChef. Help is welcome, and all contributors to this repo will be credited in the official app. 
+The app is freely available on the Apple App Store. Help is welcome, and all contributors to this repo will be credited in "Credits" page on the official app. 
