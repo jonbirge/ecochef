@@ -2,7 +2,7 @@
 
 ## About
 
-iOS app to help with cooking by providing multiple simultaneous timers and a thermal regression model for predicting preheating times.
+iOS app to help with cooking by providing multiple simultaneous timers and a thermal regression model for predicting preheating times. Uses [OptimizationKit](https://www.github.com/jonbirge/OptimizationKit) to learn and improve predictions.
 
 ## Screenshots
 
