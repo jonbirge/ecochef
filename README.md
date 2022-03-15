@@ -2,7 +2,7 @@
 
 ## About
 
-iOS app to help with cooking by providing multiple simultaneous timers and a predicting timer for preheating and cooling ovens.
+iOS app to help with cooking by providing multiple simultaneous timers and a thermal regression model for predicting preheating times.
 
 ## Screenshots
 
