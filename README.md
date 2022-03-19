@@ -6,7 +6,7 @@ iOS app to help with cooking by providing multiple simultaneous timers and a the
 
 ## Screenshots
 
-Insert screenshots here...
+![screenshot 1](/Screenshots/screen-1.png) ![screenshot 2](/Screenshots/screen-2.png) ![screenshot 3](/Screenshots/screen-3.png)
 
 ## Website
 
