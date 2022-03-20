@@ -453,10 +453,3 @@ class ThermalModel : CustomStringConvertible {
     }
 }
 
-// load from struct
-extension ThermalModel {
-    func setfrom(params:ThermalModelParams) {
-        a = params.a
-        b = params.b
-    }
-}
