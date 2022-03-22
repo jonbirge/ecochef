@@ -21,11 +21,11 @@
 		AB57418C1F397224007AA3E0 /* CalibrationTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB57418B1F397224007AA3E0 /* CalibrationTimer.swift */; };
 		AB57418D1F397224007AA3E0 /* CalibrationTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB57418B1F397224007AA3E0 /* CalibrationTimer.swift */; };
 		AB57E5DB1F0492F700D37EF8 /* birge-ring.aiff in Resources */ = {isa = PBXBuildFile; fileRef = AB57E5DA1F0492F700D37EF8 /* birge-ring.aiff */; };
-		AB58FB8F27DD178700B67BCF /* OptimizationKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB58FB8B27DD157A00B67BCF /* OptimizationKit.framework */; };
-		AB58FB9027DD178800B67BCF /* OptimizationKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AB58FB8B27DD157A00B67BCF /* OptimizationKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		ABA36DC31F07401100B3FCA4 /* EcoChefState.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA36DC21F07401100B3FCA4 /* EcoChefState.swift */; };
 		ABC7A8711EF8DC5D00F25317 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC7A8701EF8DC5D00F25317 /* SettingsViewController.swift */; };
 		ABC7A8751EF8EE7900F25317 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC7A8741EF8EE7900F25317 /* AboutViewController.swift */; };
+		ABCEEB1727E95E6C0068FB3E /* OptimizationKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABCEEB1327E95E550068FB3E /* OptimizationKit.framework */; platformFilter = ios; };
+		ABCEEB1827E95E6C0068FB3E /* OptimizationKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = ABCEEB1327E95E550068FB3E /* OptimizationKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		ABD4127F1F1134C900429887 /* EcoChefTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD4127E1F1134C900429887 /* EcoChefTests.swift */; };
 		ABD412861F11375400429887 /* ThermalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB43B18A1EEBAEA100B6A96B /* ThermalModel.swift */; };
 		ABEB6F1D1F02A6E300ABD199 /* ThermalTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB6F1C1F02A6E300ABD199 /* ThermalTimer.swift */; };
@@ -35,16 +35,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		AB58FB8A27DD157A00B67BCF /* PBXContainerItemProxy */ = {
+		ABCEEB1227E95E550068FB3E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = AB58FB8527DD157A00B67BCF /* OptimizationKit.xcodeproj */;
+			containerPortal = ABCEEB0D27E95E550068FB3E /* OptimizationKit.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = AB27E71D27D3F59A00C83D4D;
 			remoteInfo = OptimizationKit;
 		};
-		AB58FB8C27DD157A00B67BCF /* PBXContainerItemProxy */ = {
+		ABCEEB1427E95E550068FB3E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = AB58FB8527DD157A00B67BCF /* OptimizationKit.xcodeproj */;
+			containerPortal = ABCEEB0D27E95E550068FB3E /* OptimizationKit.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = AB27E72727D3F59B00C83D4D;
 			remoteInfo = OptimizationKitTests;
@@ -65,7 +65,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				AB58FB9027DD178800B67BCF /* OptimizationKit.framework in Embed Frameworks */,
+				ABCEEB1827E95E6C0068FB3E /* OptimizationKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -87,10 +87,10 @@
 		AB53D56D1F0DD85900ACA17A /* EcoChefThermalModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EcoChefThermalModel.swift; sourceTree = "<group>"; };
 		AB57418B1F397224007AA3E0 /* CalibrationTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalibrationTimer.swift; sourceTree = "<group>"; };
 		AB57E5DA1F0492F700D37EF8 /* birge-ring.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "birge-ring.aiff"; sourceTree = "<group>"; };
-		AB58FB8527DD157A00B67BCF /* OptimizationKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OptimizationKit.xcodeproj; path = ../../OptimizationKit/OptimizationKit.xcodeproj; sourceTree = "<group>"; };
 		ABA36DC21F07401100B3FCA4 /* EcoChefState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EcoChefState.swift; sourceTree = "<group>"; };
 		ABC7A8701EF8DC5D00F25317 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		ABC7A8741EF8EE7900F25317 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		ABCEEB0D27E95E550068FB3E /* OptimizationKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OptimizationKit.xcodeproj; path = ../OptimizationKit/OptimizationKit.xcodeproj; sourceTree = "<group>"; };
 		ABD4127C1F1134C900429887 /* EcoChefTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EcoChefTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABD4127E1F1134C900429887 /* EcoChefTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcoChefTests.swift; sourceTree = "<group>"; };
 		ABD412801F1134C900429887 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -105,7 +105,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB58FB8F27DD178700B67BCF /* OptimizationKit.framework in Frameworks */,
+				ABCEEB1727E95E6C0068FB3E /* OptimizationKit.framework in Frameworks */,
 				AB27E75B27D4A38A00C83D4D /* SimpleButton in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -123,10 +123,11 @@
 		AB43B16A1EEB871E00B6A96B = {
 			isa = PBXGroup;
 			children = (
-				AB58FB8527DD157A00B67BCF /* OptimizationKit.xcodeproj */,
+				ABCEEB0D27E95E550068FB3E /* OptimizationKit.xcodeproj */,
 				AB43B1751EEB871E00B6A96B /* EcoChef */,
-				ABD4127D1F1134C900429887 /* Tests */,
+				ABCEEB1627E95E6C0068FB3E /* Frameworks */,
 				AB43B1741EEB871E00B6A96B /* Products */,
+				ABD4127D1F1134C900429887 /* Tests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -166,13 +167,20 @@
 			path = EcoChef;
 			sourceTree = "<group>";
 		};
-		AB58FB8627DD157A00B67BCF /* Products */ = {
+		ABCEEB0E27E95E550068FB3E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AB58FB8B27DD157A00B67BCF /* OptimizationKit.framework */,
-				AB58FB8D27DD157A00B67BCF /* OptimizationKitTests.xctest */,
+				ABCEEB1327E95E550068FB3E /* OptimizationKit.framework */,
+				ABCEEB1527E95E550068FB3E /* OptimizationKitTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		ABCEEB1627E95E6C0068FB3E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		ABD4127D1F1134C900429887 /* Tests */ = {
@@ -278,8 +286,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = AB58FB8627DD157A00B67BCF /* Products */;
-					ProjectRef = AB58FB8527DD157A00B67BCF /* OptimizationKit.xcodeproj */;
+					ProductGroup = ABCEEB0E27E95E550068FB3E /* Products */;
+					ProjectRef = ABCEEB0D27E95E550068FB3E /* OptimizationKit.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -291,18 +299,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		AB58FB8B27DD157A00B67BCF /* OptimizationKit.framework */ = {
+		ABCEEB1327E95E550068FB3E /* OptimizationKit.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = OptimizationKit.framework;
-			remoteRef = AB58FB8A27DD157A00B67BCF /* PBXContainerItemProxy */;
+			remoteRef = ABCEEB1227E95E550068FB3E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		AB58FB8D27DD157A00B67BCF /* OptimizationKitTests.xctest */ = {
+		ABCEEB1527E95E550068FB3E /* OptimizationKitTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = OptimizationKitTests.xctest;
-			remoteRef = AB58FB8C27DD157A00B67BCF /* PBXContainerItemProxy */;
+			remoteRef = ABCEEB1427E95E550068FB3E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
