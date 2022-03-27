@@ -9,6 +9,154 @@
 import Foundation
 import OptimizationKit
 
+
+// MARK: - Computational model and regression
+
+class ThermalModel : CustomStringConvertible {
+    var a: Float = 12.0  // RC time constant (minutes)
+    var b: Float = 600.0  // RH coefficient, s.s. temp above ambient (deg F)
+    var Tamb: Float = 70.0  // T_ambient (deg F)
+
+    var description: String {
+        return "ThermalModel: \((a, b)), Tamb = \(Tamb)"
+    }
+
+    var Tmax: Float {
+        return b + Tamb
+    }
+
+    // time in fractional minutes
+    func time(totemp:Float) -> Float? {
+        return time(totemp:totemp, fromtemp:Tamb)
+    }
+
+    func time(totemp Tset:Float, fromtemp Tstart:Float) -> Float? {
+        if Tset > Tstart {  // heating
+            if Tset >= Tmax {
+                return nil
+            } else {
+                return a * log((b + Tamb - Tstart)/(b + Tamb - Tset))
+            }
+        } else {  // cooling
+            if Tset < Tamb  {
+                return nil
+            } else {
+                return a * log((Tamb - Tstart)/(Tamb - Tset))
+            }
+        }
+    }
+
+    func tempAfterHeating(time t:Float, fromtemp Tstart:Float) -> Float {
+        let Tinf = b + Tamb
+        return Tinf - exp(-t/a)*(Tinf - Tstart)
+    }
+
+    func tempAfterHeating
+    (time t:Float, fromtemp Tstart:Float, withamb Tamb:Float) -> Float {
+        let Tinf = b + Tamb
+        return Tinf - exp(-t/a)*(Tinf - Tstart)
+    }
+
+    func tempAfterCooling(time t:Float, fromtemp Tstart:Float) -> Float {
+        return Tamb + exp(-t/a)*(Tstart - Tamb)
+    }
+
+    /// Convert **Farenheit** `temp` to **Celcius** and return a `String` displaying it with appropriate significant digits.
+    static func DisplayC(temp Tf:Float) -> String {
+        let Tc = FtoC(temp:Tf)
+        return String(Int(round(Tc))) + " ºC"
+    }
+
+    /// Return a `String` displaying Farenheit `temp`.
+    static func DisplayF(temp Tf:Float) -> String {
+        return String(Int(Tf)) + " ºF"
+    }
+
+    static func FtoC(temp Tf:Float) -> Float {
+        return (Tf - 32.0)/1.8
+    }
+
+    static func CtoF(temp Tc:Float) -> Float {
+        return Tc*1.8 + 32.0
+    }
+}
+
+class ThermalModelFitter : Fittable {
+    var verbose: Bool = true  // Debuging
+    var fitmodel: ThermalModel
+    var modelparams: ThermalModelParams
+    private var fitter: GaussNewtonFitter!
+
+    struct IndexKeys {
+        static let a = 0
+        static let b = 1
+    }
+
+    var fitnparams: Int {
+        return 2
+    }
+
+    var fitnpoints: Int {
+        return modelparams.measurements.count
+    }
+
+    var fitparams: [Double] {
+        let p: [Double] =
+        [Double(modelparams.a), Double(modelparams.b)]
+        return p
+    }
+
+    // TODO: Implement this as part of Fittable and have Fitters check
+    /// Decide if there are enough data points to successfully fit a model
+    var fittable: Bool {
+        if fitnpoints > 2 {
+            return true
+        } else {
+            return false
+        }
+    }
+
+    convenience init(params: ThermalModelParams) {
+        self.init(model: ThermalModel(), params: params)
+    }
+
+    init(model: ThermalModel, params: ThermalModelParams) {
+        fitmodel = model
+        modelparams = params
+        fitter = GaussNewtonFitter(with: self)
+    }
+
+    /// Implements `Fittable` prototype.
+    func fitresiduals(for params: [Double]) throws -> [Double] {
+        fitmodel.a = Float(params[IndexKeys.a])
+        fitmodel.b = Float(params[IndexKeys.b])
+        var res: [Double] = []
+        for meas in modelparams.measurements.measlist {
+            fitmodel.Tamb = meas.Tamb
+            let Tmeas = meas.Tfinal
+            let Tcomp = fitmodel.tempAfterHeating(time: meas.time,
+                                                  fromtemp: meas.Tstart,
+                                                  withamb: meas.Tamb)
+            res.append(Double(Tcomp - Tmeas))
+        }
+        return res
+    }
+
+    func fitfromdata() {
+        if fittable {
+            do {
+                fitter.verbose = verbose
+                let p: [Double] = try fitter.fit()
+                modelparams.a = Float(round(10*p[IndexKeys.a])/10)
+                modelparams.b = Float(round(p[IndexKeys.b]))
+            } catch let err {
+                print("ThermalModelFitter: failed with \(err)")
+            }
+        }
+    }
+}
+
+
 // MARK: - Data model
 
 class ThermalModelData {
@@ -188,6 +336,14 @@ class ThermalModelParams : NSObject, NSSecureCoding {
     }
 }
 
+// load from struct
+extension ThermalModel {
+    func setfrom(params:ThermalModelParams) {
+        a = params.a
+        b = params.b
+    }
+}
+
 // MARK: - Measurements
 
 class HeatingDataSet : NSObject, NSSecureCoding {
@@ -305,151 +461,3 @@ class HeatingDataPoint : NSObject, NSSecureCoding {
         aCoder.encode(time, forKey: Keys.time)
     }
 }
-
-
-// MARK: - Computational model and regression
-
-class ThermalModelFitter : Fittable {
-    var verbose: Bool = true  // Debuging
-    var fitmodel: ThermalModel
-    var modelparams: ThermalModelParams
-    private var fitter: GaussNewtonFitter!
-    
-    struct IndexKeys {
-        static let a = 0
-        static let b = 1
-    }
-    
-    var fitnparams: Int {
-        return 2
-    }
-    
-    var fitnpoints: Int {
-        return modelparams.measurements.count
-    }
-    
-    var fitparams: [Double] {
-        let p: [Double] =
-            [Double(modelparams.a), Double(modelparams.b)]
-        return p
-    }
-    
-    // TODO: Implement this as part of Fittable and have Fitters check
-    /// Decide if there are enough data points to successfully fit a model
-    var fittable: Bool {
-        if fitnpoints > 2 {
-            return true
-        } else {
-            return false
-        }
-    }
-    
-    convenience init(params: ThermalModelParams) {
-        self.init(model: ThermalModel(), params: params)
-    }
-    
-    init(model: ThermalModel, params: ThermalModelParams) {
-        fitmodel = model
-        modelparams = params
-        fitter = GaussNewtonFitter(with: self)
-    }
-    
-    /// Implements `Fittable` prototype.
-    func fitresiduals(for params: [Double]) throws -> [Double] {
-        fitmodel.a = Float(params[IndexKeys.a])
-        fitmodel.b = Float(params[IndexKeys.b])
-        var res: [Double] = []
-        for meas in modelparams.measurements.measlist {
-            fitmodel.Tamb = meas.Tamb
-            let Tmeas = meas.Tfinal
-            let Tcomp = fitmodel.tempAfterHeating(time: meas.time,
-                                                  fromtemp: meas.Tstart,
-                                                  withamb: meas.Tamb)
-            res.append(Double(Tcomp - Tmeas))
-        }
-        return res
-    }
-    
-    func fitfromdata() {
-        if fittable {
-            do {
-                fitter.verbose = verbose
-                let p: [Double] = try fitter.fit()
-                modelparams.a = Float(round(10*p[IndexKeys.a])/10)
-                modelparams.b = Float(round(p[IndexKeys.b]))
-            } catch let err {
-                print("ThermalModelFitter: failed with \(err)")
-            }
-        }
-    }
-}
-
-class ThermalModel : CustomStringConvertible {
-    var a: Float = 12.0  // RC time constant (minutes)
-    var b: Float = 600.0  // RH coefficient, s.s. temp above ambient (deg F)
-    var Tamb: Float = 70.0  // T_ambient (deg F)
-    
-    var description: String {
-        return "ThermalModel: \((a, b)), Tamb = \(Tamb)"
-    }
-    
-    var Tmax: Float {
-        return b + Tamb
-    }
-    
-    // time in fractional minutes
-    func time(totemp:Float) -> Float? {
-        return time(totemp:totemp, fromtemp:Tamb)
-    }
-    
-    func time(totemp Tset:Float, fromtemp Tstart:Float) -> Float? {
-        if Tset > Tstart {  // heating
-            if Tset >= Tmax {
-                return nil
-            } else {
-                return a * log((b + Tamb - Tstart)/(b + Tamb - Tset))
-            }
-        } else {  // cooling
-            if Tset < Tamb  {
-                return nil
-            } else {
-                return a * log((Tamb - Tstart)/(Tamb - Tset))
-            }
-        }
-    }
-    
-    func tempAfterHeating(time t:Float, fromtemp Tstart:Float) -> Float {
-        let Tinf = b + Tamb
-        return Tinf - exp(-t/a)*(Tinf - Tstart)
-    }
-    
-    func tempAfterHeating
-        (time t:Float, fromtemp Tstart:Float, withamb Tamb:Float) -> Float {
-        let Tinf = b + Tamb
-        return Tinf - exp(-t/a)*(Tinf - Tstart)
-    }
-    
-    func tempAfterCooling(time t:Float, fromtemp Tstart:Float) -> Float {
-        return Tamb + exp(-t/a)*(Tstart - Tamb)
-    }
-    
-    /// Convert **Farenheit** `temp` to **Celcius** and return a `String` displaying it with appropriate significant digits.
-    static func DisplayC(temp Tf:Float) -> String {
-        let Tc = FtoC(temp:Tf)
-        return String(Int(round(Tc))) + " ºC"
-    }
-    
-    /// Return a `String` displaying Farenheit `temp`.
-    static func DisplayF(temp Tf:Float) -> String {
-        return String(Int(Tf)) + " ºF"
-    }
-    
-    static func FtoC(temp Tf:Float) -> Float {
-        return (Tf - 32.0)/1.8
-    }
-    
-    static func CtoF(temp Tc:Float) -> Float {
-        return Tc*1.8 + 32.0
-    }
-}
-
