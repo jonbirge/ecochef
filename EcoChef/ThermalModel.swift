@@ -82,10 +82,11 @@ class ThermalModel : CustomStringConvertible {
 }
 
 class ThermalModelFitter : Fittable {
-    var verbose: Bool = true  // Debuging
+    var verbose: Bool = true  // Debugging
     var fitmodel: ThermalModel
     var modelparams: ThermalModelParams
-    private var fitter: GaussNewtonFitter!
+    //private var fitter: GaussNewtonFitter!
+    private var fitController: RegressionController!
 
     struct IndexKeys {
         static let a = 0
@@ -106,8 +107,7 @@ class ThermalModelFitter : Fittable {
         return p
     }
 
-    // TODO: Implement this as part of Fittable and have Fitters check
-    /// Decide if there are enough data points to successfully fit a model
+    /// Decide if we can do a fit.
     var fittable: Bool {
         if fitnpoints > 2 {
             return true
@@ -123,7 +123,7 @@ class ThermalModelFitter : Fittable {
     init(model: ThermalModel, params: ThermalModelParams) {
         fitmodel = model
         modelparams = params
-        fitter = GaussNewtonFitter(with: self)
+        fitController = RegressionController(for: self, using: GaussNewtonFitter())
     }
 
     /// Implements `Fittable` prototype.
@@ -145,8 +145,8 @@ class ThermalModelFitter : Fittable {
     func fitfromdata() {
         if fittable {
             do {
-                fitter.verbose = verbose
-                let p: [Double] = try fitter.fit()
+                fitController.verbose = verbose
+                let p: [Double] = try fitController.regression()
                 modelparams.a = Float(round(10*p[IndexKeys.a])/10)
                 modelparams.b = Float(round(p[IndexKeys.b]))
             } catch let err {
