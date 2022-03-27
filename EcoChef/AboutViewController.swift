@@ -36,7 +36,6 @@ class AboutViewController: UIViewController {
                 { self.titleLabel.textColor = .systemRed },
             completion: nil
         )
-        doEgg()
     }
     
     func doEgg() {
@@ -55,11 +54,16 @@ class AboutViewController: UIViewController {
     func hideEgg() {
         print("Bye, Nathy and Alex!")
         UIView.transition(
-            with: eggTextView, duration: 5,
+            with: eggTextView, duration: 1,
             options: .transitionCrossDissolve,
             animations:
                 { self.eggTextView.textColor = .systemBackground },
             completion: nil
         )
     }
+
+    @IBAction func longPress(_ sender: UILongPressGestureRecognizer) {
+        doEgg()
+    }
+
 }

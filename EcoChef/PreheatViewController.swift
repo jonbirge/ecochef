@@ -261,11 +261,12 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         UpdateView()
         CheckTimerEnable()
     }
-    
+
+    /// Convert fractional minutes to minutes and seconds and update display
     private func ShowTime(minutes: Float?) {
         if let min = minutes {
             let pretimemin = floor(min)
-            let pretimesec = round(60*(min - pretimemin))
+            let pretimesec = floor(60*(min - pretimemin))
             minLabel.text = String(Int(pretimemin))
             var sectext : String
             if pretimesec < 10 {
