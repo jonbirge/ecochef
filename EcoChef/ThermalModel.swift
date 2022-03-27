@@ -26,11 +26,11 @@ class ThermalModel : CustomStringConvertible {
     }
 
     // time in fractional minutes
-    func time(totemp:Float) -> Float? {
+    func time(totemp: Float) -> Float? {
         return time(totemp:totemp, fromtemp:Tamb)
     }
 
-    func time(totemp Tset:Float, fromtemp Tstart:Float) -> Float? {
+    func time(totemp Tset: Float, fromtemp Tstart: Float) -> Float? {
         if Tset > Tstart {  // heating
             if Tset >= Tmax {
                 return nil
@@ -46,37 +46,37 @@ class ThermalModel : CustomStringConvertible {
         }
     }
 
-    func tempAfterHeating(time t:Float, fromtemp Tstart:Float) -> Float {
+    func tempAfterHeating(time t: Float, fromtemp Tstart: Float) -> Float {
         let Tinf = b + Tamb
         return Tinf - exp(-t/a)*(Tinf - Tstart)
     }
 
     func tempAfterHeating
-    (time t:Float, fromtemp Tstart:Float, withamb Tamb:Float) -> Float {
+    (time t: Float, fromtemp Tstart: Float, withamb Tamb: Float) -> Float {
         let Tinf = b + Tamb
         return Tinf - exp(-t/a)*(Tinf - Tstart)
     }
 
-    func tempAfterCooling(time t:Float, fromtemp Tstart:Float) -> Float {
+    func tempAfterCooling(time t: Float, fromtemp Tstart: Float) -> Float {
         return Tamb + exp(-t/a)*(Tstart - Tamb)
     }
 
     /// Convert **Farenheit** `temp` to **Celcius** and return a `String` displaying it with appropriate significant digits.
-    static func DisplayC(temp Tf:Float) -> String {
+    static func DisplayC(temp Tf: Float) -> String {
         let Tc = FtoC(temp:Tf)
         return String(Int(round(Tc))) + " ºC"
     }
 
     /// Return a `String` displaying Farenheit `temp`.
-    static func DisplayF(temp Tf:Float) -> String {
+    static func DisplayF(temp Tf: Float) -> String {
         return String(Int(Tf)) + " ºF"
     }
 
-    static func FtoC(temp Tf:Float) -> Float {
+    static func FtoC(temp Tf: Float) -> Float {
         return (Tf - 32.0)/1.8
     }
 
-    static func CtoF(temp Tc:Float) -> Float {
+    static func CtoF(temp Tc: Float) -> Float {
         return Tc*1.8 + 32.0
     }
 }
@@ -88,13 +88,18 @@ class ThermalModelFitter : Fittable {
     var modelparams: ThermalModelParams
     private var fitController: RegressionController!
 
-    struct IndexKeys {
-        static let a = 0
-        static let b = 1
-    }
-
+    /// Determine number of parameters (if any) that data can support fitting.
     var fitnparams: Int {
-        return 2
+        if fitnpoints > 0 {
+            if fitnpoints > 2 {
+                // TODO: check if points are separated well enough in temp
+                return 2
+            } else {
+                return 1
+            }
+        } else {
+            return 0
+        }
     }
 
     var fitnpoints: Int {
@@ -102,35 +107,43 @@ class ThermalModelFitter : Fittable {
     }
 
     var fitparams: [Double] {
-        let p: [Double] =
-        [Double(modelparams.a), Double(modelparams.b)]
-        return p
+        if fitnparams > 1 {
+            let p: [Double] = [Double(modelparams.a), Double(modelparams.b)]
+            return p
+        } else {
+            let p: [Double] = [Double(modelparams.b)]
+            return p
+        }
     }
 
-    /// Decide if we can do a fit.
     var fittable: Bool {
-        if fitnpoints > 2 {
+        if fitnpoints > 0 {
             return true
         } else {
             return false
         }
     }
 
-    convenience init(params: ThermalModelParams) {
-        self.init(model: ThermalModel(), params: params)
+    convenience init(modelparams: ThermalModelParams) {
+        self.init(model: ThermalModel(), modelparams: modelparams)
     }
 
-    init(model: ThermalModel, params: ThermalModelParams) {
+    init(model: ThermalModel, modelparams: ThermalModelParams) {
         fitmodel = model
-        modelparams = params
+        self.modelparams = modelparams
         fitController = RegressionController(for: self, using: GaussNewtonFitter())
     }
 
     /// Implements `Fittable` prototype.
     func fitresiduals(for params: [Double]) throws -> [Double] {
         var res: [Double] = []
-        fitmodel.a = Float(params[IndexKeys.a])
-        fitmodel.b = Float(params[IndexKeys.b])
+        if fitnparams > 1 {
+            fitmodel.a = Float(params[0])
+            fitmodel.b = Float(params[1])
+        } else {
+            fitmodel.a = modelparams.a
+            fitmodel.b = Float(params[0])
+        }
         for meas in modelparams.measurements.measlist {
             fitmodel.Tamb = meas.Tamb
             let Tmeas = meas.Tfinal
@@ -149,8 +162,12 @@ class ThermalModelFitter : Fittable {
             do {
                 fitController.verbose = verbose
                 let p: [Double] = try fitController.regression()
-                modelparams.a = Float(round(10*p[IndexKeys.a])/10)
-                modelparams.b = Float(round(p[IndexKeys.b]))
+                if fitnparams > 1 {
+                    modelparams.a = Float(round(10*p[0])/10)
+                    modelparams.b = Float(round(p[1]))
+                } else {
+                    modelparams.b = Float(round(p[0]))
+                }
             } catch let err {
                 print("ThermalModelFitter: failed with \(err)")
             }
@@ -281,7 +298,7 @@ class ThermalModelParams : NSObject, NSSecureCoding {
     }
     
     func initFitter() {
-        fitter = ThermalModelFitter(params: self)
+        fitter = ThermalModelFitter(modelparams: self)
     }
     
     func fitfromdata() {
