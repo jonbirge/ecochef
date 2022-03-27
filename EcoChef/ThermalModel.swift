@@ -92,8 +92,14 @@ class ThermalModelFitter : Fittable {
     var fitnparams: Int {
         if fitnpoints > 0 {
             if fitnpoints > 2 {
-                // TODO: check if points are separated well enough in temp
-                return 2
+                // Check if points are separated well enough in temp
+                if modelparams.measurements.temprange() > 50 {
+                    print("ThermalModelFitter: sufficient point and temp range for full fit")
+                    return 2
+                } else {
+                    print("ThermalModelFitter: insufficient temp range for full fit")
+                    return 1
+                }
             } else {
                 return 1
             }
@@ -406,7 +412,24 @@ class HeatingDataSet : NSObject, NSSecureCoding {
             return pointA.time < pointB.time
         }
     }
-    
+
+    /// Return range of temperature values in Farenheit
+    func temprange() -> Float {
+        var tempData: [Float] = []
+        for meas in measlist {
+            tempData.append(meas.Tfinal)
+        }
+
+        let minTemp: Float? = tempData.min()
+        let maxTemp: Float? = tempData.max()
+
+        if minTemp == nil || maxTemp == nil {
+            return 0
+        } else {
+            return maxTemp! - minTemp!
+        }
+    }
+
     subscript(index: Int) -> HeatingDataPoint {
         return measlist[index]
     }
