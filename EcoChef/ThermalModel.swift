@@ -33,13 +33,26 @@ class ThermalModelData {
         var theparams : ThermalModelParams
         var defaultModels : [ThermalModelParams] = []
         
+        theparams = ThermalModelParams(name: "Propane Grill", a: 16.3, b: 642, note: "MHP grill")
+#if DEBUG
+        theparams.addDataPoint(HeatingDataPoint(time: 2.5, Tstart: 64, Tfinal: 155))
+        theparams.addDataPoint(HeatingDataPoint(time: 4, Tstart: 64, Tfinal: 200))
+        theparams.addDataPoint(HeatingDataPoint(time: 7.5, Tstart: 64, Tfinal: 300))
+        theparams.addDataPoint(HeatingDataPoint(time: 5.5, Tstart: 64, Tfinal: 250))
+        theparams.addDataPoint(HeatingDataPoint(time: 10, Tstart: 64, Tfinal: 365))
+        theparams.addDataPoint(HeatingDataPoint(time: 12.25, Tstart: 64, Tfinal: 400))
+        theparams.calibrated = true
+        theparams.fitfromdata()
+#endif
+        defaultModels.append(theparams)
+
         theparams = ThermalModelParams(name: "Electric Oven (EnergyStar)")
-        theparams.a *= 2
+        theparams.a = 20
         theparams.note = "Bosch electric oven"
         defaultModels.append(theparams)
         
         theparams = ThermalModelParams(name: "Electric Oven (Fast)")
-        theparams.a *= 1.5
+        theparams.a = 15
         theparams.b = 700
         theparams.note = "Bosch oven on fast preheat setting"
         defaultModels.append(theparams)
@@ -54,19 +67,6 @@ class ThermalModelData {
         theparams.a = 10.5
         theparams.b = 650.0
         theparams.note = "Bosch speed oven; normal convection preheat"
-        defaultModels.append(theparams)
-        
-        theparams = ThermalModelParams(name: "Gas Grill", a: 16.3, b: 642, note: "MHP grill")
-#if DEBUG
-        theparams.addDataPoint(HeatingDataPoint(time: 2.5, Tstart: 64, Tfinal: 155))
-        theparams.addDataPoint(HeatingDataPoint(time: 4, Tstart: 64, Tfinal: 200))
-        theparams.addDataPoint(HeatingDataPoint(time: 7.5, Tstart: 64, Tfinal: 300))
-        theparams.addDataPoint(HeatingDataPoint(time: 5.5, Tstart: 64, Tfinal: 250))
-        theparams.addDataPoint(HeatingDataPoint(time: 10, Tstart: 64, Tfinal: 365))
-        theparams.addDataPoint(HeatingDataPoint(time: 12.25, Tstart: 64, Tfinal: 400))
-        theparams.calibrated = true
-        theparams.fitfromdata()
-#endif
         defaultModels.append(theparams)
         
         return defaultModels
@@ -453,10 +453,3 @@ class ThermalModel : CustomStringConvertible {
     }
 }
 
-// load from struct
-extension ThermalModel {
-    func setfrom(params:ThermalModelParams) {
-        a = params.a
-        b = params.b
-    }
-}

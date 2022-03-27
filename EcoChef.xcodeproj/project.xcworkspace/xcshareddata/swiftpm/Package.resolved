@@ -1,16 +1,14 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "SimpleButton",
-        "repositoryURL": "https://github.com/aloco/SimpleButton",
-        "state": {
-          "branch": "master",
-          "revision": "ae7b4451522304a422a6514d14db0779625a93e3",
-          "version": null
-        }
+  "pins" : [
+    {
+      "identity" : "simplebutton",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/aloco/SimpleButton",
+      "state" : {
+        "branch" : "master",
+        "revision" : "ae7b4451522304a422a6514d14db0779625a93e3"
       }
-    ]
-  },
-  "version": 1
+    }
+  ],
+  "version" : 2
 }

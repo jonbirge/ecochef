@@ -12,7 +12,7 @@ class TimerButton: SimpleButton {
     @IBInspectable var cornerRadius: CGFloat = 7
     /// line thickness of border
     @IBInspectable var edgeThickness: CGFloat = 1.5
-    
+
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         setBorderColor(currentTitleColor)
@@ -37,13 +37,19 @@ class TimerButton: SimpleButton {
         var sat: CGFloat = 0
         var brightness: CGFloat = 0
         thecolor.getHue(&hue, saturation: &sat, brightness: &brightness, alpha: nil)
-        let highlightBrightness: CGFloat = 1 - (1 - brightness)/3
-        let highlightColor = UIColor(hue: hue, saturation: sat, brightness: highlightBrightness, alpha: 1)
-        super.setTitleColor(highlightColor, for: .highlighted)
         let backgroundColor = UIColor(hue: hue, saturation: sat, brightness: brightness, alpha: 0.15)
-        setBackgroundColor(backgroundColor, for: .normal, animated: true, animationDuration: 1)
+        setBackgroundColor(backgroundColor, for: state, animated: true, animationDuration: 1)
         
         super.setTitleColor(color, for: state)
+
+        // set related highlight color if .normal
+        if state == .normal {
+            let highlightBrightness: CGFloat = brightness/2
+            let highlightColor = UIColor(hue: hue, saturation: sat, brightness: highlightBrightness, alpha: 1)
+            let highlightBackground = UIColor(hue: hue, saturation: sat, brightness: highlightBrightness, alpha: 0.15)
+            super.setTitleColor(highlightColor, for: .highlighted)
+            super.setBackgroundColor(highlightBackground, for: .highlighted, animated: true, animationDuration: 0.15)
+        }
     }
     
     override func configureButtonStyles() {
