@@ -81,11 +81,11 @@ class ThermalModel : CustomStringConvertible {
     }
 }
 
+/// Fit ThermalModel using OptimizationKit. When there is only a single data point, hold time constant parameter `a` and optimize `b` to fit.
 class ThermalModelFitter : Fittable {
     var verbose: Bool = true  // Debugging
     var fitmodel: ThermalModel
     var modelparams: ThermalModelParams
-    //private var fitter: GaussNewtonFitter!
     private var fitController: RegressionController!
 
     struct IndexKeys {
@@ -128,16 +128,18 @@ class ThermalModelFitter : Fittable {
 
     /// Implements `Fittable` prototype.
     func fitresiduals(for params: [Double]) throws -> [Double] {
+        var res: [Double] = []
         fitmodel.a = Float(params[IndexKeys.a])
         fitmodel.b = Float(params[IndexKeys.b])
-        var res: [Double] = []
         for meas in modelparams.measurements.measlist {
             fitmodel.Tamb = meas.Tamb
             let Tmeas = meas.Tfinal
-            let Tcomp = fitmodel.tempAfterHeating(time: meas.time,
-                                                  fromtemp: meas.Tstart,
-                                                  withamb: meas.Tamb)
-            res.append(Double(Tcomp - Tmeas))
+            let Tcomp = fitmodel.tempAfterHeating(
+                time: meas.time,
+                fromtemp: meas.Tstart,
+                withamb: meas.Tamb)
+            let err = Double(Tcomp) - Double(Tmeas)
+            res.append(err)
         }
         return res
     }
