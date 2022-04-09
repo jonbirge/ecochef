@@ -87,7 +87,8 @@ class ThermalModelFitter : Fittable {
     var fitmodel: ThermalModel
     var modelparams: ThermalModelParams
     private var fitController: RegressionController!
-
+    // private var fitterQueue = DispatchQueue(label: "FittingQueue", qos: .background)
+    
     /// Determine number of parameters (if any) that data can support fitting.
     var fitnparams: Int {
         if fitnpoints > 0 {
@@ -184,9 +185,16 @@ class ThermalModelFitter : Fittable {
 
 // MARK: - Data model
 
-class ThermalModelData {
-    var modelArray: [ThermalModelParams] = []
+protocol ThermalParamListener {
+    func thermalParamsChanged (for params: ThermalModelParams)
+}
+
+class ThermalModelData : ThermalParamListener {
     var selectedIndex: Int = 0
+    
+    var modelArray: [ThermalModelParams] = []  // TODO: Make read-only?
+    
+    private var listeners: [ThermalParamListener] = []
     
     // The currently selected model
     var selectedModelData: ThermalModelParams {
@@ -194,6 +202,27 @@ class ThermalModelData {
             return modelArray[selectedIndex]
         } else {
             return modelArray.first!  // TODO: Return optional
+        }
+    }
+    
+    func registerListener (_ listener: ThermalParamListener) {
+        listeners.append(listener)
+    }
+    
+    func setModelArray (_ modelArray: [ThermalModelParams]) {
+        self.modelArray = modelArray
+        registerModelParams()
+    }
+    
+    func thermalParamsChanged (for params: ThermalModelParams) {
+        for theListener in listeners {
+            theListener.thermalParamsChanged(for: params)
+        }
+    }
+    
+    private func registerModelParams () {
+        for params in modelArray {
+            params.listener = self
         }
     }
     
@@ -247,7 +276,6 @@ class ThermalModelData {
 }
 
 class ThermalModelParams : NSObject, NSSecureCoding {
-    static var supportsSecureCoding: Bool = true
     var name: String
     var a: Float  // minutes
     var b: Float  // degrees F
@@ -256,6 +284,8 @@ class ThermalModelParams : NSObject, NSSecureCoding {
     var measurements: HeatingDataSet
     var calibrated: Bool = false
     var fitter: ThermalModelFitter?
+    static var supportsSecureCoding: Bool = true
+    var listener: ThermalParamListener?  // parent ThermalModelData
     
     struct Keys {
         static let name = "name"
@@ -312,6 +342,9 @@ class ThermalModelParams : NSObject, NSSecureCoding {
             initFitter()
         }
         fitter?.fitfromdata()
+        if let theListener = listener {
+            theListener.thermalParamsChanged(for: self)
+        }
     }
     
     required convenience init(coder aDecoder: NSCoder) {
@@ -361,13 +394,14 @@ class ThermalModelParams : NSObject, NSSecureCoding {
     }
 }
 
-// load from struct
+/// Set model parameters from `ThermalModelParams`
 extension ThermalModel {
     func setfrom(params:ThermalModelParams) {
         a = params.a
         b = params.b
     }
 }
+
 
 // MARK: - Measurements
 
