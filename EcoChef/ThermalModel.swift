@@ -87,7 +87,6 @@ class ThermalModelFitter : Fittable {
     var fitmodel: ThermalModel
     var modelparams: ThermalModelParams
     private var fitController: RegressionController!
-    // private var fitterQueue = DispatchQueue(label: "FittingQueue", qos: .background)
     
     /// Determine number of parameters (if any) that data can support fitting.
     var fitnparams: Int {
@@ -95,10 +94,8 @@ class ThermalModelFitter : Fittable {
             if fitnpoints > 2 {
                 // Check if points are separated well enough in temp
                 if modelparams.measurements.temprange() > 50 {
-                    print("ThermalModelFitter: sufficient point and temp range for full fit")
                     return 2
                 } else {
-                    print("ThermalModelFitter: insufficient temp range for full fit")
                     return 1
                 }
             } else {
@@ -139,6 +136,9 @@ class ThermalModelFitter : Fittable {
         fitmodel = model
         self.modelparams = modelparams
         fitController = RegressionController(for: self, using: GaussNewtonFitter())
+        fitController.maxiters = 1024
+        fitController.fdrel = 0.001
+        fitController.reltol = 0.000001
     }
 
     /// Implements `Fittable` prototype.
@@ -164,7 +164,8 @@ class ThermalModelFitter : Fittable {
         return res
     }
 
-    func fitfromdata() {
+    /// Fit model from measured data, returning true of the fit was successful.
+    func fitfromdata() -> Bool {
         if fittable {
             do {
                 fitController.verbose = verbose
@@ -175,10 +176,13 @@ class ThermalModelFitter : Fittable {
                 } else {
                     modelparams.b = Float(round(p[0]))
                 }
+                return true
             } catch let err {
                 print("ThermalModelFitter: failed with \(err)")
+                return false
             }
         }
+        return false
     }
 }
 
@@ -189,12 +193,10 @@ protocol ThermalParamListener {
     func thermalParamsChanged (for params: ThermalModelParams)
 }
 
-class ThermalModelData : ThermalParamListener {
+class ThermalModelData {
     var selectedIndex: Int = 0
     
     var modelArray: [ThermalModelParams] = []  // TODO: Make read-only?
-    
-    private var listeners: [ThermalParamListener] = []
     
     // The currently selected model
     var selectedModelData: ThermalModelParams {
@@ -205,25 +207,8 @@ class ThermalModelData : ThermalParamListener {
         }
     }
     
-    func registerListener (_ listener: ThermalParamListener) {
-        listeners.append(listener)
-    }
-    
     func setModelArray (_ modelArray: [ThermalModelParams]) {
         self.modelArray = modelArray
-        registerModelParams()
-    }
-    
-    func thermalParamsChanged (for params: ThermalModelParams) {
-        for theListener in listeners {
-            theListener.thermalParamsChanged(for: params)
-        }
-    }
-    
-    private func registerModelParams () {
-        for params in modelArray {
-            params.listener = self
-        }
     }
     
     func LoadDefaultModelData() {
@@ -285,7 +270,8 @@ class ThermalModelParams : NSObject, NSSecureCoding {
     var calibrated: Bool = false
     var fitter: ThermalModelFitter?
     static var supportsSecureCoding: Bool = true
-    var listener: ThermalParamListener?  // parent ThermalModelData
+    var listeners: [ThermalParamListener] = []
+    static var fitterQueue = DispatchQueue(label: "FittingQueue", qos: .background)
     
     struct Keys {
         static let name = "name"
@@ -321,11 +307,15 @@ class ThermalModelParams : NSObject, NSSecureCoding {
         self.calibrated = cal
     }
     
-    func addDataPoint(_ data: HeatingDataPoint) {
+    func registerListener (_ listener: ThermalParamListener) {
+        listeners.append(listener)
+    }
+    
+    func addDataPoint (_ data: HeatingDataPoint) {
         measurements.addDataPoint(data)
     }
     
-    func addDataPoint(time: Float, Tstart: Float, Tfinal: Float, Tamb: Float) {
+    func addDataPoint (time: Float, Tstart: Float, Tfinal: Float, Tamb: Float) {
         let measurement = HeatingDataPoint(time: time,
                                            Tstart: Tstart,
                                            Tfinal: Tfinal,
@@ -335,16 +325,27 @@ class ThermalModelParams : NSObject, NSSecureCoding {
     
     func initFitter() {
         fitter = ThermalModelFitter(modelparams: self)
+        fitter?.verbose = true
     }
     
     func fitfromdata() {
         if fitter == nil {
             initFitter()
         }
-        fitter?.fitfromdata()
-        if let theListener = listener {
-            theListener.thermalParamsChanged(for: self)
+        
+        print("doing async fit")
+        ThermalModelParams.fitterQueue.async {
+            let didfit = self.fitter!.fitfromdata()
+            if didfit {
+                DispatchQueue.main.async {
+                    for listener in self.listeners {
+                        listener.thermalParamsChanged(for: self)
+                    }
+                }
+            }
         }
+        
+        print("leaving fitfromdata")
     }
     
     required convenience init(coder aDecoder: NSCoder) {
