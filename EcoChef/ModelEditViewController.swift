@@ -8,8 +8,13 @@
 
 import UIKit
 
-class ModelEditViewController: UITableViewController {
+class ModelEditViewController: UITableViewController, ThermalParamListener {
     var modelParams: ThermalModelParams?
+    
+    func thermalParamsChanged(for params: ThermalModelParams) {
+        print("ModelEditViewCont: Notified of parameter change")
+        updateView()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +26,8 @@ class ModelEditViewController: UITableViewController {
         rcField.text = String(modelParams!.a)
         hrField.text = String(modelParams!.b)
         fitSwitch.isOn = modelParams!.calibrated
+        
+        modelParams?.registerListener(self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
