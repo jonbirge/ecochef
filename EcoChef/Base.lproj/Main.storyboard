@@ -31,6 +31,9 @@
                             </slider>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="350" minValue="50" maxValue="500" translatesAutoresizingMaskIntoConstraints="NO" id="InP-Vp-TcT">
                                 <rect key="frame" x="30" y="624" width="315" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" priority="500" constant="480" id="t1x-gd-RVQ"/>
+                                </constraints>
                                 <color key="minimumTrackTintColor" red="0.85622223984771573" green="0.22233978877993463" blue="0.13874736178681857" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <connections>
                                     <action selector="DesiredTouchUpIn" destination="9pv-A4-QxB" eventType="touchUpInside" id="aLk-cX-sRm"/>
@@ -206,8 +209,9 @@
                             <constraint firstItem="nHw-Lj-crR" firstAttribute="centerY" secondItem="4z5-mr-Y9b" secondAttribute="centerY" id="6g9-O5-9nJ"/>
                             <constraint firstItem="InP-Vp-TcT" firstAttribute="leading" secondItem="moH-Te-Xzb" secondAttribute="leading" id="7EA-Ai-kjl"/>
                             <constraint firstItem="4z5-mr-Y9b" firstAttribute="leading" secondItem="qfS-D6-HFC" secondAttribute="trailing" constant="8" symbolic="YES" id="7K6-4s-ldt"/>
+                            <constraint firstItem="InP-Vp-TcT" firstAttribute="centerX" secondItem="tsR-hK-woN" secondAttribute="centerX" id="AfG-XN-S2r"/>
                             <constraint firstItem="GDg-mc-Nd8" firstAttribute="leading" secondItem="Yxc-k7-e3x" secondAttribute="trailing" constant="8" symbolic="YES" id="C6c-c3-sxO"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="InP-Vp-TcT" secondAttribute="trailing" constant="16" id="ECH-zB-m8o"/>
+                            <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="InP-Vp-TcT" secondAttribute="trailing" constant="16" id="ECH-zB-m8o"/>
                             <constraint firstItem="WBG-W8-8XY" firstAttribute="top" secondItem="ehU-CT-E63" secondAttribute="bottom" constant="8" symbolic="YES" id="FQ5-4S-aUg"/>
                             <constraint firstItem="moH-Te-Xzb" firstAttribute="leading" secondItem="ANQ-uz-xo0" secondAttribute="leading" id="GfX-yS-dUN"/>
                             <constraint firstItem="gCO-mA-Prx" firstAttribute="leading" secondItem="TEv-3A-fZ5" secondAttribute="trailing" id="H45-SL-tej"/>
@@ -227,7 +231,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="ehU-CT-E63" secondAttribute="trailing" constant="16" id="mj9-6u-2s0"/>
                             <constraint firstItem="TEv-3A-fZ5" firstAttribute="leading" secondItem="ANQ-uz-xo0" secondAttribute="trailing" id="qaj-61-QX8"/>
                             <constraint firstItem="ehU-CT-E63" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" constant="65" id="qlz-AL-DSf"/>
-                            <constraint firstItem="InP-Vp-TcT" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" constant="16" id="rHx-U4-BKq"/>
+                            <constraint firstItem="InP-Vp-TcT" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" constant="16" id="rHx-U4-BKq"/>
                             <constraint firstItem="YIn-MW-QDW" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leading" constant="20" symbolic="YES" id="sw1-Io-hid"/>
                             <constraint firstItem="jLP-zd-iGG" firstAttribute="leading" secondItem="YIn-MW-QDW" secondAttribute="trailing" constant="8" symbolic="YES" id="xTl-xO-txz"/>
                             <constraint firstItem="jLP-zd-iGG" firstAttribute="centerY" secondItem="YIn-MW-QDW" secondAttribute="centerY" constant="-2" id="xaP-rX-t85"/>
@@ -347,11 +351,11 @@
                                         <rect key="frame" x="16" y="413.99999809265137" width="343" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xbS-4V-qkV" id="9tp-NO-qgb">
-                                            <rect key="frame" x="0.0" y="0.0" width="306.33333333333331" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="303" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Celcius" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qFe-dE-VPE">
-                                                    <rect key="frame" x="16" y="0.0" width="282.33333333333331" height="44"/>
+                                                    <rect key="frame" x="16" y="0.0" width="279" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
@@ -364,11 +368,11 @@
                                         <rect key="frame" x="16" y="457.99999809265137" width="343" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="IE0-SA-xiu" id="Tji-eS-a64">
-                                            <rect key="frame" x="0.0" y="0.0" width="306.33333333333331" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="303" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Farenheit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="y2D-rl-2xW">
-                                                    <rect key="frame" x="16" y="0.0" width="282.33333333333331" height="44"/>
+                                                    <rect key="frame" x="16" y="0.0" width="279" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
@@ -1611,7 +1615,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="70" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EZu-f1-QZp" userLabel="CurrTemp">
-                                <rect key="frame" x="175.33333333333334" y="310" width="24.666666666666657" height="24"/>
+                                <rect key="frame" x="175" y="310" width="25" height="24"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                 <color key="textColor" systemColor="systemOrangeColor"/>
                                 <nil key="highlightedColor"/>

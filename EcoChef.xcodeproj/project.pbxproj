@@ -87,6 +87,7 @@
 		AB53D56D1F0DD85900ACA17A /* EcoChefThermalModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EcoChefThermalModel.swift; sourceTree = "<group>"; };
 		AB57418B1F397224007AA3E0 /* CalibrationTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalibrationTimer.swift; sourceTree = "<group>"; };
 		AB57E5DA1F0492F700D37EF8 /* birge-ring.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = "birge-ring.aiff"; sourceTree = "<group>"; };
+		AB95D1BF2802890800059D70 /* EcoChef.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EcoChef.entitlements; sourceTree = "<group>"; };
 		ABA36DC21F07401100B3FCA4 /* EcoChefState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EcoChefState.swift; sourceTree = "<group>"; };
 		ABC7A8701EF8DC5D00F25317 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		ABC7A8741EF8EE7900F25317 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
@@ -143,6 +144,7 @@
 		AB43B1751EEB871E00B6A96B /* EcoChef */ = {
 			isa = PBXGroup;
 			children = (
+				AB95D1BF2802890800059D70 /* EcoChef.entitlements */,
 				AB43B1761EEB871E00B6A96B /* AppDelegate.swift */,
 				AB43B18A1EEBAEA100B6A96B /* ThermalModel.swift */,
 				ABEB6F1C1F02A6E300ABD199 /* ThermalTimer.swift */,
@@ -514,6 +516,7 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_IMPLICIT_SIGN_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CODE_SIGN_ENTITLEMENTS = EcoChef/EcoChef.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -539,9 +542,10 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.birgefuller.ecochef;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -554,6 +558,7 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_IMPLICIT_SIGN_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CODE_SIGN_ENTITLEMENTS = EcoChef/EcoChef.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -577,9 +582,10 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.birgefuller.ecochef;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
