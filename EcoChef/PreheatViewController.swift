@@ -10,7 +10,6 @@ import UserNotifications
 import SafariServices
 
 class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate {
-    
     private let model = ThermalModel()
     private let modelTimer = ThermalTimer()
     private let smallstep: Float = 2

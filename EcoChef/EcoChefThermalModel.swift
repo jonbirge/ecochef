@@ -26,7 +26,7 @@ extension ThermalModelData {
                     ofClasses: [NSArray.self, ThermalModelParams.self, NSString.self, NSDate.self, HeatingDataSet.self, HeatingDataPoint.self],
                     from: rawData) as? [ThermalModelParams]
             {
-                self.modelArray = models
+                self.setModelArray(models)
             }
             else
             {
@@ -51,10 +51,3 @@ extension ThermalModelData {
     }
 }
 
-// load from struct
-extension ThermalModel {
-    func setfrom(params:ThermalModelParams) {
-        a = params.a
-        b = params.b
-    }
-}
