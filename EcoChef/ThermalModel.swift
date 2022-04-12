@@ -273,7 +273,7 @@ class ThermalModelParams : NSObject, NSSecureCoding {
     var listeners: [ThermalParamListener] = []
     static var fitterQueue = DispatchQueue(label: "FittingQueue", qos: .background)
     
-    struct Keys {
+    private struct Keys {
         static let name = "name"
         static let a = "a"
         static let b = "b"
@@ -323,11 +323,13 @@ class ThermalModelParams : NSObject, NSSecureCoding {
         measurements.addDataPoint(measurement)
     }
     
+    /// Create regression object and associate with this model
     func initFitter() {
         fitter = ThermalModelFitter(modelparams: self)
         fitter?.verbose = true
     }
     
+    /// Fit parameters from timing and temperature measurements data
     func fitfromdata() {
         if fitter == nil {
             initFitter()
