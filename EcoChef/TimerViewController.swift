@@ -8,167 +8,6 @@
 import UIKit
 import UserNotifications
 
-// TODO: Turn into real view controller with graphics
-/// Pseudo-view controller for cooking timer
-class DualTimerController {
-    var topLabel: UILabel
-    var bottomLabel: UILabel
-    var sumLabel: UILabel
-    var timerButton: TimerButton
-    private var timer: Timer?
-    private var selected: Bool = false
-    private var topside: Bool = true
-    private var topcum: Float = 0
-    private var bottomcum: Float = 0
-    private var running: Bool = false
-    private var startTime: Date?
-    private let timeInt: Double = 0.2
-    private let normalColor: UIColor = .systemGray
-    private let selectedColor: UIColor = .systemOrange
-    private let timingColor: UIColor = .systemRed
-    private let thinEdge: CGFloat = 0
-    private let selEdge: CGFloat = 2
-    
-    var isRunning: Bool {
-        return running
-    }
-    
-    var isSelected: Bool {
-        return selected
-    }
-    
-    init(_ top: UILabel, _ bottom: UILabel, _ sum: UILabel,
-         _ timer: TimerButton) {
-        topLabel = top
-        bottomLabel = bottom
-        sumLabel = sum
-        timerButton = timer
-        
-        timerButton.setTitleColor(normalColor, for: .normal)
-        timerButton.setEdgeThickness(thinEdge)
-    }
-    
-    func toggle() {
-        selected = !selected
-        if selected {
-            timerButton.setTitleColor(selectedColor, for: .normal)
-            timerButton.setEdgeThickness(selEdge)
-        } else {
-            if isRunning {
-                timerButton.setTitleColor(timingColor, for: .normal)
-            } else {
-                timerButton.setTitleColor(normalColor, for: .normal)
-            }
-            timerButton.setEdgeThickness(thinEdge)
-        }
-    }
-    
-    func flip() {
-        if running {
-            if topside {
-                topcum += secondsElapsed()
-            } else {
-                bottomcum += secondsElapsed()
-            }
-            startTime = Date()
-            topside = !topside
-        }
-    }
-    
-    func reset() {
-        stop()
-        topcum = 0
-        bottomcum = 0
-        updateTimes()
-    }
-    
-    func start() {
-        timerButton.setTitleColor(timingColor, for: .normal)
-        running = true
-        startTime = Date()
-        timer = Timer.scheduledTimer(withTimeInterval: timeInt, repeats: true) { (timer) in
-            self.updateTimes()
-        }
-    }
-    
-    func stop() {
-        if selected {
-            timerButton.setTitleColor(selectedColor, for: .normal)
-        } else {
-            timerButton.setTitleColor(normalColor, for: .normal)
-        }
-        if running {
-            running = false
-            timer?.invalidate()
-            if topside {
-                topcum = topcum + secondsElapsed()
-            } else {
-                bottomcum = topcum + secondsElapsed()
-            }
-        }
-    }
-    
-    func pause() {
-        if running {
-            timer?.invalidate()
-        }
-    }
-    
-    func resume() {
-        if running {
-            timer = Timer.scheduledTimer(withTimeInterval: timeInt, repeats: true) { (timer) in
-                self.updateTimes()
-            }
-        }
-    }
-    
-    func updateTimes() {
-        var topTotal: Float = topcum
-        var bottomTotal: Float = bottomcum
-        if running {
-            if topside {
-                topTotal += secondsElapsed()
-            } else {
-                bottomTotal += secondsElapsed()
-            }
-        }
-        let sumTotal: Float = floor(topTotal) + floor(bottomTotal)
-        topLabel.text = formatTimeFrom(seconds: floor(topTotal))
-        bottomLabel.text = formatTimeFrom(seconds: floor(bottomTotal))
-        sumLabel.text = formatTimeFrom(seconds: sumTotal)
-    }
-    
-    private func secondsElapsed() -> Float {
-        var seconds: TimeInterval = 0
-        if let then = startTime {
-            seconds = then.timeIntervalSinceNow
-        }
-        
-        return Float(-seconds)
-    }
-    
-    private func formatTimeFrom(seconds: Float) -> String {
-        var minstr : String
-        var secstr : String
-
-        let min = Int(floor(seconds/60))
-        if min < 10 {
-            minstr = "0\(min)"
-        } else {
-            minstr = "\(min)"
-        }
-        let sec = Int(round(seconds - Float(60*min)))
-        if sec < 10 {
-            secstr = "0\(sec)"
-        } else {
-            secstr = "\(sec)"
-        }
-        let timeform = minstr + ":" + secstr
-        
-        return timeform
-    }
-}
-
 class TimerViewController: UIViewController, UNUserNotificationCenterDelegate {
     private var currentTimer: DualTimerController!  // convenience
     private var timerList: [DualTimerController] = []
@@ -339,4 +178,164 @@ class TimerViewController: UIViewController, UNUserNotificationCenterDelegate {
     @IBOutlet var topLabel8: UILabel!
     @IBOutlet var bottomLabel8: UILabel!
     @IBOutlet var sumLabel8: UILabel!
+}
+
+/// Pseudo-view controller for cooking timer
+class DualTimerController {
+    var topLabel: UILabel
+    var bottomLabel: UILabel
+    var sumLabel: UILabel
+    var timerButton: TimerButton
+    private var timer: Timer?
+    private var selected: Bool = false
+    private var topside: Bool = true
+    private var topcum: Float = 0
+    private var bottomcum: Float = 0
+    private var running: Bool = false
+    private var startTime: Date?
+    private let timeInt: Double = 0.2
+    private let normalColor: UIColor = .systemGray
+    private let selectedColor: UIColor = .systemOrange
+    private let timingColor: UIColor = .systemRed
+    private let thinEdge: CGFloat = 0
+    private let selEdge: CGFloat = 2
+    
+    var isRunning: Bool {
+        return running
+    }
+    
+    var isSelected: Bool {
+        return selected
+    }
+    
+    init(_ top: UILabel, _ bottom: UILabel, _ sum: UILabel,
+         _ timer: TimerButton) {
+        topLabel = top
+        bottomLabel = bottom
+        sumLabel = sum
+        timerButton = timer
+        
+        timerButton.setTitleColor(normalColor, for: .normal)
+        timerButton.setEdgeThickness(thinEdge)
+    }
+    
+    func toggle() {
+        selected = !selected
+        if selected {
+            timerButton.setTitleColor(selectedColor, for: .normal)
+            timerButton.setEdgeThickness(selEdge)
+        } else {
+            if isRunning {
+                timerButton.setTitleColor(timingColor, for: .normal)
+            } else {
+                timerButton.setTitleColor(normalColor, for: .normal)
+            }
+            timerButton.setEdgeThickness(thinEdge)
+        }
+    }
+    
+    func flip() {
+        if running {
+            if topside {
+                topcum += secondsElapsed()
+            } else {
+                bottomcum += secondsElapsed()
+            }
+            startTime = Date()
+            topside = !topside
+        }
+    }
+    
+    func reset() {
+        stop()
+        topcum = 0
+        bottomcum = 0
+        updateTimes()
+    }
+    
+    func start() {
+        timerButton.setTitleColor(timingColor, for: .normal)
+        running = true
+        startTime = Date()
+        timer = Timer.scheduledTimer(withTimeInterval: timeInt, repeats: true) { (timer) in
+            self.updateTimes()
+        }
+    }
+    
+    func stop() {
+        if selected {
+            timerButton.setTitleColor(selectedColor, for: .normal)
+        } else {
+            timerButton.setTitleColor(normalColor, for: .normal)
+        }
+        if running {
+            running = false
+            timer?.invalidate()
+            if topside {
+                topcum = topcum + secondsElapsed()
+            } else {
+                bottomcum = topcum + secondsElapsed()
+            }
+        }
+    }
+    
+    func pause() {
+        if running {
+            timer?.invalidate()
+        }
+    }
+    
+    func resume() {
+        if running {
+            timer = Timer.scheduledTimer(withTimeInterval: timeInt, repeats: true) { (timer) in
+                self.updateTimes()
+            }
+        }
+    }
+    
+    func updateTimes() {
+        var topTotal: Float = topcum
+        var bottomTotal: Float = bottomcum
+        if running {
+            if topside {
+                topTotal += secondsElapsed()
+            } else {
+                bottomTotal += secondsElapsed()
+            }
+        }
+        let sumTotal: Float = floor(topTotal) + floor(bottomTotal)
+        topLabel.text = formatTimeFrom(seconds: floor(topTotal))
+        bottomLabel.text = formatTimeFrom(seconds: floor(bottomTotal))
+        sumLabel.text = formatTimeFrom(seconds: sumTotal)
+    }
+    
+    private func secondsElapsed() -> Float {
+        var seconds: TimeInterval = 0
+        if let then = startTime {
+            seconds = then.timeIntervalSinceNow
+        }
+        
+        return Float(-seconds)
+    }
+    
+    private func formatTimeFrom(seconds: Float) -> String {
+        var minstr : String
+        var secstr : String
+        
+        let min = Int(floor(seconds/60))
+        if min < 10 {
+            minstr = "0\(min)"
+        } else {
+            minstr = "\(min)"
+        }
+        let sec = Int(round(seconds - Float(60*min)))
+        if sec < 10 {
+            secstr = "0\(sec)"
+        } else {
+            secstr = "\(sec)"
+        }
+        let timeform = minstr + ":" + secstr
+        
+        return timeform
+    }
 }

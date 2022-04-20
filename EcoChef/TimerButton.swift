@@ -6,7 +6,6 @@ import UIKit
 import SimpleButton
 
 @IBDesignable
-
 class TimerButton: SimpleButton {
     /// radius of border corners
     @IBInspectable var cornerRadius: CGFloat = 7
