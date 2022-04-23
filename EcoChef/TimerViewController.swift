@@ -9,7 +9,7 @@ import UIKit
 import UserNotifications
 
 // TODO: Turn into real view controller with graphics
-/// Pseudo-view controller for cooking timer
+/// ontroller for cooking timer
 class DualTimerController {
     var topLabel: UILabel
     var bottomLabel: UILabel

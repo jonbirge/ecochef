@@ -24,8 +24,6 @@
 		ABA36DC31F07401100B3FCA4 /* EcoChefState.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA36DC21F07401100B3FCA4 /* EcoChefState.swift */; };
 		ABC7A8711EF8DC5D00F25317 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC7A8701EF8DC5D00F25317 /* SettingsViewController.swift */; };
 		ABC7A8751EF8EE7900F25317 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC7A8741EF8EE7900F25317 /* AboutViewController.swift */; };
-		ABCEEB1727E95E6C0068FB3E /* OptimizationKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABCEEB1327E95E550068FB3E /* OptimizationKit.framework */; platformFilter = ios; };
-		ABCEEB1827E95E6C0068FB3E /* OptimizationKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = ABCEEB1327E95E550068FB3E /* OptimizationKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		ABD4127F1F1134C900429887 /* EcoChefTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD4127E1F1134C900429887 /* EcoChefTests.swift */; };
 		ABD412861F11375400429887 /* ThermalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB43B18A1EEBAEA100B6A96B /* ThermalModel.swift */; };
 		ABEB6F1D1F02A6E300ABD199 /* ThermalTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEB6F1C1F02A6E300ABD199 /* ThermalTimer.swift */; };
@@ -35,16 +33,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		ABCEEB1227E95E550068FB3E /* PBXContainerItemProxy */ = {
+		AB16CC7528111D450099285D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = ABCEEB0D27E95E550068FB3E /* OptimizationKit.xcodeproj */;
+			containerPortal = AB16CC7028111D450099285D /* OptimizationKit.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = AB27E71D27D3F59A00C83D4D;
 			remoteInfo = OptimizationKit;
 		};
-		ABCEEB1427E95E550068FB3E /* PBXContainerItemProxy */ = {
+		AB16CC7728111D450099285D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = ABCEEB0D27E95E550068FB3E /* OptimizationKit.xcodeproj */;
+			containerPortal = AB16CC7028111D450099285D /* OptimizationKit.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = AB27E72727D3F59B00C83D4D;
 			remoteInfo = OptimizationKitTests;
@@ -65,7 +63,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				ABCEEB1827E95E6C0068FB3E /* OptimizationKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -75,6 +72,7 @@
 /* Begin PBXFileReference section */
 		AB007F1C1F1BE67E00AD9552 /* MeasTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeasTableViewController.swift; sourceTree = "<group>"; };
 		AB007F1E1F1C109000AD9552 /* DataEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataEditViewController.swift; sourceTree = "<group>"; };
+		AB16CC7028111D450099285D /* OptimizationKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OptimizationKit.xcodeproj; path = ../OptimizationKit/OptimizationKit.xcodeproj; sourceTree = "<group>"; };
 		AB2EF88E1F36D74100584390 /* CalibrationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalibrationViewController.swift; sourceTree = "<group>"; };
 		AB3BB8381F5F9CA000CDF182 /* TimerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerViewController.swift; sourceTree = "<group>"; };
 		AB43B1731EEB871E00B6A96B /* EcoChef.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EcoChef.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -91,7 +89,6 @@
 		ABA36DC21F07401100B3FCA4 /* EcoChefState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EcoChefState.swift; sourceTree = "<group>"; };
 		ABC7A8701EF8DC5D00F25317 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		ABC7A8741EF8EE7900F25317 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
-		ABCEEB0D27E95E550068FB3E /* OptimizationKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OptimizationKit.xcodeproj; path = ../OptimizationKit/OptimizationKit.xcodeproj; sourceTree = "<group>"; };
 		ABD4127C1F1134C900429887 /* EcoChefTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EcoChefTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABD4127E1F1134C900429887 /* EcoChefTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EcoChefTests.swift; sourceTree = "<group>"; };
 		ABD412801F1134C900429887 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -106,7 +103,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ABCEEB1727E95E6C0068FB3E /* OptimizationKit.framework in Frameworks */,
 				AB27E75B27D4A38A00C83D4D /* SimpleButton in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -121,10 +117,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AB16CC7128111D450099285D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AB16CC7628111D450099285D /* OptimizationKit.framework */,
+				AB16CC7828111D450099285D /* OptimizationKitTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		AB43B16A1EEB871E00B6A96B = {
 			isa = PBXGroup;
 			children = (
-				ABCEEB0D27E95E550068FB3E /* OptimizationKit.xcodeproj */,
 				AB43B1751EEB871E00B6A96B /* EcoChef */,
 				ABCEEB1627E95E6C0068FB3E /* Frameworks */,
 				AB43B1741EEB871E00B6A96B /* Products */,
@@ -169,18 +173,10 @@
 			path = EcoChef;
 			sourceTree = "<group>";
 		};
-		ABCEEB0E27E95E550068FB3E /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				ABCEEB1327E95E550068FB3E /* OptimizationKit.framework */,
-				ABCEEB1527E95E550068FB3E /* OptimizationKitTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		ABCEEB1627E95E6C0068FB3E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AB16CC7028111D450099285D /* OptimizationKit.xcodeproj */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -288,8 +284,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = ABCEEB0E27E95E550068FB3E /* Products */;
-					ProjectRef = ABCEEB0D27E95E550068FB3E /* OptimizationKit.xcodeproj */;
+					ProductGroup = AB16CC7128111D450099285D /* Products */;
+					ProjectRef = AB16CC7028111D450099285D /* OptimizationKit.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -301,18 +297,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		ABCEEB1327E95E550068FB3E /* OptimizationKit.framework */ = {
+		AB16CC7628111D450099285D /* OptimizationKit.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = OptimizationKit.framework;
-			remoteRef = ABCEEB1227E95E550068FB3E /* PBXContainerItemProxy */;
+			remoteRef = AB16CC7528111D450099285D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		ABCEEB1527E95E550068FB3E /* OptimizationKitTests.xctest */ = {
+		AB16CC7828111D450099285D /* OptimizationKitTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = OptimizationKitTests.xctest;
-			remoteRef = ABCEEB1427E95E550068FB3E /* PBXContainerItemProxy */;
+			remoteRef = AB16CC7728111D450099285D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

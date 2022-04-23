@@ -72,7 +72,6 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
             name: UIApplication.willEnterForegroundNotification, object: nil)
 
         // UI notification setup
-        // TODO: Put this elsewhere, maybe only when actually needed?
         let usernotificationCenter = UNUserNotificationCenter.current()
         usernotificationCenter.delegate = self
         let earlyAction = UNNotificationAction(
@@ -266,17 +265,16 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         if let min = minutes {
             let pretimemin = floor(min)
             let pretimesec = floor(60*(min - pretimemin))
-            minLabel.text = String(Int(pretimemin))
+            let mintext = String(Int(pretimemin))
             var sectext : String
             if pretimesec < 10 {
                 sectext = "0" + String(Int(pretimesec))
             } else {
                 sectext = String(Int(pretimesec))
             }
-            secLabel.text = sectext
+            timeLabel.text = mintext + ":" + sectext
         } else {
-            secLabel.text = "--"
-            minLabel.text = "--"
+            timeLabel.text = "--:--"
         }
     }
     
@@ -557,8 +555,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     // MARK: - IBOutlets and IBActions
     
     @IBOutlet var helpLabel: UILabel!
-    @IBOutlet var minLabel: UILabel!
-    @IBOutlet var secLabel: UILabel!
+    @IBOutlet var timeLabel: UILabel!
     @IBOutlet var currentTempLabel: UILabel!
     @IBOutlet var desiredTempLabel: UILabel!
     @IBOutlet var currentTempSlider: UISlider!
