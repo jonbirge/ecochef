@@ -189,8 +189,6 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     // TODO: Make utility function that converts F temp into appropriate display based on `state`
     /// Update view while timer is not engaged
     private func UpdateView() {
-        // print("PreheatViewCont:UpdateView")
-
         if state.useCelcius {
             currentTemp = ThermalModel.CtoF(temp: (currentTempSlider.value))  // TODO: round?
             desiredTemp = ThermalModel.CtoF(temp: QuantizeC(desiredTempSlider.value))
