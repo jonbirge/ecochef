@@ -191,12 +191,12 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     private func UpdateView() {
         // Update labels
         if state.useCelcius {
-            currentTemp = ThermalModel.CtoF(temp: (currentTempSlider.value))  // TODO: round?
+            currentTemp = round(ThermalModel.CtoF(temp: (currentTempSlider.value)))  // TODO: round?
             desiredTemp = ThermalModel.CtoF(temp: QuantizeC(desiredTempSlider.value))
             currentTempLabel.text = ThermalModel.DisplayC(temp: currentTemp)
             desiredTempLabel.text = ThermalModel.DisplayC(temp: desiredTemp)
         } else {
-            currentTemp = currentTempSlider.value  // TODO: round?
+            currentTemp = round(currentTempSlider.value)  // TODO: round?
             desiredTemp = Quantize(desiredTempSlider.value)
             currentTempLabel.text = ThermalModel.DisplayF(temp: currentTemp)
             desiredTempLabel.text = ThermalModel.DisplayF(temp: desiredTemp)
