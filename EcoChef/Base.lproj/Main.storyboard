@@ -67,11 +67,15 @@
                                     <segue destination="vre-sg-JdI" kind="show" identifier="ShowSettings" id="3SX-HB-Wfs"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ANQ-uz-xo0" customClass="TimerButton" customModule="EcoChef" customModuleProvider="target">
-                                <rect key="frame" x="32" y="441" width="147.66666666666666" height="34"/>
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ANQ-uz-xo0" customClass="SimpleButton" customModule="EcoChef" customModuleProvider="target">
+                                <rect key="frame" x="32" y="440.33333333333331" width="147.66666666666666" height="35.666666666666686"/>
                                 <state key="normal" title="Cancel">
                                     <color key="titleColor" systemColor="linkColor"/>
                                 </state>
+                                <buttonConfiguration key="configuration" style="tinted" title="Cancel">
+                                    <fontDescription key="titleFontDescription" type="system" pointSize="18"/>
+                                    <color key="baseForegroundColor" systemColor="linkColor"/>
+                                </buttonConfiguration>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="7"/>
@@ -84,12 +88,16 @@
                                     <action selector="TimerReset:" destination="9pv-A4-QxB" eventType="touchUpInside" id="jkP-Mu-Rj1"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gCO-mA-Prx" customClass="TimerButton" customModule="EcoChef" customModuleProvider="target">
-                                <rect key="frame" x="195.66666666666663" y="441" width="147.33333333333337" height="34"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gCO-mA-Prx" customClass="SimpleButton" customModule="EcoChef" customModuleProvider="target">
+                                <rect key="frame" x="195.66666666666663" y="439.33333333333331" width="147.33333333333337" height="35.666666666666686"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                 <state key="normal" title="Start">
                                     <color key="titleColor" systemColor="linkColor"/>
                                 </state>
+                                <buttonConfiguration key="configuration" style="tinted" title="Start">
+                                    <fontDescription key="titleFontDescription" type="boldSystem" pointSize="18"/>
+                                    <color key="baseForegroundColor" systemColor="linkColor"/>
+                                </buttonConfiguration>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="7"/>
@@ -351,11 +359,11 @@
                                         <rect key="frame" x="16" y="413.99999809265137" width="343" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xbS-4V-qkV" id="9tp-NO-qgb">
-                                            <rect key="frame" x="0.0" y="0.0" width="306.33333333333331" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="303" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Celcius" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qFe-dE-VPE">
-                                                    <rect key="frame" x="16" y="0.0" width="282.33333333333331" height="44"/>
+                                                    <rect key="frame" x="16" y="0.0" width="279" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
@@ -368,11 +376,11 @@
                                         <rect key="frame" x="16" y="457.99999809265137" width="343" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="IE0-SA-xiu" id="Tji-eS-a64">
-                                            <rect key="frame" x="0.0" y="0.0" width="306.33333333333331" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="303" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Farenheit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="y2D-rl-2xW">
-                                                    <rect key="frame" x="16" y="0.0" width="282.33333333333331" height="44"/>
+                                                    <rect key="frame" x="16" y="0.0" width="279" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
@@ -1456,7 +1464,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Wq-8S-KIa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2703" y="-374"/>
+            <point key="canvasLocation" x="-2703" y="-372"/>
         </scene>
         <!--Calibrate-->
         <scene sceneID="kF4-iF-yTA">
@@ -1592,7 +1600,7 @@
             <size key="intrinsicContentSize" width="30" height="34"/>
         </designable>
         <designable name="ANQ-uz-xo0">
-            <size key="intrinsicContentSize" width="56" height="34"/>
+            <size key="intrinsicContentSize" width="79.666666666666671" height="35.666666666666664"/>
         </designable>
         <designable name="JeT-IF-2l4">
             <size key="intrinsicContentSize" width="30" height="34"/>
@@ -1610,7 +1618,7 @@
             <size key="intrinsicContentSize" width="30" height="34"/>
         </designable>
         <designable name="gCO-mA-Prx">
-            <size key="intrinsicContentSize" width="44" height="34"/>
+            <size key="intrinsicContentSize" width="67.333333333333329" height="35.666666666666664"/>
         </designable>
         <designable name="keo-mK-nzD">
             <size key="intrinsicContentSize" width="30" height="34"/>
