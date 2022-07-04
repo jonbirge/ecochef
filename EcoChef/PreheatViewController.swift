@@ -178,7 +178,7 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     /// Pull in data from sliders
     private func ReadSliders() {
         if state.useCelcius {
-            currentTemp = ThermalModel.CtoF(temp: (currentTempSlider.value))  // TODO: round?
+            currentTemp = ThermalModel.CtoF(temp: (currentTempSlider.value))
             desiredTemp = ThermalModel.CtoF(temp: QuantizeC(desiredTempSlider.value))
         } else {
             currentTemp = currentTempSlider.value  // TODO: round?
@@ -189,15 +189,14 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
     // TODO: Make utility function that converts F temp into appropriate display based on `state`
     /// Update view while timer is not engaged
     private func UpdateView() {
-        // print("PreheatViewCont:UpdateView")
-
+        // Update labels
         if state.useCelcius {
-            currentTemp = ThermalModel.CtoF(temp: (currentTempSlider.value))  // TODO: round?
+            currentTemp = round(ThermalModel.CtoF(temp: (currentTempSlider.value)))
             desiredTemp = ThermalModel.CtoF(temp: QuantizeC(desiredTempSlider.value))
             currentTempLabel.text = ThermalModel.DisplayC(temp: currentTemp)
             desiredTempLabel.text = ThermalModel.DisplayC(temp: desiredTemp)
         } else {
-            currentTemp = currentTempSlider.value  // TODO: round?
+            currentTemp = round(currentTempSlider.value)
             desiredTemp = Quantize(desiredTempSlider.value)
             currentTempLabel.text = ThermalModel.DisplayF(temp: currentTemp)
             desiredTempLabel.text = ThermalModel.DisplayF(temp: desiredTemp)
@@ -226,11 +225,6 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
         var desiredMax, desiredMin: Float  // F
         var currentMax, currentMin: Float  // F
         
-        print("PreviewViewController:UpdateSliders")
-        
-        desiredMin = 70
-        model.Tamb = state.Tamb
-        
         let maxTemp = Quantize(model.Tmax)  // F
         if maxTemp > 500 {
             desiredMax = 500
@@ -238,8 +232,10 @@ class PreheatViewController : UIViewController, UNUserNotificationCenterDelegate
             desiredMax = Quantize(model.Tmax)
         }
         
+        Tamb = state.Tamb
         currentMax = desiredMax
         currentMin = Tamb
+        desiredMin = Tamb
         
         if state.useCelcius {
             currentTempSlider.maximumValue = round(ThermalModel.FtoC(temp: currentMax))
