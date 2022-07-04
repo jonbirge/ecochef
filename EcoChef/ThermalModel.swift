@@ -38,7 +38,7 @@ class ThermalModel : CustomStringConvertible {
                 return a * log((b + Tamb - Tstart)/(b + Tamb - Tset))
             }
         } else {  // cooling
-            if Tset < Tamb  {
+            if Tset <= Tamb  {
                 return nil
             } else {
                 return a * log((Tamb - Tstart)/(Tamb - Tset))
