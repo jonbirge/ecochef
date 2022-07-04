@@ -32,6 +32,7 @@
 		ABEBBBA01F05AC1C00527B4F /* TimerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEBBB9F1F05AC1C00527B4F /* TimerButton.swift */; };
 		ABEDA1BE1F09F75600FAE1E1 /* ModelTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEDA1BC1F09F75600FAE1E1 /* ModelTableViewController.swift */; };
 		ABEDA1C11F09FDAD00FAE1E1 /* ModelEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEDA1C01F09FDAD00FAE1E1 /* ModelEditViewController.swift */; };
+		ABFBBFAB28348D7C001AC90C /* TimerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABFBBFAA28348D7C001AC90C /* TimerController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,7 +77,7 @@
 		AB007F1C1F1BE67E00AD9552 /* MeasTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeasTableViewController.swift; sourceTree = "<group>"; };
 		AB007F1E1F1C109000AD9552 /* DataEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataEditViewController.swift; sourceTree = "<group>"; };
 		AB2EF88E1F36D74100584390 /* CalibrationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalibrationViewController.swift; sourceTree = "<group>"; };
-		AB3BB8381F5F9CA000CDF182 /* TimerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerViewController.swift; sourceTree = "<group>"; };
+		AB3BB8381F5F9CA000CDF182 /* TimerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = TimerViewController.swift; sourceTree = "<group>"; tabWidth = 4; };
 		AB43B1731EEB871E00B6A96B /* EcoChef.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EcoChef.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB43B1761EEB871E00B6A96B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AB43B1781EEB871E00B6A96B /* PreheatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreheatViewController.swift; sourceTree = "<group>"; };
@@ -99,6 +100,7 @@
 		ABEBBB9F1F05AC1C00527B4F /* TimerButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerButton.swift; sourceTree = "<group>"; };
 		ABEDA1BC1F09F75600FAE1E1 /* ModelTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelTableViewController.swift; sourceTree = "<group>"; };
 		ABEDA1C01F09FDAD00FAE1E1 /* ModelEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelEditViewController.swift; sourceTree = "<group>"; };
+		ABFBBFAA28348D7C001AC90C /* TimerController.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = TimerController.swift; sourceTree = "<group>"; tabWidth = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,14 +162,17 @@
 				AB007F1E1F1C109000AD9552 /* DataEditViewController.swift */,
 				ABC7A8741EF8EE7900F25317 /* AboutViewController.swift */,
 				AB3BB8381F5F9CA000CDF182 /* TimerViewController.swift */,
+				ABFBBFAA28348D7C001AC90C /* TimerController.swift */,
 				ABEBBB9F1F05AC1C00527B4F /* TimerButton.swift */,
 				AB43B17C1EEB871E00B6A96B /* Main.storyboard */,
 				AB43B1841EEB871E00B6A96B /* Info.plist */,
 				AB43B17F1EEB871E00B6A96B /* Assets.xcassets */,
 				ABEBBBAA1F05B5D400527B4F /* Media */,
 			);
+			indentWidth = 2;
 			path = EcoChef;
 			sourceTree = "<group>";
+			tabWidth = 2;
 		};
 		ABCEEB0E27E95E550068FB3E /* Products */ = {
 			isa = PBXGroup;
@@ -350,6 +355,7 @@
 				AB43B1791EEB871E00B6A96B /* PreheatViewController.swift in Sources */,
 				AB007F1F1F1C109000AD9552 /* DataEditViewController.swift in Sources */,
 				ABEBBBA01F05AC1C00527B4F /* TimerButton.swift in Sources */,
+				ABFBBFAB28348D7C001AC90C /* TimerController.swift in Sources */,
 				AB53D56E1F0DD85900ACA17A /* EcoChefThermalModel.swift in Sources */,
 				AB3BB8391F5F9CA000CDF182 /* TimerViewController.swift in Sources */,
 				AB43B18B1EEBAEA100B6A96B /* ThermalModel.swift in Sources */,
